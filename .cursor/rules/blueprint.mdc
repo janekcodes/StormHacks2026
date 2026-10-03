@@ -1,0 +1,17 @@
+---
+description: NeXT-Gen Museum project rules. Always read BLUEPRINT.md and the active build plan before changing code.
+alwaysApply: true
+---
+
+# NeXT-Gen Museum: agent rules
+
+- `BLUEPRINT.md` at the repo root is the single source of truth. If anything (a build plan, a comment, a file) disagrees with it, BLUEPRINT wins. Stop and record the conflict in `docs/decisions/` instead of guessing.
+- Work one build plan at a time from `docs/buildplan/`. Do only what that plan's **Deliverables** list. Anything in its **Out of scope** list is forbidden, even if it looks helpful.
+- A plan is done only when every item in its **Acceptance criteria** passes and its **Verify** commands succeed. Then tick its row in `docs/buildplan/00-INDEX.md`.
+- Exhibit IDs (`A1`, `B11`, ...) come from BLUEPRINT §6 only. Never invent, renumber or reuse one.
+- Facts in content need sources. No invented numbers. Unknowns are `[TBD: ...]`.
+- No em or en dashes in user-facing copy.
+- API keys (`GEMINI_API_KEY`, `ELEVENLABS_API_KEY`) are server-only. Never import them in client code, never log or print them.
+- Model IDs come from config (`GUIDE_MODEL`, `NARRATION_MODEL`, `SPEECH_MODEL`), never hardcoded.
+- TypeScript strict. No `any` without a comment explaining why.
+- Prefer small, reviewable commits named `<plan number>: <change>` (for example `05: merge static walls`).
