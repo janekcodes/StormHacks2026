@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal 1991</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=VT323&amp;display=swap">
+<style>
+body{margin:0}
+.p91 .label{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9aa3ac}
+.p91 .vt{font-family:'VT323',monospace}
+.p91 .btn{appearance:none;cursor:pointer;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #E4EAF0;background:transparent;color:#E4EAF0;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.p91 .btn:hover{background:rgba(228,234,240,.1)}
+.p91 .btn.on{background:#E4EAF0;color:#111}
+.p91 .btn:focus-visible,.p91 input:focus-visible{outline:2px solid #ffb347;outline-offset:2px}
+.p91 .led{width:10px;height:10px;border-radius:50%;background:#2a2e33}
+.p91 .led.on{background:#5dff9a;box-shadow:0 0 8px #5dff9a;animation:blink .3s steps(2) infinite}
+.p91 .led.on2{background:#ffb347;box-shadow:0 0 8px #ffb347;animation:blink .45s steps(2) infinite}
+.p91 .raw{font-family:'Times New Roman',Times,serif;color:#000;background:#fff;font-size:16px;line-height:1.35}
+.p91 .raw h1{font-size:2em;margin:.5em 0}.p91 .raw h2{font-size:1.4em;margin:.7em 0 .3em}
+.p91 .raw a{color:#0000ee;text-decoration:underline}
+.p91 .modern a{color:#2453c7;text-decoration:none}
+.p91 .sqL{background:#cfd5db;color:#111}.p91 .sqD{background:#5b636c;color:#111}
+@keyframes blink{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.p91 .led.on,.p91 .led.on2{animation:none}}
+</style>
+</helmet>
+<div class="p91" style="width: 100%; min-height: 500px; box-sizing: border-box; padding: 24px; background: #08090a; color: #E4EAF0; font-family: 'IBM Plex Mono', monospace">
+
+<sc-if value="{{isHw}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+      <div style="display: flex; align-items: center; gap: 14px; padding: 10px 14px; border: 1px solid #3a4048; border-radius: 8px; background: #c9ced4; color: #111">
+        <span class="label" style="color: #333">Modem 14.4k</span>
+        <span style="display: flex; gap: 6px; align-items: center; font-size: 10px"><span class="{{ledCD}}"></span>CD <span class="{{ledRD}}"></span>RD <span class="{{ledSD}}"></span>SD</span>
+      </div>
+      <div class="vt" style="font-size: 28px">SIM CLOCK {{clock}} · {{speedLabel}}</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px solid #2a2e33; border-radius: 8px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><span>The first web page, 1991 · ~2 KB</span><span class="vt" style="font-size: 22px">{{oldStatus}}</span></div>
+        <div style="height: 22px; background: #16191c; border: 1px solid #3a4048"><div style="height: 100%; width: {{oldW}}; background: #E4EAF0"></div></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Median mobile home page, 2025 · 2.56 MB</span><span class="vt" style="font-size: 22px">{{newStatus}}</span></div>
+        <div style="height: 22px; background: #16191c; border: 1px solid #3a4048"><div style="height: 100%; width: {{newW}}; background: #ffb347"></div></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+      <button type="button" class="{{dialCls}}" onClick="{{dial}}">{{dialLabel}}</button>
+      <span style="font-size: 12px; color: #9aa3ac">Runs in real time until the 1991 page lands, then jumps to 100× speed. Real time on the line: about 1 second vs about 24 minutes.</span>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isSw}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px">
+        <span>Weight <b>{{w.weight}}</b></span><span>Requests <b>{{w.req}}</b></span><span>JS <b>{{w.js}}</b></span><span>CSS <b>{{w.css}}</b></span>
+      </div>
+      <button type="button" class="{{webCls}}" onClick="{{toggleWeb}}" aria-pressed="{{is1991}}">{{webLabel}}</button>
+    </div>
+    <div style="border-radius: 8px; overflow: hidden; border: 1px solid #4a5058">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 7px 12px; background: #2b2f34; font-size: 12px">
+        <span style="font-family: 'Chakra Petch', sans-serif; font-weight: 700">{{w.app}}</span>
+        <span style="flex: 1; min-width: 0; background: #16191c; border: 1px solid #3a4048; border-radius: 4px; padding: 3px 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{w.url}}</span>
+      </div>
+      <sc-if value="{{isModern}}" hint-placeholder-val="{{ true }}">
+        <div class="modern" style="background: #f6f7f9; color: #1d2330; font-family: 'Chakra Petch', sans-serif; font-size: 14px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #e1e4ea"><b>Open Encyclopedia</b><span style="background: #2453c7; color: #fff; padding: 4px 12px; border-radius: 999px; font-size: 12px">Sign in</span></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 16px">
+            <div style="flex: 999 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+              <div style="height: 100px; border-radius: 8px; background: #dfe3ea; border: 1px dashed #9aa3b2; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4e5868">[hero image · 1.1 MB]</div>
+              <div style="font-size: 26px; font-weight: 700; line-height: 1.1">World Wide Web</div>
+              <p style="margin: 0; line-height: 1.55">A system of interlinked <a href="#">hypertext</a> documents on the <a href="#">Internet</a>, proposed by <a href="#">Tim Berners-Lee</a> at <a href="#">CERN</a> in 1989 and made public in 1991.</p>
+            </div>
+            <div style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 10px">
+              <div style="background: #fff; border: 1px solid #e1e4ea; border-radius: 8px; padding: 10px; font-size: 12px; line-height: 1.6"><b>Quick facts</b><br>Launched: 1991<br>Protocol: HTTP</div>
+              <div style="height: 70px; border-radius: 8px; background: #fff4d6; border: 1px dashed #c9a43c; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #6b5310">[ad slot · 4 trackers]</div>
+            </div>
+          </div>
+          <div style="padding: 10px 16px; background: #1d2330; color: #e6e9ef; font-size: 12px">We use cookies to personalise content. <b>Accept all</b></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{is1991}}" hint-placeholder-val="{{ false }}">
+        <div class="raw" style="padding: 4px 18px 16px">
+          <h1>World Wide Web</h1>
+          <p>A system of interlinked <a href="#">hypertext</a> documents on the <a href="#">Internet</a>, proposed by <a href="#">Tim Berners-Lee</a> at <a href="#">CERN</a> in 1989 and made public in 1991.</p>
+          <h2>Quick facts</h2>
+          <ul><li>Launched: 1991</li><li>Protocol: HTTP</li></ul>
+        </div>
+      </sc-if>
+    </div>
+    <pre style="margin: 0; padding: 12px; background: #000; border: 1px solid #2a2e33; border-radius: 6px; font-size: 12.5px; line-height: 1.5; overflow-x: auto; white-space: pre">{{httpText}}</pre>
+  </div>
+</sc-if>
+
+<sc-if value="{{isAi}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 26px">
+    <div style="flex: 0 1 300px; min-width: 0">
+      <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); border: 3px solid #4a5058; max-width: 300px">
+        <sc-for list="{{board}}" as="q" hint-placeholder-count="64">
+          <span class="{{q.cls}}" style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 26px; line-height: 1; font-family: serif">{{q.p}}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top: 8px; font-size: 11px; color: #9aa3ac">About 20 legal first moves; mid-game positions average around 35.</div>
+    </div>
+    <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+      <label for="depth" class="label">Search depth · {{depth}} half-moves ahead</label>
+      <input id="depth" type="range" min="1" max="12" step="1" value="{{depth}}" onChange="{{setDepth}}" style="width: 100%; accent-color: #E4EAF0; height: 28px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <sc-for list="{{fan}}" as="f" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 11px"><span style="width: 24px; color: #9aa3ac">d{{f.d}}</span><div style="height: 8px; width: {{f.w}}; background: #E4EAF0; opacity: {{f.o}}"></div></div>
+        </sc-for>
+      </div>
+      <div class="vt" style="font-size: 30px; line-height: 1.1">{{positions}} positions</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
+        <div style="border: 1px solid #2a2e33; border-radius: 8px; padding: 10px"><div class="label">Deep Thought · ~700K/s</div><div class="vt" style="font-size: 26px">{{tDT}}</div></div>
+        <div style="border: 1px solid #2a2e33; border-radius: 8px; padding: 10px"><div class="label">Deep Blue · ~200M/s</div><div class="vt" style="font-size: 26px">{{tDB}}</div></div>
+      </div>
+      <div style="font-size: 12px; color: #9aa3ac; line-height: 1.5">Full-width search with no pruning. Real engines cut most branches with alpha-beta pruning, which is how Deep Blue reached useful depths.</div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"exhibit":{"editor":"enum","options":["hw","sw","ai"],"default":"hw"},"$preview":{"width":880,"height":520}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { t: 0, running: false, web: 'modern', depth: 4 };
+  }
+  componentWillUnmount() { clearInterval(this.dT); }
+  dur(s) {
+    if (s < 1) return (s * 1000).toFixed(0) + ' ms';
+    if (s < 60) return s.toFixed(1) + ' s';
+    if (s < 3600) return (s / 60).toFixed(1) + ' min';
+    if (s < 86400) return (s / 3600).toFixed(1) + ' h';
+    if (s < 31557600) return (s / 86400).toFixed(1) + ' days';
+    var y = s / 31557600;
+    return y < 1e6 ? Math.round(y).toLocaleString('en-US') + ' years' : y.toExponential(1) + ' years';
+  }
+  big(n) {
+    if (n < 1e6) return Math.round(n).toLocaleString('en-US');
+    var units = [[1e18, 'quintillion'], [1e15, 'quadrillion'], [1e12, 'trillion'], [1e9, 'billion'], [1e6, 'million']];
+    for (var i = 0; i < units.length; i++) if (n >= units[i][0]) return (n / units[i][0]).toFixed(1) + ' ' + units[i][1];
+    return String(n);
+  }
+  mmss(t) { var m = Math.floor(t / 60), s = Math.floor(t % 60); return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s; }
+  renderVals() {
+    var self = this, st = this.state;
+    var ex = this.props.exhibit ?? 'hw';
+    var OLD = 2048 * 8 / 14400, NEW = 2560000 * 8 / 14400;
+    var oldP = Math.min(1, st.t / OLD), newP = Math.min(1, st.t / NEW);
+    var is1991 = st.web === '1991';
+    var back = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'], wback = ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'];
+    var board = [];
+    for (var r = 0; r < 8; r++) for (var c = 0; c < 8; c++) {
+      var p = r === 0 ? back[c] : r === 1 ? '♟' : r === 6 ? '♙' : r === 7 ? wback[c] : '';
+      board.push({ p: p, cls: (r + c) % 2 === 0 ? 'sqL' : 'sqD' });
+    }
+    var d = st.depth, pos = Math.pow(35, d);
+    var fan = [];
+    for (var k = 1; k <= d; k++) { var lg = Math.log10(Math.pow(35, k)); fan.push({ d: k, w: Math.min(100, lg / Math.log10(Math.pow(35, 12)) * 100).toFixed(1) + '%', o: (0.35 + 0.65 * k / 12).toFixed(2) }); }
+    return {
+      isHw: ex === 'hw', isSw: ex === 'sw', isAi: ex === 'ai',
+      clock: this.mmss(st.t), speedLabel: !st.running ? 'IDLE' : (st.t < OLD + 0.5 ? 'REAL TIME' : '100× SPEED'),
+      ledCD: st.running || st.t > 0 ? 'led on' : 'led', ledRD: st.running ? 'led on' : 'led', ledSD: st.running ? 'led on2' : 'led',
+      oldW: (oldP * 100).toFixed(1) + '%', newW: (newP * 100).toFixed(2) + '%',
+      oldStatus: oldP >= 1 ? 'LOADED · 1.1 s' : st.t > 0 ? Math.round(oldP * 100) + '%' : 'READY',
+      newStatus: newP >= 1 ? 'LOADED · 23.7 min' : st.t > 0 ? (newP * 100).toFixed(1) + '%' : 'READY',
+      dialCls: st.running ? 'btn on' : 'btn',
+      dialLabel: st.running ? 'Hang up' : (st.t > 0 ? 'Redial' : 'Dial in'),
+      dial: function () {
+        if (self.state.running) { clearInterval(self.dT); self.setState({ running: false }); return; }
+        self.setState({ t: 0, running: true });
+        clearInterval(self.dT);
+        self.dT = setInterval(function () {
+          var t = self.state.t + 0.05;
+          if (t < OLD + 0.5) t = self.state.t + 0.05; else t = self.state.t + 5;
+          if (t >= NEW) { clearInterval(self.dT); self.setState({ t: NEW, running: false }); return; }
+          self.setState({ t: t });
+        }, 50);
+      },
+      is1991: is1991, isModern: !is1991,
+      webCls: is1991 ? 'btn on' : 'btn',
+      webLabel: is1991 ? 'Restore 2026 mode' : 'Toggle 1991 web mode',
+      toggleWeb: function () { self.setState({ web: self.state.web === '1991' ? 'modern' : '1991' }); },
+      w: is1991
+        ? { app: 'WorldWideWeb', url: 'http://info.museum/hypertext/WWW.html', weight: '~2 KB', req: '1', js: '0 KB', css: 'none' }
+        : { app: 'Browser 2026', url: 'https://open-encyclopedia.example/wiki/World_Wide_Web', weight: '2.56 MB', req: '75', js: '632 KB', css: 'yes' },
+      httpText: is1991
+        ? 'GET /hypertext/WWW.html\n\n<TITLE>World Wide Web</TITLE>\n<H1>World Wide Web</H1>\n...  (HTTP/0.9: no headers, no status, just HTML)'
+        : 'GET /wiki/World_Wide_Web HTTP/2\nHost: open-encyclopedia.example\nAccept-Encoding: br, gzip\n...  then 74 more requests',
+      board: board,
+      depth: d,
+      setDepth: function (e) { var v = parseInt(e.target.value, 10); if (!isNaN(v)) self.setState({ depth: v }); },
+      fan: fan,
+      positions: this.big(pos),
+      tDT: this.dur(pos / 700000),
+      tDB: this.dur(pos / 200000000)
+    };
+  }
+}
+</script>
+</body>
+</html>

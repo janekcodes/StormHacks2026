@@ -1,0 +1,9 @@
+.main {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  color: #1d2024;
+  background: #f4f2ed;
+}

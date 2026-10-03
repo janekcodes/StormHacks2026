@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal 1956</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=VT323&amp;display=swap">
+<style>
+body{margin:0}
+.p56 .label{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#86a894}
+.p56 .vt{font-family:'VT323',monospace}
+.p56 .btn{appearance:none;cursor:pointer;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #8DF7A9;background:transparent;color:#8DF7A9;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.p56 .btn:hover{background:rgba(141,247,169,.12)}
+.p56 .btn.on{background:#8DF7A9;color:#08170e}
+.p56 .btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.p56 .flow{stroke-dasharray:8 6;animation:flow .6s linear infinite}
+.p56 .hole{width:6px;height:9px;border-radius:1px}
+.p56 .hole.p{background:#1a1a14}
+.p56 .hole.n{background:transparent}
+.p56 .sq{aspect-ratio:1;border-radius:2px;border:1px solid #2f4a39}
+.p56 .sq.lit{background:#8DF7A9;border-color:#8DF7A9;box-shadow:0 0 6px rgba(141,247,169,.6)}
+.p56 .pp.on{background:rgba(233,239,232,.14);border-style:solid !important}
+.p56 .pp:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@keyframes flow{to{stroke-dashoffset:-28}}
+@media (prefers-reduced-motion:reduce){.p56 .flow{animation:none}}
+</style>
+</helmet>
+<div class="p56" style="width: 100%; min-height: 500px; box-sizing: border-box; padding: 24px; background: #050a07; color: #8DF7A9; font-family: 'IBM Plex Mono', monospace">
+
+<sc-if value="{{isHw}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 28px">
+    <div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div class="label">A transistor is a switch · base {{baseLabel}}</div>
+      <svg viewBox="0 0 380 320" width="100%" style="max-width: 420px; display: block" role="img" aria-label="{{circuitAria}}">
+        <g fill="none" stroke="#3d5a48" stroke-width="3">
+          <path d="M240 20 L240 70"></path><path d="M240 130 L240 190"></path><path d="M240 250 L240 300"></path><path d="M60 160 L170 160"></path>
+        </g>
+        <sc-if value="{{baseOn}}" hint-placeholder-val="{{ false }}">
+          <g fill="none" stroke="#8DF7A9" stroke-width="3"><path class="flow" d="M240 20 L240 70"></path><path class="flow" d="M240 130 L240 190"></path><path class="flow" d="M240 250 L240 300"></path><path class="flow" d="M60 160 L170 160"></path></g>
+        </sc-if>
+        <circle cx="240" cy="100" r="30" fill="{{lampFill}}" stroke="#8DF7A9" stroke-width="3"></circle>
+        <path d="M222 82 L258 118 M258 82 L222 118" stroke="#3d5a48" stroke-width="2"></path>
+        <text x="282" y="106" fill="#c7e8d2" font-family="Chakra Petch, sans-serif" font-size="14">LAMP</text>
+        <circle cx="210" cy="220" r="44" fill="#08140c" stroke="#8DF7A9" stroke-width="2.5"></circle>
+        <line x1="196" y1="196" x2="196" y2="244" stroke="#8DF7A9" stroke-width="5"></line>
+        <line x1="170" y1="220" x2="196" y2="220" stroke="#8DF7A9" stroke-width="3"></line>
+        <path d="M196 208 L240 190" stroke="#8DF7A9" stroke-width="3"></path><path d="M196 232 L240 250" stroke="#8DF7A9" stroke-width="3"></path>
+        <path d="M232 241 L240 250 L228 251" fill="none" stroke="#8DF7A9" stroke-width="3"></path>
+        <path d="M60 160 L60 220 L170 220" fill="none" stroke="#3d5a48" stroke-width="3"></path>
+        <g font-family="Chakra Petch, sans-serif" font-size="13" fill="#c7e8d2"><text x="250" y="186">collector</text><text x="250" y="262">emitter</text><text x="96" y="244">base</text><text x="250" y="16">+V</text><text x="250" y="316">ground</text></g>
+        <rect x="30" y="140" width="60" height="40" rx="6" fill="#0d1f14" stroke="#8DF7A9"></rect><text x="60" y="166" text-anchor="middle" fill="#8DF7A9" font-family="VT323, monospace" font-size="22">{{baseLabel}}</text>
+      </svg>
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+        <button type="button" class="{{baseBtnCls}}" onClick="{{toggleBase}}" aria-pressed="{{baseOn}}">Base current: {{baseLabel}}</button>
+        <span style="font-size: 12px; color: #c7e8d2">A small current at the base lets a large one flow from collector to emitter.</span>
+      </div>
+    </div>
+    <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <div class="label">The same job, three generations</div>
+      <div style="display: flex; align-items: flex-end; gap: 24px; padding: 18px; border: 1px solid #1f3a2a; border-radius: 8px; min-height: 160px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+          <svg width="50" height="110" viewBox="0 0 50 110" aria-hidden="true"><rect x="8" y="4" width="34" height="80" rx="17" fill="none" stroke="#FFB347" stroke-width="2"></rect><path d="M18 30 Q25 50 32 30" stroke="#FFB347" fill="none" stroke-width="2"></path><rect x="10" y="84" width="30" height="14" fill="#5a4a36"></rect><path d="M17 98v10M25 98v10M33 98v10" stroke="#8a9097" stroke-width="2"></path></svg>
+          <span style="font-size: 11px; text-align: center; color: #c7e8d2">Vacuum tube<br>1940s</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+          <svg width="24" height="44" viewBox="0 0 24 44" aria-hidden="true"><rect x="3" y="2" width="18" height="18" rx="3" fill="#8a9097"></rect><path d="M7 20v22M12 20v22M17 20v22" stroke="#c9ced4" stroke-width="1.6"></path></svg>
+          <span style="font-size: 11px; text-align: center; color: #c7e8d2">Silicon transistor<br>1954</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+          <span style="width: 3px; height: 3px; background: #8DF7A9; border-radius: 50%; box-shadow: 0 0 6px #8DF7A9"></span>
+          <span style="font-size: 11px; text-align: center; color: #c7e8d2">Modern transistor<br>nanometres wide</span>
+        </div>
+      </div>
+      <div style="font-size: 13px; line-height: 1.6; color: #c7e8d2">Icons show relative size only loosely. The real gap is wider: today's chips pack billions of transistors into the space of a fingernail.</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isSw}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between">
+      <div class="label">Pick a statement to punch</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <sc-for list="{{stmts}}" as="s" hint-placeholder-count="3">
+          <button type="button" class="{{s.cls}}" onClick="{{s.pick}}" aria-pressed="{{s.on}}" style="text-transform: none; letter-spacing: 0; font-family: 'IBM Plex Mono', monospace">{{s.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="overflow-x: auto; padding-bottom: 6px">
+      <div style="width: max-content; background: #efe3c2; color: #6b5a40; border-radius: 6px; padding: 10px 14px 12px 22px; clip-path: polygon(16px 0, 100% 0, 100% 100%, 0 100%, 0 16px)">
+        <div style="display: flex; gap: 2px; margin-bottom: 4px; margin-left: 26px">
+          <sc-for list="{{cols}}" as="c" hint-placeholder-count="80"><span style="width: 6px; font-size: 9px; text-align: center; color: #2a2520; font-weight: 600">{{c.ch}}</span></sc-for>
+        </div>
+        <div style="display: flex; gap: 4px">
+          <div style="display: flex; flex-direction: column; gap: 2px; width: 22px; font-size: 8px; line-height: 9px; text-align: right">
+            <span>12</span><span>11</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+          </div>
+          <div style="display: flex; gap: 2px">
+            <sc-for list="{{cols}}" as="c" hint-placeholder-count="80">
+              <div style="display: flex; flex-direction: column; gap: 2px; background: {{c.bg}}">
+                <sc-for list="{{c.rows}}" as="h" hint-placeholder-count="12"><span class="{{h}}"></span></sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 6px 0 0 26px; font-size: 9px; color: #8a7350"><span>LABEL 1·5</span><span>STATEMENT 7·72</span><span>ID 73·80</span></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 18px">
+      <div style="flex: 1 1 300px; font-size: 13px; line-height: 1.6; color: #c7e8d2">Each column holds one character, encoded as holes in the 12 rows (Hollerith code). Letters combine a zone punch (12, 11 or 0) with a digit. Drop the deck and you got to re-sort your program.</div>
+      <pre style="flex: 1 1 260px; margin: 0; padding: 12px; background: #000; border: 1px solid #1f3a2a; border-radius: 6px; font-size: 12.5px; line-height: 1.5; overflow-x: auto; white-space: pre">C     THE WHOLE DECK
+      ISUM = 0
+      DO 10 I = 1, 10
+      ISUM = ISUM + I
+   10 CONTINUE</pre>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isAi}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 24px">
+    <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div class="label">The chalkboard · tap a proposer</div>
+      <div style="background: #1f3a2c; border: 6px solid #5a4a36; border-radius: 6px; padding: 18px; display: flex; flex-direction: column; gap: 16px; color: #e9efe8">
+        <div class="vt" style="font-size: 22px; line-height: 1.2">"...every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it."</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px">
+          <sc-for list="{{people}}" as="p" hint-placeholder-count="4">
+            <button type="button" class="{{p.cls}}" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px; min-height: 84px; border-radius: 8px; border: 1px dashed #c7d6c9; background: transparent; color: #e9efe8; cursor: pointer; font-family: 'IBM Plex Mono', monospace">
+              <span class="vt" style="font-size: 30px; line-height: 1">{{p.ini}}</span>
+              <span style="font-size: 11px">{{p.name}}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="min-height: 44px; font-size: 13px; line-height: 1.5; border-top: 1px dashed #7d917f; padding-top: 10px">{{personNote}}</div>
+      </div>
+      <div style="font-size: 11px; color: #86a894">Quote: the 1955 Dartmouth proposal.</div>
+    </div>
+    <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div class="label">Logic Theorist vs Principia Mathematica, ch. 2</div>
+      <div class="vt" style="font-size: 30px">{{ltLabel}}</div>
+      <div style="display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 4px">
+        <sc-for list="{{lt}}" as="q" hint-placeholder-count="52"><span class="{{q}}"></span></sc-for>
+      </div>
+      <div style="display: flex; gap: 8px"><button type="button" class="btn" onClick="{{runLt}}">{{ltBtn}}</button></div>
+      <div style="font-size: 13px; line-height: 1.6; color: #c7e8d2">Newell, Simon and Shaw's program proved 38 of the first 52 theorems by searching for proofs the way a person might, with rules of thumb. It was the star exhibit of 1956.</div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"exhibit":{"editor":"enum","options":["hw","sw","ai"],"default":"hw"},"$preview":{"width":880,"height":520}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { base: false, stmt: 0, person: 0, lt: 0 };
+  }
+  componentWillUnmount() { clearInterval(this.ltT); }
+  holl(ch) {
+    var R = { '12': 0, '11': 1, '0': 2, '1': 3, '2': 4, '3': 5, '4': 6, '5': 7, '6': 8, '7': 9, '8': 10, '9': 11 };
+    var out = [];
+    if (/[0-9]/.test(ch)) out = [ch];
+    else if (/[A-I]/.test(ch)) out = ['12', String(ch.charCodeAt(0) - 64)];
+    else if (/[J-R]/.test(ch)) out = ['11', String(ch.charCodeAt(0) - 73)];
+    else if (/[S-Z]/.test(ch)) out = ['0', String(ch.charCodeAt(0) - 81)];
+    else if (ch === '=') out = ['6', '8'];
+    else if (ch === '+') out = ['12', '6', '8'];
+    else if (ch === ',') out = ['0', '3', '8'];
+    return out.map(function (k) { return R[k]; });
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var ex = this.props.exhibit ?? 'hw';
+    var S = [{ label: 'ISUM = ISUM + I', lab: '', s: 'ISUM = ISUM + I' }, { label: 'DO 10 I = 1, 10', lab: '', s: 'DO 10 I = 1, 10' }, { label: '10 CONTINUE', lab: '10', s: 'CONTINUE' }];
+    var cur = S[st.stmt];
+    var line = ('   ' + cur.lab).slice(-5) + ' ' + cur.s;
+    while (line.length < 72) line += ' ';
+    line += 'MUSEUM01';
+    var cols = [];
+    for (var c = 0; c < 80; c++) {
+      var ch = line.charAt(c), p = this.holl(ch), rows = [];
+      for (var r = 0; r < 12; r++) rows.push(p.indexOf(r) >= 0 ? 'hole p' : 'hole n');
+      cols.push({ ch: ch === ' ' ? '' : ch, rows: rows, bg: c >= 6 && c < 72 ? 'transparent' : 'rgba(107,90,64,.08)' });
+    }
+    var P = [
+      { ini: 'JM', name: 'McCarthy', note: 'John McCarthy, Dartmouth. Coined "artificial intelligence" for the proposal; designed LISP two years later.' },
+      { ini: 'MM', name: 'Minsky', note: 'Marvin Minsky, Harvard. Had built SNARC in 1951, an early neural-network learning machine made of tubes.' },
+      { ini: 'NR', name: 'Rochester', note: 'Nathaniel Rochester, IBM. Chief designer of the IBM 701; simulated neural networks on it.' },
+      { ini: 'CS', name: 'Shannon', note: 'Claude Shannon, Bell Labs. Founded information theory in 1948; in 1950 built Theseus, a maze-learning mechanical mouse.' }
+    ];
+    var lt = [];
+    for (var i = 0; i < 52; i++) lt.push(i < st.lt ? 'sq lit' : 'sq');
+    return {
+      isHw: ex === 'hw', isSw: ex === 'sw', isAi: ex === 'ai',
+      baseOn: st.base, baseLabel: st.base ? 'ON' : 'OFF',
+      baseBtnCls: st.base ? 'btn on' : 'btn',
+      lampFill: st.base ? '#8DF7A9' : '#08140c',
+      circuitAria: st.base ? 'Base current on: current flows from collector to emitter and the lamp is lit' : 'Base current off: no current flows and the lamp is dark',
+      toggleBase: function () { self.setState({ base: !self.state.base }); },
+      stmts: S.map(function (s, i) { return { label: s.label, on: i === st.stmt, cls: i === st.stmt ? 'btn on' : 'btn', pick: function () { self.setState({ stmt: i }); } }; }),
+      cols: cols,
+      people: P.map(function (p, i) { return { ini: p.ini, name: p.name, on: i === st.person, cls: i === st.person ? 'pp on' : 'pp', pick: function () { self.setState({ person: i }); } }; }),
+      personNote: P[st.person].note,
+      lt: lt,
+      ltLabel: st.lt + ' / 52 proved',
+      ltBtn: st.lt >= 38 ? 'Run again' : 'Run Logic Theorist',
+      runLt: function () {
+        clearInterval(self.ltT);
+        self.setState({ lt: 0 });
+        self.ltT = setInterval(function () {
+          if (self.state.lt >= 38) { clearInterval(self.ltT); return; }
+          self.setState({ lt: self.state.lt + 1 });
+        }, 70);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

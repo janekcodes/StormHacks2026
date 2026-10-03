@@ -1,0 +1,1351 @@
+{
+ "scopeVersion": "1.1",
+ "units": "metres, x east, z south, origin atrium centre",
+ "exhibits": [
+  {
+   "id": "P1",
+   "year": "c. 100 BCE",
+   "title": "Antikythera mechanism",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -5.255,
+    "z": 4.41,
+    "face": [
+     0.766,
+     -0.6428
+    ]
+   }
+  },
+  {
+   "id": "P2",
+   "year": "c. 820",
+   "title": "Al-Khwarizmi and the word \"algorithm\"",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -6.848,
+    "z": -0.399,
+    "face": [
+     0.9983,
+     0.0581
+    ]
+   }
+  },
+  {
+   "id": "P3",
+   "year": "1804",
+   "title": "Jacquard's punched-card loom",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -4.708,
+    "z": -4.99,
+    "face": [
+     0.6862,
+     0.7274
+    ]
+   }
+  },
+  {
+   "id": "P4",
+   "year": "1822/37",
+   "title": "Babbage's Difference & Analytical Engines",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 0.0,
+    "z": -6.86,
+    "face": [
+     0.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "P5",
+   "year": "1843",
+   "title": "Ada Lovelace's Note G",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 4.708,
+    "z": -4.99,
+    "face": [
+     -0.6862,
+     0.7274
+    ]
+   }
+  },
+  {
+   "id": "P6",
+   "year": "1854",
+   "title": "Boole's algebra of logic",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 6.848,
+    "z": -0.399,
+    "face": [
+     -0.9983,
+     0.0581
+    ]
+   }
+  },
+  {
+   "id": "P7",
+   "year": "1890",
+   "title": "Hollerith's census tabulator",
+   "zone": "P",
+   "band": "prologue",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 5.255,
+    "z": 4.41,
+    "face": [
+     -0.766,
+     -0.6428
+    ]
+   }
+  },
+  {
+   "id": "A1",
+   "year": "1936",
+   "title": "Turing's universal machine",
+   "zone": "A",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1945",
+    "exhibit": "ai"
+   },
+   "position": {
+    "x": -11.566,
+    "z": 15.651,
+    "face": [
+     0.5943,
+     -0.8042
+    ]
+   }
+  },
+  {
+   "id": "A2",
+   "year": "1937",
+   "title": "Shannon: circuits as Boolean logic",
+   "zone": "A",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -13.608,
+    "z": 13.608,
+    "face": [
+     0.7071,
+     -0.7071
+    ]
+   }
+  },
+  {
+   "id": "A3",
+   "year": "1940/44",
+   "title": "Bletchley Park: Bombe & Colossus",
+   "zone": "A",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -15.651,
+    "z": 11.566,
+    "face": [
+     0.8042,
+     -0.5943
+    ]
+   }
+  },
+  {
+   "id": "A4",
+   "year": "1948",
+   "title": "Information theory",
+   "zone": "A",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -15.405,
+    "z": 20.209,
+    "face": [
+     0.6063,
+     -0.7953
+    ]
+   }
+  },
+  {
+   "id": "A5",
+   "year": "1959",
+   "title": "Dijkstra's shortest path",
+   "zone": "A",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -20.209,
+    "z": 15.405,
+    "face": [
+     0.7953,
+     -0.6063
+    ]
+   }
+  },
+  {
+   "id": "A6",
+   "year": "1971",
+   "title": "NP-completeness",
+   "zone": "A",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -22.079,
+    "z": 29.131,
+    "face": [
+     0.604,
+     -0.797
+    ]
+   }
+  },
+  {
+   "id": "A7",
+   "year": "1976/77",
+   "title": "Public-key crypto: Diffie-Hellman, RSA",
+   "zone": "A",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -26.702,
+    "z": 24.507,
+    "face": [
+     0.7367,
+     -0.6762
+    ]
+   }
+  },
+  {
+   "id": "A8",
+   "year": "1994",
+   "title": "Shor's algorithm",
+   "zone": "A",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -31.326,
+    "z": 19.883,
+    "face": [
+     0.8443,
+     -0.5359
+    ]
+   }
+  },
+  {
+   "id": "A9",
+   "year": "2024",
+   "title": "Post-quantum crypto standards",
+   "zone": "A",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -42.602,
+    "z": 28.602,
+    "face": [
+     0.8302,
+     -0.5574
+    ]
+   }
+  },
+  {
+   "id": "B1",
+   "year": "1941",
+   "title": "Zuse Z3",
+   "zone": "B",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -18.403,
+    "z": 2.656,
+    "face": [
+     0.9897,
+     -0.1429
+    ]
+   }
+  },
+  {
+   "id": "B2",
+   "year": "1945",
+   "title": "ENIAC",
+   "zone": "B",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1945",
+    "exhibit": "hw"
+   },
+   "position": {
+    "x": -18.403,
+    "z": 0.0,
+    "face": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "B3",
+   "year": "1947/54",
+   "title": "The transistor",
+   "zone": "B",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1956",
+    "exhibit": "hw"
+   },
+   "position": {
+    "x": -18.403,
+    "z": -2.656,
+    "face": [
+     0.9897,
+     0.1429
+    ]
+   }
+  },
+  {
+   "id": "B4",
+   "year": "1948",
+   "title": "Manchester Baby: first stored program",
+   "zone": "B",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -23.163,
+    "z": 3.971,
+    "face": [
+     0.9856,
+     -0.169
+    ]
+   }
+  },
+  {
+   "id": "B5",
+   "year": "1958/59",
+   "title": "The integrated circuit",
+   "zone": "B",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -23.163,
+    "z": 0.0,
+    "face": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "B6",
+   "year": "1965",
+   "title": "Moore's law",
+   "zone": "B",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -23.163,
+    "z": -3.971,
+    "face": [
+     0.9856,
+     0.169
+    ]
+   }
+  },
+  {
+   "id": "B7",
+   "year": "1971",
+   "title": "Intel 4004 microprocessor",
+   "zone": "B",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -32.002,
+    "z": 6.411,
+    "face": [
+     0.9805,
+     -0.1964
+    ]
+   }
+  },
+  {
+   "id": "B8",
+   "year": "1976",
+   "title": "Cray-1 supercomputer",
+   "zone": "B",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -32.002,
+    "z": 0.0,
+    "face": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "B9",
+   "year": "1985",
+   "title": "ARM1",
+   "zone": "B",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -32.002,
+    "z": -6.411,
+    "face": [
+     0.9805,
+     0.1964
+    ]
+   }
+  },
+  {
+   "id": "B10",
+   "year": "2007",
+   "title": "CUDA & GPU computing",
+   "zone": "B",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -43.334,
+    "z": 9.541,
+    "face": [
+     0.9766,
+     -0.215
+    ]
+   }
+  },
+  {
+   "id": "B11",
+   "year": "2015",
+   "title": "Tensor Processing Unit",
+   "zone": "B",
+   "band": "outer",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal2026",
+    "exhibit": "hw"
+   },
+   "position": {
+    "x": -43.334,
+    "z": 0.0,
+    "face": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "B12",
+   "year": "2019",
+   "title": "Quantum processors",
+   "zone": "B",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -43.334,
+    "z": -9.541,
+    "face": [
+     0.9766,
+     0.215
+    ]
+   }
+  },
+  {
+   "id": "C1",
+   "year": "1945",
+   "title": "Patch-cable programming",
+   "zone": "C",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1945",
+    "exhibit": "sw"
+   },
+   "position": {
+    "x": -14.936,
+    "z": -11.16,
+    "face": [
+     0.8011,
+     0.5986
+    ]
+   }
+  },
+  {
+   "id": "C2",
+   "year": "1952",
+   "title": "Hopper's A-0 compiler",
+   "zone": "C",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -13.048,
+    "z": -13.048,
+    "face": [
+     0.7071,
+     0.7071
+    ]
+   }
+  },
+  {
+   "id": "C3",
+   "year": "1957",
+   "title": "FORTRAN & LISP",
+   "zone": "C",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1956",
+    "exhibit": "sw"
+   },
+   "position": {
+    "x": -11.16,
+    "z": -14.936,
+    "face": [
+     0.5986,
+     0.8011
+    ]
+   }
+  },
+  {
+   "id": "C4",
+   "year": "1959",
+   "title": "COBOL",
+   "zone": "C",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -18.586,
+    "z": -14.34,
+    "face": [
+     0.7917,
+     0.6109
+    ]
+   }
+  },
+  {
+   "id": "C5",
+   "year": "1968/69",
+   "title": "Software engineering & Apollo code",
+   "zone": "C",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -14.34,
+    "z": -18.586,
+    "face": [
+     0.6109,
+     0.7917
+    ]
+   }
+  },
+  {
+   "id": "C6",
+   "year": "1969/72",
+   "title": "Unix & C",
+   "zone": "C",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -27.694,
+    "z": -17.915,
+    "face": [
+     0.8396,
+     0.5431
+    ]
+   }
+  },
+  {
+   "id": "C7",
+   "year": "1970",
+   "title": "Relational databases",
+   "zone": "C",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -23.727,
+    "z": -21.882,
+    "face": [
+     0.7351,
+     0.678
+    ]
+   }
+  },
+  {
+   "id": "C8",
+   "year": "1983/91",
+   "title": "GNU & Linux",
+   "zone": "C",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -19.76,
+    "z": -25.849,
+    "face": [
+     0.6073,
+     0.7945
+    ]
+   }
+  },
+  {
+   "id": "C9",
+   "year": "2005",
+   "title": "Git",
+   "zone": "C",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -39.391,
+    "z": -22.479,
+    "face": [
+     0.8685,
+     0.4956
+    ]
+   }
+  },
+  {
+   "id": "C10",
+   "year": "2013+",
+   "title": "Bundle Tower: React & Next.js",
+   "zone": "C",
+   "band": "outer",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal2026",
+    "exhibit": "sw"
+   },
+   "position": {
+    "x": -35.821,
+    "z": -26.048,
+    "face": [
+     0.8088,
+     0.5881
+    ]
+   }
+  },
+  {
+   "id": "D1",
+   "year": "1969",
+   "title": "ARPANET",
+   "zone": "D",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 14.674,
+    "z": -14.674,
+    "face": [
+     -0.7071,
+     0.7071
+    ]
+   }
+  },
+  {
+   "id": "D2",
+   "year": "1971",
+   "title": "Email",
+   "zone": "D",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 16.529,
+    "z": -25.828,
+    "face": [
+     -0.539,
+     0.8423
+    ]
+   }
+  },
+  {
+   "id": "D3",
+   "year": "1973",
+   "title": "Ethernet",
+   "zone": "D",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 19.629,
+    "z": -22.729,
+    "face": [
+     -0.6536,
+     0.7568
+    ]
+   }
+  },
+  {
+   "id": "D4",
+   "year": "1974/83",
+   "title": "TCP/IP",
+   "zone": "D",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 22.729,
+    "z": -19.629,
+    "face": [
+     -0.7568,
+     0.6536
+    ]
+   }
+  },
+  {
+   "id": "D5",
+   "year": "1983",
+   "title": "DNS",
+   "zone": "D",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 25.828,
+    "z": -16.529,
+    "face": [
+     -0.8423,
+     0.539
+    ]
+   }
+  },
+  {
+   "id": "D6",
+   "year": "1991",
+   "title": "NeXT + dial-up",
+   "zone": "D",
+   "band": "middle",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1991",
+    "exhibit": "hw"
+   },
+   "position": {
+    "x": 22.71,
+    "z": -26.476,
+    "face": [
+     -0.6511,
+     0.759
+    ]
+   }
+  },
+  {
+   "id": "D7",
+   "year": "1991",
+   "title": "HTML & HTTP",
+   "zone": "D",
+   "band": "middle",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1991",
+    "exhibit": "sw"
+   },
+   "position": {
+    "x": 25.424,
+    "z": -23.763,
+    "face": [
+     -0.7306,
+     0.6828
+    ]
+   }
+  },
+  {
+   "id": "D8",
+   "year": "1993",
+   "title": "Mosaic browser",
+   "zone": "D",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 28.137,
+    "z": -21.049,
+    "face": [
+     -0.8007,
+     0.599
+    ]
+   }
+  },
+  {
+   "id": "D9",
+   "year": "1998",
+   "title": "Search: PageRank",
+   "zone": "D",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 30.851,
+    "z": -18.336,
+    "face": [
+     -0.8596,
+     0.5109
+    ]
+   }
+  },
+  {
+   "id": "D10",
+   "year": "2001",
+   "title": "Wikipedia",
+   "zone": "D",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 35.821,
+    "z": -26.048,
+    "face": [
+     -0.8088,
+     0.5881
+    ]
+   }
+  },
+  {
+   "id": "D11",
+   "year": "2006",
+   "title": "The cloud: AWS",
+   "zone": "D",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 39.391,
+    "z": -22.479,
+    "face": [
+     -0.8685,
+     0.4956
+    ]
+   }
+  },
+  {
+   "id": "E1",
+   "year": "1962",
+   "title": "Spacewar!",
+   "zone": "E",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -2.445,
+    "z": -17.637,
+    "face": [
+     0.1373,
+     0.9905
+    ]
+   }
+  },
+  {
+   "id": "E2",
+   "year": "1963",
+   "title": "Sketchpad",
+   "zone": "E",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 0.0,
+    "z": -17.637,
+    "face": [
+     0.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "E3",
+   "year": "1968",
+   "title": "Engelbart's demo",
+   "zone": "E",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 2.445,
+    "z": -17.637,
+    "face": [
+     -0.1373,
+     0.9905
+    ]
+   }
+  },
+  {
+   "id": "E4",
+   "year": "1973",
+   "title": "Xerox Alto",
+   "zone": "E",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -3.899,
+    "z": -22.902,
+    "face": [
+     0.1678,
+     0.9858
+    ]
+   }
+  },
+  {
+   "id": "E5",
+   "year": "1975/77",
+   "title": "Altair 8800 & Apple II",
+   "zone": "E",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 0.0,
+    "z": -22.902,
+    "face": [
+     -0.0,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "E6",
+   "year": "1981/84",
+   "title": "IBM PC & Macintosh",
+   "zone": "E",
+   "band": "middle",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 3.899,
+    "z": -22.902,
+    "face": [
+     -0.1678,
+     0.9858
+    ]
+   }
+  },
+  {
+   "id": "E7",
+   "year": "2007",
+   "title": "Smartphone & multi-touch",
+   "zone": "E",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -4.014,
+    "z": -28.167,
+    "face": [
+     0.1411,
+     0.99
+    ]
+   }
+  },
+  {
+   "id": "E8",
+   "year": "2009",
+   "title": "Screen readers go mainstream",
+   "zone": "E",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 4.014,
+    "z": -28.167,
+    "face": [
+     -0.1411,
+     0.99
+    ]
+   }
+  },
+  {
+   "id": "F1",
+   "year": "1950",
+   "title": "The Turing test",
+   "zone": "F",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 20.67,
+    "z": -3.692,
+    "face": [
+     -0.9844,
+     0.1759
+    ]
+   }
+  },
+  {
+   "id": "F2",
+   "year": "1956",
+   "title": "Dartmouth Workshop",
+   "zone": "F",
+   "band": "inner",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1956",
+    "exhibit": "ai"
+   },
+   "position": {
+    "x": 20.67,
+    "z": -1.231,
+    "face": [
+     -0.9982,
+     0.0594
+    ]
+   }
+  },
+  {
+   "id": "F3",
+   "year": "1958",
+   "title": "The Perceptron",
+   "zone": "F",
+   "band": "inner",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 20.67,
+    "z": 1.231,
+    "face": [
+     -0.9982,
+     -0.0594
+    ]
+   }
+  },
+  {
+   "id": "F4",
+   "year": "1966",
+   "title": "ELIZA",
+   "zone": "F",
+   "band": "inner",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 20.67,
+    "z": 3.692,
+    "face": [
+     -0.9844,
+     -0.1759
+    ]
+   }
+  },
+  {
+   "id": "F5",
+   "year": "1974/93",
+   "title": "AI winters & expert systems",
+   "zone": "F",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 32.002,
+    "z": -6.411,
+    "face": [
+     -0.9805,
+     0.1964
+    ]
+   }
+  },
+  {
+   "id": "F6",
+   "year": "1986",
+   "title": "Backpropagation",
+   "zone": "F",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 32.002,
+    "z": 0.0,
+    "face": [
+     -1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "F7",
+   "year": "1997",
+   "title": "Deep Blue",
+   "zone": "F",
+   "band": "middle",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal1991",
+    "exhibit": "ai"
+   },
+   "position": {
+    "x": 32.002,
+    "z": 6.411,
+    "face": [
+     -0.9805,
+     -0.1964
+    ]
+   }
+  },
+  {
+   "id": "F8",
+   "year": "2012",
+   "title": "AlexNet & ImageNet",
+   "zone": "F",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 43.334,
+    "z": -10.733,
+    "face": [
+     -0.9707,
+     0.2404
+    ]
+   }
+  },
+  {
+   "id": "F9",
+   "year": "2016",
+   "title": "AlphaGo",
+   "zone": "F",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 43.334,
+    "z": -3.578,
+    "face": [
+     -0.9966,
+     0.0823
+    ]
+   }
+  },
+  {
+   "id": "F10",
+   "year": "2017",
+   "title": "The Transformer",
+   "zone": "F",
+   "band": "outer",
+   "tier": "built",
+   "prototypePortal": {
+    "artboard": "Portal2026",
+    "exhibit": "ai"
+   },
+   "position": {
+    "x": 43.334,
+    "z": 3.578,
+    "face": [
+     -0.9966,
+     -0.0823
+    ]
+   }
+  },
+  {
+   "id": "F11",
+   "year": "2022",
+   "title": "ChatGPT",
+   "zone": "F",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 43.334,
+    "z": 10.733,
+    "face": [
+     -0.9707,
+     -0.2404
+    ]
+   }
+  },
+  {
+   "id": "G1",
+   "year": "1945",
+   "title": "The ENIAC Six",
+   "zone": "G",
+   "band": null,
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": -6.153,
+    "z": 19.74,
+    "face": [
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "G2",
+   "year": "1940s/60s",
+   "title": "NASA's human computers",
+   "zone": "G",
+   "band": null,
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -6.791,
+    "z": 22.82,
+    "face": [
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "G3",
+   "year": "all eras",
+   "title": "Wall of names",
+   "zone": "G",
+   "band": null,
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": -7.429,
+    "z": 25.9,
+    "face": [
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "id": "S1",
+   "year": "1999/2000",
+   "title": "Y2K",
+   "zone": "S",
+   "band": "middle",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 30.613,
+    "z": 20.455,
+    "face": [
+     -0.8315,
+     -0.5556
+    ]
+   }
+  },
+  {
+   "id": "S2",
+   "year": "2018",
+   "title": "GDPR & privacy",
+   "zone": "S",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 45.344,
+    "z": 24.584,
+    "face": [
+     -0.8791,
+     -0.4766
+    ]
+   }
+  },
+  {
+   "id": "S3",
+   "year": "2025",
+   "title": "The Bloat Audit",
+   "zone": "S",
+   "band": "outer",
+   "tier": "core",
+   "prototypePortal": null,
+   "position": {
+    "x": 43.413,
+    "z": 27.473,
+    "face": [
+     -0.845,
+     -0.5347
+    ]
+   }
+  },
+  {
+   "id": "S4",
+   "year": "today",
+   "title": "Energy & e-waste",
+   "zone": "S",
+   "band": "outer",
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 41.483,
+    "z": 30.362,
+    "face": [
+     -0.8069,
+     -0.5906
+    ]
+   }
+  },
+  {
+   "id": "X1",
+   "year": "next",
+   "title": "Quantum futures",
+   "zone": "X",
+   "band": null,
+   "tier": "extended",
+   "prototypePortal": null,
+   "position": {
+    "x": 14.875,
+    "z": 22.052,
+    "face": [
+     -0.5592,
+     -0.829
+    ]
+   }
+  },
+  {
+   "id": "X2",
+   "year": "next",
+   "title": "[YOUR FUTURE EXHIBIT]",
+   "zone": "X",
+   "band": null,
+   "tier": "open",
+   "prototypePortal": null,
+   "position": {
+    "x": 18.397,
+    "z": 27.275,
+    "face": [
+     -0.5592,
+     -0.829
+    ]
+   }
+  }
+ ]
+}

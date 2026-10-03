@@ -1,0 +1,7 @@
+packages:
+  - "apps/*"
+  - "packages/scene"
+  - "packages/content"
+  - "packages/guide"
+  - "packages/portals/*"
+  - "tools/*"

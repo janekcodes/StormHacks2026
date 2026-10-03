@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal 1945</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=VT323&amp;display=swap">
+<style>
+body{margin:0}
+.p45 .label{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a99372}
+.p45 .vt{font-family:'VT323',monospace}
+.p45 .btn{appearance:none;cursor:pointer;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #FFB347;background:transparent;color:#FFB347;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.p45 .btn:hover{background:rgba(255,179,71,.12)}
+.p45 .btn.on{background:#FFB347;color:#1a1208}
+.p45 .btn:focus-visible,.p45 .tube:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.p45 .tube{appearance:none;border:0;padding:0;width:100%;aspect-ratio:1;border-radius:50%;background:#FFB347;box-shadow:0 0 6px rgba(255,179,71,.7);cursor:default}
+.p45 .tube.dead{background:#2b241b;box-shadow:inset 0 0 0 1px #5a4a36;cursor:pointer;animation:dead 1s steps(2) infinite}
+.p45 .tube.dead:hover{box-shadow:inset 0 0 0 2px #fff}
+.p45 .cell{width:46px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid #5a4a36;background:#efe3c2;color:#2a2520;font-family:'VT323',monospace;font-size:32px}
+.p45 .cell.head{background:#FFB347;border-color:#FFB347}
+.p45 .rule{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:4px 8px;border-radius:4px;font-size:12px}
+.p45 .rule.on{background:#FFB347;color:#1a1208}
+.p45 .wire{stroke-dasharray:6 4;animation:flow 1s linear infinite}
+@keyframes dead{50%{opacity:.5}}
+@keyframes flow{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.p45 .tube.dead,.p45 .wire{animation:none}}
+</style>
+</helmet>
+<div class="p45" style="width: 100%; min-height: 500px; box-sizing: border-box; padding: 24px; background: #0a0806; color: #FFB347; font-family: 'IBM Plex Mono', monospace">
+
+<sc-if value="{{isHw}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 24px">
+    <div style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+        <div class="label">Tube wall · 350 dots × 50 tubes ≈ 17,500</div>
+        <div class="vt" style="font-size: 24px">{{okLabel}}</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(25, minmax(0, 1fr)); gap: 5px; padding: 14px; background: #15110c; border: 1px solid #3a3022; border-radius: 8px">
+        <sc-for list="{{tubes}}" as="t" hint-placeholder-count="350">
+          <button type="button" class="{{t.cls}}" onClick="{{t.fix}}" aria-label="{{t.aria}}"></button>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <button type="button" class="btn" onClick="{{powerCycle}}">Power cycle</button>
+        <span style="font-size: 12px; color: #c9b896">{{tubeHint}}</span>
+      </div>
+    </div>
+    <div style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+      <div class="label">How big? Lengths, to scale</div>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #e8d9bb">ENIAC's panels, end to end · ~24 m</span><div style="height: 14px; background: #FFB347; width: 100%"></div></div>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #e8d9bb">A person · 1.7 m</span><div style="height: 14px; background: #e8d9bb; width: 7%"></div></div>
+      <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #e8d9bb">A smartphone · 0.15 m</span><div style="height: 14px; background: #e8d9bb; width: 0.6%; min-width: 2px"></div></div>
+      <div style="margin-top: 8px; padding: 14px; border: 1px solid #3a3022; border-radius: 8px; font-size: 13px; line-height: 1.6; color: #e8d9bb">The phone does billions of operations a second on a few watts. ENIAC did 5,000 additions a second on about 150 kW.</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isSw}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between">
+      <div class="label">Plugboard · {{progName}}</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button type="button" class="{{btnA}}" onClick="{{setA}}" aria-pressed="{{isA}}">Program A · add</button>
+        <button type="button" class="{{btnB}}" onClick="{{setB}}" aria-pressed="{{isB}}">Program B · multiply</button>
+      </div>
+    </div>
+    <div style="background: #15110c; border: 1px solid #3a3022; border-radius: 8px; padding: 10px; overflow-x: auto">
+      <sc-if value="{{rewiring}}" hint-placeholder-val="{{ false }}">
+        <div style="height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
+          <div class="vt" style="font-size: 40px">REWIRING...</div>
+          <div style="font-size: 13px; color: #c9b896">In 1946 this step took the programmers days, not milliseconds.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{showBoard}}" hint-placeholder-val="{{ true }}">
+        <svg viewBox="0 0 800 300" width="100%" style="min-width: 560px; display: block" role="img" aria-label="{{progAria}}">
+          <g font-family="Chakra Petch, sans-serif" font-weight="700" font-size="14" text-anchor="middle">
+            <rect x="20" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="75" y="90" fill="#e8d9bb">ACC 1</text>
+            <rect x="150" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="205" y="90" fill="#e8d9bb">ACC 2</text>
+            <rect x="280" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="335" y="90" fill="#e8d9bb">ACC 3</text>
+            <rect x="410" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="465" y="90" fill="#e8d9bb">ACC 4</text>
+            <rect x="540" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="595" y="90" fill="#e8d9bb">MULT</text>
+            <rect x="670" y="30" width="110" height="110" rx="4" fill="#2a2520" stroke="#6b5a40"></rect><text x="725" y="90" fill="#e8d9bb">PRINT</text>
+          </g>
+          <g fill="#0b0907" stroke="#8a7350" stroke-width="2"><circle cx="75" cy="150" r="8"></circle><circle cx="205" cy="150" r="8"></circle><circle cx="335" cy="150" r="8"></circle><circle cx="465" cy="150" r="8"></circle><circle cx="595" cy="150" r="8"></circle><circle cx="725" cy="150" r="8"></circle></g>
+          <sc-if value="{{isA}}" hint-placeholder-val="{{ true }}">
+            <g fill="none" stroke-width="5" stroke-linecap="round">
+              <path class="wire" d="M75 150 C75 270 335 270 335 150" stroke="#FFB347"></path>
+              <path class="wire" d="M205 150 C205 240 335 240 335 150" stroke="#E86A4A"></path>
+              <path class="wire" d="M335 150 C335 290 725 290 725 150" stroke="#7FD1FF"></path>
+            </g>
+          </sc-if>
+          <sc-if value="{{isB}}" hint-placeholder-val="{{ false }}">
+            <g fill="none" stroke-width="5" stroke-linecap="round">
+              <path class="wire" d="M75 150 C75 280 595 280 595 150" stroke="#FFB347"></path>
+              <path class="wire" d="M205 150 C205 250 595 250 595 150" stroke="#E86A4A"></path>
+              <path class="wire" d="M595 150 C595 220 465 220 465 150" stroke="#8DF7A9"></path>
+              <path class="wire" d="M465 150 C465 240 725 240 725 150" stroke="#7FD1FF"></path>
+            </g>
+          </sc-if>
+        </svg>
+      </sc-if>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px">
+      <div style="flex: 1 1 300px; font-size: 13px; line-height: 1.6; color: #e8d9bb">{{progDesc}}</div>
+      <div style="flex: 1 1 300px; min-width: 0">
+        <div class="label" style="margin-bottom: 6px">The stored-program version (late 1940s)</div>
+        <pre style="margin: 0; padding: 12px; background: #000; border: 1px solid #3a3022; border-radius: 6px; font-size: 12.5px; line-height: 1.5; overflow-x: auto; white-space: pre">{{progCode}}</pre>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isAi}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+      <div class="label">Binary incrementer · state {{tmState}} · step {{tmSteps}}</div>
+      <div class="vt" style="font-size: 26px">{{tmValue}}</div>
+    </div>
+    <div style="overflow-x: auto; padding-bottom: 4px">
+      <div style="display: flex; gap: 0; width: max-content; margin: 0 auto">
+        <sc-for list="{{tape}}" as="c" hint-placeholder-count="12">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <div style="height: 26px; color: #FFB347; font-size: 20px; line-height: 26px">{{c.arrow}}</div>
+            <div class="{{c.cls}}">{{c.sym}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center">
+      <button type="button" class="btn" onClick="{{tmStep}}" disabled="{{tmHalted}}">Step</button>
+      <button type="button" class="{{runCls}}" onClick="{{tmRun}}" disabled="{{tmHalted}}">{{runLabel}}</button>
+      <button type="button" class="btn" onClick="{{tmReset}}">Reset</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 18px">
+      <div style="flex: 1 1 320px; min-width: 0; border: 1px solid #3a3022; border-radius: 8px; padding: 10px">
+        <div class="rule" style="color: #a99372"><span>STATE</span><span>READ</span><span>WRITE</span><span>MOVE</span><span>NEXT</span></div>
+        <sc-for list="{{rules}}" as="r" hint-placeholder-count="6">
+          <div class="{{r.cls}}"><span>{{r.s}}</span><span>{{r.r}}</span><span>{{r.w}}</span><span>{{r.m}}</span><span>{{r.n}}</span></div>
+        </sc-for>
+      </div>
+      <div style="flex: 1 1 260px; font-size: 13px; line-height: 1.6; color: #e8d9bb">The whole "program" is the six-row table. Turing's insight was that the table itself can be written on the tape, so one universal machine can run any table. That is software.</div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"exhibit":{"editor":"enum","options":["hw","sw","ai"],"default":"hw"},"$preview":{"width":880,"height":520}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dead: [37, 158, 290], prog: 'A', rewiring: false, tm: this.tmInit(), running: false };
+  }
+  componentWillUnmount() { clearInterval(this.runT); clearTimeout(this.rwT); }
+  tmInit() { return { tape: ['_', '_', '_', '1', '0', '1', '1', '_', '_', '_', '_', '_'], head: 3, st: 'scan', steps: 0 }; }
+  rulesTable() {
+    return [
+      { s: 'scan', r: '0', w: '0', m: 'R', n: 'scan' },
+      { s: 'scan', r: '1', w: '1', m: 'R', n: 'scan' },
+      { s: 'scan', r: '_', w: '_', m: 'L', n: 'carry' },
+      { s: 'carry', r: '1', w: '0', m: 'L', n: 'carry' },
+      { s: 'carry', r: '0', w: '1', m: 'L', n: 'halt' },
+      { s: 'carry', r: '_', w: '1', m: 'L', n: 'halt' }
+    ];
+  }
+  tmStepOnce() {
+    var tm = this.state.tm;
+    if (tm.st === 'halt') { this.stopRun(); return; }
+    var sym = tm.tape[tm.head];
+    var rule = this.rulesTable().find(function (r) { return r.s === tm.st && r.r === sym; });
+    if (!rule) return;
+    var tape = tm.tape.slice(); tape[tm.head] = rule.w;
+    var head = Math.max(0, Math.min(tape.length - 1, tm.head + (rule.m === 'R' ? 1 : -1)));
+    this.setState({ tm: { tape: tape, head: head, st: rule.n, steps: tm.steps + 1 } });
+    if (rule.n === 'halt') this.stopRun();
+  }
+  stopRun() { clearInterval(this.runT); this.runT = null; this.setState({ running: false }); }
+  value(tape) {
+    var s = tape.join('').replace(/_/g, ' ').trim();
+    if (!s || /[^01]/.test(s)) return s;
+    return s + '₂ = ' + parseInt(s, 2);
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var ex = this.props.exhibit ?? 'hw';
+    var tubes = [];
+    for (var i = 0; i < 350; i++) {
+      (function (idx) {
+        var dead = st.dead.indexOf(idx) >= 0;
+        tubes.push({ cls: dead ? 'tube dead' : 'tube', aria: dead ? 'Burned-out tube, replace it' : 'Working tube',
+          fix: function () { if (self.state.dead.indexOf(idx) >= 0) self.setState({ dead: self.state.dead.filter(function (d) { return d !== idx; }) }); } });
+      })(i);
+    }
+    var tm = st.tm;
+    var cur = tm.st === 'halt' ? null : { s: tm.st, r: tm.tape[tm.head] };
+    var isA = st.prog === 'A';
+    return {
+      isHw: ex === 'hw', isSw: ex === 'sw', isAi: ex === 'ai',
+      tubes: tubes,
+      okLabel: (350 - st.dead.length) + ' / 350 OK',
+      tubeHint: st.dead.length ? 'Click the dark, flickering tubes to replace them.' : 'All tubes lit. ENIAC is computing.',
+      powerCycle: function () {
+        var n = 3 + Math.floor(Math.random() * 3), d = [];
+        while (d.length < n) { var r = Math.floor(Math.random() * 350); if (d.indexOf(r) < 0) d.push(r); }
+        self.setState({ dead: d });
+      },
+      isA: isA, isB: !isA,
+      btnA: isA ? 'btn on' : 'btn', btnB: isA ? 'btn' : 'btn on',
+      rewiring: st.rewiring, showBoard: !st.rewiring,
+      setA: function () { self.rewire('A'); }, setB: function () { self.rewire('B'); },
+      progName: isA ? 'Program A wired' : 'Program B wired',
+      progAria: isA ? 'Cables route ACC 1 and ACC 2 into ACC 3, then ACC 3 to PRINT' : 'Cables route ACC 1 and ACC 2 into MULT, MULT to ACC 4, then ACC 4 to PRINT',
+      progDesc: isA ? 'Program A: ACC 1 and ACC 2 feed ACC 3, which sums them and sends the result to the printer. The data path is the cable path.' : 'Program B: both operands are routed to the multiplier, the product lands in ACC 4, then prints. Same machine, different wiring.',
+      progCode: isA ? 'LOAD  ACC1\nADD   ACC2\nSTORE ACC3\nPRINT ACC3' : 'LOAD  ACC1\nMUL   ACC2\nSTORE ACC4\nPRINT ACC4',
+      tape: tm.tape.map(function (s, i) { return { sym: s === '_' ? '' : s, cls: i === tm.head ? 'cell head' : 'cell', arrow: i === tm.head ? '▼' : '' }; }),
+      tmState: tm.st, tmSteps: tm.steps, tmValue: this.value(tm.tape),
+      rules: this.rulesTable().map(function (r) { return { s: r.s, r: r.r, w: r.w, m: r.m, n: r.n, cls: cur && cur.s === r.s && cur.r === r.r ? 'rule on' : 'rule' }; }),
+      tmHalted: tm.st === 'halt',
+      runCls: st.running ? 'btn on' : 'btn',
+      runLabel: st.running ? 'Pause' : 'Run',
+      tmStep: function () { self.tmStepOnce(); },
+      tmRun: function () {
+        if (self.runT) { self.stopRun(); return; }
+        self.setState({ running: true });
+        self.runT = setInterval(function () { self.tmStepOnce(); }, 450);
+      },
+      tmReset: function () { self.stopRun(); self.setState({ tm: self.tmInit() }); }
+    };
+  }
+  rewire(p) {
+    var self = this;
+    if (p === this.state.prog || this.state.rewiring) return;
+    this.setState({ rewiring: true });
+    this.rwT = setTimeout(function () { self.setState({ prog: p, rewiring: false }); }, 900);
+  }
+}
+</script>
+</body>
+</html>

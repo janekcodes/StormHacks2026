@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portal 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=VT323&amp;display=swap">
+<style>
+body{margin:0}
+.p26 .label{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7f9cab}
+.p26 .vt{font-family:'VT323',monospace}
+.p26 .btn{appearance:none;cursor:pointer;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #7FD1FF;background:transparent;color:#7FD1FF;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.p26 .btn:hover{background:rgba(127,209,255,.12)}
+.p26 .btn.on{background:#7FD1FF;color:#04141c}
+.p26 .btn:focus-visible,.p26 .tok:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.p26 .pe{border:1px solid #1f3a48;border-radius:6px;background:#06131a;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;transition:background .2s,box-shadow .2s}
+.p26 .pe.on{background:#0f3a4f;border-color:#7FD1FF;box-shadow:0 0 14px rgba(127,209,255,.45)}
+.p26 .pe.done{border-color:#2f6680}
+.p26 .kb{aspect-ratio:1;border-radius:1px;background:#12252e}
+.p26 .kb.js{background:#7FD1FF}
+.p26 .kb.old{background:#E4EAF0}
+.p26 .tok{appearance:none;cursor:pointer;min-height:44px;padding:0 12px;border-radius:6px;border:1px solid #2f6680;color:#e9f7ff;font-family:'IBM Plex Mono',monospace;font-size:15px}
+.p26 .tok.sel{border:2px solid #fff}
+</style>
+</helmet>
+<div class="p26" style="width: 100%; min-height: 500px; box-sizing: border-box; padding: 24px; background: #03090c; color: #7FD1FF; font-family: 'IBM Plex Mono', monospace">
+
+<sc-if value="{{isHw}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 26px">
+    <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+      <div class="label">4 × 4 systolic array · cycle {{cycle}} of 10 · {{macs}} / 64 MACs</div>
+      <div style="display: grid; grid-template-columns: 60px repeat(4, minmax(0, 1fr)); gap: 6px; align-items: center">
+        <span></span>
+        <sc-for list="{{topFeed}}" as="f" hint-placeholder-count="4"><span class="vt" style="text-align: center; font-size: 20px; color: #E4EAF0; min-height: 22px">{{f}}</span></sc-for>
+        <sc-for list="{{gridRows}}" as="row" hint-placeholder-count="4">
+          <span class="vt" style="text-align: right; font-size: 20px; color: #ffb347; padding-right: 6px">{{row.feed}}</span>
+          <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="4">
+            <div class="{{c.cls}}"><span class="vt" style="font-size: 28px; color: #e9f7ff; line-height: 1">{{c.v}}</span><span style="font-size: 9px; color: #7f9cab">c{{c.id}}</span></div>
+          </sc-for>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px">
+        <button type="button" class="{{runCls}}" onClick="{{run}}">{{runLabel}}</button>
+        <button type="button" class="btn" onClick="{{stepOne}}">Step</button>
+        <button type="button" class="btn" onClick="{{reset}}">Reset</button>
+      </div>
+    </div>
+    <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.6; color: #cfe6f2">
+      <div><span style="color: #ffb347">Orange</span> values of A stream in from the left, <span style="color: #E4EAF0">white</span> values of B from the top. Each cell multiplies what passes through and adds it to its running total. The lit diagonal is the wavefront.</div>
+      <div>No cell asks memory for anything mid-computation; data just pulses through the grid like blood through a heart, hence "systolic."</div>
+      <div style="border: 1px solid #1f3a48; border-radius: 8px; padding: 12px">This toy grid has 16 cells. Google's first TPU had a 256 × 256 grid: 65,536 multiply-accumulates every cycle.</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isSw}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+      <div class="label">1 square = 1 KB · {{wafLabel}}</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button type="button" class="{{bJs}}" onClick="{{showJs}}" aria-pressed="{{modeJs}}">2025 median JS</button>
+        <button type="button" class="{{bOld}}" onClick="{{showOld}}" aria-pressed="{{modeOld}}">First website, whole page</button>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 2px; padding: 12px; border: 1px solid #1f3a48; border-radius: 8px">
+      <sc-for list="{{waffle}}" as="k" hint-placeholder-count="632"><span class="{{k}}"></span></sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px">
+      <pre style="flex: 1 1 280px; margin: 0; padding: 12px; background: #000; border: 1px solid #1f3a48; border-radius: 6px; font-size: 12.5px; line-height: 1.5; overflow-x: auto; white-space: pre">export default function Page() {
+  return &lt;h1&gt;Hello, world&lt;/h1&gt;;
+}
+// 20 bytes of meaning,
+// shipped inside a framework runtime.</pre>
+      <div style="flex: 1 1 280px; font-size: 13px; line-height: 1.6; color: #cfe6f2">{{wafNote}}</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{isAi}}" hint-placeholder-val="{{ false }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 26px">
+    <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+      <div class="label">Self-attention · "{{selWord}}" looks at...</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{tokens}}" as="t" hint-placeholder-count="8">
+          <button type="button" class="{{t.cls}}" style="background: {{t.bg}}" onClick="{{t.pick}}" aria-pressed="{{t.sel}}" aria-label="{{t.aria}}">{{t.w}}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 5px">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="8">
+          <div style="display: grid; grid-template-columns: 80px minmax(0, 1fr) 44px; gap: 8px; align-items: center; font-size: 12px; color: #cfe6f2">
+            <span>{{b.w}}</span><div style="height: 10px; background: #7FD1FF; width: {{b.width}}; min-width: 2px"></div><span style="text-align: right">{{b.pct}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 11px; color: #7f9cab">Weights are illustrative, not from a real model. Real models run dozens of these heads in parallel per layer.</div>
+    </div>
+    <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+      <div class="label">Next-token prediction</div>
+      <div style="padding: 12px; border: 1px solid #1f3a48; border-radius: 8px; font-size: 15px; line-height: 1.5; color: #e9f7ff; min-height: 48px">{{genText}}<span style="color: #7FD1FF">▍</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <sc-for list="{{cands}}" as="c" hint-placeholder-count="5">
+          <div style="display: grid; grid-template-columns: 76px minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 12px; color: #cfe6f2"><span>{{c.w}}</span><div style="height: 8px; background: #E4EAF0; width: {{c.width}}"></div><span style="text-align: right">{{c.pct}}</span></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button type="button" class="btn" onClick="{{sample}}" disabled="{{genDone}}">Sample next token</button>
+        <button type="button" class="btn" onClick="{{genReset}}">Reset</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"exhibit":{"editor":"enum","options":["hw","sw","ai"],"default":"hw"},"$preview":{"width":880,"height":520}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { t: 0, running: false, waf: 'js', sel: 4, gen: [] };
+    this.A = [[1, 2, 0, 1], [0, 1, 3, 2], [2, 0, 1, 1], [1, 1, 1, 0]];
+    this.B = [[2, 0, 1, 1], [1, 3, 0, 2], [0, 1, 2, 1], [1, 0, 1, 3]];
+    this.W = ['The', 'train', 'stopped', 'because', 'it', 'was', 'running', 'late'];
+    this.M = [
+      [.40, .30, .08, .04, .04, .04, .05, .05],
+      [.20, .45, .15, .03, .05, .04, .04, .04],
+      [.05, .35, .30, .05, .08, .05, .06, .06],
+      [.03, .10, .35, .25, .10, .07, .05, .05],
+      [.05, .55, .10, .06, .12, .05, .04, .03],
+      [.03, .15, .10, .07, .30, .25, .05, .05],
+      [.03, .20, .10, .05, .25, .12, .20, .05],
+      [.03, .20, .15, .05, .12, .15, .15, .15]
+    ];
+    this.G = [
+      [{ w: 'station', p: .58 }, { w: 'platform', p: .21 }, { w: 'gate', p: .09 }, { w: 'museum', p: .05 }, { w: 'future', p: .03 }],
+      [{ w: 'just', p: .34 }, { w: 'right', p: .22 }, { w: 'as', p: .18 }, { w: 'exactly', p: .10 }, { w: 'with', p: .08 }],
+      [{ w: 'in', p: .40 }, { w: 'on', p: .30 }, { w: 'before', p: .14 }, { w: 'after', p: .09 }, { w: 'at', p: .04 }],
+      [{ w: 'time.', p: .66 }, { w: 'schedule.', p: .18 }, { w: 'cue.', p: .08 }, { w: 'midnight.', p: .05 }, { w: 'dawn.', p: .02 }]
+    ];
+  }
+  componentWillUnmount() { clearInterval(this.rT); }
+  stop() { clearInterval(this.rT); this.rT = null; this.setState({ running: false }); }
+  renderVals() {
+    var self = this, st = this.state, A = this.A, B = this.B, t = st.t;
+    var ex = this.props.exhibit ?? 'hw';
+    var macs = 0, rows = [];
+    for (var i = 0; i < 4; i++) {
+      var cells = [];
+      for (var j = 0; j < 4; j++) {
+        var acc = 0, active = false, done = 0;
+        for (var k = 0; k < 4; k++) { if (i + j + k < t) { acc += A[i][k] * B[k][j]; macs++; done++; } if (i + j + k === t - 1) active = true; }
+        cells.push({ v: acc, id: '' + i + j, cls: active ? 'pe on' : (done === 4 ? 'pe done' : 'pe') });
+      }
+      var ka = t - 1 - i;
+      rows.push({ feed: ka >= 0 && ka < 4 ? 'a' + i + ka + '=' + A[i][ka] : '', cells: cells });
+    }
+    var topFeed = [];
+    for (var jj = 0; jj < 4; jj++) { var kb = t - 1 - jj; topFeed.push(kb >= 0 && kb < 4 ? 'b' + kb + jj + '=' + B[kb][jj] : ''); }
+    var waffle = [];
+    for (var q = 0; q < 632; q++) waffle.push(st.waf === 'js' ? 'kb js' : (q < 2 ? 'kb old' : 'kb'));
+    var row = this.M[st.sel];
+    var mx = Math.max.apply(null, row);
+    var step = st.gen.length;
+    var cands = step < this.G.length ? this.G[step] : [];
+    return {
+      isHw: ex === 'hw', isSw: ex === 'sw', isAi: ex === 'ai',
+      cycle: t, macs: macs, gridRows: rows, topFeed: topFeed,
+      runCls: st.running ? 'btn on' : 'btn', runLabel: st.running ? 'Pause' : (t >= 10 ? 'Run again' : 'Run matmul'),
+      run: function () {
+        if (self.rT) { self.stop(); return; }
+        if (self.state.t >= 10) self.setState({ t: 0 });
+        self.setState({ running: true });
+        self.rT = setInterval(function () { if (self.state.t >= 10) { self.stop(); return; } self.setState({ t: self.state.t + 1 }); }, 600);
+      },
+      stepOne: function () { if (self.state.t < 10) self.setState({ t: self.state.t + 1 }); },
+      reset: function () { self.stop(); self.setState({ t: 0 }); },
+      waffle: waffle,
+      modeJs: st.waf === 'js', modeOld: st.waf !== 'js',
+      bJs: st.waf === 'js' ? 'btn on' : 'btn', bOld: st.waf !== 'js' ? 'btn on' : 'btn',
+      showJs: function () { self.setState({ waf: 'js' }); }, showOld: function () { self.setState({ waf: 'old' }); },
+      wafLabel: st.waf === 'js' ? '632 KB of JavaScript (median mobile home page, 2025)' : '~2 KB: the entire first web page, 1991',
+      wafNote: st.waf === 'js' ? 'That is JavaScript alone. The whole median mobile home page weighs 2.56 MB across 75 requests (HTTP Archive Web Almanac 2025).' : 'Two squares. Text, headings and links: the semantic core that still carries most of a page’s meaning today.',
+      selWord: this.W[st.sel],
+      tokens: this.W.map(function (w, i) {
+        var a = row[i] / mx;
+        return { w: w, sel: i === st.sel, cls: i === st.sel ? 'tok sel' : 'tok', bg: 'rgba(127,209,255,' + (0.08 + a * 0.62).toFixed(2) + ')',
+          aria: w + ', attention ' + Math.round(row[i] * 100) + ' percent. Select to see where it looks.',
+          pick: function () { self.setState({ sel: i }); } };
+      }),
+      bars: this.W.map(function (w, i) { return { w: w, width: (row[i] / mx * 100).toFixed(0) + '%', pct: Math.round(row[i] * 100) + '%' }; }),
+      genText: 'The museum train arrived at the ' + st.gen.join(' '),
+      cands: cands.map(function (c) { return { w: c.w, pct: Math.round(c.p * 100) + '%', width: (c.p * 100).toFixed(0) + '%' }; }),
+      genDone: step >= this.G.length,
+      sample: function () {
+        var s = self.state.gen.length; if (s >= self.G.length) return;
+        var r = Math.random(), acc = 0, pick = self.G[s][0].w;
+        for (var n = 0; n < self.G[s].length; n++) { acc += self.G[s][n].p; if (r <= acc) { pick = self.G[s][n].w; break; } }
+        self.setState({ gen: self.state.gen.concat([pick]) });
+      },
+      genReset: function () { self.setState({ gen: [] }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "es2022",
+    "lib": ["es2022"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@museum/scene": ["packages/scene/src/index.ts"],
+      "@museum/content": ["packages/content/src/index.ts"],
+      "@museum/guide": ["packages/guide/src/index.ts"],
+      "@museum/portal-template": ["packages/portals/_template/src/index.ts"]
+    }
+  }
+}
