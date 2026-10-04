@@ -44,6 +44,8 @@ The prototype files use a canvas-specific format (`<x-dc>` markup, `class Compon
 | 14 | [UI polish and audit](14-ui-polish.md) | 05, 07, 11 | §9 | ☐ | |
 | 15 | Curation, grouping and content pass | 14 | §2, §4, §6, §8 | ☑ | |
 | 16 | Narration, GLB models and museum materials | 15 | §4, §7, §8, §12 | ☑ | |
+| 17 | [Heritage museum environment](17-museum-environment.md) | 16, decision 12 | §5, §10 | ☐ | |
+| 18 | [Design system and UI](18-design-system.md) | 14, 17, decision 12 | §9, §10 | ☐ | |
 
 ```
 01 → 02 → 03 ─┬→ 04
