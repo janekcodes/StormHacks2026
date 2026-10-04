@@ -13,6 +13,9 @@ import { lineFor, useTourStore } from './store'
 
 const COUNTDOWN_START = Math.ceil(PLAY_MS / 1000)
 
+/** A hold longer than this is released automatically and whatever was heard is processed. */
+const MAX_HOLD_MS = 30_000
+
 /** Typing targets only; unlike the player controls, a focused dialog must not block tour keys. */
 function isTypingTarget(event: KeyboardEvent): boolean {
   const target = event.target
@@ -35,6 +38,11 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const [typed, setTyped] = useState('')
   const [secondsLeft, setSecondsLeft] = useState(COUNTDOWN_START)
   const holding = useRef(false)
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const clearHoldTimer = () => {
+    if (holdTimer.current) clearTimeout(holdTimer.current)
+    holdTimer.current = null
+  }
 
   const active = state.phase !== 'idle'
   const stopId = tour?.stops[state.index]?.exhibitId
@@ -104,6 +112,7 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const releaseFailedHold = () => {
     if (!holding.current) return
     holding.current = false
+    clearHoldTimer()
     dispatch({ type: 'RESUME' })
   }
 
@@ -111,6 +120,8 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
     if (holding.current || voice.status === 'unavailable') return
     if (useTourStore.getState().state.pauseReason === 'answering') return
     holding.current = true
+    clearHoldTimer()
+    holdTimer.current = setTimeout(() => void releaseTalkRef.current(), MAX_HOLD_MS)
     dispatch({ type: 'PAUSE', reason: 'listening' })
     await voice.start()
     // start() failing flips the status to unavailable and unmounts the mic
@@ -127,6 +138,7 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const releaseTalk = async () => {
     if (!holding.current) return
     holding.current = false
+    clearHoldTimer()
     const text = await voice.stop()
     if (!text) {
       dispatch({ type: 'RESUME' })
@@ -134,6 +146,26 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
     }
     await ask(text)
   }
+
+  // Latest release handler, so the listeners below subscribe once instead of every render.
+  const releaseTalkRef = useRef(releaseTalk)
+  releaseTalkRef.current = releaseTalk
+  useEffect(() => {
+    // A held mic must not outlive the page's focus: no keyup/pointerup will arrive.
+    const release = () => void releaseTalkRef.current()
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') release()
+    }
+    window.addEventListener('blur', release)
+    window.addEventListener('pointercancel', release)
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      window.removeEventListener('blur', release)
+      window.removeEventListener('pointercancel', release)
+      document.removeEventListener('visibilitychange', onVisibility)
+      clearHoldTimer()
+    }
+  }, [])
 
   useEffect(() => {
     if (!active) return

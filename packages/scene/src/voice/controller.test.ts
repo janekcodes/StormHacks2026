@@ -11,7 +11,7 @@ function fakeConnection() {
   const conn: ScribeConnection & {
     emitPartial(text: string): void
     emitCommitted(text: string): void
-    emitError(): void
+    emitError(error?: unknown): void
     emitClose(): void
   } = {
     onPartial: (fn) => handlers.partial.push(fn),
@@ -22,7 +22,7 @@ function fakeConnection() {
     close: vi.fn(),
     emitPartial: (text) => handlers.partial.forEach((fn) => fn(text)),
     emitCommitted: (text) => handlers.committed.forEach((fn) => fn(text)),
-    emitError: () => handlers.error.forEach((fn) => fn(new Error('socket'))),
+    emitError: (error = new Error('socket')) => handlers.error.forEach((fn) => fn(error)),
     emitClose: () => handlers.close.forEach((fn) => fn())
   }
   return conn
@@ -207,6 +207,96 @@ describe('createVoiceController', () => {
       throw new Error('closed')
     })
     expect(await t.controller.stop()).toBeNull()
+    expect(t.statuses.at(-1)).toBe('idle')
+    expect(t.conn.close).toHaveBeenCalledTimes(1)
+  })
+
+  it('treats a quick tap (release while connect is pending) as a cancelled press', async () => {
+    const t = setup()
+    let open!: (c: ScribeConnection) => void
+    t.connectFn.mockReturnValueOnce(new Promise((r) => (open = r)))
+    const starting = t.controller.start()
+    await new Promise((r) => setTimeout(r, 0))
+    expect(await t.controller.stop()).toBeNull()
+    open(t.conn)
+    await starting
+    expect(t.statuses).not.toContain('listening')
+    expect(t.statuses).not.toContain('unavailable')
+    expect(t.statuses.at(-1) ?? 'idle').toBe('idle')
+    expect(t.conn.close).toHaveBeenCalledTimes(1)
+  })
+
+  it('stays idle when connect rejects after the press was cancelled', async () => {
+    const t = setup()
+    let reject!: (e: Error) => void
+    t.connectFn.mockReturnValueOnce(new Promise((_, r) => (reject = r)))
+    const starting = t.controller.start()
+    await new Promise((r) => setTimeout(r, 0))
+    expect(await t.controller.stop()).toBeNull()
+    reject(new Error('closed first'))
+    await starting
+    expect(t.statuses).not.toContain('unavailable')
+  })
+
+  it('becomes unavailable when connect rejects for a live press', async () => {
+    const t = setup()
+    t.connectFn.mockRejectedValueOnce(new Error('timeout'))
+    await t.controller.start()
     expect(t.statuses.at(-1)).toBe('unavailable')
+  })
+
+  it('cancels (idle, null, no commit) when released before any audio', async () => {
+    const t = setup()
+    await t.controller.start()
+    expect(await t.controller.stop()).toBeNull()
+    expect(t.conn.commit).not.toHaveBeenCalled()
+    expect(t.conn.close).toHaveBeenCalledTimes(1)
+    expect(t.statuses.at(-1)).toBe('idle')
+  })
+
+  it.each([
+    ['message_type', { message_type: 'insufficient_audio_activity', error: 'x' }],
+    ['message text', { message_type: 'error', error: 'Insufficient audio activity detected' }],
+    ['commit_throttled type', { message_type: 'commit_throttled', error: 'slow down' }],
+    ['Error instance', new Error('commit_throttled: too fast')]
+  ])('cancels on a harmless error during finishing (%s), and a later press works', async (_name, payload) => {
+    const t = setup(fakeConnection(), { finalTimeoutMs: 5000 })
+    await t.controller.start()
+    t.conn.emitPartial('hello there')
+    const done = t.controller.stop()
+    t.conn.emitError(payload)
+    expect(await done).toBeNull()
+    expect(t.statuses.at(-1)).toBe('idle')
+    expect(t.statuses).not.toContain('unavailable')
+    expect(t.conn.close).toHaveBeenCalledTimes(1)
+
+    const next = fakeConnection()
+    t.connectFn.mockResolvedValueOnce(next)
+    await t.controller.start()
+    expect(t.statuses.at(-1)).toBe('listening')
+    next.emitPartial('second try')
+    const second = t.controller.stop()
+    next.emitCommitted('second try')
+    expect(await second).toBe('second try')
+  })
+
+  it('cancels on a harmless error while still listening', async () => {
+    const t = setup()
+    await t.controller.start()
+    t.conn.emitError({ message_type: 'commit_throttled', error: 'x' })
+    expect(t.statuses.at(-1)).toBe('idle')
+    expect(await t.controller.stop()).toBeNull()
+  })
+
+  it('becomes unavailable on a permission or auth error', async () => {
+    const t = setup()
+    await t.controller.start()
+    t.conn.emitError(new DOMException('Permission denied', 'NotAllowedError'))
+    expect(t.statuses.at(-1)).toBe('unavailable')
+
+    const u = setup()
+    await u.controller.start()
+    u.conn.emitError({ message_type: 'auth_error', error: 'bad token' })
+    expect(u.statuses.at(-1)).toBe('unavailable')
   })
 })

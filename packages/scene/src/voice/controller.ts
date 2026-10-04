@@ -1,6 +1,7 @@
 export interface ScribeConnection {
   onPartial(fn: (text: string) => void): void
   onCommitted(fn: (text: string) => void): void
+  /** Receives the raw SDK payload; the controller classifies it with isHarmlessScribeError. */
   onError(fn: (error: unknown) => void): void
   onClose(fn: () => void): void
   commit(): void
@@ -11,6 +12,25 @@ export type ConnectScribe = (opts: { token: string; modelId: string }) => Promis
 export type VoiceStatus = 'idle' | 'listening' | 'finishing' | 'unavailable'
 
 export const MIN_WORDS = 2
+
+/**
+ * Server or SDK errors that only mean "this press produced nothing usable"
+ * (too little audio, commit sent too soon). They cancel the press; they must
+ * not disable voice. Anything else (auth, quota, mic denied, socket failure)
+ * is treated as fatal. The SDK sends `{ message_type, error }` payloads.
+ */
+export function isHarmlessScribeError(error: unknown): boolean {
+  const parts: string[] = []
+  if (typeof error === 'string') parts.push(error)
+  else if (error instanceof Error) parts.push(error.message)
+  else if (typeof error === 'object' && error !== null) {
+    for (const key of ['message_type', 'error', 'message', 'type']) {
+      const value = (error as Record<string, unknown>)[key]
+      if (typeof value === 'string') parts.push(value)
+    }
+  }
+  return /insufficient[_ ]audio[_ ]activity|commit[_ ]throttled/i.test(parts.join(' '))
+}
 
 /** Tokens expire after 15 minutes; discard prefetched ones older than 10. */
 const MAX_TOKEN_AGE_MS = 10 * 60 * 1000
@@ -30,8 +50,9 @@ export interface VoiceControllerDeps {
 /**
  * Push-to-talk over a realtime Scribe session. Press opens a session with a
  * single-use token; release commits, waits briefly for the final transcript,
- * and closes. Any failure marks the controller unavailable so the UI can
- * switch to a text box.
+ * and closes. Harmless failures (no audio, throttled commit) cancel the press;
+ * real failures mark the controller unavailable so the UI can switch to a
+ * text box.
  */
 export function createVoiceController(deps: VoiceControllerDeps) {
   const finalTimeoutMs = deps.finalTimeoutMs ?? 1500
@@ -62,6 +83,16 @@ export function createVoiceController(deps: VoiceControllerDeps) {
     closeActive()
     wake?.()
     status('unavailable')
+  }
+
+  // A press that produced nothing usable: back to idle, voice stays available.
+  // Bumping gen makes a pending stop() resolve null instead of reporting text.
+  const cancel = () => {
+    gen++
+    phase = 'idle'
+    closeActive()
+    wake?.()
+    status('idle')
   }
 
   const refill = () => {
@@ -110,8 +141,10 @@ export function createVoiceController(deps: VoiceControllerDeps) {
           if (text.trim()) committed.push(text.trim())
           wake?.()
         })
-        next.onError(() => {
-          if (conn === next) fail()
+        next.onError((error) => {
+          if (conn !== next) return
+          if (isHarmlessScribeError(error)) cancel()
+          else fail()
         })
         next.onClose(() => {
           if (conn !== next) return
@@ -135,6 +168,11 @@ export function createVoiceController(deps: VoiceControllerDeps) {
       }
       const active = conn
       if (!active || phase !== 'listening') return null
+      if (!partial.trim() && committed.length === 0) {
+        // Released before any audio was transcribed: nothing to commit.
+        cancel()
+        return null
+      }
       const mine = gen
       phase = 'finishing'
       status('finishing')
@@ -147,7 +185,8 @@ export function createVoiceController(deps: VoiceControllerDeps) {
         try {
           active.commit()
         } catch {
-          fail()
+          // e.g. socket not open: this press is lost, voice is not.
+          cancel()
         }
       })
       wake = null
