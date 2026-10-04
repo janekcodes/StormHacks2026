@@ -43,6 +43,7 @@ The prototype files use a canvas-specific format (`<x-dc>` markup, `class Compon
 | 13 | [Template: build one Core exhibit](13-core-exhibit-template.md) | 08, 09, 10 | §7, §8 | reusable | |
 | 14 | [UI polish and audit](14-ui-polish.md) | 05, 07, 11 | §9 | ☐ | |
 | 15 | Curation, grouping and content pass | 14 | §2, §4, §6, §8 | ☑ | |
+| 16 | Narration, GLB models and museum materials | 15 | §4, §7, §8, §12 | ☑ | |
 
 ```
 01 → 02 → 03 ─┬→ 04

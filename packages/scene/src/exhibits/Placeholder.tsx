@@ -120,7 +120,7 @@ function iconItems(
 ): InstanceItem[] {
   const items: InstanceItem[] = []
   exhibits.forEach((exhibit, index) => {
-    if (exhibit.tier !== tier || index % 5 !== geoIndex) return
+    if (exhibit.tier !== tier || exhibit.model || index % 5 !== geoIndex) return
     const fp = footprintFor(exhibit)
     const y = tier === 'core' ? fp.h + 0.32 : fp.h + 0.2
     const s = tier === 'core' ? 1 : 0.7
@@ -150,6 +150,7 @@ export function Placeholder({ exhibits }: { exhibits: readonly Exhibit[] }) {
   )
   const open = useMemo(() => exhibits.filter((exhibit) => exhibit.tier === 'open'), [exhibits])
   const built = useMemo(() => exhibits.filter((exhibit) => exhibit.tier === 'built'), [exhibits])
+  const modeled = useMemo(() => exhibits.filter((exhibit) => exhibit.model), [exhibits])
 
   const corePlinths = useMemo(
     () => core.map((exhibit) => {
@@ -277,7 +278,7 @@ export function Placeholder({ exhibits }: { exhibits: readonly Exhibit[] }) {
           items={batch.items}
         />
       ))}
-      {built.map((exhibit) => (
+      {modeled.map((exhibit) => (
         <ModelSlot key={exhibit.id} exhibit={exhibit} />
       ))}
     </>

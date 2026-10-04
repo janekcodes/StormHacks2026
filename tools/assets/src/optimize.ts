@@ -1,7 +1,7 @@
 import { NodeIO, type Document } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { dedup, meshopt, prune, weld } from '@gltf-transform/functions'
-import { MeshoptEncoder } from 'meshoptimizer'
+import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
 
@@ -85,7 +85,9 @@ export async function optimizeGlb(
   target: string,
   limits: ModelLimits = DEFAULT_LIMITS
 ): Promise<{ id: string; triangles: number; bytes: number }> {
-  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)
+  const io = new NodeIO()
+    .registerExtensions(ALL_EXTENSIONS)
+    .registerDependencies({ 'meshopt.encoder': MeshoptEncoder })
   const doc = await io.read(source)
 
   const triangles = countTriangles(doc)
@@ -113,7 +115,10 @@ export async function optimizeGlb(
 }
 
 /** Read a GLB file into a document (used by tests to inspect fixtures). */
-export function readGlb(source: string): Promise<Document> {
-  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)
+export async function readGlb(source: string): Promise<Document> {
+  await MeshoptDecoder.ready
+  const io = new NodeIO()
+    .registerExtensions(ALL_EXTENSIONS)
+    .registerDependencies({ 'meshopt.decoder': MeshoptDecoder })
   return io.read(source)
 }

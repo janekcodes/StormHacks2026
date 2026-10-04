@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:assets": "tsx src/cli.ts",
+    "generate": "tsx src/generate.ts",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
@@ -16,10 +17,12 @@
     "@gltf-transform/core": "^4.5.1",
     "@gltf-transform/extensions": "^4.5.1",
     "@gltf-transform/functions": "^4.5.1",
-    "meshoptimizer": "^1.1.1"
+    "meshoptimizer": "^1.1.1",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "@types/three": "^0.186.0",
     "eslint": "^9.39.5",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
