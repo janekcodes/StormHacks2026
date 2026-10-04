@@ -1,29 +1,40 @@
-import { readdirSync, statSync } from 'node:fs'
+import { readFileSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 // BLUEPRINT section 10 performance budget: initial load before exhibit assets < 3 MB.
 const LIMIT_BYTES = 3 * 1024 * 1024
 
-function totalBytes(dir) {
-  let total = 0
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) {
-      total += totalBytes(path)
-    } else {
-      total += statSync(path).size
-    }
+const nextDir = fileURLToPath(new URL('../.next', import.meta.url))
+const buildManifestPath = join(nextDir, 'build-manifest.json')
+
+/**
+ * "Initial load" is the JS every route downloads on first paint: the polyfill
+ * plus the shared root (main-app) chunks listed in `build-manifest.json`.
+ * Lazy chunks (the 3D scene with Recast + three.js, and the per-exhibit portal
+ * packages, which are "exhibit assets") are intentionally excluded, matching
+ * the BLUEPRINT wording "before exhibit assets".
+ */
+function fileBytes(rel) {
+  const abs = join(nextDir, rel)
+  if (!existsSync(abs)) {
+    throw new Error(`Initial chunk missing from build output: ${rel}`)
   }
-  return total
+  return statSync(abs).size
 }
 
-const staticDir = fileURLToPath(new URL('../.next/static', import.meta.url))
-const bytes = totalBytes(staticDir)
+function totalBytes(files) {
+  return files.reduce((sum, rel) => sum + fileBytes(rel), 0)
+}
+
+const manifest = JSON.parse(readFileSync(buildManifestPath, 'utf8'))
+const initialJsFiles = [...(manifest.polyfillFiles ?? []), ...(manifest.rootMainFiles ?? [])]
+const bytes = totalBytes(initialJsFiles)
+
 const mb = (bytes / 1024 / 1024).toFixed(2)
 const budgetMb = (LIMIT_BYTES / 1024 / 1024).toFixed(0)
 
-console.log(`Initial static payload: ${mb} MB (budget ${budgetMb} MB)`)
+console.log(`Initial shared JS payload: ${mb} MB (budget ${budgetMb} MB)`)
 
 if (bytes > LIMIT_BYTES) {
   console.error(`Exceeds the BLUEPRINT initial-load budget of ${budgetMb} MB.`)

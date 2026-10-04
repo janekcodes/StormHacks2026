@@ -34,7 +34,7 @@ export default function VisitPage() {
       />
       <header className="visit-header">
         <Link href="/" className="visit-brand">
-          The NeXT-Gen Museum
+          Hello Museum
         </Link>
         <nav aria-label="Museum">
           <Link href="/map">Floor plan</Link>

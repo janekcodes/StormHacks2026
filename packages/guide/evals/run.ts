@@ -25,6 +25,32 @@ interface EvalQuestion {
 
 const questions = JSON.parse(readFileSync(questionsPath, 'utf8')) as EvalQuestion[]
 
+/** Parse `--only <ID>` / `--only=<ID>` (plan 13 verify: `eval -- --only E3`). */
+function parseOnly(argv: string[]): string | null {
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i] ?? ''
+    if (arg === '--only') {
+      const value = argv[i + 1]
+      if (value !== undefined) return value
+      i += 1
+    } else if (arg.startsWith('--only=')) {
+      return arg.slice('--only='.length)
+    }
+  }
+  return null
+}
+
+const onlyId = parseOnly(process.argv.slice(2))
+const selected = onlyId
+  ? questions.filter((q) =>
+      q.expectCitations.some((id) => id.toUpperCase() === onlyId.toUpperCase())
+    )
+  : questions
+
+if (onlyId && selected.length === 0) {
+  throw new Error(`no golden questions matched --only ${onlyId}`)
+}
+
 const apiKey = process.env.GEMINI_API_KEY
 const model = process.env.GUIDE_MODEL
 if (!apiKey) {
@@ -108,7 +134,7 @@ async function main(): Promise<void> {
   let invalidToolCalls = 0
   const invalidDetails: string[] = []
 
-  for (const question of questions) {
+  for (const question of selected) {
     const result = await runQuestion(question.question)
 
     for (const call of result.toolCalls) {
@@ -128,7 +154,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const passRate = ((passCount / questions.length) * 100).toFixed(1)
+  const passRate = ((passCount / selected.length) * 100).toFixed(1)
   const allIdsValid = invalidToolCalls === 0
 
   const body = [...results]
@@ -140,7 +166,8 @@ async function main(): Promise<void> {
     `# Guide v1 eval report`,
     ``,
     `Model: ${model}`,
-    `Pass rate: ${passCount}/${questions.length} (${passRate}%)`,
+    ...(onlyId ? [`Filter: only exhibit ${onlyId}`] : []),
+    `Pass rate: ${passCount}/${selected.length} (${passRate}%)`,
     `Tool calls with valid IDs: ${allIdsValid ? '100%' : `${invalidToolCalls} invalid`}`,
     ``,
     `## Results`,

@@ -9,8 +9,8 @@ import { exhibits } from '../../lib/museum-data'
 import styles from '../museum.module.css'
 
 export const metadata: Metadata = {
-  title: 'Exhibits | The NeXT-Gen Museum',
-  description: 'Every exhibit in the NeXT-Gen Museum, grouped by zone and band.'
+  title: 'Exhibits | Hello Museum',
+  description: 'Every exhibit in Hello Museum, grouped by zone and band.'
 }
 
 const BAND_ORDER: Array<Band | 'none'> = [...BANDS, 'none']

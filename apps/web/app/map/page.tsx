@@ -5,8 +5,8 @@ import { building, exhibits } from '../../lib/museum-data'
 import styles from '../museum.module.css'
 
 export const metadata: Metadata = {
-  title: 'Floor plan | The NeXT-Gen Museum',
-  description: 'Interactive 2D floor plan of every exhibit in the NeXT-Gen Museum.'
+  title: 'Floor plan | Hello Museum',
+  description: 'Interactive 2D floor plan of every exhibit in Hello Museum.'
 }
 
 export default function MapPage() {

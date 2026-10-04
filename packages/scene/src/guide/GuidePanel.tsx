@@ -3,22 +3,14 @@
 import type { Exhibit } from '@museum/content/schema'
 import type { GuideMessage, ToolCall, ToolResponse } from '@museum/guide/client'
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { finish as finishSpeech, isSpeaking, pushText, stop as stopSpeech } from '../audio/guideVoiceBus'
+import { GuideVoice } from '../audio/GuideVoice'
 import { museum } from '../nav/api'
 import { chipLabel, executeToolCall, visitorContext } from './executor'
+import { getSessionId } from './session'
 import { useGuideStore } from './state'
 
 const MAX_TURNS = 6
-
-let sessionId = ''
-function getSessionId(): string {
-  if (!sessionId) {
-    sessionId =
-      typeof crypto !== 'undefined' && 'randomUUID' in crypto
-        ? crypto.randomUUID()
-        : `guide-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
-  }
-  return sessionId
-}
 
 interface StreamError {
   status: number
@@ -59,6 +51,10 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
       inputRef.current?.focus()
     }
   }, [open, seed])
+
+  useEffect(() => {
+    if (!open) stopSpeech()
+  }, [open])
 
   useEffect(() => {
     const log = logRef.current
@@ -103,6 +99,7 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
       if (event.type === 'text' && typeof event.text === 'string') {
         text += event.text
         setStreamText(text)
+        pushText(event.text)
       } else if (event.type === 'tool') {
         const call: ToolCall = {
           id: event.id ?? '',
@@ -149,6 +146,7 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const handleSend = async () => {
     const text = input.trim()
     if (!text || busyRef.current) return
+    stopSpeech()
     setInput('')
     setError(null)
     setStreamText('')
@@ -167,7 +165,9 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
         const doneAssistant = last?.role === 'assistant' && !(last.toolCalls && last.toolCalls.length > 0)
         if (doneAssistant) break
       }
+      finishSpeech()
     } catch (err) {
+      stopSpeech()
       const streamErr = err as StreamError
       setError(streamErr.message ?? 'Something went wrong. Please try again.')
     } finally {
@@ -282,6 +282,8 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
         </div>
       ) : null}
 
+      <GuideVoice />
+
       <footer className="guide-input">
         <textarea
           ref={inputRef}
@@ -289,7 +291,10 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
           rows={2}
           placeholder="Ask the guide…"
           aria-label="Ask the guide"
-          onChange={(event) => setInput(event.target.value)}
+          onChange={(event) => {
+            setInput(event.target.value)
+            if (isSpeaking()) stopSpeech()
+          }}
           onKeyDown={onKeyDown}
           disabled={busy}
         />

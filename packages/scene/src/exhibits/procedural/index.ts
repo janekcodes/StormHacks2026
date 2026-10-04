@@ -5,6 +5,7 @@ import { ChalkModel } from './chalk'
 import { ChessModel } from './chess'
 import { EniacModel } from './eniac'
 import { HtmlModel } from './html'
+import { MouseModel } from './mouse'
 import { NextModel } from './next'
 import { PlugModel } from './plug'
 import { RackModel } from './rack'
@@ -28,6 +29,7 @@ export const PROCEDURAL_MODELS: Partial<Record<ExhibitId, ComponentType>> = {
   C10: TowerModel,
   D6: NextModel,
   D7: HtmlModel,
+  E3: MouseModel,
   F2: ChalkModel,
   F7: ChessModel,
   F10: TransformerModel

@@ -17,7 +17,7 @@ export const ZONES: readonly Zone[] = [
   { code: 'B', name: 'Hardware & Architecture', location: 'West wing', ink: '#a8601a', tint: '#fbeedd', built: 3, core: 4, extended: 5, open: 0 },
   { code: 'C', name: 'Software, Languages & Systems', location: 'North-west wing', ink: '#23744a', tint: '#e3f3ea', built: 3, core: 4, extended: 3, open: 0 },
   { code: 'D', name: 'Networks & the Web', location: 'North-east wing', ink: '#1f6699', tint: '#e1eef8', built: 2, core: 3, extended: 6, open: 0 },
-  { code: 'E', name: 'Interaction & Personal Computing', location: 'North wing (smallest room)', ink: '#a8375f', tint: '#f9e4ed', built: 0, core: 4, extended: 4, open: 0 },
+  { code: 'E', name: 'Interaction & Personal Computing', location: 'North wing (smallest room)', ink: '#a8375f', tint: '#f9e4ed', built: 1, core: 3, extended: 4, open: 0 },
   { code: 'F', name: 'Artificial Intelligence', location: 'East wing', ink: '#0e7272', tint: '#ddf2f2', built: 3, core: 3, extended: 5, open: 0 },
   { code: 'G', name: 'People Gallery', location: 'Front gallery, west of the foyer', ink: '#4f5963', tint: '#eceef0', built: 0, core: 1, extended: 2, open: 0 },
   { code: 'S', name: 'Society & Ethics', location: 'Front-right room, larger half', ink: '#4f5963', tint: '#eceef0', built: 0, core: 1, extended: 3, open: 0 },

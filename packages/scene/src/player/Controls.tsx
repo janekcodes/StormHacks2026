@@ -45,6 +45,18 @@ function keyName(e: KeyboardEvent): string {
   return k
 }
 
+/** Typing targets (the guide input, any future fields) must never drive movement. */
+function isEditableTarget(e: KeyboardEvent): boolean {
+  const target = e.target
+  if (!(target instanceof HTMLElement)) return false
+  return (
+    target.tagName === 'INPUT' ||
+    target.tagName === 'TEXTAREA' ||
+    target.tagName === 'SELECT' ||
+    target.isContentEditable
+  )
+}
+
 interface ControlsProps {
   building: Building
   container: HTMLElement | null
@@ -67,6 +79,7 @@ export function Controls({ building, container }: ControlsProps) {
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (usePassport.getState().openId) return
+      if (isEditableTarget(e)) return
       const k = keyName(e)
       if (MOVE_KEYS.has(k)) {
         e.preventDefault()

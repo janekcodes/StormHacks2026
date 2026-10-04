@@ -23,6 +23,7 @@ export const portalLoaders: Partial<Record<ExhibitId, PortalLoader>> = {
   C10: () => import('@museum/portal-c10'),
   D6: () => import('@museum/portal-d6'),
   D7: () => import('@museum/portal-d7'),
+  E3: () => import('@museum/portal-e3'),
   F2: () => import('@museum/portal-f2'),
   F7: () => import('@museum/portal-f7'),
   F10: () => import('@museum/portal-f10')

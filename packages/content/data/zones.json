@@ -61,8 +61,8 @@
    "location": "North wing (smallest room)",
    "ink": "#a8375f",
    "tint": "#f9e4ed",
-   "built": 0,
-   "core": 4,
+   "built": 1,
+   "core": 3,
    "extended": 4,
    "open": 0
   },

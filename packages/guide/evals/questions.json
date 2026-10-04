@@ -29,6 +29,8 @@
   { "question": "Which exhibit covers ChatGPT?", "expectFacts": [], "expectCitations": ["F11"] },
   { "question": "What was Sketchpad?", "expectFacts": [], "expectCitations": ["E2"] },
   { "question": "What was Engelbart's demo?", "expectFacts": [], "expectCitations": ["E3"] },
+  { "question": "What did Engelbart show in the Mother of All Demos?", "expectFacts": ["mouse"], "expectCitations": ["E3"] },
+  { "question": "Who built the first computer mouse?", "expectFacts": ["Bill English"], "expectCitations": ["E3"] },
   { "question": "Show me the transistor", "expectFacts": [], "expectCitations": [], "expectTool": { "name": "walkTo", "args": { "exhibitId": "B3" } } },
   { "question": "Take me to the ENIAC", "expectFacts": [], "expectCitations": [], "expectTool": { "name": "walkTo", "args": { "exhibitId": "B2" } } },
   { "question": "Open the Turing machine exhibit", "expectFacts": [], "expectCitations": [], "expectTool": { "name": "openPortal", "args": { "exhibitId": "A1" } } },

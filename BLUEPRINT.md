@@ -1,8 +1,8 @@
-# The NeXT-Gen Museum
+# Hello Museum
 
 **Source of truth · Scope v1.1 · 2026-10-03**
 
-This file defines what the NeXT-Gen Museum is, what it covers, how it is laid out, how the prototype is built, and the stack, AI guide and narration voice for the production build. Every other Markdown file in this project points back here. If another file disagrees with this one, this one wins, and the other file is the bug.
+This file defines what Hello Museum is, what it covers, how it is laid out, how the prototype is built, and the stack, AI guide and narration voice for the production build. Every other Markdown file in this project points back here. If another file disagrees with this one, this one wins, and the other file is the bug.
 
 ---
 
@@ -30,7 +30,7 @@ Two voices travel with the visitor:
 - an **AI guide** (Gemini) that answers questions, knows where the visitor is standing, and can walk them to exhibits or build a tour;
 - a **narrator** (ElevenLabs) that reads each exhibit's description aloud, with synced captions, the moment the visitor clicks it.
 
-**Current status:** working prototype. The full building, all 76 exhibit positions, 12 built exhibits with working portals, and 64 placeholders. The guide and narration are specified here and not yet built.
+**Current status:** working prototype. The full building, all 76 exhibit positions, 13 built exhibits with working portals, and 63 placeholders. The guide and narration are specified here and not yet built.
 
 **One-line promise:** _Every exhibit is a portal. If there is nothing to do, it is a placard, not an exhibit._
 
@@ -80,8 +80,8 @@ Two voices travel with the visitor:
 
 | Tier          | Count | Meaning                                  |
 | ------------- | ----- | ---------------------------------------- |
-| **Built**     | 12    | Object and portal exist in the prototype |
-| **Core**      | 25    | Needed for a complete story; build next  |
+| **Built**     | 13    | Object and portal exist in the prototype |
+| **Core**      | 24    | Needed for a complete story; build next  |
 | **Extended**  | 39    | Depth for later phases                   |
 | **Open slot** | 1     | `X2`, reserved for a future milestone    |
 
@@ -98,7 +98,7 @@ Two voices travel with the visitor:
 | B    | Hardware & Architecture          | West wing                        | 3 / 4 / 5          |
 | C    | Software, Languages & Systems    | North-west wing                  | 3 / 4 / 3          |
 | D    | Networks & the Web               | North-east wing                  | 2 / 3 / 6          |
-| E    | Interaction & Personal Computing | North wing (smallest room)       | 0 / 4 / 4          |
+| E    | Interaction & Personal Computing | North wing (smallest room)       | 1 / 3 / 4          |
 | F    | Artificial Intelligence          | East wing                        | 3 / 3 / 5          |
 | G    | People Gallery                   | Front gallery, west of the foyer | 0 / 1 / 2          |
 | S    | Society & Ethics                 | Front-right room, larger half    | 0 / 1 / 3          |
@@ -223,7 +223,7 @@ The canonical list. **Portal** gives the portal artboard and its `exhibit` prop 
 | D11 | 2006       | The cloud: AWS                            | Wing D           | Outer    | Core      |                 |
 | E1  | 1962       | Spacewar!                                 | Wing E           | Inner    | Extended  |                 |
 | E2  | 1963       | Sketchpad                                 | Wing E           | Inner    | Core      |                 |
-| E3  | 1968       | Engelbart's demo                          | Wing E           | Inner    | Core      |                 |
+| E3  | 1968       | Engelbart's demo                          | Wing E           | Inner    | Built     | @museum/portal-e3 |
 | E4  | 1973       | Xerox Alto                                | Wing E           | Middle   | Extended  |                 |
 | E5  | 1975/77    | Altair 8800 & Apple II                    | Wing E           | Middle   | Extended  |                 |
 | E6  | 1981/84    | IBM PC & Macintosh                        | Wing E           | Middle   | Core      |                 |
@@ -608,4 +608,5 @@ Code and data layout is in [§10](#10-production-stack). Machine-readable mirror
 | Version | Date       | Change                                                                                                                                                                                                              |
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1.1     | 2026-10-03 | Added production stack (§10), Gemini guide bot (§11), ElevenLabs narration voice (§12); rules 8 to 10 on keys, voices and model config; narration in the exhibit contract; Phase 2 reordered; open decisions 6 to 8 |
+| 1.2     | 2026-10-04 | Built E3 (Engelbart's demo, 1968) per plan 13: tier Core to Built, portal and procedural object added. Built 12 to 13, Core 25 to 24; Wing E 0/4/4 to 1/3/4. New portal package `@museum/portal-e3`. |
 | 1.0     | 2026-10-03 | First source of truth: scope (76 + 1 slot), zones, building geometry, registry, exhibit contract, prototype architecture, roadmap                                                                                   |

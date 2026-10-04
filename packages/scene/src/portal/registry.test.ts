@@ -19,7 +19,7 @@ const exhibits = JSON.parse(
 describe('portal registry', () => {
   it('lazy-loads only built exhibits, one package per id', () => {
     const built = exhibits.filter((exhibit) => exhibit.tier === 'built')
-    expect(built).toHaveLength(12)
+    expect(built).toHaveLength(13)
     for (const exhibit of built) {
       expect(portalLoaders[exhibit.id as keyof typeof portalLoaders]).toEqual(expect.any(Function))
       expect(exhibit.portal?.package).toBe(`@museum/portal-${exhibit.id.toLowerCase()}`)

@@ -48,7 +48,7 @@ docs/decisions/0001-monorepo.md
 ## Acceptance criteria
 
 - [ ] `pnpm i && pnpm turbo run lint typecheck test build` passes from a clean clone.
-- [ ] `pnpm --filter web dev` serves a page titled "The NeXT-Gen Museum".
+- [ ] `pnpm --filter web dev` serves a page titled "Hello Museum".
 - [ ] Playwright smoke passes locally and in CI.
 - [ ] No package imports another package by relative path; all use `@museum/*`.
 - [ ] `.env.example` matches BLUEPRINT §10 exactly; no real values anywhere in git.

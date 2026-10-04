@@ -1,9 +1,9 @@
 ---
-description: NeXT-Gen Museum project rules. Always read BLUEPRINT.md and the active build plan before changing code.
+description: Hello Museum project rules. Always read BLUEPRINT.md and the active build plan before changing code.
 alwaysApply: true
 ---
 
-# NeXT-Gen Museum: agent rules
+# Hello Museum: agent rules
 
 - `BLUEPRINT.md` at the repo root is the single source of truth. If anything (a build plan, a comment, a file) disagrees with it, BLUEPRINT wins. Stop and record the conflict in `docs/decisions/` instead of guessing.
 - Work one build plan at a time from `docs/buildplan/`. Do only what that plan's **Deliverables** list. Anything in its **Out of scope** list is forbidden, even if it looks helpful.

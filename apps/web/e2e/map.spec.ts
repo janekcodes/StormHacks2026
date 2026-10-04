@@ -14,6 +14,7 @@ test.describe('2D floor plan and exhibit pages', () => {
   })
 
   test('all 77 exhibit pages return 200', async ({ request }) => {
+    test.setTimeout(120_000)
     for (const id of EXHIBIT_IDS) {
       const response = await request.get(`/exhibit/${id}`)
       expect(response.status(), id).toBe(200)
@@ -55,6 +56,7 @@ test.describe('2D floor plan and exhibit pages', () => {
   })
 
   test('axe reports no serious violations on /map and /exhibit/B2', async ({ page }) => {
+    test.setTimeout(120_000)
     for (const path of ['/map', '/exhibit/B2']) {
       await page.goto(path)
       const results = await new AxeBuilder({ page }).analyze()

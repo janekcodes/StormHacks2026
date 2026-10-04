@@ -1,6 +1,7 @@
 'use client'
 
 import type { Exhibit, ExhibitId } from '@museum/content/schema'
+import { stop as stopGuideVoice } from '../audio/guideVoiceBus'
 import { startNarrationFor, stopNarration } from '../audio/narratorBus'
 import { museum } from '../nav/api'
 import { exhibitStandPoint } from '../nav/targets'
@@ -20,7 +21,11 @@ export function requestOpen(id: ExhibitId): boolean {
     }
   })
   // Narration starts with the walk-to; the click is the gesture that unlocks audio.
-  if (started) startNarrationFor(id)
+  // Opening an exhibit stops guide speech so narration and speech never overlap.
+  if (started) {
+    stopGuideVoice()
+    startNarrationFor(id)
+  }
   return started
 }
 
@@ -48,5 +53,6 @@ export function showNeighbour(
   usePassport.getState().markOpened(next.id)
   usePassport.getState().setOpen(next.id)
   // The Prev/Next click is a user gesture, so the next exhibit's narration autoplays.
+  stopGuideVoice()
   startNarrationFor(next.id)
 }

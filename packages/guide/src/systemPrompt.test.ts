@@ -10,7 +10,7 @@ const exhibits: CompactExhibit[] = [
 describe('buildSystemPrompt', () => {
   it('includes the persona and every exhibit as a compact line', () => {
     const prompt = buildSystemPrompt(exhibits, '1.1')
-    expect(prompt).toContain('AI guide of the NeXT-Gen Museum')
+    expect(prompt).toContain('AI guide of Hello Museum')
     expect(prompt).toContain('A1 | 1936 | Turing')
     expect(prompt).toContain('F10 | 2017 | The Transformer')
     expect(prompt).toContain('X2 | next | Your future exhibit | X | none | open')

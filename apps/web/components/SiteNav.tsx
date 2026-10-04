@@ -5,7 +5,7 @@ export function SiteNav() {
   return (
     <nav className={styles.nav} aria-label="Museum">
       <Link href="/" className={styles.brand}>
-        The NeXT-Gen Museum
+        Hello Museum
       </Link>
       <Link href="/visit" className={styles.navLink}>
         Visit

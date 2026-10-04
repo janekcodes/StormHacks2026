@@ -36,6 +36,7 @@
       "@museum/portal-c10": ["packages/portals/c10/src/index.ts"],
       "@museum/portal-d6": ["packages/portals/d6/src/index.ts"],
       "@museum/portal-d7": ["packages/portals/d7/src/index.ts"],
+      "@museum/portal-e3": ["packages/portals/e3/src/index.ts"],
       "@museum/portal-f2": ["packages/portals/f2/src/index.ts"],
       "@museum/portal-f7": ["packages/portals/f7/src/index.ts"],
       "@museum/portal-f10": ["packages/portals/f10/src/index.ts"]

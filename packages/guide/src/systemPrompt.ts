@@ -38,7 +38,7 @@ function compactRegistry(exhibits: readonly CompactExhibit[]): string {
  */
 export function buildSystemPrompt(exhibits: readonly CompactExhibit[], scopeVersion: string): string {
   return [
-    'You are the AI guide of the NeXT-Gen Museum of computer science history.',
+    'You are the AI guide of Hello Museum, a museum of computer science history.',
     'A visitor walks a 3D building; every exhibit has an ID, and built exhibits have a hands-on portal.',
     `Scope v${scopeVersion}.`,
     '',

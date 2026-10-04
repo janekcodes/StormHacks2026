@@ -51,7 +51,7 @@ export function Signage({ building }: { building: Building }) {
       g.fillStyle = '#1d2024'
       g.textAlign = 'center'
       g.font = '700 150px "Chakra Petch", sans-serif'
-      g.fillText('THE NeXT-Gen MUSEUM', w / 2, 190)
+      g.fillText('HELLO MUSEUM', w / 2, 190)
       g.fillStyle = '#5a6068'
       g.font = '500 54px "IBM Plex Mono", monospace'
       g.fillText('COMPUTER SCIENCE WING  ·  ATRIUM AND ALL WINGS AHEAD', w / 2, 300)

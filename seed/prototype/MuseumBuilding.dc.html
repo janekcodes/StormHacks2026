@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>NeXT-Gen Museum Building</title>
+<title>Hello Museum Building</title>
 <script src="./support.js"></script>
 <script src="/_blob/87dde728e43e6e03ffed1d403c6dbc37"></script>
 </head>
@@ -49,7 +49,7 @@ a{color:#7fb8ff}a:hover{color:#b5d6ff}
 
 <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px">
   <div style="min-width: 0">
-    <div class="label" style="color: #ffb347">The NeXT-Gen Museum · 3D building prototype</div>
+    <div class="label" style="color: #ffb347">Hello Museum · 3D building prototype</div>
     <h1 class="disp" style="margin: 2px 0 0; font-size: 24px; color: #f1f3f5; line-height: 1.15">{{zoneTitle}}</h1>
   </div>
   <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end; min-width: 220px">
@@ -492,7 +492,7 @@ class Component extends DCLogic {
     {
       const t = tex(2048, 420, (g, w, h) => {
         g.fillStyle = '#fbfaf7'; g.fillRect(0, 0, w, h); g.fillStyle = '#ffb347'; g.fillRect(0, h - 18, w, 18);
-        g.fillStyle = '#1d2024'; g.textAlign = 'center'; g.font = '700 150px "Chakra Petch", sans-serif'; g.fillText('THE NeXT-Gen MUSEUM', w / 2, 190);
+        g.fillStyle = '#1d2024'; g.textAlign = 'center'; g.font = '700 150px "Chakra Petch", sans-serif'; g.fillText('HELLO MUSEUM', w / 2, 190);
         g.fillStyle = '#5a6068'; g.font = '500 54px "IBM Plex Mono", monospace'; g.fillText('COMPUTER SCIENCE WING  ·  ATRIUM AND ALL WINGS AHEAD', w / 2, 300);
       });
       const pl = new T.Mesh(new T.PlaneGeometry(7, 1.44), std({ map: t, roughness: 0.7 })); pl.position.set(0, 4.05, 24.3); scene.add(pl);

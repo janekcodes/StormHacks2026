@@ -10,10 +10,14 @@ import {
   type VisitorContext
 } from '@museum/guide'
 import { exhibits, getExhibit, scopeVersion } from '../../../lib/museum-data'
+import { rateLimited } from '../../../lib/rate-limit'
 
 // The guide route is dynamic and server-only (holds GEMINI_API_KEY).
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+// Gemini text + tool calls stream over several seconds; give the Vercel
+// function enough time (Hobby caps at 60s).
+export const maxDuration = 60
 
 const toolCallSchema = z.object({
   id: z.string(),
@@ -53,23 +57,6 @@ const requestSchema = z.object({
 })
 
 const MAX_OUTPUT_TOKENS = 600
-
-// In-memory per-session sliding window. Single instance only: replace with
-// Upstash/KV before a multi-region deploy (BLUEPRINT section 11).
-const buckets = new Map<string, number[]>()
-const RATE_LIMIT = { windowMs: 60_000, max: 24 }
-
-function rateLimited(sessionId: string): boolean {
-  const now = Date.now()
-  const bucket = (buckets.get(sessionId) ?? []).filter((t) => now - t < RATE_LIMIT.windowMs)
-  if (bucket.length >= RATE_LIMIT.max) {
-    buckets.set(sessionId, bucket)
-    return true
-  }
-  bucket.push(now)
-  buckets.set(sessionId, bucket)
-  return false
-}
 
 function questionText(messages: GuideMessage[]): string {
   const first = messages.find((message) => message.role === 'user')
@@ -120,7 +107,7 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ error: 'Invalid request.' }, { status: 400 })
   }
 
-  if (rateLimited(body.sessionId)) {
+  if (await rateLimited(body.sessionId)) {
     return Response.json(
       { error: 'You have asked a lot of questions. Wait a moment and try again.' },
       { status: 429 }

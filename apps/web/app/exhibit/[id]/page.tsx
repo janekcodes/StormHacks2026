@@ -34,14 +34,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
   if (!isExhibitId(id)) {
-    return { title: 'Exhibit | The NeXT-Gen Museum' }
+    return { title: 'Exhibit | Hello Museum' }
   }
   const exhibit = getExhibit(id)
   if (!exhibit) {
-    return { title: 'Exhibit | The NeXT-Gen Museum' }
+    return { title: 'Exhibit | Hello Museum' }
   }
   return {
-    title: `${exhibit.id} ${exhibit.title} | The NeXT-Gen Museum`,
+    title: `${exhibit.id} ${exhibit.title} | Hello Museum`,
     description: exhibitDescription(exhibit)
   }
 }
