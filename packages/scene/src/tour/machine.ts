@@ -1,6 +1,6 @@
 import type { ExhibitId } from '@museum/content/schema'
 
-export type TourLineKey = 'intro' | 'outro' | 'fallback' | `bridge:${number}` | `stop:${number}`
+export type TourLineKey = 'intro' | 'outro' | 'fallback' | `bridge:${number}`
 export type TourPhase = 'idle' | 'intro' | 'bridge' | 'narrate' | 'dwell' | 'outro' | 'done'
 export type PauseReason = 'user-pause' | 'user-move' | 'portal-closed' | 'listening' | 'answering'
 export type TimerKind = 'clip' | 'walk' | 'narration' | 'dwell'
@@ -55,8 +55,10 @@ export type TourEffect =
   | { type: 'clearTimer'; kind: TimerKind }
   | { type: 'clearTimers' }
 
-/** Play time at each stop after its short line, before Auto advances. */
-export const PLAY_MS = 11000
+/** Play time at each stop after the exhibit narration, before Auto advances. */
+export const PLAY_MS = 4000
+/** Backstop if the exhibit narration never reports its end (longest narration is 27 s). */
+export const NARRATION_TIMEOUT_MS = 45_000
 export const CLIP_GRACE_MS = 3000
 export const WALK_TIMEOUT_MS = 15_000
 /** Timeout for a line with no generated audio yet (caption only). */
@@ -111,6 +113,7 @@ function enterBridge(state: TourState, index: number, ctx: TourContext, lead: To
     },
     effects: [
       ...lead,
+      { type: 'closePortal' },
       { type: 'playClip', key },
       clipTimer(key, ctx),
       { type: 'walk', id },
@@ -121,10 +124,14 @@ function enterBridge(state: TourState, index: number, ctx: TourContext, lead: To
 
 function enterNarrate(state: TourState, ctx: TourContext, lead: TourEffect[]): Out {
   const id = stopId(state, ctx)
-  const key: TourLineKey = `stop:${state.index}`
   return {
     state: { ...state, phase: 'narrate', clipDone: false, walkDone: true },
-    effects: [...lead, { type: 'openPortal', id }, { type: 'playClip', key }, clipTimer(key, ctx)]
+    effects: [
+      ...lead,
+      { type: 'openPortal', id },
+      { type: 'startNarration', id },
+      { type: 'startTimer', kind: 'narration', ms: NARRATION_TIMEOUT_MS }
+    ]
   }
 }
 
@@ -132,7 +139,7 @@ function enterDwell(state: TourState): Out {
   return {
     state: { ...state, phase: 'dwell' },
     effects: [
-      { type: 'clearTimer', kind: 'clip' },
+      { type: 'clearTimer', kind: 'narration' },
       ...(state.auto ? [{ type: 'startTimer', kind: 'dwell', ms: PLAY_MS } as const] : [])
     ]
   }
@@ -181,7 +188,7 @@ function pauseEffects(state: TourState): TourEffect[] {
     case 'bridge':
       return [{ type: 'pauseClip' }, { type: 'cancelWalk' }, { type: 'clearTimers' }]
     case 'narrate':
-      return [{ type: 'pauseClip' }, { type: 'clearTimers' }]
+      return [{ type: 'pauseNarration' }, { type: 'clearTimers' }]
     default:
       return [{ type: 'clearTimers' }]
   }
@@ -196,7 +203,7 @@ function resume(state: TourState, ctx: TourContext): Out {
       return { state: s, effects: [{ type: 'resumeClip' }, clipTimer(key, ctx)] }
     }
     case 'bridge': {
-      const effects: TourEffect[] = []
+      const effects: TourEffect[] = [{ type: 'closePortal' }]
       if (!s.clipDone) effects.push({ type: 'resumeClip' }, clipTimer(`bridge:${s.index}`, ctx))
       if (!s.walkDone) {
         effects.push({ type: 'walk', id: stopId(s, ctx) }, { type: 'startTimer', kind: 'walk', ms: WALK_TIMEOUT_MS })
@@ -207,7 +214,7 @@ function resume(state: TourState, ctx: TourContext): Out {
       if (s.portalLost) return enterNarrate({ ...s, portalLost: false }, ctx, [])
       return {
         state: s,
-        effects: [{ type: 'resumeClip' }, clipTimer(`stop:${s.index}`, ctx)]
+        effects: [{ type: 'resumeNarration' }, { type: 'startTimer', kind: 'narration', ms: NARRATION_TIMEOUT_MS }]
       }
     case 'dwell': {
       const effects: TourEffect[] = []
@@ -290,8 +297,7 @@ export function reduceTour(state: TourState, event: TourEvent, ctx: TourContext)
       if (state.phase !== 'bridge') return same(state)
       return bridgeProgress({ ...state, walkDone: true }, ctx, [{ type: 'clearTimer', kind: 'walk' }])
     case 'NARRATION_ENDED':
-      // The tour no longer drives exhibit narration; kept so the runner compiles.
-      return same(state)
+      return state.phase === 'narrate' ? enterDwell(state) : same(state)
     case 'TIMEOUT':
       switch (event.kind) {
         case 'clip':
@@ -300,7 +306,7 @@ export function reduceTour(state: TourState, event: TourEvent, ctx: TourContext)
           if (state.phase !== 'bridge' || state.walkDone) return same(state)
           return bridgeProgress({ ...state, walkDone: true }, ctx, [{ type: 'snapTo', id: stopId(state, ctx) }])
         case 'narration':
-          return same(state)
+          return state.phase === 'narrate' ? enterDwell(state) : same(state)
         case 'dwell':
           return state.phase === 'dwell' && state.auto ? advance(state, ctx) : same(state)
       }
@@ -315,8 +321,6 @@ function clipEnded(state: TourState, ctx: TourContext): Out {
     case 'bridge':
       if (state.clipDone) return same(state)
       return bridgeProgress({ ...state, clipDone: true }, ctx, [{ type: 'clearTimer', kind: 'clip' }])
-    case 'narrate':
-      return enterDwell(state)
     case 'outro':
       return { state: { ...state, phase: 'done' }, effects: [{ type: 'clearTimers' }] }
     default:

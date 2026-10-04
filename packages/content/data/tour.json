@@ -2,38 +2,32 @@
   "id": "demo",
   "title": "Hello Museum in two minutes",
   "intro": {
-    "text": "Welcome! Hold the mic button any time to ask me something."
+    "text": "Welcome! Hold the mic button to ask me anything."
   },
   "stops": [
     {
       "exhibitId": "A1",
-      "bridge": { "text": "First, the logic wing." },
-      "line": { "text": "A tape and rules can compute anything. Try it yourself." }
+      "bridge": { "text": "First, the logic wing." }
     },
     {
       "exhibitId": "B2",
-      "bridge": { "text": "Next, the hardware wing." },
-      "line": { "text": "ENIAC's glowing dots stand for vacuum tubes. Swap the burned out ones." }
+      "bridge": { "text": "Next, the hardware wing." }
     },
     {
       "exhibitId": "C3",
-      "bridge": { "text": "Now, the software wing." },
-      "line": { "text": "FORTRAN let engineers write formulas. Pick a statement and punch it." }
+      "bridge": { "text": "Now, the software wing." }
     },
     {
       "exhibitId": "E3",
-      "bridge": { "text": "On to the interaction wing." },
-      "line": { "text": "Engelbart showed the mouse and hypertext links. Try clicking a link." }
+      "bridge": { "text": "On to the interaction wing." }
     },
     {
       "exhibitId": "D7",
-      "bridge": { "text": "Now, the network wing." },
-      "line": { "text": "Flip the article into nineteen ninety-one mode and watch the meaning stay." }
+      "bridge": { "text": "Now, the network wing." }
     },
     {
       "exhibitId": "F10",
-      "bridge": { "text": "Last stop, the AI wing." },
-      "line": { "text": "The Transformer lets every token look at every other. Click a word." }
+      "bridge": { "text": "Last stop, the AI wing." }
     }
   ],
   "outro": {

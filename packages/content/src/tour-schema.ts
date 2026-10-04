@@ -11,9 +11,7 @@ export type TourLine = z.infer<typeof TourLineSchema>
 
 export const TourStopSchema = z.object({
   exhibitId: ExhibitIdSchema,
-  bridge: TourLineSchema,
-  /** Short spoken line played while the exhibit is open; ends by inviting a try. */
-  line: TourLineSchema
+  bridge: TourLineSchema
 })
 export type TourStop = z.infer<typeof TourStopSchema>
 
@@ -30,7 +28,7 @@ export type Tour = z.infer<typeof TourSchema>
 const DASHES = /[\u2013\u2014]/
 
 /** Maximum words per kind of tour line, so the whole tour fits about two minutes. */
-export const TOUR_WORD_LIMITS = { intro: 14, outro: 14, bridge: 8, line: 12 } as const
+export const TOUR_WORD_LIMITS = { intro: 14, outro: 14, bridge: 8 } as const
 
 function wordsOf(text: string): string[] {
   return text.trim().split(/\s+/).filter(Boolean)
@@ -57,8 +55,7 @@ export function checkTour(tour: Tour, exhibits: readonly Exhibit[]): string[] {
   const lines: Array<[string, string, number | null]> = [
     ['intro', tour.intro.text, TOUR_WORD_LIMITS.intro],
     ...tour.stops.flatMap((stop): Array<[string, string, number | null]> => [
-      [`bridge ${stop.exhibitId}`, stop.bridge.text, TOUR_WORD_LIMITS.bridge],
-      [`line ${stop.exhibitId}`, stop.line.text, TOUR_WORD_LIMITS.line]
+      [`bridge ${stop.exhibitId}`, stop.bridge.text, TOUR_WORD_LIMITS.bridge]
     ]),
     ['outro', tour.outro.text, TOUR_WORD_LIMITS.outro],
     ['fallback', tour.fallback.text, null]

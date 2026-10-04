@@ -16,18 +16,12 @@ const tour: Tour = {
       exhibitId: 'A1' as ExhibitId,
       bridge: {
         text: 'Moving to the first stop'
-      },
-      line: {
-        text: 'Line without audio'
       }
     },
     {
       exhibitId: 'B2' as ExhibitId,
       bridge: {
-        text: 'Moving to the second stop'
-      },
-      line: {
-        text: 'This is a line with audio',
+        text: 'Moving to the second stop',
         durationMs: 5000,
         audio: {
           src: 'audio.mp3',
@@ -35,6 +29,19 @@ const tour: Tour = {
           voiceId: 'voice123',
           modelId: 'model123',
           hash: 'hash123'
+        }
+      }
+    },
+    {
+      exhibitId: 'C3' as ExhibitId,
+      bridge: {
+        text: 'Moving to the third stop',
+        audio: {
+          src: 'audio3.mp3',
+          align: 'align3.json',
+          voiceId: 'voice123',
+          modelId: 'model123',
+          hash: 'hash456'
         }
       }
     }
@@ -51,14 +58,16 @@ describe('tourContext().clipMs', () => {
   const ctx = tourContext(tour)
 
   it('a line with audio and durationMs returns duration plus grace', () => {
-    const ms = ctx.clipMs('stop:1')
-    expect(ms).toBe(5000 + CLIP_GRACE_MS)
+    expect(ctx.clipMs('bridge:1')).toBe(5000 + CLIP_GRACE_MS)
   })
 
-  it('a stop line without audio estimates from its text length', () => {
-    const ms = ctx.clipMs('stop:0')
-    // stop[0].line text is 'Line without audio': 3 words, 3 * 400 = 1200, minimum 1500
-    expect(ms).toBe(1500)
+  it('a line with audio but no durationMs estimates the speech plus grace', () => {
+    // 'Moving to the third stop' is 5 words: 5 * 400 = 2000
+    expect(ctx.clipMs('bridge:2')).toBe(2000 + CLIP_GRACE_MS)
+  })
+
+  it('a caption-only line estimates from its text length', () => {
+    expect(ctx.clipMs('intro')).toBe(1600)
   })
 
   it('a bridge key resolves to the bridge line', () => {

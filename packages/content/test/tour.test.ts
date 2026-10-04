@@ -16,7 +16,7 @@ function minimal(overrides: Partial<Tour> = {}): Tour {
     id: 't',
     title: 'T',
     intro: line('Hello.'),
-    stops: [{ exhibitId: 'A1', bridge: line('First stop.'), line: line('Try it yourself.') }],
+    stops: [{ exhibitId: 'A1', bridge: line('First stop.') }],
     outro: line('Bye.'),
     fallback: line('Let us keep walking.'),
     ...overrides
@@ -36,7 +36,7 @@ describe('tour.json', () => {
 
 describe('checkTour', () => {
   it('rejects a stop that is not a built exhibit', () => {
-    const errors = checkTour(minimal({ stops: [{ exhibitId: 'A2', bridge: line('x'), line: line('y') }] } as Partial<Tour>), exhibits)
+    const errors = checkTour(minimal({ stops: [{ exhibitId: 'A2', bridge: line('x') }] } as Partial<Tour>), exhibits)
     expect(errors.join('\n')).toContain('A2 is not a built exhibit')
   })
 
@@ -47,15 +47,6 @@ describe('checkTour', () => {
     expect(errors[1]).toContain('outro')
   })
 
-  it('rejects a stop line over 12 words', () => {
-    const long = 'one two three four five six seven eight nine ten eleven twelve thirteen'
-    const errors = checkTour(
-      minimal({ stops: [{ exhibitId: 'A1', bridge: line('a'), line: line(long) }] } as Partial<Tour>),
-      exhibits
-    )
-    expect(errors).toContain('line A1 has 13 words, limit 12')
-  })
-
   it('enforces intro, outro and bridge word limits', () => {
     const fifteen = Array.from({ length: 15 }, () => 'w').join(' ')
     const nine = Array.from({ length: 9 }, () => 'w').join(' ')
@@ -63,7 +54,7 @@ describe('checkTour', () => {
       minimal({
         intro: line(fifteen),
         outro: line(fifteen),
-        stops: [{ exhibitId: 'A1', bridge: line(nine), line: line('ok') }]
+        stops: [{ exhibitId: 'A1', bridge: line(nine) }]
       } as Partial<Tour>),
       exhibits
     )
@@ -74,20 +65,12 @@ describe('checkTour', () => {
     ])
   })
 
-  it('rejects a dash in a stop line', () => {
-    const errors = checkTour(
-      minimal({ stops: [{ exhibitId: 'A1', bridge: line('a'), line: line('one \u2014 two') }] } as Partial<Tour>),
-      exhibits
-    )
-    expect(errors.join('\n')).toContain('line A1 contains an em or en dash')
-  })
-
   it('rejects duplicate stops', () => {
     const errors = checkTour(
       minimal({
         stops: [
-          { exhibitId: 'A1', bridge: line('a'), line: line('c') },
-          { exhibitId: 'A1', bridge: line('b'), line: line('d') }
+          { exhibitId: 'A1', bridge: line('a') },
+          { exhibitId: 'A1', bridge: line('b') }
         ]
       } as Partial<Tour>),
       exhibits
@@ -101,16 +84,5 @@ describe('estimateSpeechMs', () => {
     expect(estimateSpeechMs('one two three')).toBe(1500)
     expect(estimateSpeechMs('one two three four five six seven eight nine ten')).toBe(4000)
     expect(estimateSpeechMs('  ')).toBe(1500)
-  })
-})
-
-describe('tour budget', () => {
-  it('spoken lines plus 11 s of play per stop leave time to walk inside 120 s', () => {
-    // Bridges are excluded: they play while the guide walks, so the walk time covers them.
-    // PLAY_MS must match packages/scene/src/tour/machine.ts. Walks are excluded from this check;
-    // the real 120 s limit is in packages/scene/src/tour/budget.test.ts.
-    const speech = [tour.intro.text, tour.outro.text, ...tour.stops.map((stop) => stop.line.text)].reduce((total, text) => total + estimateSpeechMs(text), 0)
-    const play = tour.stops.length * 11000
-    expect(speech + play).toBeLessThanOrEqual(110_000)
   })
 })

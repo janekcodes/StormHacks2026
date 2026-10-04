@@ -2,7 +2,15 @@
 
 import type { Tour } from '@museum/content/tour-schema'
 import { useEffect } from 'react'
-import { isMuted, onNarrationEnded, pauseNarration, resumeNarration, stopNarration } from '../audio/narratorBus'
+import { stop as stopGuideVoice } from '../audio/guideVoiceBus'
+import {
+  isMuted,
+  onNarrationEnded,
+  pauseNarration,
+  resumeNarration,
+  startNarrationFor,
+  stopNarration
+} from '../audio/narratorBus'
 import { museum } from '../nav/api'
 import { exhibitStandPoint } from '../nav/targets'
 import { usePassport } from '../passport'
@@ -45,8 +53,11 @@ export function TourDriver({ tour }: { tour: Tour }) {
         usePassport.subscribe((state, prev) => {
           if (state.openId !== prev.openId) fn(state.openId, prev.openId)
         }),
-      // The machine no longer starts exhibit narration; the visitor plays instead.
-      startNarration: () => undefined,
+      // Same as clicking the exhibit: guide speech stops, then the exhibit's own narration plays.
+      startNarration: (id) => {
+        stopGuideVoice()
+        startNarrationFor(id)
+      },
       pauseNarration,
       resumeNarration,
       onNarrationEnded,

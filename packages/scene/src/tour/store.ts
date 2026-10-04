@@ -17,9 +17,8 @@ import {
 
 export function lineFor(tour: Tour, key: TourLineKey): TourLine | undefined {
   if (key === 'intro' || key === 'outro' || key === 'fallback') return tour[key]
-  const [kind, rest] = key.split(':') as ['bridge' | 'stop', string]
-  const stop = tour.stops[Number(rest)]
-  return kind === 'stop' ? stop?.line : stop?.bridge
+  const index = Number(key.split(':')[1])
+  return tour.stops[index]?.bridge
 }
 
 export function tourContext(tour: Tour): TourContext {
@@ -28,7 +27,7 @@ export function tourContext(tour: Tour): TourContext {
     clipMs: (key) => {
       const line = lineFor(tour, key)
       if (!line) return MISSING_CLIP_MS
-      if (line.audio && line.durationMs) return line.durationMs + CLIP_GRACE_MS
+      if (line.audio) return (line.durationMs ?? estimateSpeechMs(line.text)) + CLIP_GRACE_MS
       return estimateSpeechMs(line.text)
     }
   }
