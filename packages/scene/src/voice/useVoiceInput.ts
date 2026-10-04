@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getSessionId } from '../guide/session'
 import { createVoiceController, type VoiceStatus } from './controller'
-import { connectScribe } from './scribe'
 
 async function fetchListenToken(): Promise<{ token: string; modelId: string }> {
   const res = await fetch(`/api/listen-token?sessionId=${encodeURIComponent(getSessionId())}`)
@@ -18,7 +17,8 @@ export function useVoiceInput() {
     () =>
       createVoiceController({
         getToken: fetchListenToken,
-        connect: connectScribe,
+        // Lazy: keeps the ElevenLabs SDK out of the main bundle until first press.
+        connect: async (opts) => (await import('./scribe')).connectScribe(opts),
         onPartial: setPartial,
         onStatus: setStatus
       }),
@@ -26,14 +26,13 @@ export function useVoiceInput() {
   )
   useEffect(() => () => controller.dispose(), [controller])
 
-  return {
-    status,
-    partial,
-    prefetch: controller.prefetch,
-    start: async () => {
-      setPartial('')
-      await controller.start()
-    },
-    stop: controller.stop
-  }
+  const start = useCallback(async () => {
+    setPartial('')
+    await controller.start()
+  }, [controller])
+
+  return useMemo(
+    () => ({ status, partial, prefetch: controller.prefetch, start, stop: controller.stop }),
+    [status, partial, controller, start]
+  )
 }

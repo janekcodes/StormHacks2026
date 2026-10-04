@@ -4,7 +4,7 @@ import { CommitStrategy, RealtimeEvents, Scribe } from '@elevenlabs/client'
 import type { ConnectScribe } from './controller'
 
 /** Adapter from the ElevenLabs client SDK to the controller's small interface. */
-export const connectScribe: ConnectScribe = ({ token, modelId }) => {
+export const connectScribe: ConnectScribe = async ({ token, modelId }) => {
   const connection = Scribe.connect({
     token,
     modelId,
@@ -15,6 +15,7 @@ export const connectScribe: ConnectScribe = ({ token, modelId }) => {
     onPartial: (fn) => connection.on(RealtimeEvents.PARTIAL_TRANSCRIPT, (data) => fn(data.text)),
     onCommitted: (fn) => connection.on(RealtimeEvents.COMMITTED_TRANSCRIPT, (data) => fn(data.text)),
     onError: (fn) => connection.on(RealtimeEvents.ERROR, (error) => fn(error)),
+    onClose: (fn) => connection.on(RealtimeEvents.CLOSE, () => fn()),
     commit: () => connection.commit(),
     close: () => connection.close()
   }
