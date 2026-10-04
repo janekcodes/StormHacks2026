@@ -34,14 +34,17 @@ export async function answerQuestion(text: string, deps: AnswerDeps): Promise<vo
   deps.dispatch({ type: 'PAUSE', reason: 'answering' })
   deps.setSpeakOverride(true)
   try {
-    const result = await deps.ask(text)
+    const result = await deps.ask(text).catch((err: unknown) => ({
+      ok: false as const,
+      error: err instanceof Error ? err.message : 'ask failed'
+    }))
     deps.finishSpeech()
     if (result.ok) {
       // Give the first sentence a moment to start before checking for silence.
       await new Promise((resolve) => setTimeout(resolve, 0))
       await waitForSilence(deps, deps.speechTimeoutMs ?? 30_000)
     } else {
-      await deps.playFallback()
+      await deps.playFallback().catch(() => undefined)
     }
   } finally {
     deps.setSpeakOverride(false)

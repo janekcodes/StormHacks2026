@@ -292,6 +292,10 @@ export function Museum({
   const settings = quality ? settingsFor(quality) : null
   const sceneReady = ready && navReady
   const tourPhase = useTourStore((s) => s.state.phase)
+  const [tourStarted, setTourStarted] = useState(false)
+  useEffect(() => {
+    if (tourPhase !== 'idle') setTourStarted(true)
+  }, [tourPhase])
   const welcome = useWelcome(sceneReady, initialExhibit !== null || startTour, container)
 
   return (
@@ -339,13 +343,15 @@ export function Museum({
       <GuidePanel exhibits={exhibits} />
       {tour ? <TourDriver tour={tour} /> : null}
       {tour ? <TourBar exhibits={exhibits} /> : null}
-      {tour && startTour && sceneReady && tourPhase === 'idle' ? (
+      {tour && startTour && sceneReady && tourPhase === 'idle' && !tourStarted ? (
         <div className="tour-start" role="dialog" aria-label="Start the tour">
           <button
             type="button"
             className="btn btn--primary"
             data-testid="tour-start"
+            autoFocus
             onClick={() => {
+              setTourStarted(true)
               welcome.dismiss()
               useTourStore.getState().dispatch({ type: 'START' })
             }}

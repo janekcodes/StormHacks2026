@@ -6,13 +6,25 @@ import { finish as finishSpeech, isSpeaking, pushText, setSpeakOverride, subscri
 import { isMuted } from '../audio/narratorBus'
 import { askGuide } from '../guide/ask'
 import { visitorContext } from '../guide/executor'
-import { isUiTarget } from '../player/Controls'
 import { useVoiceInput } from '../voice/useVoiceInput'
 import { answerQuestion } from './answer'
 import { PLAY_MS } from './machine'
 import { lineFor, useTourStore } from './store'
 
 const COUNTDOWN_START = Math.ceil(PLAY_MS / 1000)
+
+/** Typing targets only; unlike the player controls, a focused dialog must not block tour keys. */
+function isTypingTarget(event: KeyboardEvent): boolean {
+  const target = event.target
+  if (!(target instanceof HTMLElement)) return false
+  return (
+    target.tagName === 'INPUT' ||
+    target.tagName === 'TEXTAREA' ||
+    target.tagName === 'SELECT' ||
+    target.isContentEditable ||
+    target.closest('[role="menu"]') !== null
+  )
+}
 
 export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const tour = useTourStore((s) => s.tour)
@@ -69,27 +81,48 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
         if (!line) return
         useTourStore.getState().setCaption(line.text)
         // Play the pre-generated line if it exists; never wait more than 4 s.
-        await new Promise<void>((resolve) => {
-          const timer = setTimeout(resolve, line.audio ? 4000 : 2500)
-          if (!line.audio) return
-          const audio = new Audio(line.audio.src)
-          audio.muted = isMuted()
-          audio.onended = () => {
-            clearTimeout(timer)
-            resolve()
-          }
-          void audio.play().catch(() => undefined)
-        })
-        useTourStore.getState().setCaption(null)
+        const played: { audio: HTMLAudioElement | null } = { audio: null }
+        let timer: ReturnType<typeof setTimeout> | undefined
+        try {
+          await new Promise<void>((resolve) => {
+            timer = setTimeout(resolve, line.audio ? 4000 : 2500)
+            if (!line.audio) return
+            const audio = new Audio(line.audio.src)
+            played.audio = audio
+            audio.muted = isMuted()
+            audio.onended = () => resolve()
+            void audio.play().catch(() => undefined)
+          })
+        } finally {
+          clearTimeout(timer)
+          played.audio?.pause()
+          useTourStore.getState().setCaption(null)
+        }
       }
     })
 
+  const releaseFailedHold = () => {
+    if (!holding.current) return
+    holding.current = false
+    dispatch({ type: 'RESUME' })
+  }
+
   const pressTalk = async () => {
     if (holding.current || voice.status === 'unavailable') return
+    if (useTourStore.getState().state.pauseReason === 'answering') return
     holding.current = true
     dispatch({ type: 'PAUSE', reason: 'listening' })
     await voice.start()
+    // start() failing flips the status to unavailable and unmounts the mic
+    // button, so no pointer or key release will ever arrive.
+    if (voiceStatusRef.current === 'unavailable') releaseFailedHold()
   }
+
+  const voiceStatusRef = useRef(voice.status)
+  voiceStatusRef.current = voice.status
+  useEffect(() => {
+    if (voice.status === 'unavailable') releaseFailedHold()
+  })
 
   const releaseTalk = async () => {
     if (!holding.current) return
@@ -105,7 +138,7 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   useEffect(() => {
     if (!active) return
     const onDown = (event: KeyboardEvent) => {
-      if (isUiTarget(event) || event.repeat) return
+      if (isTypingTarget(event) || event.repeat) return
       const key = event.key.toLowerCase()
       if (key === 'p') dispatch(paused && !busy ? { type: 'RESUME' } : { type: 'PAUSE', reason: 'user-pause' })
       else if (key === 'n') dispatch({ type: 'NEXT' })

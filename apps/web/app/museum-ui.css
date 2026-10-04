@@ -1139,7 +1139,8 @@
   font-weight: 600;
 }
 
-.tour-bar-caption {
+.tour-bar-caption,
+.tour-bar-note {
   opacity: 0.9;
 }
 
