@@ -3,246 +3,353 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as THREE from 'three'
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js'
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 
 /**
- * Plan 16 programmatic GLB generator.
+ * Programmatic GLB generator (plan 16, upgraded in plan 17 / decision 0012).
  *
- * Composes a recognizable low-poly object per Core + Extended exhibit from
- * three.js primitives, merges each object to at most two meshes (one base, one
- * emissive accent) so the runtime draw-call budget is met, and exports
- * `assets/out/<ID>.glb`. `pnpm assets:build` then optimizes each into
+ * Composes a recognisable object per Core + Extended exhibit from bevelled
+ * three.js primitives, merges each object into at most two meshes (a primary
+ * and a secondary material) so the runtime draw-call budget is met, and
+ * exports `assets/out/<ID>.glb`. `pnpm assets:build` then optimises each into
  * `apps/web/public/models/<ID>.glb`.
  *
+ * Materials are physically based (brass, walnut, bakelite, aluminium, PCB
+ * green, bronze, paper). Nothing self-illuminates except a dim glow on
+ * screens, valve filaments and network nodes, so objects shade properly under
+ * the gallery lighting.
+ *
  * Objects are authored with their base at y = 0, sized for a 0.9 m plinth
- * (about 0.5 m tall) or standing on the floor (racks/towers, up to about 1.9 m).
+ * (about 0.5 m tall) or standing on the floor (racks, up to about 1.9 m).
  */
 
 const root = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
 // ---- primitives ------------------------------------------------------------
 
-function box(w: number, h: number, d: number, x = 0, y = 0, z = 0): THREE.BoxGeometry {
-  const g = new THREE.BoxGeometry(w, h, d)
+/** Bevelled box: edges rounded by up to 12 % of the smallest side (max 1.5 cm). */
+function box(w: number, h: number, d: number, x = 0, y = 0, z = 0): THREE.BufferGeometry {
+  const r = Math.min(0.015, Math.min(w, h, d) * 0.12)
+  const g = r > 0.002 ? new RoundedBoxGeometry(w, h, d, 2, r) : new THREE.BoxGeometry(w, h, d)
   g.translate(x, y, z)
   return g
 }
 
-function cyl(rt: number, rb: number, h: number, x = 0, y = 0, z = 0, segments = 20): THREE.CylinderGeometry {
+function cyl(rt: number, rb: number, h: number, x = 0, y = 0, z = 0, segments = 24): THREE.BufferGeometry {
   const g = new THREE.CylinderGeometry(rt, rb, h, segments)
   g.translate(x, y, z)
   return g
 }
 
-function sphere(r: number, x = 0, y = 0, z = 0, ws = 16, hs = 12): THREE.SphereGeometry {
+/** Cylinder with a chamfered rim, lathed so the edge catches light. */
+function disc(r: number, h: number, x = 0, y = 0, z = 0, segments = 32): THREE.BufferGeometry {
+  const c = Math.min(h * 0.3, r * 0.1)
+  const pts = [
+    new THREE.Vector2(0, -h / 2),
+    new THREE.Vector2(r - c, -h / 2),
+    new THREE.Vector2(r, -h / 2 + c),
+    new THREE.Vector2(r, h / 2 - c),
+    new THREE.Vector2(r - c, h / 2),
+    new THREE.Vector2(0, h / 2)
+  ]
+  const g = new THREE.LatheGeometry(pts, segments)
+  g.translate(x, y, z)
+  return g
+}
+
+function sphere(r: number, x = 0, y = 0, z = 0, ws = 20, hs = 14): THREE.BufferGeometry {
   const g = new THREE.SphereGeometry(r, ws, hs)
   g.translate(x, y, z)
   return g
 }
 
-function torus(r: number, tube: number, x = 0, y = 0, z = 0, radial = 8, tubular = 24): THREE.TorusGeometry {
+function torus(r: number, tube: number, x = 0, y = 0, z = 0, radial = 10, tubular = 40): THREE.BufferGeometry {
   const g = new THREE.TorusGeometry(r, tube, radial, tubular)
   g.translate(x, y, z)
   return g
 }
 
 function gear(r: number, thickness: number, teeth: number, x = 0, y = 0, z = 0): THREE.BufferGeometry[] {
-  const parts: THREE.BufferGeometry[] = [cyl(r - 0.06, r - 0.06, thickness, x, y, z, 32)]
+  const parts: THREE.BufferGeometry[] = [disc(r - 0.05, thickness, x, y, z, 40)]
+  parts.push(cyl(0.025, 0.025, thickness + 0.04, x, y, z, 16))
   for (let i = 0; i < teeth; i++) {
     const a = (i / teeth) * Math.PI * 2
-    parts.push(
-      box(
-        0.07,
-        thickness + 0.02,
-        0.07,
-        x + Math.cos(a) * r,
-        y,
-        z + Math.sin(a) * r
-      )
-    )
+    const t = box(0.06, thickness, 0.07)
+    t.rotateY(-a)
+    t.translate(x + Math.cos(a) * (r - 0.01), y, z + Math.sin(a) * (r - 0.01))
+    parts.push(t)
   }
   return parts
 }
 
+// ---- materials -------------------------------------------------------------
+
+interface Finish {
+  color: number
+  roughness: number
+  metalness: number
+  /** Optional faint glow (screens, filaments, nodes). */
+  emissive?: number
+  emissiveIntensity?: number
+}
+
+const FINISH = {
+  brass: { color: 0xc8a062, roughness: 0.32, metalness: 1 },
+  bronze: { color: 0x7a5a3a, roughness: 0.42, metalness: 0.85 },
+  walnut: { color: 0x4a2c1c, roughness: 0.55, metalness: 0 },
+  leather: { color: 0x6b2e1f, roughness: 0.62, metalness: 0 },
+  paper: { color: 0xefe5cc, roughness: 0.9, metalness: 0 },
+  manila: { color: 0xe3d3a6, roughness: 0.85, metalness: 0 },
+  aluminium: { color: 0xb9bdc3, roughness: 0.32, metalness: 0.95 },
+  steelPaint: { color: 0x3b4148, roughness: 0.48, metalness: 0.55 },
+  pcb: { color: 0x1d5a3b, roughness: 0.5, metalness: 0.05 },
+  ceramic: { color: 0x1a1a1c, roughness: 0.35, metalness: 0.1 },
+  ocean: { color: 0x2c6a93, roughness: 0.42, metalness: 0.05 },
+  bakelite: { color: 0x2b1e16, roughness: 0.3, metalness: 0.05 },
+  beige: { color: 0xd8ccb2, roughness: 0.48, metalness: 0 },
+  screen: { color: 0x0e1a14, roughness: 0.12, metalness: 0.1, emissive: 0x2f6b4a, emissiveIntensity: 0.35 },
+  filament: { color: 0xffd9a0, roughness: 0.3, metalness: 0, emissive: 0xff9a3c, emissiveIntensity: 0.9 },
+  node: { color: 0xffc070, roughness: 0.25, metalness: 0.1, emissive: 0xff9a3c, emissiveIntensity: 0.35 },
+  marble: { color: 0xe9e2d4, roughness: 0.28, metalness: 0 },
+  pine: { color: 0xb38b5a, roughness: 0.78, metalness: 0 },
+  gold: { color: 0xd7a650, roughness: 0.22, metalness: 1 },
+  copper: { color: 0xb8733f, roughness: 0.3, metalness: 1 }
+} satisfies Record<string, Finish>
+
+type FinishName = keyof typeof FINISH
+
 // ---- kits ------------------------------------------------------------------
 
-type Parts = { base: THREE.BufferGeometry[]; accent: THREE.BufferGeometry[] }
-
-function kitGears(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(...gear(0.28 * scale, 0.08 * scale, 10, -0.14 * scale, 0.2 * scale, 0))
-  base.push(...gear(0.18 * scale, 0.08 * scale, 8, 0.14 * scale, 0.12 * scale, 0))
-  base.push(box(0.62 * scale, 0.04 * scale, 0.62 * scale, 0, 0.02 * scale, 0))
-  return { base, accent: [] }
+interface Kit {
+  primary: THREE.BufferGeometry[]
+  primaryFinish: FinishName
+  secondary: THREE.BufferGeometry[]
+  secondaryFinish: FinishName
 }
 
-function kitBook(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const w = 0.4 * scale
-  const t = 0.05 * scale
-  const h = 0.56 * scale
-  base.push(box(w, t, h, -w / 2, 0.02 * scale, 0))
-  // two open leaves angled upward
-  base.push(box(w / 2, t, h, -w / 2, t + 0.08 * scale, 0))
-  base.push(box(w / 2, t, h, w / 2, t + 0.08 * scale, 0))
-  base[base.length - 1]!.rotateX(0.15)
-  base[base.length - 2]!.rotateX(-0.15)
-  // spine
-  base.push(box(0.05 * scale, t, h, 0, 0.05 * scale, 0))
-  return { base, accent: [] }
-}
-
-function kitCards(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const w = 0.4 * scale
-  const t = 0.012 * scale
-  const d = 0.18 * scale
-  for (let i = 0; i < 6; i++) {
-    base.push(box(w, t, d, 0, 0.02 * scale + i * t * 1.2, 0))
-  }
-  return { base, accent: [] }
-}
-
-function kitTubes(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(box(0.6 * scale, 0.06 * scale, 0.4 * scale, 0, 0.03 * scale, 0))
-  const accent: THREE.BufferGeometry[] = []
-  for (let i = 0; i < 5; i++) {
-    const x = (i - 2) * 0.11 * scale
-    base.push(cyl(0.035 * scale, 0.035 * scale, 0.42 * scale, x, 0.27 * scale, 0, 12))
-    accent.push(cyl(0.03 * scale, 0.03 * scale, 0.18 * scale, x, 0.18 * scale, 0, 12))
-  }
-  return { base, accent }
-}
-
-function kitChip(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const w = 0.6 * scale
-  const t = 0.03 * scale
-  base.push(box(w, t, w, 0, t / 2, 0))
-  base.push(box(0.3 * scale, 0.06 * scale, 0.3 * scale, 0, t + 0.03 * scale, 0))
-  for (let i = 0; i < 12; i++) {
-    const a = (i / 12) * Math.PI * 2
-    base.push(box(0.05 * scale, 0.05 * scale, 0.05 * scale, Math.cos(a) * w * 0.4, 0.06 * scale, Math.sin(a) * w * 0.4))
-  }
-  return { base, accent: [box(0.2 * scale, 0.02 * scale, 0.2 * scale, 0, t + 0.06 * scale, 0)] }
-}
-
-function kitRack(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const h = 1.8 * scale
-  base.push(box(0.7 * scale, h, 0.5 * scale, 0, h / 2, 0))
-  for (let i = 0; i < 4; i++) {
-    base.push(box(0.56 * scale, 0.1 * scale, 0.34 * scale, 0, 0.35 * scale + i * 0.32 * scale, 0.06 * scale))
-  }
-  return { base, accent: [] }
-}
-
-function kitGlobe(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(sphere(0.3 * scale, 0, 0.32 * scale, 0))
-  base.push(box(0.1 * scale, 0.02 * scale, 0.1 * scale, 0, 0.02 * scale, 0))
-  return { base, accent: [torus(0.42 * scale, 0.02 * scale, 0, 0.32 * scale, 0)] }
-}
-
-function kitScreen(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(box(0.6 * scale, 0.4 * scale, 0.06 * scale, 0, 0.34 * scale, 0))
-  base.push(box(0.1 * scale, 0.1 * scale, 0.1 * scale, 0, 0.06 * scale, 0))
-  return { base, accent: [box(0.52 * scale, 0.32 * scale, 0.01 * scale, 0, 0.34 * scale, 0.04 * scale)] }
-}
-
-function kitNeural(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const accent: THREE.BufferGeometry[] = []
-  // [x offset, node count] per layer (a small feed-forward net)
-  const layers: [number, number][] = [
-    [-0.2 * scale, 3],
-    [0, 5],
-    [0.2 * scale, 3]
+function kitGears(): Kit {
+  // Authored flat with height on -z, then stood upright: rotateX maps (x, 0, -h) to (x, h, 0).
+  const primary = [
+    ...gear(0.24, 0.05, 12, -0.15, 0, -0.33),
+    ...gear(0.16, 0.05, 9, 0.17, 0, -0.27),
+    ...gear(0.09, 0.05, 7, 0.19, 0, -0.5)
   ]
-  const prev: number[] = []
-  layers.forEach(([lx, count], li) => {
-    const ys: number[] = []
-    for (let i = 0; i < count; i++) {
-      const y = (i - (count - 1) / 2) * 0.12 * scale + 0.3 * scale
-      ys.push(y)
-      accent.push(sphere(0.05 * scale, lx, y, 0, 10, 8))
-    }
-    if (li > 0) {
-      for (const py of prev) {
-        for (const cy of ys) {
-          base.push(edgeCyl(py, cy, lx - 0.2 * scale, lx))
-        }
-      }
-    }
-    prev.length = 0
-    prev.push(...ys)
-  })
-  return { base, accent }
+  for (const g of primary) g.rotateX(Math.PI / 2)
+  const secondary = [
+    box(0.68, 0.05, 0.3, 0, 0.025, 0),
+    box(0.04, 0.33, 0.04, -0.15, 0.19, -0.05),
+    box(0.04, 0.27, 0.04, 0.17, 0.16, -0.05),
+    box(0.03, 0.5, 0.03, 0.19, 0.27, -0.08)
+  ]
+  return { primary, primaryFinish: 'brass', secondary, secondaryFinish: 'walnut' }
 }
 
-function edgeCyl(y0: number, y1: number, x0: number, x1: number): THREE.CylinderGeometry {
+function kitBook(): Kit {
+  const w = 0.38
+  const h = 0.52
+  const t = 0.018
+  const left = box(w / 2, t, h, -w / 4 - 0.01, 0.06, 0)
+  left.rotateZ(0.12)
+  const right = box(w / 2, t, h, w / 4 + 0.01, 0.06, 0)
+  right.rotateZ(-0.12)
+  const primary = [box(w + 0.04, t, h + 0.03, 0, 0.012, 0), box(0.04, 0.05, h + 0.03, 0, 0.035, 0)]
+  const secondary = [left, right]
+  for (let i = 1; i <= 3; i++) {
+    const page = box(w / 2 - 0.01, 0.004, h - 0.01, -w / 4 - 0.01, 0.07 + i * 0.006, 0)
+    page.rotateZ(0.12 - i * 0.02)
+    secondary.push(page)
+  }
+  // A reading stand behind the book.
+  const stand = box(0.3, 0.02, 0.24, 0, 0.12, -0.22)
+  stand.rotateX(-0.9)
+  primary.push(stand)
+  return { primary, primaryFinish: 'leather', secondary, secondaryFinish: 'paper' }
+}
+
+function kitCards(): Kit {
+  const w = 0.42
+  const d = 0.19
+  const t = 0.004
+  const primary: THREE.BufferGeometry[] = []
+  for (let i = 0; i < 14; i++) {
+    const card = box(w, t, d, (i % 3) * 0.004, 0.04 + i * t * 1.3, (i % 2) * 0.003)
+    card.rotateY(((i % 5) - 2) * 0.01)
+    primary.push(card)
+  }
+  const fanned = box(w, t, d, 0.1, 0.15, 0.16)
+  fanned.rotateY(0.5)
+  primary.push(fanned)
+  const secondary = [box(0.56, 0.035, 0.34, 0, 0.0175, 0.04)]
+  return { primary, primaryFinish: 'manila', secondary, secondaryFinish: 'walnut' }
+}
+
+function kitTubes(): Kit {
+  const primary: THREE.BufferGeometry[] = [box(0.62, 0.08, 0.32, 0, 0.04, 0)]
+  const secondary: THREE.BufferGeometry[] = []
+  for (let i = 0; i < 5; i++) {
+    const x = (i - 2) * 0.11
+    primary.push(disc(0.04, 0.03, x, 0.095, 0, 20))
+    primary.push(cyl(0.032, 0.036, 0.3, x, 0.26, 0, 20))
+    primary.push(sphere(0.032, x, 0.41, 0, 16, 10))
+    secondary.push(cyl(0.008, 0.008, 0.16, x, 0.24, 0, 8))
+  }
+  for (const x of [-0.27, 0.27]) primary.push(cyl(0.015, 0.015, 0.04, x, 0.1, 0.12, 12))
+  return { primary, primaryFinish: 'aluminium', secondary, secondaryFinish: 'filament' }
+}
+
+function kitChip(): Kit {
+  const w = 0.58
+  const primary: THREE.BufferGeometry[] = [box(w, 0.025, w * 0.72, 0, 0.0125, 0)]
+  for (let i = 0; i < 6; i++) primary.push(box(0.012, 0.004, w * 0.6, -0.22 + i * 0.012 * 3, 0.027, 0))
+  const secondary: THREE.BufferGeometry[] = [box(0.24, 0.045, 0.24, 0, 0.05, 0)]
+  for (let s = -1; s <= 1; s += 2) {
+    for (let i = 0; i < 8; i++) {
+      secondary.push(box(0.012, 0.02, 0.04, -0.105 + i * 0.03, 0.035, s * 0.135))
+    }
+  }
+  secondary.push(box(0.08, 0.03, 0.05, 0.19, 0.04, 0.1), box(0.06, 0.03, 0.06, -0.2, 0.04, -0.09))
+  return { primary, primaryFinish: 'pcb', secondary, secondaryFinish: 'ceramic' }
+}
+
+function kitRack(): Kit {
+  const h = 1.8
+  const primary: THREE.BufferGeometry[] = [
+    box(0.72, h, 0.6, 0, h / 2 + 0.06, 0),
+    box(0.76, 0.06, 0.64, 0, 0.03, 0),
+    box(0.76, 0.04, 0.64, 0, h + 0.08, 0)
+  ]
+  const secondary: THREE.BufferGeometry[] = []
+  for (let i = 0; i < 6; i++) {
+    const y = 0.3 + i * 0.26
+    secondary.push(box(0.6, 0.2, 0.03, 0, y, 0.31))
+    secondary.push(disc(0.03, 0.02, 0, 0, 0, 16).rotateX(Math.PI / 2).translate(-0.22, y, 0.33))
+    secondary.push(box(0.22, 0.012, 0.012, 0.1, y + 0.05, 0.33))
+  }
+  return { primary, primaryFinish: 'steelPaint', secondary, secondaryFinish: 'aluminium' }
+}
+
+function kitGlobe(): Kit {
+  const primary = [sphere(0.25, 0, 0.34, 0, 40, 28)]
+  const ring = torus(0.29, 0.01, 0, 0, 0, 8, 64)
+  ring.rotateZ(0.41)
+  ring.translate(0, 0.34, 0)
+  const secondary = [ring, disc(0.13, 0.03, 0, 0.015, 0, 40), cyl(0.012, 0.016, 0.1, 0, 0.07, 0, 12)]
+  return { primary, primaryFinish: 'ocean', secondary, secondaryFinish: 'brass' }
+}
+
+function kitScreen(): Kit {
+  const primary = [
+    box(0.5, 0.4, 0.42, 0, 0.3, -0.04),
+    box(0.3, 0.06, 0.24, 0, 0.03, 0),
+    box(0.46, 0.06, 0.18, 0, 0.03, 0.26)
+  ]
+  for (let i = 0; i < 4; i++) primary.push(box(0.07, 0.015, 0.05, -0.15 + i * 0.1, 0.07, 0.26))
+  const secondary = [box(0.38, 0.28, 0.02, 0, 0.31, 0.175)]
+  return { primary, primaryFinish: 'beige', secondary, secondaryFinish: 'screen' }
+}
+
+function edgeCyl(y0: number, y1: number, x0: number, x1: number): THREE.BufferGeometry {
   const dx = x1 - x0
   const dy = y1 - y0
   const len = Math.hypot(dx, dy)
-  const g = new THREE.CylinderGeometry(0.012, 0.012, len, 6)
+  const g = new THREE.CylinderGeometry(0.006, 0.006, len, 6)
+  g.rotateZ(Math.atan2(dy, dx) - Math.PI / 2)
   g.translate(x0 + dx / 2, y0 + dy / 2, 0)
-  g.rotateZ(Math.atan2(dy, dx))
   return g
 }
 
-function kitPortrait(scale: number, count: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  const heads: number[] = count === 1 ? [0] : [-0.14 * scale, 0, 0.14 * scale]
+function kitNeural(): Kit {
+  const primary: THREE.BufferGeometry[] = [box(0.6, 0.03, 0.2, 0, 0.015, 0), cyl(0.012, 0.012, 0.06, -0.25, 0.05, 0), cyl(0.012, 0.012, 0.06, 0.25, 0.05, 0)]
+  const secondary: THREE.BufferGeometry[] = []
+  const layers: [number, number][] = [
+    [-0.22, 3],
+    [0, 5],
+    [0.22, 3]
+  ]
+  let prev: number[] = []
+  layers.forEach(([lx, count], li) => {
+    const ys: number[] = []
+    for (let i = 0; i < count; i++) {
+      const y = (i - (count - 1) / 2) * 0.11 + 0.32
+      ys.push(y)
+      secondary.push(sphere(0.035, lx, y, 0, 16, 10))
+    }
+    if (li > 0) {
+      const px = layers[li - 1]?.[0] ?? 0
+      for (const py of prev) for (const cy of ys) primary.push(edgeCyl(py, cy, px, lx))
+    }
+    prev = ys
+  })
+  return { primary, primaryFinish: 'aluminium', secondary, secondaryFinish: 'node' }
+}
+
+function kitPortrait(count: number): Kit {
+  const primary: THREE.BufferGeometry[] = []
+  const heads = count === 1 ? [0] : [-0.15, 0, 0.15]
   for (const hx of heads) {
-    base.push(sphere(0.12 * scale, hx, 0.28 * scale, 0, 16, 12))
-    base.push(cyl(0.04 * scale, 0.05 * scale, 0.08 * scale, hx, 0.14 * scale, 0, 12))
+    const s = count === 1 ? 1 : 0.75
+    primary.push(sphere(0.085 * s, hx, 0.3 * s + 0.08, 0, 24, 16))
+    primary.push(cyl(0.035 * s, 0.045 * s, 0.07 * s, hx, 0.22 * s + 0.07, 0, 16))
+    const shoulders = sphere(0.12 * s, 0, 0, 0, 24, 12)
+    shoulders.scale(1, 0.55, 0.6)
+    shoulders.translate(hx, 0.13 * s + 0.08, 0)
+    primary.push(shoulders)
   }
-  base.push(box(0.7 * scale, 0.05 * scale, 0.3 * scale, 0, 0.025 * scale, 0))
-  return { base, accent: [] }
+  const secondary = [box(0.62, 0.06, 0.26, 0, 0.03, 0), box(0.5, 0.03, 0.22, 0, 0.075, 0)]
+  return { primary, primaryFinish: 'bronze', secondary, secondaryFinish: 'marble' }
 }
 
-function kitCrate(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(box(0.5 * scale, 0.28 * scale, 0.4 * scale, 0, 0.14 * scale, 0))
-  base.push(box(0.4 * scale, 0.24 * scale, 0.34 * scale, 0, 0.42 * scale, 0))
-  base.push(box(0.06 * scale, 0.06 * scale, 0.06 * scale, 0, 0.02 * scale, 0))
-  return { base, accent: [] }
+function kitCrate(): Kit {
+  const primary = [box(0.48, 0.26, 0.38, 0, 0.13, 0), box(0.38, 0.22, 0.3, 0.02, 0.37, -0.02)]
+  const secondary: THREE.BufferGeometry[] = []
+  for (const y of [0.04, 0.22]) secondary.push(box(0.5, 0.025, 0.4, 0, y, 0))
+  secondary.push(box(0.4, 0.02, 0.32, 0.02, 0.46, -0.02))
+  return { primary, primaryFinish: 'pine', secondary, secondaryFinish: 'bronze' }
 }
 
-function kitDial(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(box(0.55 * scale, 0.4 * scale, 0.12 * scale, 0, 0.24 * scale, 0))
-  base.push(cyl(0.12 * scale, 0.12 * scale, 0.05 * scale, 0, 0.3 * scale, 0.08 * scale, 24))
-  for (const dx of [-0.14 * scale, 0.14 * scale]) {
-    base.push(box(0.05 * scale, 0.05 * scale, 0.02 * scale, dx, 0.1 * scale, 0.08 * scale))
+function kitDial(): Kit {
+  const primary = [box(0.52, 0.38, 0.16, 0, 0.21, 0), box(0.56, 0.03, 0.2, 0, 0.015, 0)]
+  for (const dx of [-0.16, 0.16]) primary.push(disc(0.028, 0.03, 0, 0, 0, 20).rotateX(Math.PI / 2).translate(dx, 0.08, 0.09))
+  const face = disc(0.12, 0.02, 0, 0, 0, 40)
+  face.rotateX(Math.PI / 2)
+  face.translate(0, 0.25, 0.085)
+  const secondary = [face, torus(0.125, 0.008, 0, 0.25, 0.09, 8, 48)]
+  const needle = box(0.008, 0.1, 0.004, 0, 0.29, 0.1)
+  needle.rotateZ(0.5)
+  secondary.push(needle)
+  return { primary, primaryFinish: 'bakelite', secondary, secondaryFinish: 'brass' }
+}
+
+function kitScale(): Kit {
+  const primary = [
+    cyl(0.018, 0.022, 0.5, 0, 0.29, 0, 16),
+    box(0.58, 0.02, 0.03, 0, 0.55, 0),
+    sphere(0.03, 0, 0.56, 0),
+    disc(0.08, 0.02, -0.26, 0.42, 0, 32),
+    disc(0.08, 0.02, 0.26, 0.42, 0, 32)
+  ]
+  for (const sx of [-0.26, 0.26]) {
+    primary.push(cyl(0.003, 0.003, 0.13, sx - 0.05, 0.49, 0, 6), cyl(0.003, 0.003, 0.13, sx + 0.05, 0.49, 0, 6))
   }
-  return { base, accent: [cyl(0.1 * scale, 0.1 * scale, 0.02 * scale, 0, 0.3 * scale, 0.1 * scale, 24)] }
+  const secondary = [box(0.3, 0.05, 0.22, 0, 0.025, 0)]
+  return { primary, primaryFinish: 'brass', secondary, secondaryFinish: 'walnut' }
 }
 
-function kitScale(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(cyl(0.03 * scale, 0.03 * scale, 0.6 * scale, 0, 0.3 * scale, 0, 10))
-  base.push(box(0.6 * scale, 0.03 * scale, 0.04 * scale, 0, 0.56 * scale, 0))
-  base.push(cyl(0.08 * scale, 0.08 * scale, 0.03 * scale, -0.26 * scale, 0.45 * scale, 0, 16))
-  base.push(cyl(0.08 * scale, 0.08 * scale, 0.03 * scale, 0.26 * scale, 0.45 * scale, 0, 16))
-  base.push(box(0.1 * scale, 0.02 * scale, 0.1 * scale, 0, 0.02 * scale, 0))
-  return { base, accent: [] }
-}
-
-function kitQuantum(scale: number): Parts {
-  const base: THREE.BufferGeometry[] = []
-  base.push(sphere(0.12 * scale, 0, 0.2 * scale, 0, 16, 12))
-  base.push(cyl(0.02 * scale, 0.02 * scale, 0.4 * scale, 0, 0.2 * scale, 0, 8))
-  return {
-    base,
-    accent: [
-      torus(0.18 * scale, 0.02 * scale, 0, 0.2 * scale, 0),
-      torus(0.3 * scale, 0.02 * scale, 0, 0.36 * scale, 0),
-      torus(0.44 * scale, 0.02 * scale, 0, 0.52 * scale, 0)
-    ]
-  }
+function kitQuantum(): Kit {
+  const primary: THREE.BufferGeometry[] = []
+  const tiers = [0.48, 0.34, 0.2]
+  tiers.forEach((y, i) => {
+    primary.push(disc(0.2 - i * 0.04, 0.018, 0, y, 0, 40))
+    for (let k = 0; k < 6; k++) {
+      const a = (k / 6) * Math.PI * 2
+      primary.push(cyl(0.006, 0.006, 0.14, Math.cos(a) * (0.14 - i * 0.03), y - 0.075, Math.sin(a) * (0.14 - i * 0.03), 6))
+    }
+  })
+  primary.push(cyl(0.02, 0.02, 0.1, 0, 0.11, 0, 16), disc(0.05, 0.02, 0, 0.055, 0, 24))
+  const secondary: THREE.BufferGeometry[] = [disc(0.24, 0.025, 0, 0.53, 0, 48), box(0.36, 0.03, 0.36, 0, 0.015, 0)]
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) secondary.push(cyl(0.008, 0.008, 0.52, sx * 0.15, 0.28, sz * 0.15, 8))
+  return { primary, primaryFinish: 'gold', secondary, secondaryFinish: 'copper' }
 }
 
 type KitName =
@@ -335,95 +442,84 @@ const MODELS: Record<string, ModelSpec> = {
   X1: { kit: 'quantum', footprint: 'plinth' }
 }
 
-// Base colors are brightened well above the "near black" original palette so the
-// objects read against the stone/timber interior under the dim baked-lightmap
-// lighting (hemisphere drops to 0.05 once lightmaps load). Each base material
-// also carries a small self-emissive lift (see buildScene) matching the visible
-// white-glow placeholder icons these replace.
-const BASE_COLORS: Record<KitName, number> = {
-  gears: 0xd0a862,
-  book: 0xa4713f,
-  cards: 0xe8e2cf,
-  tubes: 0x78808a,
-  chip: 0x2f6b4f,
-  rack: 0x6a7178,
-  globe: 0x3f8fb8,
-  screen: 0x4a5159,
-  neural: 0x7a838c,
-  portrait: 0xd6cfc0,
-  crate: 0xb98a52,
-  dial: 0x6a7178,
-  scale: 0xb0b6bd,
-  quantum: 0x555c66
-}
+/** Floor-standing pieces other than racks are shown at a larger scale on their dais. */
+const FLOOR_SCALE: Partial<Record<KitName, number>> = { quantum: 2.4, neural: 2.2 }
 
-const ACCENT_COLOR = 0xffe3a8
-
-function buildParts(spec: ModelSpec): Parts {
+function buildKit(spec: ModelSpec): Kit {
   switch (spec.kit) {
     case 'gears':
-      return kitGears(1)
+      return kitGears()
     case 'book':
-      return kitBook(1)
+      return kitBook()
     case 'cards':
-      return kitCards(1)
+      return kitCards()
     case 'tubes':
-      return kitTubes(1)
+      return kitTubes()
     case 'chip':
-      return kitChip(1)
+      return kitChip()
     case 'rack':
-      return kitRack(1)
+      return kitRack()
     case 'globe':
-      return kitGlobe(1)
+      return kitGlobe()
     case 'screen':
-      return kitScreen(1)
+      return kitScreen()
     case 'neural':
-      return kitNeural(1)
+      return kitNeural()
     case 'portrait':
-      return kitPortrait(1, spec.portraitCount ?? 1)
+      return kitPortrait(spec.portraitCount ?? 1)
     case 'crate':
-      return kitCrate(1)
+      return kitCrate()
     case 'dial':
-      return kitDial(1)
+      return kitDial()
     case 'scale':
-      return kitScale(1)
+      return kitScale()
     case 'quantum':
-      return kitQuantum(1)
+      return kitQuantum()
   }
+}
+
+function material(name: FinishName): THREE.MeshStandardMaterial {
+  const f: Finish = FINISH[name]
+  const m = new THREE.MeshStandardMaterial({
+    color: f.color,
+    roughness: f.roughness,
+    metalness: f.metalness
+  })
+  m.name = name
+  if (f.emissive !== undefined) {
+    m.emissive.set(f.emissive)
+    m.emissiveIntensity = f.emissiveIntensity ?? 1
+  }
+  return m
+}
+
+/** Merges geometries that may mix indexed and non-indexed inputs. */
+function merge(parts: THREE.BufferGeometry[]): THREE.BufferGeometry | null {
+  if (parts.length === 0) return null
+  const flat = parts.map((g) => {
+    const n = g.index ? g.toNonIndexed() : g
+    for (const name of Object.keys(n.attributes)) {
+      if (name !== 'position' && name !== 'normal' && name !== 'uv') n.deleteAttribute(name)
+    }
+    return n
+  })
+  return mergeGeometries(flat, false)
 }
 
 function buildScene(spec: ModelSpec): { scene: THREE.Scene; meshes: THREE.Mesh[] } {
-  const parts = buildParts(spec)
+  const kit = buildKit(spec)
   const scene = new THREE.Scene()
   const meshes: THREE.Mesh[] = []
-
-  const baseMat = new THREE.MeshStandardMaterial({
-    color: BASE_COLORS[spec.kit],
-    roughness: 0.5,
-    metalness: 0.1,
-    emissive: BASE_COLORS[spec.kit],
-    emissiveIntensity: 0.32
-  })
-  const baseMerged = mergeGeometries(parts.base, false)
-  if (baseMerged) {
-    baseMerged.computeVertexNormals()
-    meshes.push(new THREE.Mesh(baseMerged, baseMat))
+  const scale = spec.footprint === 'floor' ? (FLOOR_SCALE[spec.kit] ?? 1) : 1
+  for (const [geos, finish] of [
+    [kit.primary, kit.primaryFinish],
+    [kit.secondary, kit.secondaryFinish]
+  ] as const) {
+    const merged = merge(geos)
+    if (!merged) continue
+    if (scale !== 1) merged.scale(scale, scale, scale)
+    meshes.push(new THREE.Mesh(merged, material(finish)))
   }
-
-  if (parts.accent.length > 0) {
-    const accentMat = new THREE.MeshStandardMaterial({
-      color: ACCENT_COLOR,
-      roughness: 0.4,
-      emissive: ACCENT_COLOR,
-      emissiveIntensity: 1.4
-    })
-    const accentMerged = mergeGeometries(parts.accent, false)
-    if (accentMerged) {
-      accentMerged.computeVertexNormals()
-      meshes.push(new THREE.Mesh(accentMerged, accentMat))
-    }
-  }
-
   for (const mesh of meshes) scene.add(mesh)
   return { scene, meshes }
 }
@@ -452,7 +548,7 @@ function ensureFileReader(): void {
   ;(globalThis as unknown as { FileReader: typeof NodeFileReader }).FileReader = NodeFileReader
 }
 
-async function exportGlb(id: string, spec: ModelSpec, target: string): Promise<number> {
+async function exportGlb(spec: ModelSpec, target: string): Promise<number> {
   ensureFileReader()
   const { scene, meshes } = buildScene(spec)
   const bytes = await new Promise<ArrayBuffer>((resolve, reject) => {
@@ -485,7 +581,8 @@ interface RawExhibitsFile {
 const FLOOR_FOOTPRINT = { w: 2.3, d: 2, h: 0.06, floor: true }
 
 function wireExhibits(exhibitsPath: string): void {
-  const raw = JSON.parse(readFileSync(exhibitsPath, 'utf8')) as RawExhibitsFile
+  const before = readFileSync(exhibitsPath, 'utf8')
+  const raw = JSON.parse(before) as RawExhibitsFile
   for (const exhibit of raw.exhibits) {
     const spec = MODELS[exhibit.id]
     if (!spec) continue
@@ -496,7 +593,8 @@ function wireExhibits(exhibitsPath: string): void {
       delete exhibit.footprint
     }
   }
-  writeFileSync(exhibitsPath, JSON.stringify(raw, null, 1).replace(/\r?\n/g, '\r\n') + '\r\n')
+  if (JSON.stringify(raw) === JSON.stringify(JSON.parse(before))) return
+  writeFileSync(exhibitsPath, JSON.stringify(raw, null, 2) + '\n')
 }
 
 // ---- entry ----------------------------------------------------------------
@@ -508,7 +606,7 @@ async function main(): Promise<void> {
   for (const id of ids) {
     const spec = MODELS[id] as ModelSpec
     const target = join(outDir, `${id}.glb`)
-    const bytes = await exportGlb(id, spec, target)
+    const bytes = await exportGlb(spec, target)
     console.log(`generated ${id} -> ${target} (${bytes} bytes)`)
   }
   wireExhibits(exhibitsPath)
