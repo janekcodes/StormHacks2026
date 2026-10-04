@@ -1,7 +1,7 @@
 'use client'
 
 import type { ExhibitAudio } from '@museum/content/schema'
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useId, useMemo, useState, useSyncExternalStore } from 'react'
 import { parseAlignment, type AlignmentFile } from './alignment'
 import { getActiveAudio, isMuted, setMuted, subscribe } from './narratorBus'
 
@@ -16,6 +16,17 @@ function wordIndexAt(words: readonly AlignmentFile['words'][number][], ms: numbe
     if (word && ms >= word.startMs && ms <= word.endMs) return i
   }
   return -1
+}
+
+/** Index of the sentence each word belongs to; a word ending in . ? or ! closes a sentence. */
+export function sentenceIndexes(words: readonly { text: string }[]): number[] {
+  const out: number[] = []
+  let sentence = 0
+  for (const word of words) {
+    out.push(sentence)
+    if (/[.?!]["')\]]*$/.test(word.text)) sentence++
+  }
+  return out
 }
 
 const serverSnapshot = (): HTMLAudioElement | null => null
@@ -34,7 +45,17 @@ export function Narrator({ audio, title }: NarratorProps) {
   const [muted, setMutedState] = useState(isMuted())
   const [speed, setSpeed] = useState<1 | 1.25>(1)
   const [currentWord, setCurrentWord] = useState(-1)
+  const [shownSentence, setShownSentence] = useState(0)
+  const [transcript, setTranscript] = useState(false)
   const [error, setError] = useState(false)
+  const transcriptId = useId()
+  const sentenceOf = useMemo(() => (words ? sentenceIndexes(words.words) : []), [words])
+
+  // Between words (index -1) the strip keeps the last sentence instead of blanking.
+  useEffect(() => {
+    const sentence = sentenceOf[currentWord]
+    if (sentence !== undefined) setShownSentence(sentence)
+  }, [currentWord, sentenceOf])
 
   useEffect(() => {
     let alive = true
@@ -114,47 +135,67 @@ export function Narrator({ audio, title }: NarratorProps) {
     if (current) current.playbackRate = next
   }
 
+  const renderWord = (word: AlignmentFile['words'][number], index: number) => (
+    <span
+      key={`${index}-${word.text}`}
+      className={index === currentWord ? 'narrator-word narrator-word-current' : 'narrator-word'}
+    >
+      {word.text}{' '}
+    </span>
+  )
+
   return (
-    <div className="narrator" data-testid="narrator">
-      <div className="narrator-controls">
-        <button
-          type="button"
-          className="btn"
-          onClick={togglePlay}
-          aria-label={playing ? `Pause narration for ${title}` : `Play narration for ${title}`}
-        >
-          {playing ? 'Pause' : 'Play'}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          onClick={toggleMute}
-          aria-pressed={muted}
-          aria-label={muted ? 'Unmute narration' : 'Mute narration'}
-        >
-          {muted ? 'Unmute' : 'Mute'}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          onClick={toggleSpeed}
-          aria-pressed={speed !== 1}
-          aria-label="Playback speed"
-        >
-          {speed}x
-        </button>
+    <div className="narrator" data-testid="narrator" data-transcript={transcript ? 'open' : 'closed'}>
+      <div className="narrator-bar">
+        <div className="narrator-controls">
+          <button
+            type="button"
+            className="btn"
+            onClick={togglePlay}
+            aria-label={playing ? `Pause narration for ${title}` : `Play narration for ${title}`}
+          >
+            {playing ? 'Pause' : 'Play'}
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={toggleMute}
+            aria-pressed={muted}
+            aria-label={muted ? 'Unmute narration' : 'Mute narration'}
+          >
+            {muted ? 'Unmute' : 'Mute'}
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={toggleSpeed}
+            aria-pressed={speed !== 1}
+            aria-label="Playback speed"
+          >
+            {speed}x
+          </button>
+        </div>
+        {words && !transcript ? (
+          <p className="narrator-strip" data-testid="narrator-strip" aria-hidden="true">
+            {words.words.map((word, index) => (sentenceOf[index] === shownSentence ? renderWord(word, index) : null))}
+          </p>
+        ) : null}
+        {words ? (
+          <button
+            type="button"
+            className="btn narrator-toggle"
+            aria-expanded={transcript}
+            aria-controls={transcriptId}
+            onClick={() => setTranscript((open) => !open)}
+          >
+            {transcript ? 'Hide transcript' : 'Transcript'}
+          </button>
+        ) : null}
       </div>
       {error ? <p className="narrator-error">Narration unavailable.</p> : null}
       {words ? (
-        <p className="narrator-captions" aria-hidden="true">
-          {words.words.map((word, index) => (
-            <span
-              key={`${index}-${word.text}`}
-              className={index === currentWord ? 'narrator-word narrator-word-current' : 'narrator-word'}
-            >
-              {word.text}{' '}
-            </span>
-          ))}
+        <p id={transcriptId} className="narrator-captions" hidden={!transcript}>
+          {words.words.map(renderWord)}
         </p>
       ) : null}
     </div>
