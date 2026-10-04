@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import type { Object3D, SpotLight } from 'three'
 import { useExhibitUi } from './ui'
 import { usePlayer } from '../player/usePlayer'
+import { useGuideStore } from '../guide/state'
 
 const SPOT_COUNT = 6
 
@@ -20,6 +21,7 @@ export function SpotPool({ exhibits }: { exhibits: readonly Exhibit[] }) {
     frame.current += 1
     const { x, z } = usePlayer.getState()
     const { focusId, hoverId } = useExhibitUi.getState()
+    const highlightIds = useGuideStore.getState().highlightIds
 
     if (frame.current % 8 === 1) {
       const near: { index: number; dist: number }[] = []
@@ -56,8 +58,9 @@ export function SpotPool({ exhibits }: { exhibits: readonly Exhibit[] }) {
       target.position.set(exhibit.position.x, 1, exhibit.position.z)
       if (light.target !== target) light.target = target
       target.updateMatrixWorld()
+      const highlighted = highlightIds.includes(exhibit.id)
       const hot = exhibit.id === focusId || exhibit.id === hoverId
-      const want = hot ? 1.9 : 1.2
+      const want = highlighted ? 2.6 : hot ? 1.9 : 1.2
       light.intensity += (want - light.intensity) * 0.15
     }
   })

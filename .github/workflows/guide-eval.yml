@@ -1,0 +1,54 @@
+name: Guide eval
+
+# Scores the guide against golden questions and commits the report. Runs
+# nightly and whenever the guide package or its model changes. The Gemini key
+# never leaves the server.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/guide/**'
+      - 'packages/content/data/exhibits.json'
+  pull_request:
+    paths:
+      - 'packages/guide/**'
+      - 'packages/content/data/exhibits.json'
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter @museum/content build
+      - run: pnpm --filter @museum/guide build
+
+      - name: Run guide eval
+        run: pnpm --filter @museum/guide eval
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GUIDE_MODEL: ${{ secrets.GUIDE_MODEL }}
+
+      - name: Commit eval report
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'guide: update eval report'
+          file_pattern: 'docs/guide/report.md'

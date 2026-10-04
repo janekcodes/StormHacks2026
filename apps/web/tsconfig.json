@@ -21,6 +21,8 @@
         "../../packages/content/generated/standpoints.json"
       ],
       "@museum/content/data/exhibits.json": ["../../packages/content/data/exhibits.json"],
+      "@museum/guide": ["../../packages/guide/src/index.ts"],
+      "@museum/guide/client": ["../../packages/guide/src/client.ts"],
       "@museum/portal-a1": ["../../packages/portals/a1/src/index.ts"],
       "@museum/portal-b2": ["../../packages/portals/b2/src/index.ts"],
       "@museum/portal-b3": ["../../packages/portals/b3/src/index.ts"],

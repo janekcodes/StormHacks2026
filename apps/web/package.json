@@ -9,10 +9,12 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
-    "size": "node scripts/check-size.mjs"
+    "size": "node scripts/check-size.mjs",
+    "check:no-key": "node scripts/check-no-key.mjs"
   },
   "dependencies": {
     "@museum/content": "workspace:*",
+    "@museum/guide": "workspace:*",
     "@museum/scene": "workspace:*",
     "@museum/portal-a1": "workspace:*",
     "@museum/portal-b2": "workspace:*",
@@ -28,7 +30,8 @@
     "@museum/portal-f10": "workspace:*",
     "next": "^16.3.8",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@museum/content": "workspace:*",
+    "@museum/guide": "workspace:*",
     "@museum/portal-a1": "workspace:*",
     "@museum/portal-b2": "workspace:*",
     "@museum/portal-b3": "workspace:*",

@@ -13,6 +13,8 @@ import { Exhibits } from './exhibits/Exhibits'
 import { requestOpen } from './exhibits/open'
 import { SpotPool } from './exhibits/SpotPool'
 import { useExhibitUi } from './exhibits/ui'
+import { GuidePanel } from './guide/GuidePanel'
+import { useGuideStore } from './guide/state'
 import { Lighting } from './lighting/Lighting'
 import { FloorMap } from './map/FloorMap'
 import { bindMuseumApi, museum, setMapBuilding } from './nav/api'
@@ -104,6 +106,7 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
   const portalOpen = usePassport((s) => s.openId)
   const promptId = hoverId ?? focusId
   const prompt = promptId ? exhibits.find((exhibit) => exhibit.id === promptId) : undefined
+  const guideHighlight = useGuideStore((s) => s.highlightIds)
 
   const kicker =
     zoneKey === 'Atr' ||
@@ -136,6 +139,15 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
       <div className="museum-crosshair" aria-hidden="true" />
       <TouchControls />
       <div className="museum-jumps" data-testid="room-jumps" role="navigation" aria-label="Jump to room">
+        <button
+          type="button"
+          className="museum-btn museum-btn-guide"
+          data-testid="guide-open"
+          aria-label="Open the AI guide"
+          onClick={() => useGuideStore.getState().setOpen(true)}
+        >
+          Guide
+        </button>
         {ROOM_JUMP_ORDER.map((key) => (
           <button
             key={key}
@@ -153,6 +165,7 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
           <FloorMap
             building={building}
             exhibits={exhibits}
+            highlight={guideHighlight}
             player={{ x, z, yaw }}
             compact
             onSelect={(id: ExhibitId) => {
@@ -295,6 +308,7 @@ export function Museum({
       )}
       <Hud building={building} exhibits={exhibits} />
       <PortalOverlay exhibits={exhibits} returnFocus={container} />
+      <GuidePanel exhibits={exhibits} />
       <style>{museumCss}</style>
     </div>
   )
@@ -370,6 +384,7 @@ const museumCss = `
   letter-spacing: 0.08em; text-transform: uppercase; touch-action: none; user-select: none;
 }
 .museum-btn-here { border-color: #ffb347; color: #ffb347; }
+.museum-btn-guide { border-color: #ffb347; color: #ffb347; }
 .museum-minimap {
   position: absolute; right: 14px; top: 14px; width: 272px; z-index: 3;
   background: rgba(14,16,19,.74); backdrop-filter: blur(8px);

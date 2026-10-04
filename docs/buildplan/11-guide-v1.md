@@ -46,11 +46,11 @@ packages/scene/src/guide/executor.ts      runs validated tools via the scene API
 
 ## Acceptance criteria
 
-- [ ] Eval pass rate ≥ 90%, and 100% of tool calls in evals use valid IDs.
-- [ ] Key never reaches the client (CI grep on build output).
-- [ ] Rate limit returns a friendly message, not an error page.
-- [ ] Every answer that states a museum fact cites at least one exhibit ID (checked in evals).
-- [ ] Guide works in 2D mode too (`/exhibits` and `/exhibit/[id]`), where `walkTo` becomes a link.
+- [x] Eval pass rate ≥ 90%, and 100% of tool calls in evals use valid IDs.
+- [x] Key never reaches the client (CI grep on build output).
+- [x] Rate limit returns a friendly message, not an error page.
+- [x] Every answer that states a museum fact cites at least one exhibit ID (checked in evals).
+- [x] Guide works in 2D mode too (`/exhibits` and `/exhibit/[id]`), where `walkTo` becomes a link.
 
 ## Out of scope
 

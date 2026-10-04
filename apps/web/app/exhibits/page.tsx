@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BANDS, type Band, type Exhibit } from '@museum/content/schema'
 import { ZONES } from '@museum/content/zones'
 import { SiteNav } from '../../components/SiteNav'
+import { GuideWidget } from '../../components/GuideWidget'
 import { bandLabel, tierLabel } from '../../lib/exhibit-copy'
 import { exhibits } from '../../lib/museum-data'
 import styles from '../museum.module.css'
@@ -77,6 +78,7 @@ export default function ExhibitsPage() {
           )
         })}
       </main>
+      <GuideWidget exhibits={exhibits} />
     </div>
   )
 }

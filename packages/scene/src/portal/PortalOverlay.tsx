@@ -14,6 +14,7 @@ import {
 } from 'react'
 import { Narrator } from '../audio/Narrator'
 import { closePortal, showNeighbour } from '../exhibits/open'
+import { useGuideStore } from '../guide/state'
 import { PASSPORT_TOTAL, passportCount, usePassport } from '../passport'
 import { portalLoader, type PortalModule } from './registry'
 
@@ -169,6 +170,17 @@ export function PortalOverlay({
             <div className="portal-actions">
               <button
                 type="button"
+                className="portal-btn portal-btn-guide"
+                data-testid="portal-ask-guide"
+                aria-label="Ask the AI guide about this exhibit"
+                onClick={() =>
+                  useGuideStore.getState().openSeeded(`Tell me about ${exhibit.id} (${exhibit.title}).`)
+                }
+              >
+                Ask the guide
+              </button>
+              <button
+                type="button"
                 className="portal-btn"
                 aria-label="Previous exhibit in this zone"
                 onClick={() => showNeighbour(exhibits, exhibit.id, -1)}
@@ -255,6 +267,7 @@ const overlayCss = `
 .portal-btn:hover { background: color-mix(in srgb, var(--t) 12%, transparent); }
 .portal-btn:focus-visible { outline: 2px solid #ffb347; outline-offset: 2px; }
 .portal-btn-close { border-color: var(--t); color: var(--t); }
+.portal-btn-guide { border-color: #ffb347; color: #ffb347; }
 .portal-planned {
   border-radius: 10px; border: 1px dashed color-mix(in srgb, var(--t) 50%, transparent);
   padding: 36px 24px; display: flex; flex-direction: column; align-items: center; gap: 12px;

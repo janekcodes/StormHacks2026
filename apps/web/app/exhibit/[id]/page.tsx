@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { EXHIBIT_IDS, type ExhibitId } from '@museum/content/schema'
 import { FloorMap } from '@museum/scene/map'
 import { ExhibitPortal } from '../../../components/ExhibitPortal'
+import { GuideWidget } from '../../../components/GuideWidget'
 import { SiteNav } from '../../../components/SiteNav'
 import {
   bandLabel,
@@ -183,6 +184,7 @@ export default async function ExhibitPage({ params }: PageProps) {
           </nav>
         </article>
       </main>
+      <GuideWidget exhibits={exhibits} currentExhibitId={exhibit.id} />
     </div>
   )
 }

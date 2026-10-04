@@ -38,7 +38,7 @@ The prototype files use a canvas-specific format (`<x-dc>` markup, `class Compon
 | 08 | [Port the 12 built portals](08-portal-packages.md) | 07 | §6, §7 | ☑ | |
 | 09 | [Exhibit models and asset pipeline](09-exhibit-models.md) | 07 | §7, §10 | ☑ | |
 | 10 | [Narration pipeline and player](10-narration.md) | 07, decision 7 | §12 | ☑ | |
-| 11 | [Guide v1 (text)](11-guide-v1.md) | 06, 07 | §11 | ☐ | |
+| 11 | [Guide v1 (text)](11-guide-v1.md) | 06, 07 | §11 | ☑ | |
 | 12 | [Guide speech](12-guide-speech.md) | 10, 11 | §11, §12 | ☐ | |
 | 13 | [Template: build one Core exhibit](13-core-exhibit-template.md) | 08, 09, 10 | §7, §8 | reusable | |
 
