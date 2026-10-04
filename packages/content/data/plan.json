@@ -1,0 +1,64 @@
+{
+  "origin": [1000, 640],
+  "scale": 0.07,
+  "atriumR": 150,
+  "concourseR": 232,
+  "outline": [
+    [300, 340],
+    [440, 200],
+    [1560, 200],
+    [1700, 340],
+    [1700, 1100],
+    [1660, 1140],
+    [1240, 1140],
+    [1240, 1040],
+    [1160, 1040]
+  ],
+  "outlineTail": [
+    [840, 1040],
+    [760, 1040],
+    [760, 1140],
+    [340, 1140],
+    [300, 1100]
+  ],
+  "bulge": {
+    "fromX": 1160,
+    "toX": 840,
+    "baseY": 1040,
+    "amplitude": 150,
+    "count": 25
+  },
+  "entranceGap": [10, 14],
+  "sectors": [
+    { "angle": 0, "zone": "F" },
+    { "angle": 45, "zone": "SX" },
+    { "angle": 90, "zone": "S" },
+    { "angle": 135, "zone": "A" },
+    { "angle": 180, "zone": "B" },
+    { "angle": 225, "zone": "C" },
+    { "angle": 270, "zone": "E" },
+    { "angle": 315, "zone": "D" }
+  ],
+  "seSplit": {
+    "angle": 45,
+    "society": [22.5, 45],
+    "futureLab": [45, 67.5]
+  },
+  "southSplit": {
+    "peopleMaxX": 935,
+    "shopMinX": 1065,
+    "alcoveCapY": 1040
+  },
+  "doors": {
+    "radial": { "widthPx": 34, "positions": [0.22, 0.52, 0.82] },
+    "frontWall": { "widthPx": 34, "positions": [0.78] },
+    "seSplit": { "widthPx": 34, "positions": [0.3, 0.8] },
+    "concourse": { "widthPx": 64, "positions": [0.5] },
+    "alcove": { "widthPx": 40, "positions": [0.55] }
+  },
+  "atriumGlassGap": {
+    "widthPx": 70,
+    "sides": ["N", "S", "E", "W"]
+  },
+  "bands": 3
+}

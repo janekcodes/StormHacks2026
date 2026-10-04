@@ -2,6 +2,10 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { ExhibitsFileSchema, type Exhibit, type ExhibitId } from './schema'
 
+export * from './schema'
+export * from './zones'
+export * from './plan-schema'
+
 const exhibitsPath = fileURLToPath(new URL('../data/exhibits.json', import.meta.url))
 const parsed = ExhibitsFileSchema.parse(JSON.parse(readFileSync(exhibitsPath, 'utf8')))
 
