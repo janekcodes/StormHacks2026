@@ -56,7 +56,7 @@ export type TourEffect =
   | { type: 'clearTimers' }
 
 /** Play time at each stop after its short line, before Auto advances. */
-export const PLAY_MS = 8000
+export const PLAY_MS = 11000
 export const CLIP_GRACE_MS = 3000
 export const WALK_TIMEOUT_MS = 15_000
 /** Timeout for a line with no generated audio yet (caption only). */

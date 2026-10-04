@@ -54,9 +54,9 @@ describe('tourContext().clipMs', () => {
     expect(ms).toBe(5000 + CLIP_GRACE_MS)
   })
 
-  it('a line without audio estimates from text length', () => {
+  it('a stop line without audio estimates from its text length', () => {
     const ms = ctx.clipMs('stop:0')
-    // 'Line without audio' is 3 words: 3 * 400 = 1200, but minimum is 1500
+    // stop[0].line text is 'Line without audio': 3 words, 3 * 400 = 1200, minimum 1500
     expect(ms).toBe(1500)
   })
 
