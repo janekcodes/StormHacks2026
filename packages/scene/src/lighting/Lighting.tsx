@@ -20,10 +20,10 @@ function CustomRoomEnv({ enabled }: { enabled: boolean }) {
     env.add(
       new THREE.Mesh(
         new THREE.BoxGeometry(24, 9, 24),
-        new THREE.MeshBasicMaterial({ color: 0x8c8983, side: THREE.BackSide })
+        new THREE.MeshBasicMaterial({ color: 0x918a7c, side: THREE.BackSide })
       )
     )
-    const panelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(5, 5, 4.8) })
+    const panelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(5, 4.6, 3.8) })
     for (const p of [
       [-5, 0],
       [5, 0],
@@ -36,7 +36,7 @@ function CustomRoomEnv({ enabled }: { enabled: boolean }) {
     }
     const fb = new THREE.Mesh(
       new THREE.BoxGeometry(24, 0.1, 24),
-      new THREE.MeshBasicMaterial({ color: 0x6d6862 })
+      new THREE.MeshBasicMaterial({ color: 0x6d6459 })
     )
     fb.position.y = -4.4
     env.add(fb)
@@ -99,14 +99,14 @@ export function Lighting({ quality }: { quality: QualityTier }) {
 
   return (
     <>
-      <color attach="background" args={[0xcfdde6]} />
-      <fog attach="fog" args={[0xd6dde2, 26, 80]} />
+      <color attach="background" args={[0xded9cf]} />
+      <fog attach="fog" args={[0xd8d3c8, 26, 80]} />
       <CustomRoomEnv enabled={settings.environment && !lightmapReady} />
-      <hemisphereLight args={[0xfffaf2, 0x8a8478, lightmapReady ? 0.05 : 0.3]} />
+      <hemisphereLight args={[0xfff6ea, 0x8a8272, lightmapReady ? 0.05 : 0.3]} />
       <directionalLight
         ref={sunRef}
-        color={0xfff6ea}
-        intensity={0.7}
+        color={0xfff0dc}
+        intensity={0.72}
         castShadow={settings.shadows}
       />
       <object3D ref={targetRef} />

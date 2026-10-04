@@ -12,27 +12,37 @@ function floorTexture(): THREE.CanvasTexture {
     1024,
     1024,
     (g, w, h) => {
-      g.fillStyle = '#ffffff'
+      // Warm honed-stone tiles: large square tiles with a subtle grout grid
+      // and gentle per-tile tonal variation for a natural museum floor.
+      g.fillStyle = '#e4ddcf'
       g.fillRect(0, 0, w, h)
-      for (let i = 0; i < 9000; i++) {
-        const v = (225 + Math.random() * 30) | 0
-        g.fillStyle = `rgba(${v},${v},${v},0.35)`
-        g.fillRect(Math.random() * w, Math.random() * h, 2, 2)
+      const cols = 4
+      const rows = 4
+      const tw = w / cols
+      const th = h / rows
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const v = 216 + Math.floor(Math.random() * 20)
+          g.fillStyle = `rgba(${v},${v - 6},${v - 16},0.5)`
+          g.fillRect(c * tw + 3, r * th + 3, tw - 6, th - 6)
+        }
       }
-      g.strokeStyle = 'rgba(70,64,56,0.22)'
-      g.lineWidth = 3
-      for (let i = 0; i <= 2; i++) {
+      g.strokeStyle = 'rgba(90,82,70,0.35)'
+      g.lineWidth = 4
+      for (let i = 0; i <= cols; i++) {
         g.beginPath()
-        g.moveTo((i * w) / 2, 0)
-        g.lineTo((i * w) / 2, h)
+        g.moveTo(i * tw, 0)
+        g.lineTo(i * tw, h)
         g.stroke()
+      }
+      for (let i = 0; i <= rows; i++) {
         g.beginPath()
-        g.moveTo(0, (i * h) / 2)
-        g.lineTo(w, (i * h) / 2)
+        g.moveTo(0, i * th)
+        g.lineTo(w, i * th)
         g.stroke()
       }
     },
-    { repeat: [0.5, 0.5] }
+    { repeat: [0.35, 0.35] }
   )
 }
 
@@ -75,23 +85,22 @@ export function Floors({ building }: { building: Building }) {
 
     const baseFloorMat = new THREE.MeshStandardMaterial({
       map: floorTex,
-      color: 0xc4bdb1,
-      roughness: 0.3
+      color: 0xbdb5a6,
+      roughness: 0.5
     })
     const roomFloors = building.rooms.map((r) => {
-      const c = new THREE.Color(r.tint).multiply(new THREE.Color(0xd2cbbf))
       const mat = new THREE.MeshStandardMaterial({
         map: floorTex,
-        color: c,
-        roughness: r.key === 'Atr' ? 0.18 : 0.3
+        color: 0xdad3c5,
+        roughness: r.key === 'Atr' ? 0.22 : 0.42
       })
       const geo = new THREE.ShapeGeometry(outlineShape(r.poly, true))
       return { key: r.key, mat, geo, y: r.key === 'Atr' ? 0.02 : 0.01 }
     })
     const ceilMat = new THREE.MeshStandardMaterial({
-      color: 0xf3f2ef,
-      roughness: 0.95,
-      emissive: 0xfff6e6,
+      color: 0x1f1d1a,
+      roughness: 0.92,
+      emissive: 0xfff0d8,
       emissiveMap: ceilTex,
       emissiveIntensity: 1.1
     })
@@ -138,7 +147,7 @@ export function Floors({ building }: { building: Building }) {
     const dashGeo = new THREE.PlaneGeometry(0.55, 0.06)
     dashGeo.rotateX(-Math.PI / 2)
     const dashMat = new THREE.MeshBasicMaterial({
-      color: 0x8f969c,
+      color: 0x8a857b,
       transparent: true,
       opacity: 0.7
     })

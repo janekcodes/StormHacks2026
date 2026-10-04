@@ -24,8 +24,8 @@ let cache: ExhibitMaterials | null = null
 export function exhibitMaterials(): ExhibitMaterials {
   if (cache) return cache
   cache = {
-    plinth: new THREE.MeshStandardMaterial({ color: 0xf6f4f0, roughness: 0.5 }),
-    plinthGrey: new THREE.MeshStandardMaterial({ color: 0xe4e1da, roughness: 0.6 }),
+    plinth: new THREE.MeshStandardMaterial({ color: 0xf0ece2, roughness: 0.5 }),
+    plinthGrey: new THREE.MeshStandardMaterial({ color: 0xded8cb, roughness: 0.6 }),
     glass: new THREE.MeshStandardMaterial({
       color: 0xd6e8ee,
       roughness: 0.05,
@@ -35,10 +35,10 @@ export function exhibitMaterials(): ExhibitMaterials {
       envMapIntensity: 1.6,
       depthWrite: false
     }),
-    frame: new THREE.MeshStandardMaterial({ color: 0x3a3f45, roughness: 0.4, metalness: 0.7 }),
-    platform: new THREE.MeshStandardMaterial({ color: 0xe7e2da, roughness: 0.55 }),
+    frame: new THREE.MeshStandardMaterial({ color: 0x2e2a26, roughness: 0.4, metalness: 0.7 }),
+    platform: new THREE.MeshStandardMaterial({ color: 0xe2dccf, roughness: 0.55 }),
     model: new THREE.MeshStandardMaterial({ color: 0xc5c0b6, roughness: 0.72 }),
-    brushed: new THREE.MeshStandardMaterial({ color: 0x8d939a, roughness: 0.35, metalness: 0.75 }),
+    brushed: new THREE.MeshStandardMaterial({ color: 0x9a9184, roughness: 0.35, metalness: 0.75 }),
     ring: new THREE.MeshBasicMaterial({ color: 0x8b939c, side: THREE.DoubleSide }),
     iconCore: new THREE.MeshStandardMaterial({
       color: 0xffffff,

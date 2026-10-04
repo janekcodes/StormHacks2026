@@ -11,6 +11,9 @@ export interface Zone {
 }
 
 // Zone metadata and expected tier counts, mirroring BLUEPRINT section 4.
+// `ink` is the wayfinding accent (floor marks, signage, plaques, map markers, HUD).
+// `tint` fills the 2D floor plan washes only; the 3D scene uses realistic
+// stone/wood materials (see docs/decisions/0010-museum-materials.md).
 export const ZONES: readonly Zone[] = [
   { code: 'P', name: 'Prologue', location: 'Atrium (centre)', ink: '#7a6a48', tint: '#efe9dc', built: 0, core: 2, extended: 5, open: 0 },
   { code: 'A', name: 'Logic, Theory & Cryptography', location: 'South-west wing', ink: '#5a49c4', tint: '#ebe8fb', built: 1, core: 3, extended: 5, open: 0 },

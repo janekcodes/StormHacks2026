@@ -15,14 +15,14 @@ export function makeMaterials(): {
   ground: THREE.MeshStandardMaterial
 } {
   return {
-    wall: new THREE.MeshStandardMaterial({ color: 0xe4e1da, roughness: 0.94 }),
+    wall: new THREE.MeshStandardMaterial({ color: 0xe9e4d8, roughness: 0.9 }),
     ceil: new THREE.MeshStandardMaterial({
-      color: 0xf3f2ef,
-      roughness: 0.95,
-      emissive: 0xfff6e6,
+      color: 0x1f1d1a,
+      roughness: 0.92,
+      emissive: 0xfff0d8,
       emissiveIntensity: 1.1
     }),
-    base: new THREE.MeshStandardMaterial({ color: 0x2b2d30, roughness: 0.6 }),
+    base: new THREE.MeshStandardMaterial({ color: 0x2f2a24, roughness: 0.5 }),
     glass: new THREE.MeshStandardMaterial({
       color: 0xd6e8ee,
       roughness: 0.05,
@@ -32,14 +32,14 @@ export function makeMaterials(): {
       envMapIntensity: 1.6,
       depthWrite: false
     }),
-    frame: new THREE.MeshStandardMaterial({ color: 0x3a3f45, roughness: 0.4, metalness: 0.7 }),
-    plinth: new THREE.MeshStandardMaterial({ color: 0xf6f4f0, roughness: 0.5 }),
-    wood: new THREE.MeshStandardMaterial({ color: 0x7a5636, roughness: 0.62 }),
+    frame: new THREE.MeshStandardMaterial({ color: 0x2e2a26, roughness: 0.4, metalness: 0.7 }),
+    plinth: new THREE.MeshStandardMaterial({ color: 0xf0ece2, roughness: 0.5 }),
+    wood: new THREE.MeshStandardMaterial({ color: 0x8a5a33, roughness: 0.55 }),
     leaf: new THREE.MeshStandardMaterial({ color: 0x5f8f5a, roughness: 0.8 }),
-    trunk: new THREE.MeshStandardMaterial({ color: 0x6b513a, roughness: 0.9 }),
-    pot: new THREE.MeshStandardMaterial({ color: 0xdedad2, roughness: 0.6 }),
-    bench: new THREE.MeshStandardMaterial({ color: 0x8a6a4a, roughness: 0.55 }),
-    ground: new THREE.MeshStandardMaterial({ color: 0xa9b39c, roughness: 1 })
+    trunk: new THREE.MeshStandardMaterial({ color: 0x5d4630, roughness: 0.9 }),
+    pot: new THREE.MeshStandardMaterial({ color: 0xd8d2c6, roughness: 0.6 }),
+    bench: new THREE.MeshStandardMaterial({ color: 0x8a5a33, roughness: 0.5 }),
+    ground: new THREE.MeshStandardMaterial({ color: 0x9c988d, roughness: 1 })
   }
 }
 

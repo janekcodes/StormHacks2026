@@ -119,6 +119,8 @@ Zone colours (ink / floor tint):
 | P       | `#7a6a48` | `#efe9dc` |
 | G, S, X | `#4f5963` | `#eceef0` |
 
+The `tint` fills the **2D floor plan** room washes. The 3D scene uses realistic stone and wood materials instead (see `docs/decisions/0010-museum-materials.md`); `ink` is the wayfinding accent in both.
+
 ---
 
 ## 5. The building
@@ -609,4 +611,5 @@ Code and data layout is in [§10](#10-production-stack). Machine-readable mirror
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1.1     | 2026-10-03 | Added production stack (§10), Gemini guide bot (§11), ElevenLabs narration voice (§12); rules 8 to 10 on keys, voices and model config; narration in the exhibit contract; Phase 2 reordered; open decisions 6 to 8 |
 | 1.2     | 2026-10-04 | Built E3 (Engelbart's demo, 1968) per plan 13: tier Core to Built, portal and procedural object added. Built 12 to 13, Core 25 to 24; Wing E 0/4/4 to 1/3/4. New portal package `@museum/portal-e3`. |
+| 1.3     | 2026-10-04 | Plan 16: enriched all Core and Extended exhibits with caption/stats/sources/narration; programmatic GLB models; realistic museum materials (3D floor tint retired, §4 note added). |
 | 1.0     | 2026-10-03 | First source of truth: scope (76 + 1 slot), zones, building geometry, registry, exhibit contract, prototype architecture, roadmap                                                                                   |
