@@ -245,12 +245,20 @@ describe('createVoiceController', () => {
     expect(t.statuses.at(-1)).toBe('unavailable')
   })
 
-  it('cancels (idle, null, no commit) when released before any audio', async () => {
+  it('keeps a short question released before the first partial', async () => {
+    const t = setup()
+    await t.controller.start()
+    const done = t.controller.stop()
+    expect(t.conn.commit).toHaveBeenCalled()
+    t.conn.emitCommitted('what is ENIAC')
+    expect(await done).toBe('what is ENIAC')
+    expect(t.statuses.at(-1)).toBe('idle')
+  })
+
+  it('returns null when nothing arrives after a release with no partials', async () => {
     const t = setup()
     await t.controller.start()
     expect(await t.controller.stop()).toBeNull()
-    expect(t.conn.commit).not.toHaveBeenCalled()
-    expect(t.conn.close).toHaveBeenCalledTimes(1)
     expect(t.statuses.at(-1)).toBe('idle')
   })
 

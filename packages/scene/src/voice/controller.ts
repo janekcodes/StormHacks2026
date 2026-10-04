@@ -168,11 +168,6 @@ export function createVoiceController(deps: VoiceControllerDeps) {
       }
       const active = conn
       if (!active || phase !== 'listening') return null
-      if (!partial.trim() && committed.length === 0) {
-        // Released before any audio was transcribed: nothing to commit.
-        cancel()
-        return null
-      }
       const mine = gen
       phase = 'finishing'
       status('finishing')
