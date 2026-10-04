@@ -19,7 +19,7 @@ export interface TourState {
 
 export interface TourContext {
   stops: readonly ExhibitId[]
-  /** Expected spoken length of a tour line, for its timeout. */
+  /** Full timeout for a tour line, including grace for audio. */
   clipMs: (key: TourLineKey) => number
 }
 
@@ -82,7 +82,7 @@ const TEARDOWN: TourEffect[] = [
 ]
 
 function clipTimer(key: TourLineKey, ctx: TourContext): TourEffect {
-  return { type: 'startTimer', kind: 'clip', ms: ctx.clipMs(key) + CLIP_GRACE_MS }
+  return { type: 'startTimer', kind: 'clip', ms: ctx.clipMs(key) }
 }
 
 function stopId(state: TourState, ctx: TourContext): ExhibitId {

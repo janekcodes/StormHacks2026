@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { ExhibitId } from '@museum/content/schema'
 import {
-  CLIP_GRACE_MS,
   initialTourState,
   PLAY_MS,
   reduceTour,
@@ -34,7 +33,7 @@ describe('reduceTour', () => {
     const { state, effects } = run([{ type: 'START' }])
     expect(state.phase).toBe('intro')
     expect(effects).toContainEqual({ type: 'playClip', key: 'intro' })
-    expect(effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+    expect(effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 })
   })
 
   it('intro end starts stop 0: bridge clip and walk together', () => {
@@ -51,7 +50,7 @@ describe('reduceTour', () => {
     expect(b.state.phase).toBe('narrate')
     expect(b.effects).toContainEqual({ type: 'openPortal', id: 'A1' })
     expect(b.effects).toContainEqual({ type: 'playClip', key: 'stop:0' })
-    expect(b.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+    expect(b.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 })
     expect(types(b.effects)).not.toContain('startNarration')
     expect(b.state).toMatchObject({ clipDone: false, walkDone: true })
 
@@ -250,7 +249,7 @@ describe('reduceTour', () => {
     expect(types(paused.effects)).toEqual(['pauseClip', 'clearTimers'])
     const resumed = run([{ type: 'RESUME' }], paused.state)
     expect(types(resumed.effects)).toEqual(['resumeClip', 'startTimer'])
-    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 })
   })
 
   it('pause and resume in outro', () => {
@@ -260,7 +259,7 @@ describe('reduceTour', () => {
     expect(types(paused.effects)).toEqual(['pauseClip', 'clearTimers'])
     const resumed = run([{ type: 'RESUME' }], paused.state)
     expect(types(resumed.effects)).toEqual(['resumeClip', 'startTimer'])
-    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 })
   })
 
   it('RESUME mid-bridge with clip unfinished resumes clip and re-walks if walk unfinished', () => {

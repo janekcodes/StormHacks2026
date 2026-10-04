@@ -4,6 +4,7 @@ import { estimateSpeechMs, type Tour, type TourLine } from '@museum/content/tour
 import type { ExhibitId } from '@museum/content/schema'
 import { create } from 'zustand'
 import {
+  CLIP_GRACE_MS,
   initialTourState,
   MISSING_CLIP_MS,
   reduceTour,
@@ -27,7 +28,8 @@ export function tourContext(tour: Tour): TourContext {
     clipMs: (key) => {
       const line = lineFor(tour, key)
       if (!line) return MISSING_CLIP_MS
-      return line.audio && line.durationMs ? line.durationMs : estimateSpeechMs(line.text)
+      if (line.audio && line.durationMs) return line.durationMs + CLIP_GRACE_MS
+      return estimateSpeechMs(line.text)
     }
   }
 }
