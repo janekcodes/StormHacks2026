@@ -33,6 +33,7 @@ export function createClipPlayer(deps: ClipPlayerDeps): ClipPlayer {
   const stop = () => {
     if (el) {
       el.onended = null
+      el.onerror = null
       el.pause()
       el = null
     }
@@ -53,6 +54,9 @@ export function createClipPlayer(deps: ClipPlayerDeps): ClipPlayer {
       audio.onended = () => {
         if (el !== audio) return
         deps.onEnded()
+      }
+      audio.onerror = () => {
+        if (el === audio) deps.onEnded()
       }
       el = audio
       void audio.play().catch(() => {

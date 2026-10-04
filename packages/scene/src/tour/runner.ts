@@ -116,7 +116,13 @@ export function createTourRunner(deps: RunnerDeps) {
 
   return {
     run(effects: TourEffect[]) {
-      for (const effect of effects) runOne(effect)
+      for (const effect of effects) {
+        try {
+          runOne(effect)
+        } catch {
+          console.error('tour effect failed', effect.type)
+        }
+      }
     },
     dispose() {
       for (const kind of [...timers.keys()]) clearTimer(kind)

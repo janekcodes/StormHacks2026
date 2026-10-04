@@ -7,6 +7,7 @@ class FakeEl {
   muted = false
   paused = true
   onended: (() => void) | null = null
+  onerror: (() => void) | null = null
   constructor(readonly src: string) {}
   play() {
     this.paused = false
@@ -80,5 +81,16 @@ describe('createClipPlayer', () => {
     expect(t.els).toHaveLength(0)
     expect(t.player.caption()).toBe('Caption only')
     expect(t.captions.at(-1)).toBe('Caption only')
+  })
+
+  it('a failed load (onerror) advances the tour once, ignoring stale elements', () => {
+    const t = setup()
+    t.player.play('intro')
+    t.player.play('outro')
+    const [a, b] = t.els as [FakeEl, FakeEl]
+    a.onerror?.()
+    expect(t.onEnded).not.toHaveBeenCalled()
+    b.onerror?.()
+    expect(t.onEnded).toHaveBeenCalledTimes(1)
   })
 })

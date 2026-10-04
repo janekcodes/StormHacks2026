@@ -97,4 +97,19 @@ describe('createTourRunner', () => {
     vi.advanceTimersByTime(500)
     expect(t.events).toHaveLength(1)
   })
+
+  it('a throwing effect does not skip the later ones', () => {
+    vi.useFakeTimers()
+    const t = setup()
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    t.deps.clips.play = vi.fn(() => {
+      throw new Error('boom')
+    })
+    const runner = createTourRunner(t.deps)
+    runner.run([{ type: 'playClip', key: 'intro' }, { type: 'startTimer', kind: 'clip', ms: 100 }])
+    vi.advanceTimersByTime(150)
+    expect(t.events).toEqual([{ type: 'TIMEOUT', kind: 'clip' }])
+    expect(error).toHaveBeenCalledWith('tour effect failed', 'playClip')
+    error.mockRestore()
+  })
 })
