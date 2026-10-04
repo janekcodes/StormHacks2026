@@ -85,7 +85,6 @@ describe('askGuide', () => {
   })
 
   it('times out a stream that stalls after its first chunk and cancels the body', async () => {
-    vi.useFakeTimers()
     const cancel = vi.fn()
     const body = new ReadableStream<Uint8Array>({
       start(controller) {
@@ -96,16 +95,13 @@ describe('askGuide', () => {
     })
     const chunks: string[] = []
     const fetchImpl = vi.fn(async () => new Response(body, { headers: { 'Content-Type': 'application/x-ndjson' } }))
-    const pending = askGuide('Hi there', { exhibits: [], mode: 'tour', timeoutMs: 50, context: ctx, onText: (t) => chunks.push(t), fetchImpl })
-    // let fetch resolve and the first chunk be read before the timeout fires
-    // flush microtasks to let the chunk be processed
-    await Promise.resolve()
-    await Promise.resolve()
-    await Promise.resolve()
-    await vi.advanceTimersByTimeAsync(60)
+    const pending = askGuide('Hi there', { exhibits: [], mode: 'tour', timeoutMs: 100, context: ctx, onText: (t) => chunks.push(t), fetchImpl })
+
+    await vi.waitFor(() => expect(chunks).toEqual(['Hello ']))
+    expect(chunks).toEqual(['Hello '])
+
     await expect(pending).resolves.toEqual({ ok: false, error: 'The guide took too long to answer.' })
     expect(cancel).toHaveBeenCalled()
-    vi.useRealTimers()
   })
 
   it('times out fetch rejecting on abort with Node message "This operation was aborted"', async () => {
