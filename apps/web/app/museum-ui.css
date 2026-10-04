@@ -1405,6 +1405,70 @@
   outline: 2px solid var(--c-accent);
 }
 
+/* Auto: a switch with a visible on/off state (track, knob and label). */
+.tour-bar-auto {
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+}
+
+.tour-bar-auto-track {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 16px;
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius-pill);
+  background: var(--c-night-2);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.tour-bar-auto-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--c-night-muted);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.tour-bar-auto-state {
+  min-width: 3ch;
+  color: var(--c-night-muted);
+  text-align: left;
+}
+
+.tour-bar-auto[aria-checked='true'] {
+  border-color: color-mix(in srgb, var(--c-accent) 70%, transparent);
+  background: var(--c-accent-soft);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-track {
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-knob {
+  transform: translateX(14px);
+  background: var(--c-ink);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-state {
+  color: var(--c-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-bar-auto-track,
+  .tour-bar-auto-knob {
+    transition: none;
+  }
+}
+
 .tour-bar-ask {
   display: flex;
   gap: var(--space-2);

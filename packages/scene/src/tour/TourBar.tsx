@@ -280,11 +280,18 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
         <button
           type="button"
           role="switch"
-          className="btn"
+          className="btn tour-bar-auto"
           aria-checked={state.auto}
           onClick={() => dispatch({ type: 'SET_AUTO', auto: !state.auto })}
         >
           Auto
+          {/* Visual state only; the switch role and aria-checked carry it for assistive tech. */}
+          <span className="tour-bar-auto-track" aria-hidden="true">
+            <span className="tour-bar-auto-knob" />
+          </span>
+          <span className="tour-bar-auto-state" aria-hidden="true">
+            {state.auto ? 'On' : 'Off'}
+          </span>
         </button>
         {voice.status === 'unavailable' ? (
           <form
