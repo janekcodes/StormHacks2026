@@ -1,89 +1,113 @@
-# Hello Museum
+# 🏛️ Hello Museum
 
-*Hello World. Meet your history.*
+### Hello World. Meet your history.
 
-**[hellomuseum.tech](https://hellomuseum.tech)** | StormHacks 2026
+**[Enter the museum → hellomuseum.tech](https://hellomuseum.tech)**
 
-## About
+StormHacks 2026 · CSSS SFU CS Legacy Track
 
-Hello, Museum is an interactive computer science museum that you can walk through in your browser. Each room covers one era of computing, from Ada Lovelace's notes in the 1800s to modern AI, and has one hands-on exhibit you can try in under 30 seconds. An AI curator answers questions and narrates each room, and a stamp quiz rewards you for finishing the tour.
+---
 
-It is our tribute to the people and machines that made modern computing possible, built for the **CSSS SFU CS Legacy Track**.
+## The 10-second pitch
 
-## The Rooms
+Most CS-history hackathon projects are a timeline, a chatbot, and a Wikipedia paraphrase.
 
-| Room | Era | Interactive exhibit |
-|---|---|---|
-| 1. The Dawn | 1800s | **Ada's Engine:** step through Ada Lovelace's first program |
-| 2. The Theory | 1930s-40s | **Turing Tape** puzzle and an **Enigma** code-cracking challenge |
-| 3. The Giants | 1940s-60s | **Punch Card Poet** and the story of the first computer bug |
-| 4. The Games | 1958-70s | **Spacewar!** / **Tennis for Two** mini-games and Conway's **Game of Life** |
-| 5. The Network | 1969-90s | **First Message:** send a packet across the 4-node ARPANET |
-| 6. The Now | 2000s on | **ELIZA (1966) vs. Gemini** chat, side by side |
+**Hello Museum is a building you walk into.**
 
-## Features
+Click one link and you're standing in a glass foyer. Walk toward the windows and the decades come at you. Step up to a brass plaque and a portal opens. You're no longer reading about Turing. You're **stepping his tape**.
 
-- **Timeline hallway:** jump to any room from a single navigation bar.
-- **Era styling:** each room restyles the page (engravings, green-screen terminal, 8-bit pixels, modern UI).
-- **AI curator:** ask any question about an exhibit, powered by the Gemini API.
-- **Voice narration:** the curator speaks each room's intro using ElevenLabs.
-- **Stamp quiz:** answer one question per room to collect stamps and finish with a score.
+> **Every exhibit is a portal. If there's nothing to do, it's a placard, not an exhibit.**
 
-## Tech Stack
+We didn't make a tribute *about* computer science. We made a place where computer science still happens to your hands.
 
-- **Frontend:** HTML, CSS, and JavaScript (single-page app)
-- **Backend:** Python (FastAPI) for exhibit logic and API calls
-- **AI:** Google Gemini API for the curator's Q&A
-- **Voice:** ElevenLabs for narration
-- **Optional:** Tiger Data or TiDB for a visitor leaderboard and curator memory
-- **Domain:** hellomuseum.tech
+---
 
-## Getting Started
+## Try it: 90 seconds, one laptop, no install
 
-Replace the placeholders below with your real repository details.
+1. Go to **[hellomuseum.tech](https://hellomuseum.tech)** and hit **Enter the museum**.
+2. **Walk.** WASD to move, drag to look, Shift to run. Stone, wood, and brass, not a video-game corridor.
+3. **Click a plaque.** Hear the narrator. Watch the captions keep time with the voice.
+4. **Open a portal and do the thing.** Punch a FORTRAN card. Race the 1991 modem handshake. Watch Transformer attention light up.
+5. **Ask the AI guide something real:** *"Who programmed ENIAC?"* *"Walk me to the web."* It knows which room you're in, and it can walk you there, open the portal, or start a tour.
 
-```bash
-git clone https://github.com/YOUR-TEAM/hellomuseum.git
-cd hellomuseum
-pip install -r requirements.txt
-cp .env.example .env
-uvicorn main:app --reload
-```
+No headset. No download. If your device can't handle the 3D, the [floor plan](https://hellomuseum.tech/map) and [every exhibit as a page](https://hellomuseum.tech/exhibits) still work. The museum never leaves you stranded.
 
-Add your API keys to the `.env` file:
+---
 
-```
-GEMINI_API_KEY=your_key_here
-ELEVENLABS_API_KEY=your_key_here
-```
+## Why it wins
 
-Then open <http://localhost:8000> in your browser.
+### 🌍 A world, not a deck
+Six themed wings around a glass atrium, plus People, Society, and a Future Lab. **76 exhibits on a real floor plan. 13 portals live.** The rest already stand on their plinths in the right decade, waiting. That's ambition you can walk through, not a promise.
 
-## Project Structure
+### ⏳ Time is architecture
+Depth in every gallery is date. Two ways to explore:
+- **Theme walk:** pick a wing and travel from the start to the present.
+- **Era walk:** stay in 1971 and cut through doors from hardware into software. 1971 next to 1971.
 
-```
-hellomuseum/
-  main.py            # FastAPI app and routes
-  static/            # HTML, CSS, JS
-  rooms/             # one folder per room and exhibit
-  curator.py         # Gemini Q&A
-  narrate.py         # ElevenLabs voice
-  requirements.txt
-  .env.example
-```
+### 🤖 The AI guide earns its place
+The guide is a docent, not the product. It points you *to* portals. If the guide explains an idea better than the exhibit does, we consider the exhibit broken. Answers come from the museum's own collection first, with exhibit references, so you can trust what you're told.
 
-## Prize Tracks
+### 🎙️ The voice is the museum
+One consistent narrator for every plaque and for the guide, with captions that highlight as they're spoken. Respect for the people in this history is a design decision.
 
-- CSSS SFU CS Legacy Track (core: a tribute to computing history)
-- Best Design (era styling and museum feel)
-- SSSS Python Track (Python backend and exhibit logic)
-- MLH: Gemini API, ElevenLabs, and Best .Tech Domain Name
-- Best Game (stamp quiz and mini-game exhibits)
+### ✅ We tell the truth
+We never write "the first computer." Firsts are specific and caveated. Facts have sources. Unknowns stay unknown. A computing museum that invents statistics is a joke at its own expense.
 
-## Team
+### 🎨 Beauty is the argument
+It looks like a museum you'd dress up to visit, then lets you rewire ENIAC with patch cables. Design track, meet legacy track.
 
-Add your team members, roles, and links here.
+---
 
-## Credits
+## The portals: our closing arguments
 
-Hello, Museum honors Ada Lovelace, Alan Turing, Grace Hopper, the builders of Spacewar! and Tennis for Two, the ARPANET team, Joseph Weizenbaum (ELIZA), and John Conway. Historical text was written by our team.
+Don't take our word for it. Spend ninety seconds inside any of these.
+
+| Year | You walk up to | You actually do |
+| --- | --- | --- |
+| 1936 | Turing's universal machine | Step a tape |
+| 1945 | ENIAC | Stand with the machine that computed firing tables |
+| 1945 | Patch-cable programming | Wire the program by hand |
+| 1947/54 | The transistor | See the switch that replaced the tube |
+| 1956 | Dartmouth Workshop | Visit the summer that named AI |
+| 1957 | FORTRAN & LISP | Punch a card |
+| 1968 | Engelbart's demo | Use the mouse, windows, and links in one sitting |
+| 1991 | NeXT + dial-up | Race a modem handshake |
+| 1991 | HTML & HTTP | Request the first web page |
+| 1997 | Deep Blue | Play out the match that beat a world champion |
+| 2013+ | Bundle Tower | Climb the stack you're probably standing on |
+| 2015 | Tensor Processing Unit | Meet purpose-built AI hardware |
+| 2017 | The Transformer | Watch attention weights fire |
+
+This isn't a collage of features. It's a collection with a building, a voice, a docent, and one rule: **do the idea, or it's not an exhibit.**
+
+---
+
+## What we're asking you to award
+
+| Prize | Our case |
+| --- | --- |
+| **CSSS SFU CS Legacy** | The tribute isn't a mood board of famous names. It's a floor where those names still work. |
+| **Best Design** | Heritage interiors, era as space, type and brass and light used like a real institution, not a hackathon skin. |
+| **Gemini** | A docent that knows where you are, draws on the collection, and walks you to the exhibit. |
+| **ElevenLabs** | The voice *is* the museum: every plaque, the guide, and live-synced captions. |
+| **Best .Tech Domain** | **[hellomuseum.tech](https://hellomuseum.tech)** is the name the product always wanted. |
+
+---
+
+## After the weekend
+
+- The Core exhibits still to build: **Lovelace, Hopper, and the ENIAC Six** first
+- Spoken conversation with the guide
+- Tours from the foyer
+- WebXR in the same museum
+- An empty slot in the Future Lab, labelled for whatever comes next
+
+History isn't finished. Neither is the floor.
+
+---
+
+### The doors are open.
+
+## **[hellomuseum.tech](https://hellomuseum.tech)**
+
+*Enter the museum. Click a plaque. Make history do something.*
