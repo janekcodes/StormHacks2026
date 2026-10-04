@@ -3,8 +3,10 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, type PointerEvent as ReactPointerEvent } from 'react'
 import type { Building } from '@museum/content/plan-schema'
+import type { Exhibit } from '@museum/content/schema'
 import {
   buildCollisionSegments,
+  buildExhibitSegments,
   buildObstacles,
   slideMove
 } from './collision'
@@ -59,12 +61,16 @@ function isEditableTarget(e: KeyboardEvent): boolean {
 
 interface ControlsProps {
   building: Building
+  exhibits: readonly Exhibit[]
   container: HTMLElement | null
 }
 
-export function Controls({ building, container }: ControlsProps) {
+export function Controls({ building, exhibits, container }: ControlsProps) {
   const { camera } = useThree()
-  const segs = useMemo(() => buildCollisionSegments(building), [building])
+  const segs = useMemo(
+    () => [...buildCollisionSegments(building), ...buildExhibitSegments(exhibits)],
+    [building, exhibits]
+  )
   const circles = useMemo(() => buildObstacles(building), [building])
   const bob = useRef(0)
   const zoneTick = useRef(0)

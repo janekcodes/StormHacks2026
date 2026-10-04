@@ -1,7 +1,16 @@
 import type { Building } from '@museum/content/plan-schema'
+import type { Footprint, Tier } from '@museum/content/schema'
+import { footprintFor } from '../exhibits/footprint'
 
 export type Seg = readonly [number, number, number, number]
 export type Circle = readonly [number, number, number]
+
+/** Minimal exhibit shape needed for collision, so tests can pass a plain object. */
+export interface ExhibitCollision {
+  tier: Tier
+  footprint?: Footprint | undefined
+  position: { x: number; z: number; face: readonly [number, number] }
+}
 
 export const PLAYER_RADIUS = 0.35
 export const SEG_CLEARANCE = 0.48
@@ -26,6 +35,36 @@ export function buildCollisionSegments(building: Building): Seg[] {
   }
   for (const g of building.glass) {
     segs.push([g[0], g[1], g[2], g[3]])
+  }
+  return segs
+}
+
+/**
+ * One collision segment per edge of each exhibit's footprint, rotated by the
+ * exhibit's facing so visitors cannot walk through artifacts.
+ */
+export function buildExhibitSegments(exhibits: readonly ExhibitCollision[]): Seg[] {
+  const segs: Seg[] = []
+  for (const exhibit of exhibits) {
+    const fp = footprintFor(exhibit)
+    const cx = exhibit.position.x
+    const cz = exhibit.position.z
+    const yaw = Math.atan2(exhibit.position.face[0], exhibit.position.face[1])
+    const cos = Math.cos(yaw)
+    const sin = Math.sin(yaw)
+    const hw = fp.w / 2
+    const hd = fp.d / 2
+    const corners: Array<[number, number]> = [
+      [cx - hw * cos + hd * sin, cz - hw * sin - hd * cos],
+      [cx + hw * cos + hd * sin, cz + hw * sin - hd * cos],
+      [cx + hw * cos - hd * sin, cz + hw * sin + hd * cos],
+      [cx - hw * cos - hd * sin, cz - hw * sin + hd * cos]
+    ]
+    for (let i = 0; i < 4; i++) {
+      const a = corners[i]!
+      const b = corners[(i + 1) % 4]!
+      segs.push([a[0], a[1], b[0], b[1]])
+    }
   }
   return segs
 }

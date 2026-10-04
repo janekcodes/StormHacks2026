@@ -84,7 +84,7 @@ function SceneBody({
       <Exhibits building={building} exhibits={exhibits} />
       <SpotPool exhibits={exhibits} />
       <TravelDriver />
-      <Controls building={building} container={container} />
+      <Controls building={building} exhibits={exhibits} container={container} />
       <DrawCallProbe />
       <SceneReady />
     </>
@@ -107,6 +107,24 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
   const promptId = hoverId ?? focusId
   const prompt = promptId ? exhibits.find((exhibit) => exhibit.id === promptId) : undefined
   const guideHighlight = useGuideStore((s) => s.highlightIds)
+  const [navOpen, setNavOpen] = useState(false)
+  const navRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!navOpen) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setNavOpen(false)
+    }
+    const onPointer = (event: PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) setNavOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
+  }, [navOpen])
 
   const kicker =
     zoneKey === 'Atr' ||
@@ -119,14 +137,57 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
 
   return (
     <>
-      <div className="museum-hud museum-zone" data-testid="zone-hud">
-        <div className="museum-kicker">{kicker}</div>
-        <div className="museum-zone-name">{zoneName}</div>
-        <div className="museum-meta">
-          {ready ? 'ready' : 'loading'} · {quality}
+      <div className="museum-left">
+        <div className="museum-hud museum-zone" data-testid="zone-hud">
+          <div className="museum-kicker">{kicker}</div>
+          <div className="museum-zone-name">{zoneName}</div>
+          <div className="museum-meta">
+            {ready ? 'ready' : 'loading'} · {quality}
+          </div>
+          <div className="museum-passport" data-testid="passport">
+            {passportCount(opened)} of {PASSPORT_TOTAL}
+          </div>
         </div>
-        <div className="museum-passport" data-testid="passport">
-          {passportCount(opened)} of {PASSPORT_TOTAL}
+        <div className="museum-toolbar">
+          <button
+            type="button"
+            className="museum-btn museum-btn-guide"
+            data-testid="guide-open"
+            aria-label="Open the AI guide"
+            onClick={() => useGuideStore.getState().setOpen(true)}
+          >
+            Guide
+          </button>
+          <div className="museum-nav" ref={navRef}>
+            <button
+              type="button"
+              className="museum-btn"
+              aria-haspopup="menu"
+              aria-expanded={navOpen}
+              onClick={() => setNavOpen((v) => !v)}
+            >
+              Navigate
+            </button>
+            {navOpen ? (
+              <ul className="museum-nav-menu" role="menu" aria-label="Jump to room">
+                {ROOM_JUMP_ORDER.map((key) => (
+                  <li key={key}>
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className={key === zoneKey ? 'museum-nav-item museum-nav-item-here' : 'museum-nav-item'}
+                      onClick={() => {
+                        museum.goRoom(key)
+                        setNavOpen(false)
+                      }}
+                    >
+                      {roomJumpLabel(key)}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         </div>
       </div>
       {prompt && !portalOpen ? (
@@ -138,28 +199,6 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
       ) : null}
       <div className="museum-crosshair" aria-hidden="true" />
       <TouchControls />
-      <div className="museum-jumps" data-testid="room-jumps" role="navigation" aria-label="Jump to room">
-        <button
-          type="button"
-          className="museum-btn museum-btn-guide"
-          data-testid="guide-open"
-          aria-label="Open the AI guide"
-          onClick={() => useGuideStore.getState().setOpen(true)}
-        >
-          Guide
-        </button>
-        {ROOM_JUMP_ORDER.map((key) => (
-          <button
-            key={key}
-            type="button"
-            className={key === zoneKey ? 'museum-btn museum-btn-here' : 'museum-btn'}
-            aria-label={`Go to ${roomJumpLabel(key)}`}
-            onClick={() => museum.goRoom(key)}
-          >
-            {roomJumpLabel(key)}
-          </button>
-        ))}
-      </div>
       {showMap ? (
         <div className="museum-minimap" data-testid="minimap">
           <FloorMap
@@ -335,11 +374,16 @@ const museumCss = `
   color: #5b6168; font-family: "Chakra Petch", sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .museum-hud {
-  position: absolute; pointer-events: none; z-index: 2;
+  pointer-events: none; z-index: 2;
   background: rgba(14,16,19,.74); backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,.12); border-radius: 10px; color: #eef1f4;
 }
-.museum-zone { left: 14px; top: 14px; padding: 8px 12px; max-width: 360px; }
+.museum-left {
+  position: absolute; left: 14px; top: 14px; z-index: 3;
+  display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+}
+.museum-zone { padding: 8px 12px; max-width: 360px; }
+.museum-toolbar { display: flex; flex-wrap: wrap; gap: 6px; pointer-events: auto; }
 .museum-kicker {
   font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 11px;
   letter-spacing: 0.14em; text-transform: uppercase; color: #ffb347;
@@ -372,10 +416,6 @@ const museumCss = `
   position: absolute; right: 14px; bottom: 14px; display: flex; gap: 6px; flex-wrap: wrap;
   justify-content: flex-end; max-width: 280px; z-index: 3; pointer-events: auto;
 }
-.museum-jumps {
-  position: absolute; left: 14px; top: 88px; display: flex; flex-wrap: wrap; gap: 5px;
-  max-width: 320px; z-index: 3; pointer-events: auto;
-}
 .museum-btn {
   appearance: none; cursor: pointer; min-height: 32px; min-width: 40px; padding: 0 10px;
   border-radius: 9px; border: 1px solid rgba(255,255,255,.18);
@@ -383,8 +423,25 @@ const museumCss = `
   font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 10px;
   letter-spacing: 0.08em; text-transform: uppercase; touch-action: none; user-select: none;
 }
-.museum-btn-here { border-color: #ffb347; color: #ffb347; }
 .museum-btn-guide { border-color: #ffb347; color: #ffb347; }
+.museum-nav { position: relative; }
+.museum-nav-menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 4;
+  margin: 0; padding: 6px; list-style: none;
+  min-width: 148px; max-height: min(60vh, 420px); overflow-y: auto;
+  background: rgba(14,16,19,.92); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.14); border-radius: 10px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.museum-nav-item {
+  appearance: none; cursor: pointer; display: block; width: 100%; text-align: left;
+  min-height: 30px; padding: 0 10px; border: 0; border-radius: 6px;
+  background: transparent; color: #eef1f4;
+  font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.museum-nav-item:hover { background: rgba(255,255,255,.08); }
+.museum-nav-item-here { color: #ffb347; }
 .museum-minimap {
   position: absolute; right: 14px; top: 14px; width: 272px; z-index: 3;
   background: rgba(14,16,19,.74); backdrop-filter: blur(8px);
@@ -401,6 +458,5 @@ const museumCss = `
 @media (max-width: 720px) {
   .museum-minimap { width: 180px; }
   .museum-help { display: none; }
-  .museum-jumps { max-width: 200px; }
 }
 `
