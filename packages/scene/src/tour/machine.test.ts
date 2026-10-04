@@ -330,4 +330,9 @@ describe('reduceTour', () => {
     expect(run([{ type: 'CLIP_ENDED' }], paused).state).toEqual(paused)
     expect(run([{ type: 'WALK_ARRIVED' }], paused).state).toEqual(paused)
   })
+
+  it('a finished bridge line stops the clip so its caption clears', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }]).state
+    expect(types(run([{ type: 'CLIP_ENDED' }], bridge).effects)).toContain('stopClip')
+  })
 })

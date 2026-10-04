@@ -7,6 +7,8 @@ export interface AnswerDeps {
   ask: (text: string) => Promise<{ ok: true } | { ok: false; error: string }>
   setSpeakOverride: (on: boolean) => void
   finishSpeech: () => void
+  /** Stop any guide speech already playing (a half-spoken answer). */
+  stopSpeech: () => void
   isSpeaking: () => boolean
   subscribeSpeech: (fn: () => void) => () => void
   playFallback: () => Promise<void>
@@ -44,6 +46,7 @@ export async function answerQuestion(text: string, deps: AnswerDeps): Promise<vo
       await new Promise((resolve) => setTimeout(resolve, 0))
       await waitForSilence(deps, deps.speechTimeoutMs ?? 30_000)
     } else {
+      deps.stopSpeech()
       await deps.playFallback().catch(() => undefined)
     }
   } finally {

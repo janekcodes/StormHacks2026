@@ -8,6 +8,7 @@ import {
   isSpeaking,
   pushText,
   setSpeakOverride,
+  stop as stopSpeech,
   subscribe as subscribeSpeech
 } from '../audio/guideVoiceBus'
 import { isMuted } from '../audio/narratorBus'
@@ -18,7 +19,7 @@ import { useVoiceInput } from '../voice/useVoiceInput'
 import { answerQuestion } from './answer'
 import { tourCaption } from './caption'
 import { PLAY_MS } from './machine'
-import { lineFor, useTourStore } from './store'
+import { beginAsk, lineFor, useTourStore } from './store'
 
 const COUNTDOWN_START = Math.ceil(PLAY_MS / 1000)
 
@@ -94,29 +95,37 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
     return () => clearInterval(timer)
   }, [counting, state.phase, state.index, state.auto, state.pauseReason])
 
-  const ask = (text: string) =>
-    answerQuestion(text, {
+  const ask = (text: string) => {
+    let cancelled: AbortSignal | null = null
+    return answerQuestion(text, {
       dispatch,
       ask: async (question) => {
         // In the store, not local state: the pop-up switch can remount this bar mid-answer.
         const { setThinking } = useTourStore.getState()
         setThinking(true)
+        // End aborts this request (see the store), so it cannot keep talking.
+        const request = beginAsk()
+        cancelled = request.signal
         try {
           return await askGuide(question, {
             exhibits,
             mode: 'tour',
             context: () => visitorContext(exhibits),
-            onText: (chunk) => pushText(chunk)
+            onText: (chunk) => pushText(chunk),
+            signal: request.signal
           })
         } finally {
+          request.finish()
           setThinking(false)
         }
       },
       setSpeakOverride,
       finishSpeech,
+      stopSpeech,
       isSpeaking,
       subscribeSpeech,
       playFallback: async () => {
+        if (cancelled?.aborted) return // the tour was ended; stay silent
         const line = tour ? lineFor(tour, 'fallback') : undefined
         if (!line) return
         useTourStore.getState().setCaption(line.text)
@@ -140,6 +149,7 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
         }
       }
     })
+  }
 
   const releaseFailedHold = () => {
     if (!holding.current) return
@@ -149,7 +159,7 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
   }
 
   const pressTalk = async () => {
-    if (holding.current || voice.status === 'unavailable') return
+    if (holding.current || voice.status === 'unavailable' || voice.status === 'finishing') return
     if (useTourStore.getState().state.pauseReason === 'answering') return
     holding.current = true
     clearHoldTimer()
@@ -168,12 +178,13 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
   })
 
   const releaseTalk = async () => {
-    if (!holding.current) return
+    if (!holding.current || voice.status === 'finishing') return
     holding.current = false
     clearHoldTimer()
     const text = await voice.stop()
     if (!text) {
-      dispatch({ type: 'RESUME' })
+      // Only undo our own listening pause; a stray release must not resume mid-answer.
+      if (useTourStore.getState().state.pauseReason === 'listening') dispatch({ type: 'RESUME' })
       return
     }
     await ask(text)
@@ -260,11 +271,10 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
         <span className="tour-bar-stop" data-testid="tour-stop">
           {label}
         </span>
-        {liveCaption ? (
-          <span className="tour-bar-caption" data-testid="tour-caption" aria-live="polite">
-            {liveCaption}
-          </span>
-        ) : null}
+        {/* Always mounted so screen readers announce the first caption. */}
+        <span className="tour-bar-caption" data-testid="tour-caption" aria-live="polite">
+          {liveCaption}
+        </span>
         {playing ? (
           <span className="tour-bar-note" data-testid="tour-countdown" aria-live="off">
             {state.auto ? `Next stop in ${secondsLeft}s` : 'Take your time, press Next when ready'}

@@ -66,17 +66,16 @@ describe('createSentenceSplitter (incremental)', () => {
   it('emits sentences as they complete across chunks', () => {
     const splitter = createSentenceSplitter()
     expect(splitter.push('The transistor is in wing')).toEqual([])
-    expect(splitter.push(' B. It switched in 1947.')).toEqual([
-      'The transistor is in wing B.',
-      'It switched in 1947.'
-    ])
-    expect(splitter.flush()).toEqual([])
+    expect(splitter.push(' B. It switched in 1947.')).toEqual(['The transistor is in wing B.'])
+    // The trailing sentence waits for more text (it could be "1947.5"); flush emits it.
+    expect(splitter.flush()).toEqual(['It switched in 1947.'])
   })
 
   it('holds a trailing abbreviation until more text arrives', () => {
     const splitter = createSentenceSplitter()
     expect(splitter.push('Al-Khwarizmi worked c.')).toEqual([])
-    expect(splitter.push(' 820.')).toEqual(['Al-Khwarizmi worked c. 820.'])
+    expect(splitter.push(' 820.')).toEqual([])
+    expect(splitter.flush()).toEqual(['Al-Khwarizmi worked c. 820.'])
   })
 
   it('flushes remaining text as a final sentence', () => {
@@ -90,5 +89,23 @@ describe('createSentenceSplitter (incremental)', () => {
     splitter.push('See B4')
     splitter.reset()
     expect(splitter.flush()).toEqual([])
+  })
+
+  it('does not split a decimal when the digits arrive in a later chunk', () => {
+    const splitter = createSentenceSplitter()
+    expect(splitter.push('It was 2.')).toEqual([])
+    expect(splitter.push('56 MB long. ')).toEqual(['It was 2.56 MB long.'])
+  })
+
+  it('does not split an initialism across chunks', () => {
+    const splitter = createSentenceSplitter()
+    expect(splitter.push('Made in the U.')).toEqual([])
+    expect(splitter.push('S. is a fact. ')).toEqual(['Made in the U.S. is a fact.'])
+  })
+
+  it('end of buffer is not a boundary while streaming, flush emits it', () => {
+    const splitter = createSentenceSplitter()
+    expect(splitter.push('Done.')).toEqual([])
+    expect(splitter.flush()).toEqual(['Done.'])
   })
 })

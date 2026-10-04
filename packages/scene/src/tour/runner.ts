@@ -20,6 +20,8 @@ export interface RunnerDeps {
   pauseNarration: () => void
   resumeNarration: () => void
   onNarrationEnded: (fn: () => void) => () => void
+  /** Narration could not load or play; treated like it ended so a stop never stalls. */
+  onNarrationFailed: (fn: () => void) => () => void
   setTimeout: (fn: () => void, ms: number) => Handle
   clearTimeout: (handle: Handle) => void
 }
@@ -38,6 +40,7 @@ export function createTourRunner(deps: RunnerDeps) {
     if (prev !== null && id !== prev) deps.dispatch({ type: 'PORTAL_CLOSED' })
   })
   const offEnded = deps.onNarrationEnded(() => deps.dispatch({ type: 'NARRATION_ENDED' }))
+  const offFailed = deps.onNarrationFailed(() => deps.dispatch({ type: 'NARRATION_ENDED' }))
 
   const clearTimer = (kind: TimerKind) => {
     const handle = timers.get(kind)
@@ -129,6 +132,7 @@ export function createTourRunner(deps: RunnerDeps) {
       walkToken++
       offPortal()
       offEnded()
+      offFailed()
       deps.clips.stop()
     }
   }

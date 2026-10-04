@@ -3,7 +3,7 @@ import type { Tour } from '@museum/content/tour-schema'
 import type { ExhibitId } from '@museum/content/schema'
 import { CLIP_GRACE_MS, MISSING_CLIP_MS } from './machine'
 import type { TourEffect, TourLineKey } from './machine'
-import { tourContext, useTourStore } from './store'
+import { beginAsk, tourContext, useTourStore } from './store'
 
 const tour: Tour = {
   id: 'test-tour',
@@ -119,6 +119,22 @@ describe('useTourStore thinking flag', () => {
     expect(useTourStore.getState().thinking).toBe(true)
     useTourStore.getState().configure(tour, null)
     expect(useTourStore.getState().thinking).toBe(false)
+    useTourStore.getState().configure(null, null)
+  })
+})
+
+describe('ask abort', () => {
+  it('END aborts the in-flight ask; a finished ask is not aborted', () => {
+    useTourStore.getState().configure(tour, () => undefined)
+    useTourStore.getState().dispatch({ type: 'START' })
+    const ask = beginAsk()
+    expect(ask.signal.aborted).toBe(false)
+    useTourStore.getState().dispatch({ type: 'END' })
+    expect(ask.signal.aborted).toBe(true)
+    const done = beginAsk()
+    done.finish()
+    useTourStore.getState().dispatch({ type: 'END' })
+    expect(done.signal.aborted).toBe(false)
     useTourStore.getState().configure(null, null)
   })
 })

@@ -151,8 +151,8 @@ test.describe('Guided tour', () => {
 
     await expect.poll(() => guideBodies.length).toBeGreaterThan(0)
     expect(guideBodies[0]?.mode).toBe('tour')
-    // The answer is voiced through /api/speak. (No visible answer text exists during the
-    // tour: the guide voice caption lives only inside the guide panel.)
+    // The answer is voiced through /api/speak and captioned in the tour bar while spoken.
+    await expect(page.getByTestId('tour-caption')).toContainText('Ada wrote it')
     await expect.poll(() => spoken.some((body) => body.includes('Ada wrote it'))).toBe(true)
     // The tour resumed: Pause is back and enabled after the answer.
     await expect(bar(page).getByRole('button', { name: 'Pause' })).toBeEnabled({ timeout: 30_000 })

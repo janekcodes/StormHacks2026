@@ -10,6 +10,7 @@ let activeAudio: HTMLAudioElement | null = null
 let muted = readMuted()
 const listeners = new Set<Listener>()
 const endedListeners = new Set<() => void>()
+const failedListeners = new Set<() => void>()
 const audioByExhibit = new Map<ExhibitId, ExhibitAudio>()
 
 function readMuted(): boolean {
@@ -19,6 +20,10 @@ function readMuted(): boolean {
   } catch {
     return false
   }
+}
+
+function notify(set: Set<() => void>): void {
+  for (const fn of [...set]) fn()
 }
 
 function emit(): void {
@@ -64,6 +69,7 @@ export function registerExhibitAudio(exhibits: readonly Exhibit[]): void {
 export function startNarrationFor(id: ExhibitId): void {
   const audio = audioByExhibit.get(id)
   if (audio) startNarration(audio)
+  else notify(failedListeners)
 }
 
 /**
@@ -78,10 +84,16 @@ export function startNarration(audio: ExhibitAudio): void {
   const el = activeAudio
   el.addEventListener('ended', () => {
     if (el !== activeAudio) return
-    for (const fn of endedListeners) fn()
+    notify(endedListeners)
   })
-  void activeAudio.play().catch(() => {
-    /* autoplay blocked (e.g. deep link); the play button remains available */
+  // A load or decode failure never fires 'ended'; report it so the tour moves on.
+  el.addEventListener('error', () => {
+    if (el === activeAudio) notify(failedListeners)
+  })
+  void el.play().catch((err: unknown) => {
+    // Autoplay blocked (e.g. deep link): the play button remains available.
+    if (err instanceof Error && err.name === 'NotAllowedError') return
+    if (el === activeAudio) notify(failedListeners)
   })
   emit()
 }
@@ -94,6 +106,14 @@ export function onNarrationEnded(listener: () => void): () => void {
   }
 }
 
+/** Called when the active narration cannot load or play (not for autoplay blocks). */
+export function onNarrationFailed(listener: () => void): () => void {
+  failedListeners.add(listener)
+  return () => {
+    failedListeners.delete(listener)
+  }
+}
+
 /** Pause without rewinding, so the tour can resume where it stopped. */
 export function pauseNarration(): void {
   activeAudio?.pause()
@@ -101,6 +121,11 @@ export function pauseNarration(): void {
 
 export function resumeNarration(): void {
   if (!activeAudio) return
+  // Already finished: do not replay, let the tour move on.
+  if (activeAudio.ended) {
+    notify(endedListeners)
+    return
+  }
   void activeAudio.play().catch(() => {
     /* autoplay blocked; the tour's narration timeout keeps it moving */
   })
@@ -121,7 +146,8 @@ export function stopNarration(): void {
  */
 export function interruptNarration(): void {
   const el = activeAudio
-  if (!el) return
+  // Already paused (e.g. the tour paused it in place): leave the position alone.
+  if (!el || el.paused) return
   el.pause()
   el.currentTime = 0
 }

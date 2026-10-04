@@ -6,6 +6,7 @@ import { stop as stopGuideVoice } from '../audio/guideVoiceBus'
 import {
   isMuted,
   onNarrationEnded,
+  onNarrationFailed,
   pauseNarration,
   resumeNarration,
   startNarrationFor,
@@ -61,11 +62,17 @@ export function TourDriver({ tour }: { tour: Tour }) {
       pauseNarration,
       resumeNarration,
       onNarrationEnded,
+      onNarrationFailed,
       setTimeout: (fn, ms) => globalThis.setTimeout(fn, ms),
       clearTimeout: (handle) => globalThis.clearTimeout(handle)
     })
     store.configure(tour, (effects) => runner.run(effects))
+    // End (button or otherwise) must silence a half-spoken guide answer.
+    const offEnd = useTourStore.subscribe((state, prev) => {
+      if (prev.state.phase !== 'idle' && state.state.phase === 'idle') stopGuideVoice()
+    })
     return () => {
+      offEnd()
       runner.dispose()
       useTourStore.getState().configure(null, null)
     }

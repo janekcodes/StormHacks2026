@@ -320,7 +320,10 @@ function clipEnded(state: TourState, ctx: TourContext): Out {
       return enterBridge(state, 0, ctx, [{ type: 'clearTimer', kind: 'clip' }, { type: 'stopClip' }])
     case 'bridge':
       if (state.clipDone) return same(state)
-      return bridgeProgress({ ...state, clipDone: true }, ctx, [{ type: 'clearTimer', kind: 'clip' }])
+      return bridgeProgress({ ...state, clipDone: true }, ctx, [
+        { type: 'clearTimer', kind: 'clip' },
+        { type: 'stopClip' }
+      ])
     case 'outro':
       return { state: { ...state, phase: 'done' }, effects: [{ type: 'clearTimers' }] }
     default:

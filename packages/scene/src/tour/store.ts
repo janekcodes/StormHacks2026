@@ -45,6 +45,26 @@ interface TourStore {
   setThinking: (on: boolean) => void
 }
 
+/** The in-flight guide question. Module-level: the bar can remount mid-answer. */
+let askController: AbortController | null = null
+
+export function beginAsk(): { signal: AbortSignal; finish: () => void } {
+  askController?.abort()
+  const controller = new AbortController()
+  askController = controller
+  return {
+    signal: controller.signal,
+    finish: () => {
+      if (askController === controller) askController = null
+    }
+  }
+}
+
+function abortAsk(): void {
+  askController?.abort()
+  askController = null
+}
+
 let runEffects: ((effects: TourEffect[]) => void) | null = null
 let ctx: TourContext | null = null
 const queue: TourEvent[] = []
@@ -71,6 +91,7 @@ export const useTourStore = create<TourStore>((set, get) => ({
       while (queue.length > 0) {
         const next = queue.shift()!
         if (!ctx) continue
+        if (next.type === 'END') abortAsk()
         const out = reduceTour(get().state, next, ctx)
         set({ state: out.state })
         runEffects?.(out.effects)

@@ -1395,6 +1395,11 @@
   opacity: 0.9;
 }
 
+/* The live region stays mounted while empty; out of flow so it adds no flex gap. */
+.tour-bar-caption:empty {
+  position: absolute;
+}
+
 .tour-bar-actions {
   display: flex;
   flex-wrap: wrap;

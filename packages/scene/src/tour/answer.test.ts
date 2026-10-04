@@ -23,6 +23,7 @@ function deps(overrides: Partial<AnswerDeps> = {}) {
       listeners.add(fn)
       return () => listeners.delete(fn)
     },
+    stopSpeech: vi.fn(),
     playFallback: vi.fn(async () => undefined),
     speechTimeoutMs: 500,
     ...overrides
@@ -48,6 +49,10 @@ describe('answerQuestion', () => {
   it('plays the fallback line and resumes when the guide fails', async () => {
     const { d, events } = deps({ ask: vi.fn(async () => ({ ok: false as const, error: 'x' })) })
     await answerQuestion('Hi there', d)
+    expect(d.stopSpeech).toHaveBeenCalled()
+    expect(vi.mocked(d.stopSpeech).mock.invocationCallOrder[0]).toBeLessThan(
+      vi.mocked(d.playFallback).mock.invocationCallOrder[0]!
+    )
     expect(d.playFallback).toHaveBeenCalled()
     expect(events.at(-1)).toEqual({ type: 'RESUME' })
   })

@@ -8,6 +8,7 @@ function setup() {
   let arrive: (() => void) | undefined
   let cancel: (() => void) | undefined
   let openId: ExhibitId | null = null
+  const failedListeners: Array<() => void> = []
   const passportListeners: Array<(id: ExhibitId | null, prev: ExhibitId | null) => void> = []
   const setOpen = (id: ExhibitId | null) => {
     const prev = openId
@@ -34,10 +35,14 @@ function setup() {
     pauseNarration: vi.fn(),
     resumeNarration: vi.fn(),
     onNarrationEnded: () => () => undefined,
+    onNarrationFailed: (fn) => {
+      failedListeners.push(fn)
+      return () => undefined
+    },
     setTimeout: (fn, ms) => globalThis.setTimeout(fn, ms),
     clearTimeout: (handle) => globalThis.clearTimeout(handle)
   }
-  return { deps, events, arrive: () => arrive?.(), userCancel: () => cancel?.(), setOpen }
+  return { deps, events, failNarration: () => failedListeners.forEach((fn) => fn()), arrive: () => arrive?.(), userCancel: () => cancel?.(), setOpen }
 }
 
 describe('createTourRunner', () => {
@@ -111,5 +116,12 @@ describe('createTourRunner', () => {
     expect(t.events).toEqual([{ type: 'TIMEOUT', kind: 'clip' }])
     expect(error).toHaveBeenCalledWith('tour effect failed', 'playClip')
     error.mockRestore()
+  })
+
+  it('maps a narration failure to NARRATION_ENDED so the stop does not stall', () => {
+    const t = setup()
+    createTourRunner(t.deps)
+    t.failNarration()
+    expect(t.events).toEqual([{ type: 'NARRATION_ENDED' }])
   })
 })

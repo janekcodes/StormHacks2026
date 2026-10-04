@@ -119,7 +119,8 @@ export interface SentenceSplitter {
 export function createSentenceSplitter(): SentenceSplitter {
   let buffer = ''
 
-  function drain(): string[] {
+  /** `final`: end of input counts as a boundary (flush only). While streaming, the next chunk may continue a decimal or initialism. */
+  function drain(final: boolean): string[] {
     const sentences: string[] = []
     let start = 0
     let i = 0
@@ -141,7 +142,7 @@ export function createSentenceSplitter(): SentenceSplitter {
         }
       }
 
-      const boundary = j >= buffer.length || isWhitespace(buffer[j]!)
+      const boundary = j >= buffer.length ? final : isWhitespace(buffer[j]!)
       if (!boundary) {
         i++
         continue
@@ -160,12 +161,13 @@ export function createSentenceSplitter(): SentenceSplitter {
   return {
     push(chunk: string) {
       buffer += chunk
-      return drain()
+      return drain(false)
     },
     flush() {
+      const done = drain(true)
       const rest = buffer.trim()
       buffer = ''
-      return rest ? [rest] : []
+      return rest ? [...done, rest] : done
     },
     reset() {
       buffer = ''
