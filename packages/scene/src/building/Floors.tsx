@@ -145,7 +145,7 @@ export function Floors({ building }: { building: Building }) {
     const marks = building.marks.map((mk) => {
       const room = roomAt(building, mk.p[0], mk.p[1])
       const ink = room?.ink ?? '#4f5963'
-      const tex = canvasTexture(512, 128, (g, w, h) => {
+      const tex = canvasTexture(512, 128, (g, w) => {
         g.fillStyle = ink
         g.globalAlpha = 0.75
         g.font = '700 84px "Chakra Petch", sans-serif'
