@@ -80,17 +80,49 @@ describe('askGuide', () => {
     expect(out).toEqual({ ok: false, error: 'Model failed.' })
   })
 
-  it('times out a fetch whose body never ends with timeoutMs: 50', async () => {
+  it('times out a stalled stream with timeoutMs: 50', async () => {
     vi.useFakeTimers()
     try {
       const fetchImpl = vi.fn(async () => {
-        // Return a response with a ReadableStream that never closes
+        // Return a response with a ReadableStream that never ends
         return new Response(
           new ReadableStream(() => {
             // Never close or error; just hang
           }),
           { headers: { 'Content-Type': 'application/x-ndjson' } }
         )
+      })
+
+      const promise = askGuide('Hi', {
+        exhibits: [],
+        mode: 'tour',
+        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+        onText: () => undefined,
+        timeoutMs: 50,
+        fetchImpl
+      })
+
+      // Advance past timeout to trigger abort
+      vi.advanceTimersByTime(100)
+      const out = await promise
+      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('times out fetch rejecting on abort with Node message "This operation was aborted"', async () => {
+    vi.useFakeTimers()
+    try {
+      const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
+        const signal = init.signal
+        return new Promise<Response>((_, reject) => {
+          signal?.addEventListener('abort', () => {
+            // Node's error message (different from Firefox)
+            reject(new DOMException('This operation was aborted', 'AbortError'))
+          })
+          // Never resolve or reject naturally
+        })
       })
       const promise = askGuide('Hi', {
         exhibits: [],
@@ -109,16 +141,16 @@ describe('askGuide', () => {
     }
   })
 
-  it('times out a fetch that rejects on abort with timeoutMs: 50', async () => {
+  it('returns "The question was cancelled." when caller signal aborts', async () => {
     vi.useFakeTimers()
     try {
-      const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
-        const signal = init.signal
+      const callerController = new AbortController()
+      const fetchImpl = vi.fn(async () => {
+        // Hang forever waiting for abort
         return new Promise<Response>((_, reject) => {
-          signal?.addEventListener('abort', () => {
-            reject(new DOMException('The operation was aborted.', 'AbortError'))
+          callerController.signal.addEventListener('abort', () => {
+            reject(new DOMException('Aborted by caller', 'AbortError'))
           })
-          // Never resolve or reject naturally
         })
       })
       const promise = askGuide('Hi', {
@@ -126,13 +158,48 @@ describe('askGuide', () => {
         mode: 'tour',
         context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
         onText: () => undefined,
-        timeoutMs: 50,
+        signal: callerController.signal,
         fetchImpl
       })
-      // Advance timers to trigger the timeout
-      vi.advanceTimersByTime(100)
+      // Abort from caller (not timeout)
+      vi.advanceTimersByTime(10)
+      callerController.abort()
+      vi.advanceTimersByTime(10)
       const out = await promise
+      expect(out).toEqual({ ok: false, error: 'The question was cancelled.' })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('times out during tool execution, preventing a second fetch', async () => {
+    vi.useFakeTimers()
+    try {
+      const fetchImpl = vi
+        .fn()
+        .mockResolvedValueOnce(
+          ndjson([{ type: 'tool', id: 'c1', name: 'walkTo', args: { exhibitId: 'B3' } }, { type: 'done' }])
+        )
+        // This second call should never happen if timeout fires during tool execution
+        .mockResolvedValueOnce(ndjson([{ type: 'text', text: 'Done.' }, { type: 'done' }]))
+
+      const promise = askGuide('Take me to B3', {
+        exhibits: [],
+        mode: 'tour',
+        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+        onText: () => undefined,
+        timeoutMs: 100,
+        fetchImpl
+      })
+
+      // Advance past the timeout before tool execution completes
+      vi.advanceTimersByTime(150)
+      const out = await promise
+
+      // Should timeout, not complete successfully
       expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
+      // Should have only called fetch once (the timeout prevented the second turn)
+      expect(fetchImpl).toHaveBeenCalledTimes(1)
     } finally {
       vi.useRealTimers()
     }

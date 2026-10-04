@@ -67,6 +67,12 @@ export async function streamGuideTurn(history: GuideMessage[], opts: StreamOptio
   let text = ''
   const toolCalls: ToolCall[] = []
 
+  // Set up abort handler to interrupt pending read
+  const abortHandler = () => {
+    reader.cancel().catch(() => {})
+  }
+  opts.signal?.addEventListener('abort', abortHandler, { once: true })
+
   const handleEvent = (raw: unknown) => {
     const event = raw as {
       type?: string
@@ -90,27 +96,34 @@ export async function streamGuideTurn(history: GuideMessage[], opts: StreamOptio
     }
   }
 
-  for (;;) {
-    if (opts.signal?.aborted) {
-      await reader.cancel()
-      throw new Error('The guide took too long to answer.')
-    }
-    const { value, done } = await reader.read()
-    if (done) break
-    buffer += decoder.decode(value, { stream: true })
-    let nl = buffer.indexOf('\n')
-    while (nl >= 0) {
-      const line = buffer.slice(0, nl).trim()
-      buffer = buffer.slice(nl + 1)
-      nl = buffer.indexOf('\n')
-      if (!line) continue
-      try {
-        handleEvent(JSON.parse(line))
-      } catch {
-        // Ignore malformed lines and keep streaming.
+  try {
+    for (;;) {
+      if (opts.signal?.aborted) {
+        await reader.cancel().catch(() => {})
+        throw new Error('Aborted')
+      }
+      const { value, done } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+      let nl = buffer.indexOf('\n')
+      while (nl >= 0) {
+        const line = buffer.slice(0, nl).trim()
+        buffer = buffer.slice(nl + 1)
+        nl = buffer.indexOf('\n')
+        if (!line) continue
+        try {
+          handleEvent(JSON.parse(line))
+        } catch {
+          // Ignore malformed lines and keep streaming.
+        }
       }
     }
+  } finally {
+    opts.signal?.removeEventListener('abort', abortHandler)
   }
+
+  // Check again before executing tools
+  if (opts.signal?.aborted) throw new Error('Aborted')
 
   const next: GuideMessage[] = [...history, { role: 'assistant', text, ...(toolCalls.length > 0 ? { toolCalls } : {}) }]
   if (toolCalls.length > 0) {
@@ -135,11 +148,21 @@ export async function askGuide(
   // Create AbortController with timeout timer
   const abortController = new AbortController()
   let timeoutHandle: ReturnType<typeof setTimeout> | null = null
+  let timedOut = false
 
   if (timeoutMs !== undefined) {
     timeoutHandle = setTimeout(() => {
+      timedOut = true
       abortController.abort()
     }, timeoutMs)
+  }
+
+  // Link caller-supplied signal to our controller
+  const callerAbortHandler = () => {
+    abortController.abort()
+  }
+  if (opts.signal) {
+    opts.signal.addEventListener('abort', callerAbortHandler, { once: true })
   }
 
   const inner: StreamOptions = {
@@ -153,26 +176,28 @@ export async function askGuide(
 
   try {
     for (let turn = 0; turn < MAX_TURNS; turn++) {
+      // Check before starting a turn
+      if (abortController.signal.aborted) throw new Error('Aborted')
       history = await streamGuideTurn(history, inner)
       if (streamError) {
-        if (timeoutHandle !== null) clearTimeout(timeoutHandle)
         return { ok: false, error: streamError }
       }
       const last = history[history.length - 1]
       if (last?.role === 'assistant' && !(last.toolCalls && last.toolCalls.length > 0)) break
     }
-    if (timeoutHandle !== null) clearTimeout(timeoutHandle)
     return { ok: true }
   } catch (err) {
-    if (timeoutHandle !== null) clearTimeout(timeoutHandle)
-    // Check if this is the specific timeout error
-    if (err instanceof Error && err.message === 'The guide took too long to answer.') {
+    if (timedOut) {
       return { ok: false, error: 'The guide took too long to answer.' }
     }
-    // Check if the error is due to an abort caused by our timeout
-    if (abortController.signal.aborted && err instanceof Error && err.message === 'The operation was aborted.') {
-      return { ok: false, error: 'The guide took too long to answer.' }
+    if (abortController.signal.aborted && !timedOut) {
+      return { ok: false, error: 'The question was cancelled.' }
     }
     return { ok: false, error: err instanceof Error ? err.message : 'Something went wrong. Please try again.' }
+  } finally {
+    if (timeoutHandle !== null) clearTimeout(timeoutHandle)
+    if (opts.signal) {
+      opts.signal.removeEventListener('abort', callerAbortHandler)
+    }
   }
 }
