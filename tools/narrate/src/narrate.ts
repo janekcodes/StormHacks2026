@@ -33,6 +33,7 @@ export interface NarrateExhibitOutput {
   src: string
   align: string
   changed: boolean
+  durationMs: number | null
 }
 
 export function computeAudioRecord(
@@ -59,7 +60,7 @@ export async function narrateExhibit(input: NarrateExhibitInput): Promise<Narrat
   const record = computeAudioRecord(id, narration, voiceId, modelId)
 
   if (input.existingHash === record.hash) {
-    return { ...record, changed: false }
+    return { ...record, changed: false, durationMs: null }
   }
 
   const spoken = applyPronunciation(narration, dictionary)
@@ -80,5 +81,5 @@ export async function narrateExhibit(input: NarrateExhibitInput): Promise<Narrat
   writeFileSync(join(audioDir, `${id}.${record.hash}.mp3`), result.audio)
   writeFileSync(join(audioDir, `${id}.${record.hash}.align.json`), JSON.stringify(alignment, null, 2) + '\n')
 
-  return { ...record, changed: true }
+  return { ...record, changed: true, durationMs: words.length > 0 ? words[words.length - 1]!.endMs : null }
 }

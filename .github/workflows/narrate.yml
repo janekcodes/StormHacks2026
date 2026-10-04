@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - 'packages/content/data/exhibits.json'
+      - 'packages/content/data/tour.json'
       - 'packages/content/pronunciation/**'
       - 'tools/narrate/**'
   workflow_dispatch:
@@ -57,4 +58,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'narrate: regenerate narration audio'
-          file_pattern: 'apps/web/public/audio/* packages/content/data/exhibits.json'
+          file_pattern: 'apps/web/public/audio/* packages/content/data/exhibits.json packages/content/data/tour.json'

@@ -68,4 +68,20 @@ describe('narrateExhibit', () => {
 
     rmSync(dir, { recursive: true, force: true })
   })
+
+  it('reports the spoken duration from the last word, and null when unchanged', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'narrate-'))
+    const first = await narrateExhibit({
+      id: 'T1', narration: 'two words', voiceId: 'v', modelId: 'm', apiKey: 'k',
+      audioDir: dir, dictionary: {}, synth: fakeSynth
+    })
+    // fakeSynth: char i ends at (i + 1) seconds; "two words" has 9 chars.
+    expect(first.durationMs).toBe(9000)
+    const again = await narrateExhibit({
+      id: 'T1', narration: 'two words', voiceId: 'v', modelId: 'm', apiKey: 'k',
+      audioDir: dir, dictionary: {}, synth: fakeSynth, existingHash: first.hash
+    })
+    expect(again.durationMs).toBeNull()
+    rmSync(dir, { recursive: true, force: true })
+  })
 })
