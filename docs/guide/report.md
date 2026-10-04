@@ -43,8 +43,8 @@ PASS | Open the Turing machine exhibit
 PASS | Walk me to the Transformer exhibit
 PASS | Highlight the AI exhibits for me
 PASS | Give me a tour of AI and hardware
-FAIL | Is the Turing test on display?
-      unexpected tool call
+PASS | Is the Turing test on display?
 PASS | Is the Manchester Baby on display?
-PASS | Can I open the smartphone exhibit?
+FAIL | Can I open the smartphone exhibit?
+      unexpected tool call
 PASS | What's the weather like today?
