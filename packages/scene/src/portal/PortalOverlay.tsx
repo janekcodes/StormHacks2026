@@ -228,7 +228,7 @@ export function PortalOverlay({
               </button>
             </div>
           </div>
-          <TourBar variant="inline" exhibits={exhibits} />
+          {touring ? <TourBar variant="inline" exhibits={exhibits} /> : null}
           {exhibit.tier === 'built' && exhibit.audio ? (
             <Narrator audio={exhibit.audio} title={exhibit.title} />
           ) : null}

@@ -167,19 +167,31 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
   useEffect(() => {
     // A held mic must not outlive the page's focus: no keyup/pointerup will arrive.
     const release = () => void releaseTalkRef.current()
-    const onVisibility = () => {
-      if (document.visibilityState === 'hidden') release()
+    // The first mic permission prompt blurs the window while connecting; only a
+    // live session ('listening') is released by blur or hiding.
+    const releaseIfListening = () => {
+      if (voiceStatusRef.current === 'listening') release()
     }
-    window.addEventListener('blur', release)
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') releaseIfListening()
+    }
+    window.addEventListener('blur', releaseIfListening)
     window.addEventListener('pointercancel', release)
     document.addEventListener('visibilitychange', onVisibility)
     return () => {
-      window.removeEventListener('blur', release)
+      window.removeEventListener('blur', releaseIfListening)
       window.removeEventListener('pointercancel', release)
       document.removeEventListener('visibilitychange', onVisibility)
       clearHoldTimer()
+      // Switching between the floating and inline bar unmounts the owner of a
+      // live hold; no key or pointer release will arrive, so resume here. An
+      // ask already in flight has holding=false and resumes itself.
+      if (holding.current) {
+        holding.current = false
+        if (useTourStore.getState().state.pauseReason === 'listening') dispatch({ type: 'RESUME' })
+      }
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (!active) return
