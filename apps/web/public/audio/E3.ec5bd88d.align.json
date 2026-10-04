@@ -1,0 +1,284 @@
+{
+  "words": [
+    {
+      "text": "On",
+      "startMs": 0,
+      "endMs": 139
+    },
+    {
+      "text": "December",
+      "startMs": 186,
+      "endMs": 569
+    },
+    {
+      "text": "ninth,",
+      "startMs": 639,
+      "endMs": 998
+    },
+    {
+      "text": "nineteen",
+      "startMs": 1080,
+      "endMs": 1440
+    },
+    {
+      "text": "sixty-eight,",
+      "startMs": 1498,
+      "endMs": 2218
+    },
+    {
+      "text": "Douglas",
+      "startMs": 2426,
+      "endMs": 2821
+    },
+    {
+      "text": "Engelbart",
+      "startMs": 2891,
+      "endMs": 4040
+    },
+    {
+      "text": "showed",
+      "startMs": 4156,
+      "endMs": 4481
+    },
+    {
+      "text": "the",
+      "startMs": 4516,
+      "endMs": 4586
+    },
+    {
+      "text": "mouse,",
+      "startMs": 4644,
+      "endMs": 5097
+    },
+    {
+      "text": "windows,",
+      "startMs": 5178,
+      "endMs": 5782
+    },
+    {
+      "text": "hypertext",
+      "startMs": 5863,
+      "endMs": 6455
+    },
+    {
+      "text": "links",
+      "startMs": 6502,
+      "endMs": 6792
+    },
+    {
+      "text": "and",
+      "startMs": 6838,
+      "endMs": 6966
+    },
+    {
+      "text": "live",
+      "startMs": 7036,
+      "endMs": 7279
+    },
+    {
+      "text": "shared",
+      "startMs": 7303,
+      "endMs": 7546
+    },
+    {
+      "text": "editing",
+      "startMs": 7616,
+      "endMs": 8011
+    },
+    {
+      "text": "in",
+      "startMs": 8185,
+      "endMs": 8324
+    },
+    {
+      "text": "one",
+      "startMs": 8406,
+      "endMs": 8568
+    },
+    {
+      "text": "ninety",
+      "startMs": 8615,
+      "endMs": 8882
+    },
+    {
+      "text": "minute",
+      "startMs": 8928,
+      "endMs": 9149
+    },
+    {
+      "text": "demo",
+      "startMs": 9183,
+      "endMs": 9485
+    },
+    {
+      "text": "in",
+      "startMs": 9567,
+      "endMs": 9671
+    },
+    {
+      "text": "San",
+      "startMs": 9729,
+      "endMs": 9880
+    },
+    {
+      "text": "Francisco.",
+      "startMs": 9927,
+      "endMs": 10751
+    },
+    {
+      "text": "Many",
+      "startMs": 11262,
+      "endMs": 11494
+    },
+    {
+      "text": "parts",
+      "startMs": 11552,
+      "endMs": 11819
+    },
+    {
+      "text": "of",
+      "startMs": 11854,
+      "endMs": 11912
+    },
+    {
+      "text": "how",
+      "startMs": 11958,
+      "endMs": 12051
+    },
+    {
+      "text": "you",
+      "startMs": 12109,
+      "endMs": 12179
+    },
+    {
+      "text": "use",
+      "startMs": 12260,
+      "endMs": 12446
+    },
+    {
+      "text": "a",
+      "startMs": 12481,
+      "endMs": 12504
+    },
+    {
+      "text": "computer",
+      "startMs": 12550,
+      "endMs": 12992
+    },
+    {
+      "text": "today",
+      "startMs": 13050,
+      "endMs": 13410
+    },
+    {
+      "text": "appeared",
+      "startMs": 13584,
+      "endMs": 13978
+    },
+    {
+      "text": "on",
+      "startMs": 14013,
+      "endMs": 14083
+    },
+    {
+      "text": "that",
+      "startMs": 14118,
+      "endMs": 14245
+    },
+    {
+      "text": "stage.",
+      "startMs": 14303,
+      "endMs": 14919
+    },
+    {
+      "text": "Move",
+      "startMs": 15615,
+      "endMs": 15894
+    },
+    {
+      "text": "the",
+      "startMs": 15929,
+      "endMs": 15998
+    },
+    {
+      "text": "pointer",
+      "startMs": 16045,
+      "endMs": 16393
+    },
+    {
+      "text": "and",
+      "startMs": 16451,
+      "endMs": 16567
+    },
+    {
+      "text": "click",
+      "startMs": 16625,
+      "endMs": 16823
+    },
+    {
+      "text": "a",
+      "startMs": 16869,
+      "endMs": 16892
+    },
+    {
+      "text": "link",
+      "startMs": 16950,
+      "endMs": 17148
+    },
+    {
+      "text": "to",
+      "startMs": 17218,
+      "endMs": 17276
+    },
+    {
+      "text": "jump",
+      "startMs": 17368,
+      "endMs": 17554
+    },
+    {
+      "text": "between",
+      "startMs": 17612,
+      "endMs": 17914
+    },
+    {
+      "text": "notes,",
+      "startMs": 17984,
+      "endMs": 18425
+    },
+    {
+      "text": "while",
+      "startMs": 18576,
+      "endMs": 18796
+    },
+    {
+      "text": "a",
+      "startMs": 18831,
+      "endMs": 18855
+    },
+    {
+      "text": "second",
+      "startMs": 18901,
+      "endMs": 19203
+    },
+    {
+      "text": "cursor",
+      "startMs": 19272,
+      "endMs": 19609
+    },
+    {
+      "text": "types",
+      "startMs": 19656,
+      "endMs": 19934
+    },
+    {
+      "text": "beside",
+      "startMs": 19981,
+      "endMs": 20375
+    },
+    {
+      "text": "you.",
+      "startMs": 20410,
+      "endMs": 20898
+    }
+  ]
+}

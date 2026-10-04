@@ -1306,6 +1306,13 @@
     "d": 1.3,
     "h": 0.95,
     "floor": false
+   },
+   "audio": {
+    "src": "/audio/E3.ec5bd88d.mp3",
+    "align": "/audio/E3.ec5bd88d.align.json",
+    "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+    "modelId": "eleven_multilingual_v2",
+    "hash": "ec5bd88d"
    }
   },
   {
