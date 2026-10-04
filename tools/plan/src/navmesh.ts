@@ -286,9 +286,19 @@ export function roomTargetFor(
     return { x: round3(p.x), z: round3(p.z), yaw: 0 }
   }
   if (key === 'Conc') {
-    const r = building.rc * 0.55
+    // Midway across the ring (apothems of the atrium and concourse octagons), so it is not in the atrium.
+    const r = ((building.ra + building.rc) / 2) * Math.cos(Math.PI / 8)
     const p = snapPoint(query, 0, r, 2) ?? { x: 0, z: r }
     return { x: round3(p.x), z: round3(p.z), yaw: Math.PI }
+  }
+  // Sx and X split the SE sector along the 45 deg line, where the Sx sign sits.
+  // Aim at the middle of each half instead so the target lands in its own room.
+  if (key === 'Sx' || key === 'X') {
+    const a = ((key === 'Sx' ? 33.75 : 56.25) * Math.PI) / 180
+    const [ux, uz] = [Math.cos(a), Math.sin(a)]
+    const d = building.rc + 2.5
+    const p = snapPoint(query, ux * d, uz * d, 1.5) ?? { x: ux * d, z: uz * d }
+    return { x: round3(p.x), z: round3(p.z), yaw: round3(yawAlong(ux, uz)) }
   }
 
   const sign = building.signs.find((s) => s.k === key)
@@ -330,10 +340,6 @@ export function roomTargetFor(
     const [cx, cz] = roomCentroid(room)
     const p = snapPoint(query, cx, cz + 1.2, 2) ?? { x: cx, z: cz }
     return { x: round3(p.x), z: round3(p.z), yaw: round3(-Math.PI / 2) }
-  }
-  if (key === 'X') {
-    const p = snapPoint(query, 10.8, 10.8, 3) ?? { x: 10.8, z: 10.8 }
-    return { x: round3(p.x), z: round3(p.z), yaw: round3(yawAlong(0.7, 0.7)) }
   }
 
   const room = building.rooms.find((r) => r.key === key)
