@@ -15,6 +15,7 @@ import {
 import { Narrator } from '../audio/Narrator'
 import { closePortal, showNeighbour } from '../exhibits/open'
 import { useGuideStore } from '../guide/state'
+import { TourBar } from '../tour/TourBar'
 import { useTourStore } from '../tour/store'
 import { PASSPORT_TOTAL, passportCount, usePassport } from '../passport'
 import { lightInk, useFocusTrap, usePresence } from '../ui'
@@ -202,27 +203,32 @@ export function PortalOverlay({
               >
                 Ask the guide
               </button>
-              <button
-                type="button"
-                className="btn"
-                aria-label="Previous exhibit in this zone"
-                onClick={() => showNeighbour(exhibits, exhibit.id, -1)}
-              >
-                <span aria-hidden="true">←</span> Prev
-              </button>
-              <button
-                type="button"
-                className="btn"
-                aria-label="Next exhibit in this zone"
-                onClick={() => showNeighbour(exhibits, exhibit.id, 1)}
-              >
-                Next <span aria-hidden="true">→</span>
-              </button>
+              {touring ? null : (
+                <>
+                  <button
+                    type="button"
+                    className="btn"
+                    aria-label="Previous exhibit in this zone"
+                    onClick={() => showNeighbour(exhibits, exhibit.id, -1)}
+                  >
+                    <span aria-hidden="true">←</span> Prev
+                  </button>
+                  <button
+                    type="button"
+                    className="btn"
+                    aria-label="Next exhibit in this zone"
+                    onClick={() => showNeighbour(exhibits, exhibit.id, 1)}
+                  >
+                    Next <span aria-hidden="true">→</span>
+                  </button>
+                </>
+              )}
               <button type="button" className="btn btn--primary" data-testid="portal-close" onClick={() => closePortal()}>
                 Back to museum <span className="keycap" aria-hidden="true">Esc</span>
               </button>
             </div>
           </div>
+          <TourBar variant="inline" exhibits={exhibits} />
           {exhibit.tier === 'built' && exhibit.audio ? (
             <Narrator audio={exhibit.audio} title={exhibit.title} />
           ) : null}

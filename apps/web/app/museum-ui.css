@@ -1168,8 +1168,43 @@
   background: rgb(0 0 0 / 0.45);
 }
 
+/* Inline variant: a compact strip inside the exhibit pop-up, under the header. */
+.tour-bar--inline {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  transform: none;
+  left: auto;
+  bottom: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  max-width: none;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius-md, 10px);
+  background: var(--c-night);
+  color: var(--c-night-text);
+}
+
+.tour-bar--inline .tour-bar-status {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.tour-bar--inline .tour-bar-actions {
+  flex: 0 1 auto;
+}
+
+.tour-bar--inline .tour-bar-ask input {
+  min-width: 0;
+  max-width: 100%;
+}
+
 @media (max-width: 640px) {
-  .tour-bar {
+  .tour-bar:not(.tour-bar--inline) {
     bottom: var(--space-2);
     padding: var(--space-2) var(--space-3);
   }

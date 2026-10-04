@@ -6,6 +6,7 @@ import { finish as finishSpeech, isSpeaking, pushText, setSpeakOverride, subscri
 import { isMuted } from '../audio/narratorBus'
 import { askGuide } from '../guide/ask'
 import { visitorContext } from '../guide/executor'
+import { usePassport } from '../passport'
 import { useVoiceInput } from '../voice/useVoiceInput'
 import { answerQuestion } from './answer'
 import { PLAY_MS } from './machine'
@@ -29,7 +30,20 @@ function isTypingTarget(event: KeyboardEvent): boolean {
   )
 }
 
-export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
+export type TourBarVariant = 'floating' | 'inline'
+
+/**
+ * Exactly one body is mounted at a time, so only one owns the keyboard
+ * listeners and the voice hook. While an exhibit is open the inline variant
+ * (rendered inside the pop-up) owns them; otherwise the floating bar does.
+ */
+export function TourBar({ exhibits, variant = 'floating' }: { exhibits: readonly Exhibit[]; variant?: TourBarVariant }) {
+  const exhibitOpen = usePassport((s) => s.openId !== null)
+  if ((variant === 'inline') !== exhibitOpen) return null
+  return <TourBarBody exhibits={exhibits} variant={variant} />
+}
+
+function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; variant: TourBarVariant }) {
   const tour = useTourStore((s) => s.tour)
   const state = useTourStore((s) => s.state)
   const caption = useTourStore((s) => s.caption)
@@ -202,7 +216,9 @@ export function TourBar({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const playing = state.phase === 'dwell' && state.pauseReason === null
 
   return (
-    <div className="museum-glass tour-bar" role="region" aria-label="Guided tour" data-testid="tour-bar">
+    <div
+      className={variant === 'inline' ? 'tour-bar tour-bar--inline' : 'museum-glass tour-bar'}
+      role="region" aria-label="Guided tour" data-testid="tour-bar">
       <div className="tour-bar-status">
         <span className="tour-bar-stop" data-testid="tour-stop">
           {label}
