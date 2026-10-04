@@ -5,6 +5,8 @@ import {
   buildSystemPrompt,
   createGuideClient,
   GUIDE_TOOL_NAMES,
+  TOUR_MODE_RULES,
+  TOUR_TOOL_NAMES,
   type GuideMessage,
   type ToolCall,
   type VisitorContext
@@ -53,7 +55,8 @@ const visitorContextSchema = z.object({
 const requestSchema = z.object({
   sessionId: z.string().min(1).max(128),
   messages: z.array(guideMessageSchema).min(1).max(40),
-  visitorContext: visitorContextSchema
+  visitorContext: visitorContextSchema,
+  mode: z.enum(['visit', 'tour']).optional()
 })
 
 const MAX_OUTPUT_TOKENS = 600
@@ -122,10 +125,19 @@ export async function POST(request: Request): Promise<Response> {
   const visitor = toVisitorContext(body.visitorContext)
   const detailId = visitor.openPortalId ?? visitor.nearestExhibitId
   const exhibit = detailId ? getExhibit(detailId) : undefined
+  const tour = body.mode === 'tour'
   const systemInstruction =
-    buildSystemPrompt(exhibits, scopeVersion) + '\n\n' + buildContext(visitor, exhibit ?? null)
+    buildSystemPrompt(exhibits, scopeVersion) +
+    '\n\n' +
+    buildContext(visitor, exhibit ?? null) +
+    (tour ? '\n\n' + TOUR_MODE_RULES : '')
 
-  const client = createGuideClient({ apiKey, model, systemInstruction })
+  const client = createGuideClient({
+    apiKey,
+    model,
+    systemInstruction,
+    ...(tour ? { tools: TOUR_TOOL_NAMES } : {})
+  })
 
   const encoder = new TextEncoder()
   const stream = new ReadableStream<Uint8Array>({

@@ -49,3 +49,8 @@ export function buildSystemPrompt(exhibits: readonly CompactExhibit[], scopeVers
     compactRegistry(exhibits)
   ].join('\n')
 }
+
+/** Appended to the system prompt while the visitor is on the guided tour. */
+export const TOUR_MODE_RULES = `The visitor is on a guided tour and asked a question out loud.
+Answer in at most two short spoken sentences, from museum content first, and cite the exhibit ID.
+Do not walk the visitor anywhere, open portals or start tours; the tour continues after your answer.`

@@ -1,11 +1,13 @@
 import { GoogleGenAI, type Content, type Part } from '@google/genai'
-import { GUIDE_TOOL_DECLARATIONS, type ToolCall } from './tools'
+import { toolDeclarationsFor, type GuideToolName, type ToolCall } from './tools'
 import type { GuideMessage, ToolResponse } from './protocol'
 
 export interface GuideClientOptions {
   apiKey: string
   model: string
   systemInstruction: string
+  /** Restrict the tools offered to the model. Defaults to every tool. */
+  tools?: readonly GuideToolName[]
 }
 
 export interface GuideTurnConfig {
@@ -99,7 +101,7 @@ export function createGuideClient(options: GuideClientOptions): GuideClient {
 
   const configFor = (config?: GuideTurnConfig) => ({
     systemInstruction,
-    tools: [{ functionDeclarations: GUIDE_TOOL_DECLARATIONS }],
+    tools: [{ functionDeclarations: toolDeclarationsFor(options.tools) }],
     ...(config?.maxOutputTokens !== undefined ? { maxOutputTokens: config.maxOutputTokens } : {}),
     ...(config?.temperature !== undefined ? { temperature: config.temperature } : {})
   })
