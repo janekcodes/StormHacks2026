@@ -77,8 +77,8 @@ Exhibit placement logic. **Positions are authored data in `exhibits.json`, not d
 ## Verify
 
 ```bash
-pnpm --filter tools-plan test
-pnpm --filter tools-plan build:plan && git diff --exit-code packages/content/generated
+pnpm --filter @museum/plan test
+pnpm --filter @museum/plan build:plan && git diff --exit-code packages/content/generated
 ```
 
 ## Handoff
