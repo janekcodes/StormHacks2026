@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { FloorMap } from '@museum/scene'
+import { FloorMap } from '@museum/scene/map'
 import { SiteNav } from '../../components/SiteNav'
 import { building, exhibits } from '../../lib/museum-data'
 import styles from '../museum.module.css'

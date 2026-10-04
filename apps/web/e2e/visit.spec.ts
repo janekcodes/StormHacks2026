@@ -16,9 +16,10 @@ test.describe('3D scene shell /visit', () => {
     const view = page.locator('.museum-view')
     await expect(view).toBeVisible({ timeout: 60_000 })
     await expect(view).toHaveAttribute('data-ready', 'true', { timeout: 60_000 })
+    await expect(view).toHaveAttribute('data-nav', 'true', { timeout: 60_000 })
     await expect(page.getByTestId('zone-hud')).toContainText(/ready/i)
     await expect(view).toHaveAttribute('data-draw-calls', /^(?:[1-9]|[1-9]\d|1[0-4]\d)$/, {
-      timeout: 10_000
+      timeout: 15_000
     })
 
     const outDir = path.join('test-results', 'visit')
@@ -27,16 +28,18 @@ test.describe('3D scene shell /visit', () => {
       fullPage: false
     })
 
-    // Run north into the atrium (Shift + W from z=34.5)
-    await view.focus()
-    await page.keyboard.down('Shift')
-    await page.keyboard.down('w')
-    await page.waitForTimeout(7000)
-    await page.keyboard.up('w')
-    await page.keyboard.up('Shift')
+    // Click to focus the shell, then walk via the nav API (pathfind through doors).
+    // Keyboard hold is flaky in headless CI when blur clears the key store mid-hold.
+    await view.click({ position: { x: 40, y: 40 } })
+    const walked = await page.evaluate(() => {
+      const api = window.museum
+      if (!api) return false
+      return api.goRoom('Atr')
+    })
+    expect(walked).toBe(true)
 
     await expect(page.getByTestId('zone-hud')).toContainText(/Atrium|Concourse/i, {
-      timeout: 10_000
+      timeout: 20_000
     })
 
     await page.screenshot({

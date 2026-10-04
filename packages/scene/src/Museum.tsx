@@ -3,7 +3,7 @@
 import type { Building } from '@museum/content/plan-schema'
 import type { Exhibit, ExhibitId } from '@museum/content/schema'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Atrium } from './building/Atrium'
 import { Floors } from './building/Floors'
 import { Signage } from './building/Signage'
@@ -37,10 +37,7 @@ function SceneReady() {
 
 function DrawCallProbe() {
   const { gl } = useThree()
-  const frame = useRef(0)
   useFrame(() => {
-    frame.current++
-    if (frame.current % 30 !== 0) return
     const el = document.querySelector('.museum-view')
     if (el) el.setAttribute('data-draw-calls', String(gl.info.render.calls))
   })

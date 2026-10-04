@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { EXHIBIT_IDS, type ExhibitId } from '@museum/content/schema'
-import { FloorMap } from '@museum/scene'
+import { FloorMap } from '@museum/scene/map'
 import { SiteNav } from '../../../components/SiteNav'
 import {
   bandLabel,

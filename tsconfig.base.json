@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@museum/scene": ["packages/scene/src/index.ts"],
+      "@museum/scene/map": ["packages/scene/src/map.ts"],
       "@museum/content": ["packages/content/src/index.ts"],
       "@museum/content/schema": ["packages/content/src/schema.ts"],
       "@museum/content/plan-schema": ["packages/content/src/plan-schema.ts"],
