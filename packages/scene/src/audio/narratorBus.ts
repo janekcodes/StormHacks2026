@@ -9,6 +9,7 @@ type Listener = () => void
 let activeAudio: HTMLAudioElement | null = null
 let muted = readMuted()
 const listeners = new Set<Listener>()
+const endedListeners = new Set<() => void>()
 const audioByExhibit = new Map<ExhibitId, ExhibitAudio>()
 
 function readMuted(): boolean {
@@ -74,10 +75,35 @@ export function startNarration(audio: ExhibitAudio): void {
   activeAudio = new Audio(audio.src)
   activeAudio.muted = muted
   activeAudio.playbackRate = 1
+  const el = activeAudio
+  el.addEventListener('ended', () => {
+    if (el !== activeAudio) return
+    for (const fn of endedListeners) fn()
+  })
   void activeAudio.play().catch(() => {
     /* autoplay blocked (e.g. deep link); the play button remains available */
   })
   emit()
+}
+
+/** Called when the active narration clip plays to its end (tour auto-advance). */
+export function onNarrationEnded(listener: () => void): () => void {
+  endedListeners.add(listener)
+  return () => {
+    endedListeners.delete(listener)
+  }
+}
+
+/** Pause without rewinding, so the tour can resume where it stopped. */
+export function pauseNarration(): void {
+  activeAudio?.pause()
+}
+
+export function resumeNarration(): void {
+  if (!activeAudio) return
+  void activeAudio.play().catch(() => {
+    /* autoplay blocked; the tour's narration timeout keeps it moving */
+  })
 }
 
 /** Stop and release narration (close, prev/next, travel cancel). */
