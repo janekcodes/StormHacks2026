@@ -48,3 +48,6 @@ export {
   type StandpointsData
 } from './nav/targets'
 export { museum, bindMuseumApi, setMapBuilding, type MuseumNavApi } from './nav/api'
+
+export { interruptNarration } from './audio/narratorBus'
+export { Narrator } from './audio/Narrator'

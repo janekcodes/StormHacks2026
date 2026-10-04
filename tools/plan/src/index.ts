@@ -1,5 +1,6 @@
 export { generate } from './generate'
 export { renderSvg } from './svg'
+export { buildShellScene, exportShellGlb } from './shell'
 export * from './geometry'
 export {
   NAV_CONFIG,

@@ -10,6 +10,7 @@
       "@/*": ["./*"],
       "@museum/scene": ["../../packages/scene/src/index.ts"],
       "@museum/scene/map": ["../../packages/scene/src/map.ts"],
+      "@museum/scene/portal": ["../../packages/scene/src/portal/registry.ts"],
       "@museum/content/schema": ["../../packages/content/src/schema.ts"],
       "@museum/content/plan-schema": ["../../packages/content/src/plan-schema.ts"],
       "@museum/content/zones": ["../../packages/content/src/zones.ts"],
@@ -19,7 +20,19 @@
       "@museum/content/generated/standpoints.json": [
         "../../packages/content/generated/standpoints.json"
       ],
-      "@museum/content/data/exhibits.json": ["../../packages/content/data/exhibits.json"]
+      "@museum/content/data/exhibits.json": ["../../packages/content/data/exhibits.json"],
+      "@museum/portal-a1": ["../../packages/portals/a1/src/index.ts"],
+      "@museum/portal-b2": ["../../packages/portals/b2/src/index.ts"],
+      "@museum/portal-b3": ["../../packages/portals/b3/src/index.ts"],
+      "@museum/portal-b11": ["../../packages/portals/b11/src/index.ts"],
+      "@museum/portal-c1": ["../../packages/portals/c1/src/index.ts"],
+      "@museum/portal-c3": ["../../packages/portals/c3/src/index.ts"],
+      "@museum/portal-c10": ["../../packages/portals/c10/src/index.ts"],
+      "@museum/portal-d6": ["../../packages/portals/d6/src/index.ts"],
+      "@museum/portal-d7": ["../../packages/portals/d7/src/index.ts"],
+      "@museum/portal-f2": ["../../packages/portals/f2/src/index.ts"],
+      "@museum/portal-f7": ["../../packages/portals/f7/src/index.ts"],
+      "@museum/portal-f10": ["../../packages/portals/f10/src/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

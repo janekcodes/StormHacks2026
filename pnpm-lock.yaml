@@ -35,6 +35,42 @@ importers:
       '@museum/content':
         specifier: workspace:*
         version: link:../../packages/content
+      '@museum/portal-a1':
+        specifier: workspace:*
+        version: link:../../packages/portals/a1
+      '@museum/portal-b11':
+        specifier: workspace:*
+        version: link:../../packages/portals/b11
+      '@museum/portal-b2':
+        specifier: workspace:*
+        version: link:../../packages/portals/b2
+      '@museum/portal-b3':
+        specifier: workspace:*
+        version: link:../../packages/portals/b3
+      '@museum/portal-c1':
+        specifier: workspace:*
+        version: link:../../packages/portals/c1
+      '@museum/portal-c10':
+        specifier: workspace:*
+        version: link:../../packages/portals/c10
+      '@museum/portal-c3':
+        specifier: workspace:*
+        version: link:../../packages/portals/c3
+      '@museum/portal-d6':
+        specifier: workspace:*
+        version: link:../../packages/portals/d6
+      '@museum/portal-d7':
+        specifier: workspace:*
+        version: link:../../packages/portals/d7
+      '@museum/portal-f10':
+        specifier: workspace:*
+        version: link:../../packages/portals/f10
+      '@museum/portal-f2':
+        specifier: workspace:*
+        version: link:../../packages/portals/f2
+      '@museum/portal-f7':
+        specifier: workspace:*
+        version: link:../../packages/portals/f7
       '@museum/scene':
         specifier: workspace:*
         version: link:../../packages/scene
@@ -128,11 +164,347 @@ importers:
         specifier: ^3.2.7
         version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
 
+  packages/portals/a1:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/b11:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/b2:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/b3:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/c1:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/c10:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/c3:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/d6:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/d7:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/f10:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/f2:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  packages/portals/f7:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
   packages/scene:
     dependencies:
       '@museum/content':
         specifier: workspace:*
         version: link:../content
+      '@museum/portal-a1':
+        specifier: workspace:*
+        version: link:../portals/a1
+      '@museum/portal-b11':
+        specifier: workspace:*
+        version: link:../portals/b11
+      '@museum/portal-b2':
+        specifier: workspace:*
+        version: link:../portals/b2
+      '@museum/portal-b3':
+        specifier: workspace:*
+        version: link:../portals/b3
+      '@museum/portal-c1':
+        specifier: workspace:*
+        version: link:../portals/c1
+      '@museum/portal-c10':
+        specifier: workspace:*
+        version: link:../portals/c10
+      '@museum/portal-c3':
+        specifier: workspace:*
+        version: link:../portals/c3
+      '@museum/portal-d6':
+        specifier: workspace:*
+        version: link:../portals/d6
+      '@museum/portal-d7':
+        specifier: workspace:*
+        version: link:../portals/d7
+      '@museum/portal-f10':
+        specifier: workspace:*
+        version: link:../portals/f10
+      '@museum/portal-f2':
+        specifier: workspace:*
+        version: link:../portals/f2
+      '@museum/portal-f7':
+        specifier: workspace:*
+        version: link:../portals/f7
       '@react-three/drei':
         specifier: ^10.7.9
         version: 10.7.9(@react-three/fiber@9.8.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(three@0.186.1))(@types/react@19.3.0)(@types/three@0.186.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(three@0.186.1)
@@ -154,6 +526,9 @@ importers:
       three:
         specifier: ^0.186.1
         version: 0.186.1
+      three-stdlib:
+        specifier: ^2.35.6
+        version: 2.36.1(three@0.186.1)
       zustand:
         specifier: ^5.0.15
         version: 5.0.15(@types/react@19.3.0)(react@19.3.0)(use-sync-external-store@1.7.0(react@19.3.0))
@@ -186,7 +561,20 @@ importers:
         specifier: ^3.2.7
         version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
 
-  tools/narrate:
+  tools/assets:
+    dependencies:
+      '@gltf-transform/core':
+        specifier: ^4.5.1
+        version: 4.5.1
+      '@gltf-transform/extensions':
+        specifier: ^4.5.1
+        version: 4.5.1
+      '@gltf-transform/functions':
+        specifier: ^4.5.1
+        version: 4.5.1(@types/node@24.19.1)
+      meshoptimizer:
+        specifier: ^1.1.1
+        version: 1.1.1
     devDependencies:
       '@types/node':
         specifier: ^24.0.0
@@ -194,6 +582,31 @@ importers:
       eslint:
         specifier: ^9.39.5
         version: 9.39.5
+      tsx:
+        specifier: ^4.23.15
+        version: 4.23.15
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.7
+        version: 3.2.7(@types/node@24.19.1)(tsx@4.23.15)
+
+  tools/narrate:
+    dependencies:
+      '@museum/content':
+        specifier: workspace:*
+        version: link:../../packages/content
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.19.1
+      eslint:
+        specifier: ^9.39.5
+        version: 9.39.5
+      tsx:
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -448,6 +861,15 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@gltf-transform/core@4.5.1':
+    resolution: {integrity: sha512-OWgBYssKHKoXMIrMb2N20jXqWRnMP9HdtcTFQBEAJtz4P+OOxx5fozl5eAeK7nktIs5uDE/lu4NbkE5VCZaR9g==}
+
+  '@gltf-transform/extensions@4.5.1':
+    resolution: {integrity: sha512-3jTe+GWRy4fj1TU790LPsO+rpO/4byUWPTpNkjy6M6h8RvrUivRf12Mptc0770K4ZczibpJDNHXZFkFsFMRDLA==}
+
+  '@gltf-transform/functions@4.5.1':
+    resolution: {integrity: sha512-rfm4nQY2DJ+ip1e15xp7YfQwhRno3kPLcGw4EZiRk1dVwMV3cdFMcF08glYcO/+oLyYkUEs3xXMJYXa0cPgcTg==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -915,6 +1337,9 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
+  '@types/ndarray@1.1.0':
+    resolution: {integrity: sha512-go+C6vHBUuO9jH6Tj6qEZ63JEGoMSxFdmd+6QAtthGD6xumBfIz3RbNDDs2aoRVLf9naH8lk5jnWy2UHHKgYQQ==}
+
   '@types/node@24.19.1':
     resolution: {integrity: sha512-aS3/DG0oM05K0RIXXP+hKjinGG5IgSSVGzswZxW3O0sS3pH4/fycXundUC9XsszgKCk4gHXylTEK6hyFxVxnoQ==}
 
@@ -1149,6 +1574,9 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
+  cwise-compiler@1.1.3:
+    resolution: {integrity: sha512-WXlK/m+Di8DMMcCjcWr4i+XzcQra9eCdXIJrgh4TUgh0pIS/yJduLxS9JgefsHJ/YVLdgPtXm9r62W92MvanEQ==}
+
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
     engines: {node: '>=6.0'}
@@ -1325,6 +1753,12 @@ packages:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
 
+  iota-array@1.0.0:
+    resolution: {integrity: sha512-pZ2xT+LOHckCatGQ3DcG/a+QuEqvoxqkiL7tvE8nn3uuu+f6i1TtpB5/FtWFbxUuVr5PZCx8KskuGatbJDXOWA==}
+
+  is-buffer@1.1.6:
+    resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
+
   is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
@@ -1362,6 +1796,9 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  ktx-parse@1.1.0:
+    resolution: {integrity: sha512-mKp3y+FaYgR7mXWAbyyzpa/r1zDWeaunH+INJO4fou3hb45XuNSwar+7llrRyvpMWafxSIi99RNFJ05MHedaJQ==}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -1414,6 +1851,18 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  ndarray-lanczos@0.3.0:
+    resolution: {integrity: sha512-5kBmmG3Zvyj77qxIAC4QFLKuYdDIBJwCG+DukT6jQHNa1Ft74/hPH1z5mbQXeHBt8yvGPBGVrr3wEOdJPYYZYg==}
+
+  ndarray-ops@1.2.2:
+    resolution: {integrity: sha512-BppWAFRjMYF7N/r6Ie51q6D4fs0iiGmeXIACKY66fLpnwIui3Wc3CXiD/30mgLbDjPpSLrsqcp3Z62+IcHZsDw==}
+
+  ndarray-pixels@5.2.0:
+    resolution: {integrity: sha512-lTh4tFKziAatVTa9crIsidUyn+lqujVOQpzfdBWvdFu2wo9Uo6z261lVX7SgMyP89xGmj3TMTPbbxl9YDnV4SA==}
+
+  ndarray@1.1.1:
+    resolution: {integrity: sha512-AsE8w/M2MS+0pD3nP5qbRRtJFeJJJaJ+qXZaZr0XjVGXhy6LIj2TERTlkpdK2AI3WufoOP+pwPk3q2ilAJcZ9g==}
 
   next@16.3.8:
     resolution: {integrity: sha512-U7QEZaTini6wKrb8A8hqLLqYQyCetegKjCpJOyxk642vWoMoU1x5PyZCJFvgYgiptA8xc5j/9xYlZFO7w9Sjmw==}
@@ -1509,6 +1958,9 @@ packages:
 
   promise-worker-transferable@1.0.4:
     resolution: {integrity: sha512-bN+0ehEnrXfxV2ZQvU2PetO0n4gqBD4ulq3MI1WOPLgr7/Mg9yRQkX5+0v1vagr74ZTsl7XtzlaYDo2EuCeYJw==}
+
+  property-graph@4.1.0:
+    resolution: {integrity: sha512-AvPcP7XECNWy4LGmFQ77k7un4lSKM4eS29PTvW4ck95uYeLxXPWJM7hLuBqK91FaHqCcgJvIUCuNJjjxKE7VKQ==}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -1718,6 +2170,9 @@ packages:
 
   undici-types@7.24.6:
     resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+
+  uniq@1.0.1:
+    resolution: {integrity: sha512-Gw+zz50YNKPDKXs+9d+aKAjVwpjNwqzvNpLigIruT4HA9lMZNdMqs9x07kKHB/L9WRzqp4+DlTU5s4wG2esdoA==}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -2004,6 +2459,26 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
+  '@gltf-transform/core@4.5.1':
+    dependencies:
+      property-graph: 4.1.0
+
+  '@gltf-transform/extensions@4.5.1':
+    dependencies:
+      '@gltf-transform/core': 4.5.1
+      ktx-parse: 1.1.0
+
+  '@gltf-transform/functions@4.5.1(@types/node@24.19.1)':
+    dependencies:
+      '@gltf-transform/core': 4.5.1
+      '@gltf-transform/extensions': 4.5.1
+      ktx-parse: 1.1.0
+      ndarray: 1.1.1
+      ndarray-lanczos: 0.3.0
+      ndarray-pixels: 5.2.0(@types/node@24.19.1)
+    transitivePeerDependencies:
+      - '@types/node'
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -2020,8 +2495,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.35.5':
     optionalDependencies:
@@ -2352,6 +2826,8 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/ndarray@1.1.0': {}
+
   '@types/node@24.19.1':
     dependencies:
       undici-types: 7.24.6
@@ -2619,6 +3095,10 @@ snapshots:
 
   csstype@3.2.3: {}
 
+  cwise-compiler@1.1.3:
+    dependencies:
+      uniq: 1.0.1
+
   debug@4.4.3:
     dependencies:
       ms: 2.1.3
@@ -2631,8 +3111,7 @@ snapshots:
     dependencies:
       webgl-constants: 1.1.1
 
-  detect-libc@2.1.2:
-    optional: true
+  detect-libc@2.1.2: {}
 
   draco3d@1.5.7: {}
 
@@ -2803,6 +3282,10 @@ snapshots:
 
   imurmurhash@0.1.4: {}
 
+  iota-array@1.0.0: {}
+
+  is-buffer@1.1.6: {}
+
   is-extglob@2.1.1: {}
 
   is-glob@4.0.3:
@@ -2835,6 +3318,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  ktx-parse@1.1.0: {}
 
   levn@0.4.1:
     dependencies:
@@ -2881,6 +3366,29 @@ snapshots:
   nanoid@3.3.19: {}
 
   natural-compare@1.4.0: {}
+
+  ndarray-lanczos@0.3.0:
+    dependencies:
+      '@types/ndarray': 1.1.0
+      ndarray: 1.1.1
+
+  ndarray-ops@1.2.2:
+    dependencies:
+      cwise-compiler: 1.1.3
+
+  ndarray-pixels@5.2.0(@types/node@24.19.1):
+    dependencies:
+      '@types/ndarray': 1.1.0
+      ndarray: 1.1.1
+      ndarray-ops: 1.2.2
+      sharp: 0.35.5(@types/node@24.19.1)
+    transitivePeerDependencies:
+      - '@types/node'
+
+  ndarray@1.1.1:
+    dependencies:
+      iota-array: 1.0.0
+      is-buffer: 1.1.6
 
   next@16.3.8(@playwright/test@1.63.0)(@types/node@24.19.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
@@ -2974,6 +3482,8 @@ snapshots:
     dependencies:
       is-promise: 2.2.2
       lie: 3.3.0
+
+  property-graph@4.1.0: {}
 
   punycode@2.3.1: {}
 
@@ -3069,7 +3579,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.5
       '@img/sharp-win32-x64': 0.35.5
       '@types/node': 24.19.1
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:
@@ -3205,6 +3714,8 @@ snapshots:
   typescript@5.9.3: {}
 
   undici-types@7.24.6: {}
+
+  uniq@1.0.1: {}
 
   uri-js@4.4.1:
     dependencies:

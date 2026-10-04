@@ -13,6 +13,10 @@
     "./map": {
       "types": "./dist/map.d.ts",
       "import": "./dist/map.js"
+    },
+    "./portal": {
+      "types": "./dist/portal/registry.d.ts",
+      "import": "./dist/portal/registry.js"
     }
   },
   "scripts": {
@@ -23,6 +27,18 @@
   },
   "dependencies": {
     "@museum/content": "workspace:*",
+    "@museum/portal-a1": "workspace:*",
+    "@museum/portal-b2": "workspace:*",
+    "@museum/portal-b3": "workspace:*",
+    "@museum/portal-b11": "workspace:*",
+    "@museum/portal-c1": "workspace:*",
+    "@museum/portal-c3": "workspace:*",
+    "@museum/portal-c10": "workspace:*",
+    "@museum/portal-d6": "workspace:*",
+    "@museum/portal-d7": "workspace:*",
+    "@museum/portal-f2": "workspace:*",
+    "@museum/portal-f7": "workspace:*",
+    "@museum/portal-f10": "workspace:*",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
     "@recast-navigation/core": "^0.43.1",
@@ -30,6 +46,7 @@
     "detect-gpu": "^5.0.70",
     "recast-navigation": "^0.43.1",
     "three": "^0.186.1",
+    "three-stdlib": "^2.35.6",
     "zustand": "^5.0.15"
   },
   "peerDependencies": {

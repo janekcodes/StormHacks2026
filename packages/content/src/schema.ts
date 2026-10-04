@@ -34,6 +34,29 @@ export const PositionSchema = z.object({
 })
 export type Position = z.infer<typeof PositionSchema>
 
+/** Plan size of a built exhibit's stand, in metres. Model art arrives in plan 09. */
+export const FootprintSchema = z.object({
+  w: z.number(),
+  d: z.number(),
+  h: z.number(),
+  floor: z.boolean()
+})
+export type Footprint = z.infer<typeof FootprintSchema>
+
+/** How a built exhibit's object is represented in the scene. */
+export const ModelKindSchema = z.enum(['glb', 'procedural'])
+export type ModelKind = z.infer<typeof ModelKindSchema>
+
+/** Mount type for a built exhibit's object. */
+export const ModelFootprintSchema = z.enum(['plinth', 'floor'])
+export type ModelFootprint = z.infer<typeof ModelFootprintSchema>
+
+export const ModelSchema = z.object({
+  kind: ModelKindSchema,
+  footprint: ModelFootprintSchema
+})
+export type ExhibitModel = z.infer<typeof ModelSchema>
+
 export const SourceSchema = z.object({
   id: z.string(),
   label: z.string(),
@@ -80,6 +103,8 @@ export function makeExhibitSchema(options: SchemaOptions) {
     band: BandSchema.nullable(),
     tier: TierSchema,
     position: PositionSchema,
+    footprint: FootprintSchema.optional(),
+    model: ModelSchema.optional(),
     portal: PortalSchema.optional(),
     caption: z.string().optional(),
     hook: z.string().optional(),

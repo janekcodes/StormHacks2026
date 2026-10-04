@@ -3,6 +3,7 @@
 import type { Building } from '@museum/content/plan-schema'
 import { useEffect, useMemo } from 'react'
 import type { Material } from 'three'
+import { applyLightmap, useLightmap } from '../lighting/lightmap'
 import { makeMaterials } from './materials'
 import { boxPart, mergeParts, type MergedMesh } from './merge'
 
@@ -101,6 +102,17 @@ export function Walls({ building }: { building: Building }) {
 
     return mergeParts(parts)
   }, [building, mats])
+
+  const atlas = useLightmap((s) => s.atlas)
+
+  useEffect(() => {
+    if (!atlas) return
+    for (const m of meshes) {
+      if (m.material === mats.wall || m.material === mats.base) {
+        applyLightmap(m.material, m.geometry, atlas)
+      }
+    }
+  }, [atlas, meshes, mats])
 
   useEffect(() => {
     return () => {

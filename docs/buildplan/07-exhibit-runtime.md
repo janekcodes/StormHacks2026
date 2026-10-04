@@ -1,6 +1,6 @@
 > **Source of truth:** [BLUEPRINT.md](../../BLUEPRINT.md) · Scope v1.1
 > **Exhibits:** all (placeholders)
-> **Status:** Ready
+> **Status:** Final
 > **Depends on:** 06
 
 # 07 · Exhibit runtime and portal overlay
@@ -40,12 +40,12 @@ apps/web/app/visit/page.tsx                   ?exhibit=ID deep link opens that p
 
 ## Acceptance criteria
 
-- [ ] 77 exhibits render at their content positions; count verified in a test.
-- [ ] Clicking any exhibit walks there via the navmesh and opens the overlay.
-- [ ] Unbuilt exhibits show the planned card, never fake portal content.
-- [ ] Portal packages are separate chunks (verify in the build output) and only load when opened.
-- [ ] Esc and the close button return keyboard focus to the canvas.
-- [ ] Draw calls under 400 in the busiest view on `high`.
+- [x] 77 exhibits render at their content positions; count verified in a test.
+- [x] Clicking any exhibit walks there via the navmesh and opens the overlay.
+- [x] Unbuilt exhibits show the planned card, never fake portal content.
+- [x] Portal packages are separate chunks (verify in the build output) and only load when opened.
+- [x] Esc and the close button return keyboard focus to the canvas.
+- [x] Draw calls under 400 in the busiest view on `high`.
 
 ## Out of scope
 

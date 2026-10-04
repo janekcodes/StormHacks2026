@@ -35,11 +35,11 @@ apps/web/e2e/map.spec.ts
 
 ## Acceptance criteria
 
-- [ ] `/map` renders all 77 markers; clicking any marker navigates to its page.
-- [ ] All 77 exhibit pages build statically and return 200.
-- [ ] Map is usable by keyboard alone (Tab through markers in zone order).
-- [ ] axe (via Playwright) reports no serious violations on `/map` and `/exhibit/B2`.
-- [ ] No WebGL code is loaded on these routes (check the route bundle).
+- [x] `/map` renders all 77 markers; clicking any marker navigates to its page.
+- [x] All 77 exhibit pages build statically and return 200.
+- [x] Map is usable by keyboard alone (Tab through markers in zone order).
+- [x] axe (via Playwright) reports no serious violations on `/map` and `/exhibit/B2`.
+- [x] No WebGL code is loaded on these routes (check the route bundle).
 
 ## Out of scope
 

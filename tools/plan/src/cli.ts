@@ -9,6 +9,7 @@ import {
 import { generate } from './generate'
 import { renderSvg } from './svg'
 import { buildNavmesh, buildStandpoints } from './navmesh'
+import { exportShellGlb } from './shell'
 
 // tools/plan/src/cli.ts -> repo root
 const root = fileURLToPath(new URL('../../..', import.meta.url))
@@ -21,6 +22,7 @@ const svgPath = join(outDir, 'plan.svg')
 const navmeshPath = join(outDir, 'navmesh.bin')
 const standpointsPath = join(outDir, 'standpoints.json')
 const publicNavmeshPath = join(root, 'apps/web/public/navmesh.bin')
+const shellPath = join(root, 'apps/web/public/lightmap/shell.glb')
 
 const plan = PlanInputSchema.parse(JSON.parse(readFileSync(planPath, 'utf8')))
 const building = BuildingSchema.parse(generate(plan))
@@ -39,8 +41,11 @@ writeFileSync(publicNavmeshPath, bytes)
 const standpoints = buildStandpoints(query, building, exhibitsFile.exhibits)
 writeFileSync(standpointsPath, JSON.stringify(standpoints, null, 2) + '\n')
 
+const shellBytes = await exportShellGlb(building, shellPath)
+
 console.log(`wrote ${buildingPath} (${building.walls.length} walls, ${building.rooms.length} rooms)`)
 console.log(`wrote ${svgPath}`)
 console.log(`wrote ${navmeshPath} (${bytes.byteLength} bytes)`)
 console.log(`wrote ${standpointsPath} (${Object.keys(standpoints.exhibits).length} exhibits, ${Object.keys(standpoints.rooms).length} rooms)`)
 console.log(`wrote ${publicNavmeshPath}`)
+console.log(`wrote ${shellPath} (${shellBytes} bytes)`)

@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { usePlayer } from '../player/usePlayer'
 import { settingsFor, type QualityTier } from '../quality'
+import { useLightmap } from './lightmap'
 
 function CustomRoomEnv({ enabled }: { enabled: boolean }) {
   const { gl, scene } = useThree()
@@ -55,6 +56,11 @@ export function Lighting({ quality }: { quality: QualityTier }) {
   const sunRef = useRef<THREE.DirectionalLight>(null)
   const targetRef = useRef<THREE.Object3D>(null)
   const { gl } = useThree()
+  const lightmapReady = useLightmap((s) => s.status === 'ready')
+
+  useEffect(() => {
+    useLightmap.getState().load()
+  }, [])
 
   useEffect(() => {
     gl.toneMapping = THREE.ACESFilmicToneMapping
@@ -95,8 +101,8 @@ export function Lighting({ quality }: { quality: QualityTier }) {
     <>
       <color attach="background" args={[0xcfdde6]} />
       <fog attach="fog" args={[0xd6dde2, 26, 80]} />
-      <CustomRoomEnv enabled={settings.environment} />
-      <hemisphereLight args={[0xfffaf2, 0x8a8478, 0.3]} />
+      <CustomRoomEnv enabled={settings.environment && !lightmapReady} />
+      <hemisphereLight args={[0xfffaf2, 0x8a8478, lightmapReady ? 0.05 : 0.3]} />
       <directionalLight
         ref={sunRef}
         color={0xfff6ea}

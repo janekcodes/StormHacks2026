@@ -3,6 +3,7 @@
 import type { Building } from '@museum/content/plan-schema'
 import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
+import { applyLightmap, useLightmap } from '../lighting/lightmap'
 import { roomAt } from '../rooms'
 import { canvasTexture, makeMaterials, outlineShape } from './materials'
 
@@ -178,6 +179,17 @@ export function Floors({ building }: { building: Building }) {
       ground: mats.ground
     }
   }, [building, mats])
+
+  const atlas = useLightmap((s) => s.atlas)
+
+  useEffect(() => {
+    if (!atlas) return
+    applyLightmap(assets.baseFloorMat, assets.baseGeo, atlas)
+    applyLightmap(assets.ceilMat, assets.ceilGeo, atlas)
+    for (const r of assets.roomFloors) {
+      applyLightmap(r.mat, r.geo, atlas)
+    }
+  }, [atlas, assets])
 
   useEffect(() => {
     return () => {

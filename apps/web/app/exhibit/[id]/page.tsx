@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { EXHIBIT_IDS, type ExhibitId } from '@museum/content/schema'
 import { FloorMap } from '@museum/scene/map'
+import { ExhibitPortal } from '../../../components/ExhibitPortal'
 import { SiteNav } from '../../../components/SiteNav'
 import {
   bandLabel,
@@ -99,6 +100,13 @@ export default async function ExhibitPage({ params }: PageProps) {
                 </li>
               ))}
             </ul>
+          ) : null}
+
+          {exhibit.tier === 'built' ? (
+            <section className={styles.section} aria-label={`${exhibit.title} portal`}>
+              <h2>Portal</h2>
+              <ExhibitPortal id={exhibit.id} />
+            </section>
           ) : null}
 
           <div className={styles.actions}>

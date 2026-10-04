@@ -1,6 +1,6 @@
 > **Source of truth:** [BLUEPRINT.md](../../BLUEPRINT.md) · Scope v1.1
 > **Exhibits:** A1, B2, B3, B11, C1, C3, C10, D6, D7, F2, F7, F10
-> **Status:** Ready
+> **Status:** Final
 > **Depends on:** 07
 
 # 08 · Port the 12 built portals
@@ -56,15 +56,15 @@ Plus each exhibit's `portal.package` set in `exhibits.json`.
 
 ## Acceptance criteria
 
-- [ ] 12 packages, each a separate lazy chunk under the 150 KB JS budget.
-- [ ] Unit tests include at least these exact checks:
+- [x] 12 packages, each a separate lazy chunk under the 150 KB JS budget.
+- [x] Unit tests include at least these exact checks:
   - A1 ends in state `halt` with tape reading `1100`.
   - C3 encodes `ISUM = ISUM + I` column by column to the expected row sets (fixture).
   - D6 large page time is 1,422 s ± 1.
   - B11 final matrix is `[[5,6,2,8],[3,6,8,11],[5,1,5,6],[3,4,3,4]]` with 64 MACs at t = 10.
   - F10 every row sums to 1 ± 0.001.
-- [ ] Each portal opens from the 3D overlay and from `/exhibit/<id>` (2D page embeds it too).
-- [ ] axe: no serious violations inside any portal.
+- [x] Each portal opens from the 3D overlay and from `/exhibit/<id>` (2D page embeds it too).
+- [x] axe: no serious violations inside any portal.
 
 ## Out of scope
 
@@ -79,4 +79,8 @@ pnpm --filter web build
 
 ## Handoff
 
-Note any behaviour you found ambiguous in the prototype and how you resolved it.
+- C3's prototype padded the statement label with three spaces, so `ISUM = ISUM + I` began in column 5. The plan's column map (label 1 to 5, statement 7 to 72, id 73 to 80) is what the package uses, with a blank column 6. The id text is `MUSEUM01`, taken from the prototype; the plan names the columns and not the string.
+- F10's next-token weights in a step do not all sum to 1. A draw past the last mass picks the first candidate, as the prototype sampler did. Attention rows do sum to 1, and both the weight panel and the next-token panel say illustrative.
+- D6's prototype status line said "1.1 s" and "23.7 min". The portal shows 1.14 s and 1,422 s, the figures in this plan. The HTTP Archive Web Almanac 2025 citation was not on the D6 artboard; it is in the D6 note, and C10 keeps the prototype's citation.
+- B2's power-cycle and F10's sampler take an explicit random source. Tests pin it. The UI passes `Math.random`.
+- When reduced motion is requested, timed runs (A1, C1 rewire, F2, D6, B11) finish immediately instead of playing the interval.

@@ -3,14 +3,21 @@
 import type { Building } from '@museum/content/plan-schema'
 import type { Exhibit, ExhibitId } from '@museum/content/schema'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import { registerExhibitAudio } from './audio/narratorBus'
 import { Atrium } from './building/Atrium'
 import { Floors } from './building/Floors'
 import { Signage } from './building/Signage'
 import { Walls } from './building/Walls'
+import { Exhibits } from './exhibits/Exhibits'
+import { requestOpen } from './exhibits/open'
+import { SpotPool } from './exhibits/SpotPool'
+import { useExhibitUi } from './exhibits/ui'
 import { Lighting } from './lighting/Lighting'
 import { FloorMap } from './map/FloorMap'
 import { bindMuseumApi, museum, setMapBuilding } from './nav/api'
+import { PASSPORT_TOTAL, passportCount, usePassport } from './passport'
+import { PortalOverlay } from './portal/PortalOverlay'
 import { ROOM_JUMP_ORDER, roomJumpLabel, setStandpoints, type StandpointsData } from './nav/targets'
 import { TravelDriver } from './nav/travel'
 import { disposeNav, loadNavMesh } from './nav/useNav'
@@ -24,6 +31,8 @@ export interface MuseumProps {
   standpoints: StandpointsData
   /** URL for the committed navmesh binary (default `/navmesh.bin`). */
   navmeshUrl?: string
+  /** Deep link: walk to this exhibit and open its portal once the navmesh is ready. */
+  initialExhibit?: ExhibitId | null
 }
 
 function SceneReady() {
@@ -39,17 +48,27 @@ function DrawCallProbe() {
   const { gl } = useThree()
   useFrame(() => {
     const el = document.querySelector('.museum-view')
-    if (el) el.setAttribute('data-draw-calls', String(gl.info.render.calls))
+    if (!el) return
+    const player = usePlayer.getState()
+    const ui = useExhibitUi.getState()
+    el.setAttribute('data-draw-calls', String(gl.info.render.calls))
+    el.setAttribute('data-player-x', player.x.toFixed(2))
+    el.setAttribute('data-player-z', player.z.toFixed(2))
+    el.setAttribute('data-focus', ui.focusId ?? '')
+    el.setAttribute('data-hover', ui.hoverId ?? '')
+    el.setAttribute('data-open', usePassport.getState().openId ?? '')
   })
   return null
 }
 
 function SceneBody({
   building,
+  exhibits,
   quality,
   container
 }: {
   building: Building
+  exhibits: readonly Exhibit[]
   quality: QualityTier
   container: HTMLElement | null
 }) {
@@ -60,6 +79,8 @@ function SceneBody({
       <Walls building={building} />
       <Atrium building={building} />
       <Signage building={building} />
+      <Exhibits building={building} exhibits={exhibits} />
+      <SpotPool exhibits={exhibits} />
       <TravelDriver />
       <Controls building={building} container={container} />
       <DrawCallProbe />
@@ -77,6 +98,12 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
   const yaw = usePlayer((s) => s.yaw)
   const ready = usePlayer((s) => s.ready)
   const quality = usePlayer((s) => s.quality)
+  const opened = usePassport((s) => s.opened)
+  const focusId = useExhibitUi((s) => s.focusId)
+  const hoverId = useExhibitUi((s) => s.hoverId)
+  const portalOpen = usePassport((s) => s.openId)
+  const promptId = hoverId ?? focusId
+  const prompt = promptId ? exhibits.find((exhibit) => exhibit.id === promptId) : undefined
 
   const kicker =
     zoneKey === 'Atr' ||
@@ -95,7 +122,17 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
         <div className="museum-meta">
           {ready ? 'ready' : 'loading'} · {quality}
         </div>
+        <div className="museum-passport" data-testid="passport">
+          {passportCount(opened)} of {PASSPORT_TOTAL}
+        </div>
       </div>
+      {prompt && !portalOpen ? (
+        <div className="museum-prompt" data-testid="exhibit-prompt">
+          <span className="museum-prompt-id">{prompt.id}</span>
+          <span className="museum-prompt-title">{prompt.title}</span>
+          <span className="museum-prompt-key">{hoverId ? 'Click' : 'E · open'}</span>
+        </div>
+      ) : null}
       <div className="museum-crosshair" aria-hidden="true" />
       <TouchControls />
       <div className="museum-jumps" data-testid="room-jumps" role="navigation" aria-label="Jump to room">
@@ -128,27 +165,41 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
         </div>
       ) : null}
       <div className="museum-help">
-        W A S D / arrows move · Q or left/right turn · Shift run · Drag look · M map · click map to walk
+        W A S D / arrows move · Q or left/right turn · Shift run · Drag look · click an exhibit or E · M map
       </div>
     </>
   )
+}
+
+function qualityFromQuery(): QualityTier | null {
+  if (typeof window === 'undefined') return null
+  const value = new URLSearchParams(window.location.search).get('quality')
+  if (value === 'high' || value === 'balanced' || value === 'low') return value
+  return null
 }
 
 export function Museum({
   building,
   exhibits,
   standpoints,
-  navmeshUrl = '/navmesh.bin'
+  navmeshUrl = '/navmesh.bin',
+  initialExhibit = null
 }: MuseumProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [quality, setQuality] = useState<QualityTier | null>(null)
   const [navReady, setNavReady] = useState(false)
   const setStoreQuality = usePlayer((s) => s.setQuality)
   const ready = usePlayer((s) => s.ready)
+  const openId = usePassport((s) => s.openId)
+  const linked = useRef<string | null>(null)
 
   useEffect(() => {
     setStandpoints(standpoints)
   }, [standpoints])
+
+  useEffect(() => {
+    registerExhibitAudio(exhibits)
+  }, [exhibits])
 
   useEffect(() => {
     setMapBuilding(building)
@@ -160,6 +211,12 @@ export function Museum({
   }, [building])
 
   useEffect(() => {
+    const forced = qualityFromQuery()
+    if (forced) {
+      setQuality(forced)
+      setStoreQuality(forced)
+      return
+    }
     let alive = true
     detectQuality().then((q) => {
       if (!alive) return
@@ -170,6 +227,13 @@ export function Museum({
       alive = false
     }
   }, [setStoreQuality])
+
+  useEffect(() => {
+    if (!initialExhibit || !ready || !navReady) return
+    if (linked.current === initialExhibit) return
+    linked.current = initialExhibit
+    requestOpen(initialExhibit)
+  }, [initialExhibit, navReady, ready])
 
   useEffect(() => {
     let alive = true
@@ -202,25 +266,35 @@ export function Museum({
       className="museum-view"
       tabIndex={0}
       role="application"
-      aria-label="3D museum building. W A S D or arrow keys to move and turn, drag to look, M toggles the map."
+      aria-label="3D museum building. W A S D or arrow keys to move and turn, drag to look, click an exhibit or press E to open it, M toggles the map."
       data-ready={sceneReady ? 'true' : 'false'}
       data-nav={navReady ? 'true' : 'false'}
+      data-exhibit-count={exhibits.length}
+      data-quality={settings?.tier ?? ''}
+      data-paused={openId ? 'true' : 'false'}
     >
       {settings ? (
         <Canvas
+          frameloop={openId ? 'never' : 'always'}
           shadows={settings.shadows}
           dpr={settings.dpr}
           camera={{ fov: 62, near: 0.05, far: 260, position: [0, 1.65, 34.5] }}
           gl={{ antialias: true, powerPreference: 'high-performance' }}
         >
           <Suspense fallback={null}>
-            <SceneBody building={building} quality={settings.tier} container={container} />
+            <SceneBody
+              building={building}
+              exhibits={exhibits}
+              quality={settings.tier}
+              container={container}
+            />
           </Suspense>
         </Canvas>
       ) : (
         <div className="museum-loading">Detecting GPU…</div>
       )}
       <Hud building={building} exhibits={exhibits} />
+      <PortalOverlay exhibits={exhibits} returnFocus={container} />
       <style>{museumCss}</style>
     </div>
   )
@@ -241,6 +315,7 @@ const museumCss = `
 }
 .museum-view:focus-visible { box-shadow: 0 0 0 2px #ffb347; }
 .museum-view canvas { display: block; width: 100% !important; height: 100% !important; touch-action: none; cursor: grab; }
+.museum-view canvas.hot { cursor: pointer; }
 .museum-loading {
   display: grid; place-items: center; height: 100%;
   color: #5b6168; font-family: "Chakra Petch", sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
@@ -259,6 +334,21 @@ const museumCss = `
   font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 18px; margin-top: 2px;
 }
 .museum-meta { font-size: 11px; color: #aab2bb; margin-top: 4px; }
+.museum-passport {
+  margin-top: 6px; font-family: "Chakra Petch", sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #ffb347;
+}
+.museum-prompt {
+  position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 2;
+  display: flex; align-items: center; gap: 12px; padding: 10px 16px; white-space: nowrap;
+  background: rgba(14,16,19,.74); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.12); border-radius: 10px; pointer-events: none;
+}
+.museum-prompt-id { font-family: "IBM Plex Mono", monospace; color: #ffb347; }
+.museum-prompt-title { font-family: "Chakra Petch", sans-serif; font-weight: 700; }
+.museum-prompt-key {
+  font-size: 11px; color: #aab2bb; border: 1px solid #4a5058; border-radius: 4px; padding: 2px 6px;
+}
 .museum-crosshair {
   position: absolute; left: 50%; top: 50%; width: 6px; height: 6px;
   margin: -3px 0 0 -3px; border-radius: 50%;

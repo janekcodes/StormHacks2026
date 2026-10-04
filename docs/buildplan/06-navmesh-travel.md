@@ -1,6 +1,6 @@
 > **Source of truth:** [BLUEPRINT.md](../../BLUEPRINT.md) · Scope v1.1
 > **Exhibits:** none
-> **Status:** Ready
+> **Status:** Final
 > **Depends on:** 05
 
 # 06 · Navmesh and travel
@@ -36,11 +36,11 @@ packages/scene/src/nav/targets.ts   room entry points and exhibit stand points
 
 ## Acceptance criteria
 
-- [ ] A path exists from the foyer start to every one of the 77 stand points and 13 room targets (unit test over all).
-- [ ] No path segment intersects a wall (test against `building.json` walls).
-- [ ] Clicking the minimap inside a wall or outside the building does nothing.
-- [ ] Travel to the farthest exhibit from the foyer completes in under 15 s.
-- [ ] The fade-teleport code path does not exist.
+- [x] A path exists from the foyer start to every one of the 77 stand points and 13 room targets (unit test over all).
+- [x] No path segment intersects a wall (test against `building.json` walls).
+- [x] Clicking the minimap inside a wall or outside the building does nothing.
+- [x] Travel to the farthest exhibit from the foyer completes in under 15 s.
+- [x] The fade-teleport code path does not exist.
 
 ## Out of scope
 
@@ -49,7 +49,7 @@ Exhibit meshes, portal opening, guide.
 ## Verify
 
 ```bash
-pnpm --filter tools-plan test
+pnpm --filter @museum/plan test
 pnpm --filter @museum/scene test -- nav
 ```
 

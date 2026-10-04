@@ -18,7 +18,9 @@ test.describe('3D scene shell /visit', () => {
     await expect(view).toHaveAttribute('data-ready', 'true', { timeout: 60_000 })
     await expect(view).toHaveAttribute('data-nav', 'true', { timeout: 60_000 })
     await expect(page.getByTestId('zone-hud')).toContainText(/ready/i)
-    await expect(view).toHaveAttribute('data-draw-calls', /^(?:[1-9]|[1-9]\d|1[0-4]\d)$/, {
+    // Plan 09 renders the 12 built exhibits as procedural models, so the shell
+    // budget here is plan 09's < 400 draw calls, not plan 05's original < 150.
+    await expect(view).toHaveAttribute('data-draw-calls', /^(?:[1-9]|[1-9]\d|[1-3]\d\d)$/, {
       timeout: 15_000
     })
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useFrame } from '@react-three/fiber'
+import { stopNarration } from '../audio/narratorBus'
 import { usePlayer } from '../player/usePlayer'
 import { findPath, type NavPoint2 } from './useNav'
 
@@ -98,6 +99,8 @@ export function isTravelling(): boolean {
 
 export function cancelTravel(): void {
   travel = null
+  // A cancelled walk-to never opens the portal, so drop its narration too.
+  stopNarration()
 }
 
 /**

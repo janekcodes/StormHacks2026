@@ -18,6 +18,9 @@ import {
 } from './usePlayer'
 import { roomAt } from '../rooms'
 import { isTravelling } from '../nav/travel'
+import { requestOpen } from '../exhibits/open'
+import { useExhibitUi } from '../exhibits/ui'
+import { usePassport } from '../passport'
 
 const MOVE_KEYS = new Set([
   'w',
@@ -63,12 +66,19 @@ export function Controls({ building, container }: ControlsProps) {
     if (!container) return
 
     const onKeyDown = (e: KeyboardEvent) => {
+      if (usePassport.getState().openId) return
       const k = keyName(e)
       if (MOVE_KEYS.has(k)) {
         e.preventDefault()
         usePlayer.getState().setKey(k, true)
       } else if (k === 'm' && e.target === container) {
         usePlayer.getState().toggleMap()
+      } else if ((k === 'e' || k === 'enter' || k === 'space') && e.target === container) {
+        const id = useExhibitUi.getState().focusId
+        if (id) {
+          e.preventDefault()
+          requestOpen(id)
+        }
       }
     }
     const onKeyUp = (e: KeyboardEvent) => {
@@ -133,6 +143,7 @@ export function Controls({ building, container }: ControlsProps) {
   }, [container])
 
   useFrame((_, dt) => {
+    if (usePassport.getState().openId) return
     const clamped = Math.min(0.05, dt)
     const s = usePlayer.getState()
     const k = s.keys

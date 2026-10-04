@@ -1,13 +1,29 @@
 'use client'
 
-import { building, exhibits, standpoints } from '../../lib/museum-data'
+import { building, exhibits, standpoints, isExhibitId } from '../../lib/museum-data'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 const Museum = dynamic(() => import('@museum/scene').then((m) => m.Museum), {
   ssr: false,
   loading: () => <div className="visit-loading">Loading museum…</div>
 })
+
+function VisitMuseum() {
+  const params = useSearchParams()
+  const raw = params.get('exhibit')
+  const initialExhibit = raw && isExhibitId(raw) ? raw : null
+  return (
+    <Museum
+      building={building}
+      exhibits={exhibits}
+      standpoints={standpoints}
+      initialExhibit={initialExhibit}
+    />
+  )
+}
 
 export default function VisitPage() {
   return (
@@ -25,7 +41,9 @@ export default function VisitPage() {
           <Link href="/exhibits">Exhibits</Link>
         </nav>
       </header>
-      <Museum building={building} exhibits={exhibits} standpoints={standpoints} />
+      <Suspense fallback={<div className="visit-loading">Loading museum…</div>}>
+        <VisitMuseum />
+      </Suspense>
       <style>{`
         .visit-page { min-height: 100vh; background: #1d2024; color: #eef1f4; }
         .visit-header {
