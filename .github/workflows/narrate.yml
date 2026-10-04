@@ -13,6 +13,12 @@ on:
       - 'tools/narrate/**'
   workflow_dispatch:
 
+# Serialize the two bot-commit workflows (this one and guide-eval) so they never
+# push to main concurrently and race on the branch tip.
+concurrency:
+  group: bot-commits
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -41,6 +47,11 @@ jobs:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
           NARRATION_MODEL: ${{ secrets.NARRATION_MODEL || 'eleven_multilingual_v2' }}
+
+      - name: Sync with latest main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
 
       - name: Commit generated audio
         uses: stefanzweifel/git-auto-commit-action@v5

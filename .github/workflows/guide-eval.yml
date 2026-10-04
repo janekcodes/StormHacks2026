@@ -18,6 +18,12 @@ on:
     - cron: '17 7 * * *'
   workflow_dispatch:
 
+# Serialize the two bot-commit workflows (this one and narrate) so they never
+# push to main concurrently and race on the branch tip.
+concurrency:
+  group: bot-commits
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -46,6 +52,13 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GUIDE_MODEL: ${{ secrets.GUIDE_MODEL || 'gemini-3.8-flash' }}
+
+      - name: Sync with latest main
+        # Only push-triggered runs commit to main; PR runs push to the PR branch.
+        if: github.event_name != 'pull_request'
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
 
       - name: Commit eval report
         uses: stefanzweifel/git-auto-commit-action@v5
