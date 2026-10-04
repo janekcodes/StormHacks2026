@@ -63,7 +63,38 @@
      0,
      1
     ]
-   }
+   },
+   "hook": "Two engines, one idea: a computer that runs on numbers and never tires.",
+   "caption": "Charles Babbage designed the Difference Engine to compute mathematical tables, and the Analytical Engine to run any calculation from punched cards. Neither was finished in his lifetime, but the Analytical Engine's design held every part of a modern computer: a store, a mill, and control by a program.",
+   "stats": [
+    {
+     "k": "Difference Engine",
+     "v": "conceived 1822",
+     "sourceId": "chm-babbage"
+    },
+    {
+     "k": "Analytical Engine",
+     "v": "designed 1837",
+     "sourceId": "chm-babbage"
+    },
+    {
+     "k": "Design",
+     "v": "store, mill, punched cards",
+     "sourceId": "sci-babbage"
+    }
+   ],
+   "sources": [
+    {
+     "id": "chm-babbage",
+     "label": "Computer History Museum: The Engines",
+     "url": "https://www.computerhistory.org/babbage/"
+    },
+    {
+     "id": "sci-babbage",
+     "label": "Science Museum: Babbage engines",
+     "url": "https://www.sciencemuseum.org.uk/objects-and-stories/charles-babbages-difference-engines-and-analytical-engine"
+    }
+   ]
   },
   {
    "id": "P5",
@@ -79,7 +110,39 @@
      -0.6862,
      0.7274
     ]
-   }
+   },
+   "hook": "The first published algorithm, written for a machine that was never built.",
+   "caption": "Ada Lovelace's 1843 notes on the Analytical Engine include Note G, which steps through a method for computing Bernoulli numbers. It is widely read as the first published algorithm written for a computing machine.",
+   "stats": [
+    {
+     "k": "Published",
+     "v": "1843",
+     "sourceId": "chm-lovelace"
+    },
+    {
+     "k": "Note G",
+     "v": "computes Bernoulli numbers",
+     "sourceId": "chm-lovelace"
+    },
+    {
+     "k": "Author",
+     "v": "Ada Lovelace",
+     "sourceId": "wiki-lovelace"
+    }
+   ],
+   "sources": [
+    {
+     "id": "chm-lovelace",
+     "label": "Computer History Museum: Ada Lovelace",
+     "url": "https://www.computerhistory.org/babbage/adalovelace/"
+    },
+    {
+     "id": "wiki-lovelace",
+     "label": "Wikipedia: Ada Lovelace",
+     "url": "https://en.wikipedia.org/wiki/Ada_Lovelace"
+    }
+   ],
+   "caveat": "The label 'first' applies to the published algorithm in Note G, not to a working machine."
   },
   {
    "id": "P6",
@@ -121,11 +184,11 @@
    "band": "inner",
    "tier": "built",
    "position": {
-    "x": -11.566,
-    "z": 15.651,
+    "x": -10.9672,
+    "z": 15.0543,
     "face": [
-     0.5943,
-     -0.8042
+     0.5888,
+     -0.8083
     ]
    },
    "portal": {
@@ -183,8 +246,8 @@
    "band": "inner",
    "tier": "extended",
    "position": {
-    "x": -13.608,
-    "z": 13.608,
+    "x": -13.0108,
+    "z": 13.0108,
     "face": [
      0.7071,
      -0.7071
@@ -199,13 +262,50 @@
    "band": "inner",
    "tier": "core",
    "position": {
-    "x": -15.651,
-    "z": 11.566,
+    "x": -15.0543,
+    "z": 10.9672,
     "face": [
-     0.8042,
-     -0.5943
+     0.8083,
+     -0.5888
     ]
-   }
+   },
+   "hook": "Codebreaking machines that helped shorten a war and pioneered the programmable computer.",
+   "caption": "At Bletchley Park, the Bombe helped break German Enigma messages, and in 1944 Colossus attacked the Lorenz cipher. Colossus used valves and paper tape and is counted as the first programmable electronic digital computer.",
+   "stats": [
+    {
+     "k": "Bombe",
+     "v": "Enigma codebreaking, 1940",
+     "sourceId": "wiki-bombe"
+    },
+    {
+     "k": "Colossus",
+     "v": "Lorenz cipher, 1944",
+     "sourceId": "wiki-colossus"
+    },
+    {
+     "k": "Programmed by",
+     "v": "plugs and switches",
+     "sourceId": "wiki-colossus"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-bombe",
+     "label": "Wikipedia: Bombe",
+     "url": "https://en.wikipedia.org/wiki/Bombe"
+    },
+    {
+     "id": "wiki-colossus",
+     "label": "Wikipedia: Colossus computer",
+     "url": "https://en.wikipedia.org/wiki/Colossus_computer"
+    },
+    {
+     "id": "bp",
+     "label": "Bletchley Park",
+     "url": "https://bletchleypark.org.uk/"
+    }
+   ],
+   "caveat": "The label 'first' applies to Colossus as a programmable electronic digital computer."
   },
   {
    "id": "A4",
@@ -215,13 +315,39 @@
    "band": "inner",
    "tier": "core",
    "position": {
-    "x": -15.405,
-    "z": 20.209,
+    "x": -13.9724,
+    "z": 18.7808,
     "face": [
-     0.6063,
-     -0.7953
+     0.5969,
+     -0.8023
     ]
-   }
+   },
+   "hook": "One paper, one bit: how to measure information itself.",
+   "caption": "Claude Shannon's 1948 paper, A Mathematical Theory of Communication, defined the bit and showed how much information a channel can carry. It founded information theory and underpins every digital system built since.",
+   "stats": [
+    {
+     "k": "Paper",
+     "v": "A Mathematical Theory of Communication, 1948",
+     "sourceId": "wiki-shannon"
+    },
+    {
+     "k": "Unit defined",
+     "v": "the bit",
+     "sourceId": "wiki-shannon"
+    },
+    {
+     "k": "Field founded",
+     "v": "information theory",
+     "sourceId": "wiki-shannon"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-shannon",
+     "label": "Wikipedia: A Mathematical Theory of Communication",
+     "url": "https://en.wikipedia.org/wiki/A_Mathematical_Theory_of_Communication"
+    }
+   ]
   },
   {
    "id": "A5",
@@ -231,11 +357,11 @@
    "band": "inner",
    "tier": "extended",
    "position": {
-    "x": -20.209,
-    "z": 15.405,
+    "x": -18.7808,
+    "z": 13.9724,
     "face": [
-     0.7953,
-     -0.6063
+     0.8023,
+     -0.5969
     ]
    }
   },
@@ -269,7 +395,38 @@
      0.7367,
      -0.6762
     ]
-   }
+   },
+   "hook": "Two keys, one public and one secret: encryption without a shared secret.",
+   "caption": "Whitfield Diffie and Martin Hellman proposed public-key cryptography in 1976, so two people could agree on a secret over a public channel. In 1977 Ron Rivest, Adi Shamir and Leonard Adleman turned the idea into RSA.",
+   "stats": [
+    {
+     "k": "Concept",
+     "v": "New Directions in Cryptography, 1976",
+     "sourceId": "wiki-pkc"
+    },
+    {
+     "k": "RSA",
+     "v": "Rivest, Shamir, Adleman, 1977",
+     "sourceId": "wiki-rsa"
+    },
+    {
+     "k": "Security rests on",
+     "v": "factoring large numbers",
+     "sourceId": "wiki-rsa"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-pkc",
+     "label": "Wikipedia: Public-key cryptography",
+     "url": "https://en.wikipedia.org/wiki/Public-key_cryptography"
+    },
+    {
+     "id": "wiki-rsa",
+     "label": "Wikipedia: RSA (cryptosystem)",
+     "url": "https://en.wikipedia.org/wiki/RSA_(cryptosystem)"
+    }
+   ]
   },
   {
    "id": "A8",
@@ -460,7 +617,33 @@
      -0.169
     ]
    },
-   "caveat": "The label 'first' refers to running a stored program, not to being the first computer."
+   "caveat": "The label 'first' refers to running a stored program, not to being the first computer.",
+   "hook": "The first machine to run a program stored in its own memory.",
+   "caption": "On June 21, 1948, the Manchester Baby ran the first program stored in electronic memory. The program lived in the same store as the data, the pattern every computer since has followed.",
+   "stats": [
+    {
+     "k": "First program ran",
+     "v": "June 21, 1948",
+     "sourceId": "wiki-baby"
+    },
+    {
+     "k": "Store",
+     "v": "32 words of 32 bits",
+     "sourceId": "wiki-baby"
+    },
+    {
+     "k": "Purpose",
+     "v": "test the Williams tube memory",
+     "sourceId": "wiki-baby"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-baby",
+     "label": "Wikipedia: Manchester Baby",
+     "url": "https://en.wikipedia.org/wiki/Manchester_Baby"
+    }
+   ]
   },
   {
    "id": "B5",
@@ -476,7 +659,39 @@
      1,
      0
     ]
-   }
+   },
+   "hook": "A whole circuit, shrunk onto a single piece of silicon.",
+   "caption": "Jack Kilby built the first integrated circuit in 1958, and Robert Noyce made a silicon version in 1959 that was easier to mass produce. Putting many components on one chip made the microelectronics revolution possible.",
+   "stats": [
+    {
+     "k": "Kilby's IC",
+     "v": "1958",
+     "sourceId": "chm-silicon"
+    },
+    {
+     "k": "Noyce's silicon IC",
+     "v": "1959",
+     "sourceId": "chm-silicon"
+    },
+    {
+     "k": "Nobel Prize",
+     "v": "2000, to Kilby",
+     "sourceId": "wiki-ic"
+    }
+   ],
+   "sources": [
+    {
+     "id": "chm-silicon",
+     "label": "Computer History Museum: The Silicon Engine",
+     "url": "https://www.computerhistory.org/siliconengine/"
+    },
+    {
+     "id": "wiki-ic",
+     "label": "Wikipedia: Integrated circuit",
+     "url": "https://en.wikipedia.org/wiki/Integrated_circuit"
+    }
+   ],
+   "caveat": "The label 'first' refers to Kilby's 1958 demonstration and Noyce's 1959 silicon version."
   },
   {
    "id": "B6",
@@ -508,7 +723,34 @@
      0.9805,
      -0.1964
     ]
-   }
+   },
+   "hook": "A whole CPU on one chip, first sold for calculators.",
+   "caption": "The Intel 4004, released in 1971, packed a 4-bit central processing unit onto a single chip. It was the first commercially available microprocessor, putting a computer brain in a package the size of a fingernail.",
+   "stats": [
+    {
+     "k": "Transistors",
+     "v": "2,300",
+     "sourceId": "wiki-4004"
+    },
+    {
+     "k": "Data width",
+     "v": "4-bit",
+     "sourceId": "wiki-4004"
+    },
+    {
+     "k": "Designed for",
+     "v": "Busicom calculators",
+     "sourceId": "wiki-4004"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-4004",
+     "label": "Wikipedia: Intel 4004",
+     "url": "https://en.wikipedia.org/wiki/Intel_4004"
+    }
+   ],
+   "caveat": "The label 'first' refers to a commercially available single-chip microprocessor."
   },
   {
    "id": "B8",
@@ -556,7 +798,33 @@
      0.9766,
      -0.215
     ]
-   }
+   },
+   "hook": "The graphics card learns to do general computing.",
+   "caption": "Nvidia released CUDA in 2007, opening the graphics processing unit to general-purpose computing. Thousands of small cores running together made GPUs the engine of the deep learning boom.",
+   "stats": [
+    {
+     "k": "CUDA released",
+     "v": "2007",
+     "sourceId": "wiki-cuda"
+    },
+    {
+     "k": "Model",
+     "v": "many parallel cores",
+     "sourceId": "wiki-cuda"
+    },
+    {
+     "k": "Role today",
+     "v": "deep learning",
+     "sourceId": "wiki-cuda"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-cuda",
+     "label": "Wikipedia: CUDA",
+     "url": "https://en.wikipedia.org/wiki/CUDA"
+    }
+   ]
   },
   {
    "id": "B11",
@@ -713,7 +981,34 @@
      0.7071,
      0.7071
     ]
-   }
+   },
+   "hook": "Grace Hopper's first step from machine code to words.",
+   "caption": "Grace Hopper's A-0 system, finished in 1952, translated symbolic instructions into machine code for the UNIVAC I. It was an early compiler, a first step toward programming in something closer to English.",
+   "stats": [
+    {
+     "k": "System",
+     "v": "A-0, 1952",
+     "sourceId": "wiki-hopper"
+    },
+    {
+     "k": "Machine",
+     "v": "UNIVAC I",
+     "sourceId": "wiki-hopper"
+    },
+    {
+     "k": "Idea",
+     "v": "reusable subroutines",
+     "sourceId": "wiki-hopper"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-hopper",
+     "label": "Wikipedia: Grace Hopper",
+     "url": "https://en.wikipedia.org/wiki/Grace_Hopper"
+    }
+   ],
+   "caveat": "The label 'first' applies to the A-0 system as an early compiler, not to a compiler in today's full sense."
   },
   {
    "id": "C3",
@@ -823,7 +1118,38 @@
      0.8396,
      0.5431
     ]
-   }
+   },
+   "hook": "An operating system and a language that still run the world.",
+   "caption": "Ken Thompson and Dennis Ritchie built Unix at Bell Labs in 1969, and Ritchie designed C in 1972 to rewrite it. Unix tools and the portability of C became the foundation of modern software.",
+   "stats": [
+    {
+     "k": "Unix",
+     "v": "Bell Labs, 1969",
+     "sourceId": "wiki-unix"
+    },
+    {
+     "k": "C",
+     "v": "Dennis Ritchie, 1972",
+     "sourceId": "wiki-c"
+    },
+    {
+     "k": "Unix rewritten",
+     "v": "in C by 1973",
+     "sourceId": "wiki-unix"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-unix",
+     "label": "Wikipedia: Unix",
+     "url": "https://en.wikipedia.org/wiki/Unix"
+    },
+    {
+     "id": "wiki-c",
+     "label": "Wikipedia: C (programming language)",
+     "url": "https://en.wikipedia.org/wiki/C_(programming_language)"
+    }
+   ]
   },
   {
    "id": "C7",
@@ -839,7 +1165,33 @@
      0.7351,
      0.678
     ]
-   }
+   },
+   "hook": "Data as tables, and a language to ask them questions.",
+   "caption": "Edgar Codd's 1970 paper described data as relations, or tables, that could be queried in a uniform way. The relational model became the basis of SQL and nearly every database in use today.",
+   "stats": [
+    {
+     "k": "Paper",
+     "v": "A Relational Model of Data, 1970",
+     "sourceId": "wiki-relational"
+    },
+    {
+     "k": "Author",
+     "v": "Edgar F. Codd",
+     "sourceId": "wiki-relational"
+    },
+    {
+     "k": "Descendant",
+     "v": "SQL databases",
+     "sourceId": "wiki-relational"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-relational",
+     "label": "Wikipedia: Relational model",
+     "url": "https://en.wikipedia.org/wiki/Relational_model"
+    }
+   ]
   },
   {
    "id": "C8",
@@ -855,7 +1207,38 @@
      0.6073,
      0.7945
     ]
-   }
+   },
+   "hook": "A free operating system, built in public by thousands.",
+   "caption": "Richard Stallman launched the GNU project in 1983 to build a free operating system, and Linus Torvalds released the Linux kernel in 1991. Together they power most of the servers on the internet and every Android phone.",
+   "stats": [
+    {
+     "k": "GNU project",
+     "v": "1983",
+     "sourceId": "wiki-gnu"
+    },
+    {
+     "k": "Linux kernel",
+     "v": "1991",
+     "sourceId": "wiki-linux"
+    },
+    {
+     "k": "Licence",
+     "v": "free software, GPL",
+     "sourceId": "wiki-gnu"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-gnu",
+     "label": "Wikipedia: GNU",
+     "url": "https://en.wikipedia.org/wiki/GNU"
+    },
+    {
+     "id": "wiki-linux",
+     "label": "Wikipedia: Linux",
+     "url": "https://en.wikipedia.org/wiki/Linux"
+    }
+   ]
   },
   {
    "id": "C9",
@@ -949,7 +1332,34 @@
      -0.7071,
      0.7071
     ]
-   }
+   },
+   "hook": "The first packet-switched network, with a first message that crashed.",
+   "caveat": "The label 'first' refers to the first ARPANET message, sent on October 29, 1969.",
+   "caption": "ARPANET went live in 1969, connecting four university sites by packet switching. Its first message, LOGIN from UCLA to Stanford, crashed after two letters, but the network grew into the internet.",
+   "stats": [
+    {
+     "k": "First message",
+     "v": "October 29, 1969",
+     "sourceId": "wiki-arpanet"
+    },
+    {
+     "k": "Sites connected",
+     "v": "4 at first",
+     "sourceId": "wiki-arpanet"
+    },
+    {
+     "k": "Technique",
+     "v": "packet switching",
+     "sourceId": "wiki-arpanet"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-arpanet",
+     "label": "Wikipedia: ARPANET",
+     "url": "https://en.wikipedia.org/wiki/ARPANET"
+    }
+   ]
   },
   {
    "id": "D2",
@@ -997,7 +1407,33 @@
      -0.7568,
      0.6536
     ]
-   }
+   },
+   "hook": "The common language that let different networks speak.",
+   "caption": "Vint Cerf and Bob Kahn described TCP in 1974 as a way to connect separate networks into an internet. On January 1, 1983, ARPANET switched to TCP/IP, the event many mark as the internet's birthday.",
+   "stats": [
+    {
+     "k": "Protocol paper",
+     "v": "Cerf and Kahn, 1974",
+     "sourceId": "wiki-tcpip"
+    },
+    {
+     "k": "ARPANET switch",
+     "v": "January 1, 1983",
+     "sourceId": "wiki-tcpip"
+    },
+    {
+     "k": "Layers",
+     "v": "TCP and IP",
+     "sourceId": "wiki-tcpip"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-tcpip",
+     "label": "Wikipedia: Internet protocol suite",
+     "url": "https://en.wikipedia.org/wiki/Internet_protocol_suite"
+    }
+   ]
   },
   {
    "id": "D5",
@@ -1023,11 +1459,11 @@
    "band": "middle",
    "tier": "built",
    "position": {
-    "x": 22.71,
-    "z": -26.476,
+    "x": 20.5202,
+    "z": -28.6661,
     "face": [
-     -0.6511,
-     0.759
+     -0.5821,
+     0.8131
     ]
    },
    "caveat": "The label 'first' describes the common early dial-up experience, not a claim that a single machine was the web's only origin.",
@@ -1086,11 +1522,11 @@
    "band": "middle",
    "tier": "built",
    "position": {
-    "x": 25.424,
-    "z": -23.763,
+    "x": 23.2355,
+    "z": -25.9508,
     "face": [
-     -0.7306,
-     0.6828
+     -0.6671,
+     0.745
     ]
    },
    "portal": {
@@ -1148,11 +1584,11 @@
    "band": "middle",
    "tier": "extended",
    "position": {
-    "x": 28.137,
-    "z": -21.049,
+    "x": 25.9508,
+    "z": -23.2355,
     "face": [
-     -0.8007,
-     0.599
+     -0.745,
+     0.6671
     ]
    }
   },
@@ -1164,11 +1600,11 @@
    "band": "middle",
    "tier": "extended",
    "position": {
-    "x": 30.851,
-    "z": -18.336,
+    "x": 28.6661,
+    "z": -20.5202,
     "face": [
-     -0.8596,
-     0.5109
+     -0.8131,
+     0.5821
     ]
    }
   },
@@ -1202,7 +1638,33 @@
      -0.8685,
      0.4956
     ]
-   }
+   },
+   "hook": "Computing on demand, billed like a utility.",
+   "caption": "Amazon Web Services launched S3 storage and EC2 compute in 2006, letting anyone rent servers by the hour over the internet. The cloud turned computing into a utility and became the default way software runs.",
+   "stats": [
+    {
+     "k": "S3 launched",
+     "v": "March 2006",
+     "sourceId": "wiki-aws"
+    },
+    {
+     "k": "EC2 launched",
+     "v": "August 2006",
+     "sourceId": "wiki-aws"
+    },
+    {
+     "k": "Model",
+     "v": "rent by the hour",
+     "sourceId": "wiki-aws"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-aws",
+     "label": "Wikipedia: Amazon Web Services",
+     "url": "https://en.wikipedia.org/wiki/Amazon_Web_Services"
+    }
+   ]
   },
   {
    "id": "E1",
@@ -1234,7 +1696,34 @@
      0,
      1
     ]
-   }
+   },
+   "hook": "Draw with a light pen, and the computer understands.",
+   "caption": "Ivan Sutherland's Sketchpad, from his 1963 MIT thesis, let a user draw on screen with a light pen and move shapes as objects. It pioneered interactive computer graphics and the idea of the graphical interface.",
+   "stats": [
+    {
+     "k": "Author",
+     "v": "Ivan Sutherland",
+     "sourceId": "wiki-sketchpad"
+    },
+    {
+     "k": "Year",
+     "v": "1963",
+     "sourceId": "wiki-sketchpad"
+    },
+    {
+     "k": "Input",
+     "v": "light pen",
+     "sourceId": "wiki-sketchpad"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-sketchpad",
+     "label": "Wikipedia: Sketchpad",
+     "url": "https://en.wikipedia.org/wiki/Sketchpad"
+    }
+   ],
+   "caveat": "The label 'first' applies to Sketchpad as the first interactive computer graphics program."
   },
   {
    "id": "E3",
@@ -1361,7 +1850,39 @@
      -0.1678,
      0.9858
     ]
-   }
+   },
+   "hook": "The business machine, then the machine everyone could point and click.",
+   "caption": "The IBM PC, released in 1981, set the standard for personal computers in business. In 1984 the Macintosh brought the mouse and a graphical interface to a mass audience.",
+   "stats": [
+    {
+     "k": "IBM PC",
+     "v": "1981",
+     "sourceId": "wiki-ibmpc"
+    },
+    {
+     "k": "Macintosh",
+     "v": "1984",
+     "sourceId": "wiki-mac"
+    },
+    {
+     "k": "Macintosh interface",
+     "v": "mouse and windows",
+     "sourceId": "wiki-mac"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-ibmpc",
+     "label": "Wikipedia: IBM Personal Computer",
+     "url": "https://en.wikipedia.org/wiki/IBM_Personal_Computer"
+    },
+    {
+     "id": "wiki-mac",
+     "label": "Wikipedia: Macintosh 128K",
+     "url": "https://en.wikipedia.org/wiki/Macintosh_128K"
+    }
+   ],
+   "caveat": "The label 'first' applies to the Macintosh as a successful mass-market computer with a graphical interface, not the first machine to have one."
   },
   {
    "id": "E7",
@@ -1377,7 +1898,33 @@
      0.1411,
      0.99
     ]
-   }
+   },
+   "hook": "A computer in your pocket, operated by touch.",
+   "caption": "The iPhone, announced in 2007, combined a phone, an internet device and a music player behind a multi-touch screen. Direct manipulation by touch changed how billions of people use computers.",
+   "stats": [
+    {
+     "k": "Announced",
+     "v": "January 2007",
+     "sourceId": "wiki-iphone"
+    },
+    {
+     "k": "Interface",
+     "v": "multi-touch",
+     "sourceId": "wiki-iphone"
+    },
+    {
+     "k": "Combined",
+     "v": "phone, iPod, internet",
+     "sourceId": "wiki-iphone"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-iphone",
+     "label": "Wikipedia: iPhone (1st generation)",
+     "url": "https://en.wikipedia.org/wiki/IPhone_(1st_generation)"
+    }
+   ]
   },
   {
    "id": "E8",
@@ -1487,7 +2034,33 @@
      -0.9982,
      -0.0594
     ]
-   }
+   },
+   "hook": "A machine that could learn, one adjustable weight at a time.",
+   "caption": "Frank Rosenblatt's perceptron, demonstrated in 1958, was an early artificial neuron that learned by adjusting its weights. It could recognise simple patterns, and its limits later motivated the work that powers neural networks today.",
+   "stats": [
+    {
+     "k": "Inventor",
+     "v": "Frank Rosenblatt",
+     "sourceId": "wiki-perceptron"
+    },
+    {
+     "k": "Year",
+     "v": "1958",
+     "sourceId": "wiki-perceptron"
+    },
+    {
+     "k": "Machine",
+     "v": "Mark I Perceptron",
+     "sourceId": "wiki-perceptron"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-perceptron",
+     "label": "Wikipedia: Perceptron",
+     "url": "https://en.wikipedia.org/wiki/Perceptron"
+    }
+   ]
   },
   {
    "id": "F4",
@@ -1613,7 +2186,33 @@
      -0.9707,
      0.2404
     ]
-   }
+   },
+   "hook": "The moment deep learning went from lab curiosity to the main event.",
+   "caption": "AlexNet won the 2012 ImageNet competition by a wide margin, using a deep convolutional network trained on GPUs. Its victory launched the deep learning era that produced modern AI systems.",
+   "stats": [
+    {
+     "k": "Competition",
+     "v": "ImageNet 2012",
+     "sourceId": "wiki-alexnet"
+    },
+    {
+     "k": "Top-5 error",
+     "v": "15.3 percent",
+     "sourceId": "wiki-alexnet"
+    },
+    {
+     "k": "Trained on",
+     "v": "two GPUs",
+     "sourceId": "wiki-alexnet"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-alexnet",
+     "label": "Wikipedia: AlexNet",
+     "url": "https://en.wikipedia.org/wiki/AlexNet"
+    }
+   ]
   },
   {
    "id": "F9",
@@ -1707,7 +2306,34 @@
      -0.9707,
      -0.2404
     ]
-   }
+   },
+   "hook": "The chatbot that made language models mainstream.",
+   "caption": "OpenAI released ChatGPT on November 30, 2022, a chatbot built on a large language model. It reached about a hundred million users in two months and made generative AI a daily tool.",
+   "stats": [
+    {
+     "k": "Released",
+     "v": "November 30, 2022",
+     "sourceId": "wiki-chatgpt"
+    },
+    {
+     "k": "Reach",
+     "v": "about 100 million users in two months",
+     "sourceId": "wiki-chatgpt"
+    },
+    {
+     "k": "Built on",
+     "v": "a large language model",
+     "sourceId": "wiki-chatgpt"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-chatgpt",
+     "label": "Wikipedia: ChatGPT",
+     "url": "https://en.wikipedia.org/wiki/ChatGPT"
+    }
+   ],
+   "caveat": "Growth figures are estimates; user numbers changed quickly after launch."
   },
   {
    "id": "G1",
@@ -1723,7 +2349,33 @@
      1,
      0
     ]
-   }
+   },
+   "hook": "The women who programmed ENIAC by rewiring its cables.",
+   "caption": "Kay McNulty, Betty Jennings, Betty Snyder, Marlyn Wescoff, Fran Bilas and Ruth Lichterman programmed the ENIAC by setting its cables and switches. They worked out the machine logic largely from block diagrams, and their story is now a landmark in the history of programming.",
+   "stats": [
+    {
+     "k": "Programmers",
+     "v": "6 women",
+     "sourceId": "wiki-eniac"
+    },
+    {
+     "k": "Machine",
+     "v": "ENIAC, 1945",
+     "sourceId": "wiki-eniac"
+    },
+    {
+     "k": "Method",
+     "v": "cable and switch wiring",
+     "sourceId": "wiki-eniac"
+    }
+   ],
+   "sources": [
+    {
+     "id": "wiki-eniac",
+     "label": "Wikipedia: ENIAC",
+     "url": "https://en.wikipedia.org/wiki/ENIAC"
+    }
+   ]
   },
   {
    "id": "G2",
@@ -1803,7 +2455,33 @@
      -0.845,
      -0.5347
     ]
-   }
+   },
+   "hook": "How heavy is the web? This museum measures its own weight.",
+   "caption": "The Bloat Audit turns the museum performance budget into an exhibit. It tracks the median web page, which grew to about 2.56 megabytes in 2025, and asks how much of that weight actually serves the visitor.",
+   "stats": [
+    {
+     "k": "Median page",
+     "v": "2.56 MB",
+     "sourceId": "almanac"
+    },
+    {
+     "k": "Median requests",
+     "v": "75",
+     "sourceId": "almanac"
+    },
+    {
+     "k": "Median JavaScript",
+     "v": "632 KB",
+     "sourceId": "almanac"
+    }
+   ],
+   "sources": [
+    {
+     "id": "almanac",
+     "label": "HTTP Archive Web Almanac 2025",
+     "url": "https://almanac.httparchive.org/"
+    }
+   ]
   },
   {
    "id": "S4",

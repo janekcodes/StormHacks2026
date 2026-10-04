@@ -33,13 +33,13 @@
   font-weight: 500;
   font-size: clamp(1.1rem, 2.6vw, 1.45rem);
   line-height: 1.5;
-  color: #5a49c4;
+  color: #5b6168;
 }
 
 .lede {
   margin: 0 0 1.75rem;
   max-width: 40rem;
-  color: #4f5963;
+  color: #5b6168;
   line-height: 1.6;
   font-size: 1.05rem;
 }
@@ -111,7 +111,7 @@
 
 .sectionMeta {
   margin: 0;
-  color: #5b6570;
+  color: #5b6168;
   font-size: 0.95rem;
 }
 
@@ -124,7 +124,7 @@
 
 .mapCaption {
   margin: 0.75rem 0 0;
-  color: #4f5963;
+  color: #5b6168;
   font-size: 0.9rem;
 }
 
@@ -134,7 +134,8 @@
 }
 
 .link:hover {
-  color: #a8601a;
+  color: #1d2024;
+  text-decoration-color: #ffb347;
 }
 
 .cards {
@@ -159,12 +160,12 @@
 .cardId {
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
   font-weight: 600;
-  color: #a8601a;
+  color: #1d2024;
 }
 
 .cardYear {
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  color: #5b6570;
+  color: #5b6168;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -176,7 +177,7 @@
 }
 
 .cardZone {
-  color: #5b6570;
+  color: #5b6168;
   font-size: 0.85rem;
 }
 

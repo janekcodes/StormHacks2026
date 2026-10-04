@@ -135,10 +135,16 @@ function Hud({ building, exhibits }: { building: Building; exhibits: readonly Ex
       ? 'Public area'
       : 'Gallery'
 
+  const zoneInk = building.zones[zoneKey === 'Atr' ? 'P' : zoneKey]?.ink
+
   return (
     <>
       <div className="museum-left">
-        <div className="museum-hud museum-zone" data-testid="zone-hud">
+        <div
+          className="museum-hud museum-zone"
+          data-testid="zone-hud"
+          style={zoneInk ? { borderLeftColor: zoneInk, borderLeftWidth: 3 } : undefined}
+        >
           <div className="museum-kicker">{kicker}</div>
           <div className="museum-zone-name">{zoneName}</div>
           <div className="museum-meta">

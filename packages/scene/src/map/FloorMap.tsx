@@ -23,11 +23,11 @@ export interface FloorMapProps {
   compact?: boolean
 }
 
-const GREY = '#9aa4ad'
-const INK = '#1c2733'
-const WALL = '#2b2b2b'
-const GLASS = '#3b82c4'
-const DASH = '#9aa4ad'
+const GREY = '#5b6168'
+const INK = '#1d2024'
+const WALL = '#2e3339'
+const GLASS = '#1f6699'
+const DASH = '#5b6168'
 
 function tierLabel(tier: Tier): string {
   switch (tier) {
@@ -222,7 +222,7 @@ export function FloorMap({
                   x={p.x}
                   y={p.y}
                   fontSize={10}
-                  fill="#5b6570"
+                  fill="#5b6168"
                   textAnchor="middle"
                   dominantBaseline="middle"
                 >

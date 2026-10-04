@@ -34,7 +34,7 @@
 }
 
 .navLink {
-  color: #3a424c;
+  color: #5b6168;
   text-decoration: none;
   font-size: 0.95rem;
 }
@@ -64,7 +64,7 @@
 .lede {
   margin: 0;
   max-width: 40rem;
-  color: #4f5963;
+  color: #5b6168;
   line-height: 1.5;
 }
 
@@ -86,7 +86,7 @@
 
 .zoneMeta {
   margin: 0 0 0.75rem;
-  color: #5b6570;
+  color: #5b6168;
   font-size: 0.9rem;
 }
 
@@ -98,7 +98,7 @@
   margin: 0 0 0.4rem;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #3a424c;
+  color: #1d2024;
 }
 
 .list {
@@ -134,12 +134,12 @@
 }
 
 .year {
-  color: #5b6570;
+  color: #5b6168;
   font-variant-numeric: tabular-nums;
 }
 
 .tier {
-  color: #5b6570;
+  color: #5b6168;
   font-size: 0.85rem;
 }
 
@@ -156,15 +156,15 @@
   margin: 0 0 1rem;
   padding: 0;
   list-style: none;
-  color: #4f5963;
+  color: #5b6168;
   font-size: 0.95rem;
 }
 
 .planned {
   margin: 0 0 1rem;
   padding: 0.75rem 0.9rem;
-  background: #efe9dc;
-  border-left: 3px solid #7a6a48;
+  background: #fff4e2;
+  border-left: 3px solid #ffb347;
   line-height: 1.45;
 }
 
@@ -194,7 +194,7 @@
 .statKey {
   display: block;
   font-size: 0.8rem;
-  color: #5b6570;
+  color: #5b6168;
   margin-bottom: 0.2rem;
 }
 
@@ -220,7 +220,7 @@
 
 .caveat {
   margin: 0;
-  color: #4f5963;
+  color: #5b6168;
   line-height: 1.5;
 }
 
