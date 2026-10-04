@@ -224,7 +224,9 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
       : state.phase === 'outro' || state.phase === 'done'
         ? 'Tour complete'
         : `Stop ${state.index + 1} of ${tour.stops.length}: ${stop?.id ?? ''} ${stop?.title ?? ''}`
-  const liveCaption = state.pauseReason === 'listening' ? voice.partial || 'Listening' : caption
+  // Until the session is live nothing is heard, so do not invite speech yet.
+  const listenCaption = voice.status === 'listening' ? 'Listening' : 'Starting the mic'
+  const liveCaption = state.pauseReason === 'listening' ? voice.partial || listenCaption : caption
   const playing = state.phase === 'dwell' && state.pauseReason === null
 
   return (

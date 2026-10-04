@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { createVoiceController, type ScribeConnection, type VoiceStatus } from './controller'
+import { createTokenCache, createVoiceController, type ScribeConnection, type VoiceStatus } from './controller'
 
 function fakeConnection() {
   const handlers = {
@@ -28,7 +28,7 @@ function fakeConnection() {
   return conn
 }
 
-function setup(conn = fakeConnection(), extra: { now?: () => number; finalTimeoutMs?: number } = {}) {
+function setup(conn = fakeConnection(), extra: { now?: () => number; finalTimeoutMs?: number; warm?: () => void } = {}) {
   const statuses: VoiceStatus[] = []
   const partials: string[] = []
   const getToken = vi.fn(async () => ({ token: 't', modelId: 'm' }))
@@ -306,5 +306,91 @@ describe('createVoiceController', () => {
     await u.controller.start()
     u.conn.emitError({ message_type: 'auth_error', error: 'bad token' })
     expect(u.statuses.at(-1)).toBe('unavailable')
+  })
+
+  describe('slow token (owner bug: every hold refetched a token and none reached the guide)', () => {
+    type Tok = { token: string; modelId: string }
+    function deferredTokens() {
+      const resolvers: Array<(t: Tok) => void> = []
+      let n = 0
+      const getToken = vi.fn(
+        () =>
+          new Promise<Tok>((resolve) => {
+            const id = ++n
+            resolvers.push(() => resolve({ token: `t${id}`, modelId: 'm' }))
+          })
+      )
+      return { getToken, resolve: (i: number) => resolvers[i]?.({ token: '', modelId: '' }) }
+    }
+
+    it('keeps the token of a press released while it was loading, so the next press does not refetch', async () => {
+      const d = deferredTokens()
+      const t = setup()
+      const controller = createVoiceController({
+        getToken: d.getToken,
+        connect: t.connectFn,
+        onPartial: () => undefined,
+        onStatus: () => undefined,
+        finalTimeoutMs: 50
+      })
+      const first = controller.start()
+      expect(await controller.stop()).toBeNull()
+      // Pressed again before the first token arrived: must wait on the same fetch.
+      const second = controller.start()
+      expect(d.getToken).toHaveBeenCalledTimes(1)
+      d.resolve(0)
+      await first
+      await second
+      expect(t.connectFn).toHaveBeenCalledTimes(1)
+      expect(t.connectFn).toHaveBeenCalledWith({ token: 't1', modelId: 'm' })
+    })
+
+    it('reuses a token that arrived after the press was released', async () => {
+      const d = deferredTokens()
+      const t = setup()
+      const controller = createVoiceController({
+        getToken: d.getToken,
+        connect: t.connectFn,
+        onPartial: () => undefined,
+        onStatus: () => undefined,
+        finalTimeoutMs: 50
+      })
+      const first = controller.start()
+      expect(await controller.stop()).toBeNull()
+      d.resolve(0)
+      await first
+      expect(t.connectFn).not.toHaveBeenCalled()
+      await controller.start()
+      expect(t.connectFn).toHaveBeenCalledWith({ token: 't1', modelId: 'm' })
+      expect(d.getToken).toHaveBeenCalledTimes(2) // the original fetch, plus the refill after connecting
+    })
+
+    it('shares the prefetched token across controllers, so a floating/inline remount keeps it', async () => {
+      const getToken = vi.fn(async () => ({ token: 'warm', modelId: 'm' }))
+      const tokens = createTokenCache(getToken)
+      const make = () =>
+        createVoiceController({
+          getToken,
+          tokens,
+          connect: vi.fn(async () => fakeConnection()),
+          onPartial: () => undefined,
+          onStatus: () => undefined
+        })
+      const floating = make()
+      floating.prefetch()
+      floating.dispose()
+      const inline = make()
+      inline.prefetch()
+      expect(getToken).toHaveBeenCalledTimes(1)
+      await inline.start()
+      expect(getToken).toHaveBeenCalledTimes(2) // refill after use only
+    })
+
+    it('warms the connect module on prefetch', () => {
+      const warm = vi.fn()
+      const t = setup(fakeConnection(), { warm })
+      t.controller.prefetch()
+      expect(warm).toHaveBeenCalled()
+    })
   })
 })

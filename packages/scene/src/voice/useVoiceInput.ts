@@ -2,13 +2,18 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getSessionId } from '../guide/session'
-import { createVoiceController, type VoiceStatus } from './controller'
+import { createTokenCache, createVoiceController, type VoiceStatus } from './controller'
 
 async function fetchListenToken(): Promise<{ token: string; modelId: string }> {
   const res = await fetch(`/api/listen-token?sessionId=${encodeURIComponent(getSessionId())}`)
   if (!res.ok) throw new Error(`listen token failed: ${res.status}`)
   return (await res.json()) as { token: string; modelId: string }
 }
+
+// Module level so the warm token survives the floating/inline TourBar remount
+// that happens at every tour stop (one hook instance is mounted at a time).
+const sharedTokens = createTokenCache(fetchListenToken)
+const loadScribe = () => import('./scribe')
 
 export function useVoiceInput() {
   const [status, setStatus] = useState<VoiceStatus>('idle')
@@ -17,8 +22,10 @@ export function useVoiceInput() {
     () =>
       createVoiceController({
         getToken: fetchListenToken,
-        // Lazy: keeps the ElevenLabs SDK out of the main bundle until first press.
-        connect: async (opts) => (await import('./scribe')).connectScribe(opts),
+        tokens: sharedTokens,
+        // Lazy: keeps the ElevenLabs SDK out of the main bundle; warmed on prefetch, before the first press.
+        connect: async (opts) => (await loadScribe()).connectScribe(opts),
+        warm: () => void loadScribe().catch(() => undefined),
         onPartial: setPartial,
         onStatus: setStatus
       }),

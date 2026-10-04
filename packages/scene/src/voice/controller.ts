@@ -36,12 +36,51 @@ export function isHarmlessScribeError(error: unknown): boolean {
 const MAX_TOKEN_AGE_MS = 10 * 60 * 1000
 
 type Token = { token: string; modelId: string }
+type TokenEntry = { promise: Promise<Token>; at: number }
+
+/**
+ * Holds at most one single-use token (or the fetch for one). It outlives any
+ * one controller: the tour swaps the floating bar for the inline one at every
+ * stop, and a fresh fetch can take several seconds, longer than a typical hold.
+ */
+export function createTokenCache(getToken: () => Promise<Token>, now: () => number = Date.now) {
+  let pending: TokenEntry | null = null
+  const track = (entry: TokenEntry) => {
+    entry.promise.catch(() => {
+      if (pending === entry) pending = null
+    })
+    return entry
+  }
+  const fresh = (entry: TokenEntry | null) => entry !== null && now() - entry.at <= MAX_TOKEN_AGE_MS
+  return {
+    /** Start a fetch unless a usable token (or fetch) is already held. */
+    prefetch() {
+      if (!fresh(pending)) pending = track({ promise: getToken(), at: now() })
+    },
+    /** Hand out the held token, or fetch one now. */
+    take(): TokenEntry {
+      const entry = pending
+      pending = null
+      return entry && fresh(entry) ? entry : track({ promise: getToken(), at: now() })
+    },
+    /** Return a token that was never sent to the server, so the next press can use it. */
+    restore(entry: TokenEntry) {
+      if (!fresh(pending)) pending = entry
+    }
+  }
+}
+
+export type TokenCache = ReturnType<typeof createTokenCache>
 
 export interface VoiceControllerDeps {
   getToken: () => Promise<Token>
+  /** Shared token cache; defaults to a private one built from getToken. */
+  tokens?: TokenCache
   connect: ConnectScribe
   onPartial: (text: string) => void
   onStatus: (status: VoiceStatus) => void
+  /** Called on prefetch to load whatever connect needs (e.g. the SDK chunk) ahead of the first press. */
+  warm?: () => void
   finalTimeoutMs?: number
   /** Clock, injectable for tests. */
   now?: () => number
@@ -56,8 +95,7 @@ export interface VoiceControllerDeps {
  */
 export function createVoiceController(deps: VoiceControllerDeps) {
   const finalTimeoutMs = deps.finalTimeoutMs ?? 1500
-  const now = deps.now ?? Date.now
-  let pending: { promise: Promise<Token>; at: number } | null = null
+  const tokens = deps.tokens ?? createTokenCache(deps.getToken, deps.now)
   let conn: ScribeConnection | null = null
   let phase: 'idle' | 'listening' | 'finishing' = 'idle'
   let partial = ''
@@ -67,6 +105,8 @@ export function createVoiceController(deps: VoiceControllerDeps) {
   // Press generation: bumped on cancel so a start() resuming from an await can tell it is stale.
   let gen = 0
   let starting: number | null = null
+  // The token the pending start() holds, until it is sent to connect().
+  let startingToken: TokenEntry | null = null
 
   const status = (next: VoiceStatus) => deps.onStatus(next)
 
@@ -95,25 +135,11 @@ export function createVoiceController(deps: VoiceControllerDeps) {
     status('idle')
   }
 
-  const refill = () => {
-    const entry = { promise: deps.getToken(), at: now() }
-    pending = entry
-    entry.promise.catch(() => {
-      if (pending === entry) pending = null
-    })
-  }
-
-  const takeToken = () => {
-    const entry = pending
-    pending = null
-    if (entry && now() - entry.at <= MAX_TOKEN_AGE_MS) return entry.promise
-    return deps.getToken()
-  }
-
   return {
     prefetch() {
       if (unavailable) return
-      if (!pending || now() - pending.at > MAX_TOKEN_AGE_MS) refill()
+      deps.warm?.()
+      tokens.prefetch()
     },
     async start() {
       if (starting !== null || conn || unavailable) return
@@ -122,8 +148,12 @@ export function createVoiceController(deps: VoiceControllerDeps) {
       partial = ''
       committed = []
       try {
-        const { token, modelId } = await takeToken()
+        const entry = tokens.take()
+        startingToken = entry
+        const { token, modelId } = await entry.promise
         if (mine !== gen) return
+        // From here the token is spent: the server consumes it on connect.
+        startingToken = null
         const next = await deps.connect({ token, modelId })
         if (mine !== gen) {
           next.close()
@@ -152,18 +182,24 @@ export function createVoiceController(deps: VoiceControllerDeps) {
           else wake?.()
         })
         status('listening')
-        refill()
+        tokens.prefetch()
       } catch {
         if (mine === gen) fail()
       } finally {
-        if (starting === mine) starting = null
+        if (starting === mine) {
+          starting = null
+          startingToken = null
+        }
       }
     },
     async stop(): Promise<string | null> {
       if (starting !== null) {
-        // Released while still connecting: cancel the press.
+        // Released while still connecting: cancel the press, but keep an
+        // unspent token (or its fetch) for the next one.
         gen++
         starting = null
+        if (startingToken) tokens.restore(startingToken)
+        startingToken = null
         return null
       }
       const active = conn
@@ -196,6 +232,8 @@ export function createVoiceController(deps: VoiceControllerDeps) {
     dispose() {
       gen++
       starting = null
+      if (startingToken) tokens.restore(startingToken)
+      startingToken = null
       phase = 'idle'
       closeActive()
       wake?.()
