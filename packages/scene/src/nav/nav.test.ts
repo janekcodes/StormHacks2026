@@ -60,6 +60,12 @@ describe('nav', () => {
     }
   })
 
+  it('puts every Navigate room target inside its own room', () => {
+    for (const [key, rt] of Object.entries(standpoints.rooms)) {
+      expect(roomAt(building, rt.x, rt.z)?.key, `room target ${key} at (${rt.x}, ${rt.z})`).toBe(key)
+    }
+  })
+
   it('rejects minimap clicks inside walls or outside the building', () => {
     // Far outside
     expect(museum.goMapPoint(200, 200)).toBe(false)
