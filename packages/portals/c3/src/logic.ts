@@ -46,3 +46,22 @@ export const STATEMENTS: readonly { label: string; statement: string; button: st
   { label: '', statement: 'DO 10 I = 1, 10', button: 'DO 10 I = 1, 10' },
   { label: '10', statement: 'CONTINUE', button: '10 CONTINUE' }
 ]
+
+export interface Cleaned {
+  text: string
+  /** True when a character the card cannot encode was removed. */
+  dropped: boolean
+}
+
+/** Typed statement: uppercase, only characters `rowsFor` encodes, max 66 columns (7 to 72). */
+export function cleanStatement(raw: string): Cleaned {
+  const upper = raw.toUpperCase()
+  const kept = [...upper].filter((ch) => ch === ' ' || rowsFor(ch).length > 0).join('')
+  return { text: kept.slice(0, 66), dropped: kept.length !== upper.length }
+}
+
+/** Typed statement label: digits only, max 5 columns (1 to 5). */
+export function cleanLabel(raw: string): Cleaned {
+  const kept = raw.replace(/[^0-9]/g, '')
+  return { text: kept.slice(0, 5), dropped: kept.length !== raw.length }
+}
