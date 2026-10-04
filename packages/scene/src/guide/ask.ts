@@ -22,6 +22,8 @@ export interface StreamOptions {
   onTool?: (call: ToolCall) => void
   onStreamError?: (message: string) => void
   fetchImpl?: typeof fetch
+  timeoutMs?: number
+  signal?: AbortSignal
 }
 
 export class GuideRequestError extends Error {
@@ -53,7 +55,8 @@ export async function streamGuideTurn(history: GuideMessage[], opts: StreamOptio
       messages: history,
       visitorContext: opts.context(),
       mode: opts.mode
-    })
+    }),
+    ...(opts.signal ? { signal: opts.signal } : {})
   })
   if (!res.ok) throw new GuideRequestError(res.status, await readError(res))
   if (!res.body) throw new GuideRequestError(res.status, 'No response stream.')
@@ -88,6 +91,10 @@ export async function streamGuideTurn(history: GuideMessage[], opts: StreamOptio
   }
 
   for (;;) {
+    if (opts.signal?.aborted) {
+      await reader.cancel()
+      throw new Error('The guide took too long to answer.')
+    }
     const { value, done } = await reader.read()
     if (done) break
     buffer += decoder.decode(value, { stream: true })
@@ -121,22 +128,51 @@ export async function askGuide(
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   let history: GuideMessage[] = [{ role: 'user', text }]
   let streamError: string | null = null
+
+  // Determine timeout: default 12s in tour mode, no timeout in visit mode unless specified
+  const timeoutMs = opts.timeoutMs ?? (opts.mode === 'tour' ? 12_000 : undefined)
+
+  // Create AbortController with timeout timer
+  const abortController = new AbortController()
+  let timeoutHandle: ReturnType<typeof setTimeout> | null = null
+
+  if (timeoutMs !== undefined) {
+    timeoutHandle = setTimeout(() => {
+      abortController.abort()
+    }, timeoutMs)
+  }
+
   const inner: StreamOptions = {
     ...opts,
+    signal: abortController.signal,
     onStreamError: (message) => {
       streamError ??= message
       opts.onStreamError?.(message)
     }
   }
+
   try {
     for (let turn = 0; turn < MAX_TURNS; turn++) {
       history = await streamGuideTurn(history, inner)
-      if (streamError) return { ok: false, error: streamError }
+      if (streamError) {
+        if (timeoutHandle !== null) clearTimeout(timeoutHandle)
+        return { ok: false, error: streamError }
+      }
       const last = history[history.length - 1]
       if (last?.role === 'assistant' && !(last.toolCalls && last.toolCalls.length > 0)) break
     }
+    if (timeoutHandle !== null) clearTimeout(timeoutHandle)
     return { ok: true }
   } catch (err) {
+    if (timeoutHandle !== null) clearTimeout(timeoutHandle)
+    // Check if this is the specific timeout error
+    if (err instanceof Error && err.message === 'The guide took too long to answer.') {
+      return { ok: false, error: 'The guide took too long to answer.' }
+    }
+    // Check if the error is due to an abort caused by our timeout
+    if (abortController.signal.aborted && err instanceof Error && err.message === 'The operation was aborted.') {
+      return { ok: false, error: 'The guide took too long to answer.' }
+    }
     return { ok: false, error: err instanceof Error ? err.message : 'Something went wrong. Please try again.' }
   }
 }

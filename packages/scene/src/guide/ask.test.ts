@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi, afterEach } from 'vitest'
 
 const walkTo = vi.fn(() => true)
 vi.mock('../nav/api', () => ({ museum: { walkTo: (...args: unknown[]) => (walkTo as (...a: unknown[]) => boolean)(...args) } }))
@@ -78,5 +78,89 @@ describe('askGuide', () => {
       fetchImpl
     })
     expect(out).toEqual({ ok: false, error: 'Model failed.' })
+  })
+
+  it('times out a fetch whose body never ends with timeoutMs: 50', async () => {
+    vi.useFakeTimers()
+    try {
+      const fetchImpl = vi.fn(async () => {
+        // Return a response with a ReadableStream that never closes
+        return new Response(
+          new ReadableStream(() => {
+            // Never close or error; just hang
+          }),
+          { headers: { 'Content-Type': 'application/x-ndjson' } }
+        )
+      })
+      const promise = askGuide('Hi', {
+        exhibits: [],
+        mode: 'tour',
+        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+        onText: () => undefined,
+        timeoutMs: 50,
+        fetchImpl
+      })
+      // Advance timers to trigger the timeout
+      vi.advanceTimersByTime(100)
+      const out = await promise
+      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('times out a fetch that rejects on abort with timeoutMs: 50', async () => {
+    vi.useFakeTimers()
+    try {
+      const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
+        const signal = init.signal
+        return new Promise<Response>((_, reject) => {
+          signal?.addEventListener('abort', () => {
+            reject(new DOMException('The operation was aborted.', 'AbortError'))
+          })
+          // Never resolve or reject naturally
+        })
+      })
+      const promise = askGuide('Hi', {
+        exhibits: [],
+        mode: 'tour',
+        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+        onText: () => undefined,
+        timeoutMs: 50,
+        fetchImpl
+      })
+      // Advance timers to trigger the timeout
+      vi.advanceTimersByTime(100)
+      const out = await promise
+      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('returns ok: true for a fast answer and leaves no pending timer', async () => {
+    vi.useFakeTimers()
+    try {
+      const fetchImpl = vi.fn(async () =>
+        ndjson([{ type: 'text', text: 'Quick.' }, { type: 'done' }])
+      )
+      const out = await askGuide('Hi', {
+        exhibits: [],
+        mode: 'tour',
+        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+        onText: () => undefined,
+        timeoutMs: 5000,
+        fetchImpl
+      })
+      expect(out).toEqual({ ok: true })
+      const timerCount = vi.getTimerCount()
+      expect(timerCount).toBe(0)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 })
