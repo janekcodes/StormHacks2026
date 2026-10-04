@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
+import { uvMetresOf } from './materials'
+import { worldUv } from './textures'
 
 export interface MergePart {
   geometry: THREE.BufferGeometry
@@ -7,6 +9,8 @@ export interface MergePart {
   material: THREE.Material
   castShadow: boolean
   receiveShadow: boolean
+  /** Per-part colour, used when the material has `vertexColors`. */
+  color?: THREE.Color
 }
 
 export interface MergedMesh {
@@ -53,6 +57,30 @@ export function cylPart(
   return { geometry, matrix, material: mat, castShadow, receiveShadow }
 }
 
+/** Any geometry placed with a full matrix. */
+export function geoPart(
+  geometry: THREE.BufferGeometry,
+  matrix: THREE.Matrix4,
+  mat: THREE.Material,
+  castShadow = true,
+  receiveShadow = true
+): MergePart {
+  return { geometry, matrix, material: mat, castShadow, receiveShadow }
+}
+
+/** Matrix from position, yaw and optional pitch / roll. */
+export function placeMatrix(x: number, y: number, z: number, rotY = 0, rotX = 0, rotZ = 0): THREE.Matrix4 {
+  const m = new THREE.Matrix4()
+  m.makeRotationFromEuler(new THREE.Euler(rotX, rotY, rotZ, 'YXZ'))
+  m.setPosition(x, y, z)
+  return m
+}
+
+/**
+ * Merges parts per material and shadow flags into a handful of meshes.
+ * Textured materials get world-space UVs (true scale, seamless across parts)
+ * and `vertexColors` materials get a colour attribute from each part.
+ */
 export function mergeParts(parts: MergePart[]): MergedMesh[] {
   const groups = new Map<
     string,
@@ -68,6 +96,27 @@ export function mergeParts(parts: MergePart[]): MergedMesh[] {
     }
     const geo = p.geometry.index ? p.geometry.toNonIndexed() : p.geometry.clone()
     geo.applyMatrix4(p.matrix)
+    const metres = uvMetresOf(p.material)
+    if (metres) worldUv(geo, metres)
+    if ((p.material as THREE.MeshStandardMaterial).vertexColors) {
+      const c = p.color ?? new THREE.Color(1, 1, 1)
+      const n = geo.getAttribute('position').count
+      const arr = new Float32Array(n * 3)
+      for (let i = 0; i < n; i++) {
+        arr[i * 3] = c.r
+        arr[i * 3 + 1] = c.g
+        arr[i * 3 + 2] = c.b
+      }
+      geo.setAttribute('color', new THREE.BufferAttribute(arr, 3))
+    }
+    for (const name of Object.keys(geo.attributes)) {
+      if (name !== 'position' && name !== 'normal' && name !== 'uv' && name !== 'color') {
+        geo.deleteAttribute(name)
+      }
+    }
+    if (!geo.getAttribute('uv')) {
+      geo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(geo.getAttribute('position').count * 2), 2))
+    }
     g.geos.push(geo)
     p.geometry.dispose()
   }

@@ -1,54 +1,46 @@
 'use client'
 
+import { Environment, Lightformer } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { streamTextures } from '../building/textures'
 import { usePlayer } from '../player/usePlayer'
 import { settingsFor, type QualityTier } from '../quality'
 import { useLightmap } from './lightmap'
 
-function CustomRoomEnv({ enabled }: { enabled: boolean }) {
-  const { gl, scene } = useThree()
-  useEffect(() => {
-    if (!enabled) {
-      scene.environment = null
-      return
-    }
-    // Match prototype: simple boxed room PMREM
-    const pmrem = new THREE.PMREMGenerator(gl)
-    const env = new THREE.Scene()
-    env.add(
-      new THREE.Mesh(
-        new THREE.BoxGeometry(24, 9, 24),
-        new THREE.MeshBasicMaterial({ color: 0x918a7c, side: THREE.BackSide })
-      )
-    )
-    const panelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(5, 4.6, 3.8) })
-    for (const p of [
-      [-5, 0],
-      [5, 0],
-      [0, -6],
-      [0, 6]
-    ] as const) {
-      const m = new THREE.Mesh(new THREE.BoxGeometry(5, 0.1, 1.2), panelMat)
-      m.position.set(p[0], 4.4, p[1])
-      env.add(m)
-    }
-    const fb = new THREE.Mesh(
-      new THREE.BoxGeometry(24, 0.1, 24),
-      new THREE.MeshBasicMaterial({ color: 0x6d6459 })
-    )
-    fb.position.y = -4.4
-    env.add(fb)
-    const tex = pmrem.fromScene(env, 0.04).texture
-    scene.environment = tex
-    pmrem.dispose()
-    return () => {
-      scene.environment = null
-      tex.dispose()
-    }
-  }, [enabled, gl, scene])
-  return null
+/** Offset of the shadowing key light from the player: high and slightly south-east, like overhead gallery lighting. */
+const KEY_OFFSET = new THREE.Vector3(3, 18, 5)
+
+/**
+ * A warm interior light probe built from Lightformers (no HDRI download):
+ * a grid of ceiling panels, cream wall bounce and a dark wood floor. It drives
+ * reflections on glass, brass and polished stone on every tier.
+ */
+function RoomProbe() {
+  const panels: [number, number][] = []
+  for (let x = -12; x <= 12; x += 6) for (let z = -12; z <= 12; z += 6) panels.push([x, z])
+  return (
+    <Environment resolution={128} frames={1} background={false} environmentIntensity={0.85}>
+      <color attach="background" args={[0x3b322a]} />
+      {panels.map(([x, z]) => (
+        <Lightformer
+          key={`${x}:${z}`}
+          form="rect"
+          intensity={2.2}
+          color="#fff1dc"
+          position={[x, 6, z]}
+          rotation-x={Math.PI / 2}
+          scale={[2.2, 2.2, 1]}
+        />
+      ))}
+      <Lightformer form="rect" intensity={0.7} color="#efe2cc" position={[0, 2.5, -16]} scale={[40, 5, 1]} />
+      <Lightformer form="rect" intensity={0.7} color="#efe2cc" position={[0, 2.5, 16]} rotation-y={Math.PI} scale={[40, 5, 1]} />
+      <Lightformer form="rect" intensity={0.55} color="#e8d8c0" position={[-16, 2.5, 0]} rotation-y={Math.PI / 2} scale={[40, 5, 1]} />
+      <Lightformer form="rect" intensity={0.9} color="#dfeaf2" position={[16, 3, 0]} rotation-y={-Math.PI / 2} scale={[40, 4, 1]} />
+      <Lightformer form="rect" intensity={0.25} color="#6b4a32" position={[0, -2, 0]} rotation-x={-Math.PI / 2} scale={[40, 40, 1]} />
+    </Environment>
+  )
 }
 
 export function Lighting({ quality }: { quality: QualityTier }) {
@@ -63,11 +55,16 @@ export function Lighting({ quality }: { quality: QualityTier }) {
   }, [])
 
   useEffect(() => {
+    const id = window.setTimeout(() => streamTextures(settings.textureSize), 250)
+    return () => window.clearTimeout(id)
+  }, [settings.textureSize])
+
+  useEffect(() => {
     gl.toneMapping = THREE.ACESFilmicToneMapping
-    gl.toneMappingExposure = 0.8
+    gl.toneMappingExposure = 1.0
     gl.outputColorSpace = THREE.SRGBColorSpace
     gl.shadowMap.enabled = settings.shadows
-    gl.shadowMap.type = THREE.PCFSoftShadowMap
+    gl.shadowMap.type = THREE.PCFShadowMap
   }, [gl, settings.shadows])
 
   useEffect(() => {
@@ -75,14 +72,15 @@ export function Lighting({ quality }: { quality: QualityTier }) {
     if (!sun || !settings.shadows) return
     sun.shadow.mapSize.set(settings.shadowMapSize, settings.shadowMapSize)
     const sc = sun.shadow.camera
-    sc.left = -16
-    sc.right = 16
-    sc.top = 16
-    sc.bottom = -16
+    sc.left = -14
+    sc.right = 14
+    sc.top = 14
+    sc.bottom = -14
     sc.near = 1
     sc.far = 40
-    sun.shadow.bias = -0.0004
-    sun.shadow.normalBias = 0.03
+    sun.shadow.bias = -0.0003
+    sun.shadow.normalBias = 0.025
+    sun.shadow.radius = 3
     sun.shadow.camera.updateProjectionMatrix()
   }, [settings.shadowMapSize, settings.shadows])
 
@@ -91,24 +89,22 @@ export function Lighting({ quality }: { quality: QualityTier }) {
     const sun = sunRef.current
     const target = targetRef.current
     if (!sun || !target) return
-    sun.position.set(x + 6, 16, z + 8)
-    target.position.set(x, 0, z)
+    // Snap to a 0.5 m grid so shadow edges do not shimmer while walking.
+    const sx = Math.round(x * 2) / 2
+    const sz = Math.round(z * 2) / 2
+    sun.position.set(sx + KEY_OFFSET.x, KEY_OFFSET.y, sz + KEY_OFFSET.z)
+    target.position.set(sx, 0, sz)
     sun.target = target
     target.updateMatrixWorld()
   })
 
   return (
     <>
-      <color attach="background" args={[0xded9cf]} />
-      <fog attach="fog" args={[0xd8d3c8, 16, 48]} />
-      <CustomRoomEnv enabled={settings.environment && !lightmapReady} />
-      <hemisphereLight args={[0xfff6ea, 0x8a8272, lightmapReady ? 0.05 : 0.3]} />
-      <directionalLight
-        ref={sunRef}
-        color={0xfff0dc}
-        intensity={0.72}
-        castShadow={settings.shadows}
-      />
+      <color attach="background" args={[0xe9e4d6]} />
+      <fog attach="fog" args={[0xe9e4d6, 34, 150]} />
+      {settings.environment ? <RoomProbe /> : null}
+      <hemisphereLight args={[0xfff3e2, 0x5a4636, lightmapReady ? 0.05 : 0.32]} />
+      <directionalLight ref={sunRef} color={0xffeedb} intensity={1.15} castShadow={settings.shadows} />
       <object3D ref={targetRef} />
     </>
   )

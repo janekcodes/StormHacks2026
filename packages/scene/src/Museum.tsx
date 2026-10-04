@@ -3,10 +3,13 @@
 import type { Building } from '@museum/content/plan-schema'
 import type { Exhibit, ExhibitId } from '@museum/content/schema'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { registerExhibitAudio } from './audio/narratorBus'
 import { Atrium } from './building/Atrium'
 import { Floors } from './building/Floors'
+import { benchObstacles, galleryBenchSpots } from './building/furniture'
+import { PostFx } from './lighting/PostFx'
+import { buildCollisionSegments } from './player/collision'
 import { Signage } from './building/Signage'
 import { Walls } from './building/Walls'
 import { Exhibits } from './exhibits/Exhibits'
@@ -46,45 +49,76 @@ function SceneReady() {
   return null
 }
 
+/**
+ * Publishes the previous frame's total draw calls. `info.autoReset` is off so
+ * shadow and post-processing passes are counted together; this probe runs
+ * first in each frame (priority below zero), reads the total, then resets.
+ */
 function DrawCallProbe() {
   const { gl } = useThree()
+  const scene = useThree((s) => s.scene)
+  useEffect(() => {
+    ;(window as unknown as { __scene: unknown }).__scene = scene
+  }, [scene])
+  useEffect(() => {
+    gl.info.autoReset = false
+    return () => {
+      gl.info.autoReset = true
+    }
+  }, [gl])
   useFrame(() => {
+    const calls = gl.info.render.calls
+    gl.info.reset()
     const el = document.querySelector('.museum-view')
     if (!el) return
     const player = usePlayer.getState()
     const ui = useExhibitUi.getState()
-    el.setAttribute('data-draw-calls', String(gl.info.render.calls))
+    el.setAttribute('data-draw-calls', String(calls))
     el.setAttribute('data-player-x', player.x.toFixed(2))
     el.setAttribute('data-player-z', player.z.toFixed(2))
     el.setAttribute('data-focus', ui.focusId ?? '')
     el.setAttribute('data-hover', ui.hoverId ?? '')
     el.setAttribute('data-open', usePassport.getState().openId ?? '')
-  })
+  }, -1000)
   return null
 }
 
 function SceneBody({
   building,
   exhibits,
+  standpoints,
   quality,
   container
 }: {
   building: Building
   exhibits: readonly Exhibit[]
+  standpoints: StandpointsData
   quality: QualityTier
   container: HTMLElement | null
 }) {
+  const walls = useMemo(() => buildCollisionSegments(building), [building])
+  const benches = useMemo(
+    () =>
+      galleryBenchSpots({
+        building,
+        exhibits,
+        stops: [...Object.values(standpoints.exhibits), ...Object.values(standpoints.rooms)]
+      }),
+    [building, exhibits, standpoints]
+  )
+  const obstacles = useMemo(() => benchObstacles(benches), [benches])
   return (
     <>
       <Lighting quality={quality} />
       <Floors building={building} />
       <Walls building={building} />
-      <Atrium building={building} />
+      <Atrium building={building} benches={benches} />
       <Signage building={building} />
       <Exhibits building={building} exhibits={exhibits} />
-      <SpotPool exhibits={exhibits} />
+      <SpotPool exhibits={exhibits} walls={walls} />
       <TravelDriver />
-      <Controls building={building} exhibits={exhibits} container={container} />
+      <Controls building={building} exhibits={exhibits} container={container} obstacles={obstacles} />
+      <PostFx quality={quality} />
       <DrawCallProbe />
       <SceneReady />
     </>
@@ -337,12 +371,13 @@ export function Museum({
           shadows={settings.shadows}
           dpr={settings.dpr}
           camera={{ fov: 62, near: 0.05, far: 260, position: [0, 1.65, 20.7] }}
-          gl={{ antialias: true, powerPreference: 'high-performance' }}
+          gl={{ antialias: !settings.post, stencil: false, powerPreference: 'high-performance' }}
         >
           <Suspense fallback={null}>
             <SceneBody
               building={building}
               exhibits={exhibits}
+              standpoints={standpoints}
               quality={settings.tier}
               container={container}
             />

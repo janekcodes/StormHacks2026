@@ -15,6 +15,7 @@ import { usePlayer } from '../player/usePlayer'
 import { axisNear, CULL_M, faceYaw } from './focus'
 import { footprintFor, modelBaseY } from './footprint'
 import { PROCEDURAL_MODELS } from './procedural'
+import { StaticMerger } from './staticMerge'
 
 /**
  * KTX2 basis transcoder and Draco decoder are fetched on demand only when a
@@ -56,12 +57,35 @@ function castShadows(root: THREE.Object3D): void {
   })
 }
 
-/** Apply shadow flags to a procedural model's meshes once mounted. */
+const OBSERVE_FRAMES = 90
+
+/**
+ * Applies shadow flags to a procedural model, then, after watching it for
+ * about a second and a half, merges its static parts per material so a
+ * 30-mesh stand-in costs a handful of draw calls (decision 0012).
+ */
 function ShadowModel({ children }: { children: ReactNode }) {
   const ref = useRef<THREE.Group>(null)
+  const merger = useRef<StaticMerger | null>(null)
+  const frames = useRef(0)
   useLayoutEffect(() => {
-    if (ref.current) castShadows(ref.current)
+    const root = ref.current
+    if (!root) return
+    castShadows(root)
+    merger.current = new StaticMerger(root)
+    frames.current = 0
+    return () => {
+      merger.current?.dispose()
+      merger.current = null
+    }
   }, [])
+  useFrame(() => {
+    const m = merger.current
+    if (!m || frames.current > OBSERVE_FRAMES) return
+    frames.current += 1
+    m.sample()
+    if (frames.current > OBSERVE_FRAMES) m.merge()
+  })
   return <group ref={ref}>{children}</group>
 }
 

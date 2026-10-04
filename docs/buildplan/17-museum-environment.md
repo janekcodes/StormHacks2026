@@ -44,11 +44,11 @@ packages/scene/src/quality.ts           per-tier feature flags
 
 ## Acceptance criteria
 
-- [ ] No surface in the shell uses a plain flat colour on `high` once textures load.
-- [ ] Draw calls stay under 400 in every e2e view on `high`.
-- [ ] `/visit` still reaches `ready` with no console errors on all three tiers.
-- [ ] Exhibit footprints and collision are unchanged (collision tests pass).
-- [ ] Metals render lit on `low`.
+- [x] No surface in the shell uses a plain flat colour on `high` once textures load.
+- [x] Draw calls stay under 400 in every e2e view on `high`.
+- [x] `/visit` still reaches `ready` with no console errors on all three tiers.
+- [x] Exhibit footprints and collision are unchanged (collision tests pass).
+- [x] Metals render lit on `low`.
 
 ## Out of scope
 

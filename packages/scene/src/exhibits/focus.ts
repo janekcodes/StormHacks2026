@@ -1,5 +1,5 @@
 import type { ExhibitId } from '@museum/content/schema'
-import { blocked, type Seg } from '../player/collision'
+import { segDist, type Seg } from '../player/collision'
 
 export const FOCUS_MAX_M = 4.6
 export const FOCUS_MIN_COS = 0.82
@@ -45,7 +45,10 @@ export function bestFocus(
   return best
 }
 
-/** True when the segment does not pass within wall clearance of a wall. */
+/** About half a wall's thickness: a sightline is a ray, not a visitor's body. */
+export const SIGHT_CLEARANCE = 0.16
+
+/** True when the segment does not pass through (or graze) a wall. */
 export function lineClear(
   x0: number,
   z0: number,
@@ -54,10 +57,12 @@ export function lineClear(
   segs: readonly Seg[]
 ): boolean {
   const dist = Math.hypot(x1 - x0, z1 - z0)
-  const steps = Math.max(1, Math.ceil(dist / 0.4))
+  const steps = Math.max(1, Math.ceil(dist / 0.1))
   for (let i = 1; i <= steps; i++) {
     const t = i / steps
-    if (blocked(x0 + (x1 - x0) * t, z0 + (z1 - z0) * t, segs, [])) return false
+    const x = x0 + (x1 - x0) * t
+    const z = z0 + (z1 - z0) * t
+    for (const s of segs) if (segDist(x, z, s) < SIGHT_CLEARANCE) return false
   }
   return true
 }

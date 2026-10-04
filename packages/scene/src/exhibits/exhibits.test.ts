@@ -72,6 +72,11 @@ describe('line of sight', () => {
   it('allows a hover ray with no wall between', () => {
     expect(lineClear(0, -2, 0, -0.5, wall)).toBe(true)
   })
+
+  it('allows a ray through a doorway that passes near the jamb', () => {
+    const jamb = [[1.4, 0.44, 1.4, 3]] as const
+    expect(lineClear(0, 0, 2.4, 0, jamb)).toBe(true)
+  })
 })
 
 describe('passport', () => {

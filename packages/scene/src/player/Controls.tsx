@@ -8,7 +8,8 @@ import {
   buildCollisionSegments,
   buildExhibitSegments,
   buildObstacles,
-  slideMove
+  slideMove,
+  type Circle
 } from './collision'
 import {
   EYE_HEIGHT,
@@ -63,15 +64,17 @@ interface ControlsProps {
   building: Building
   exhibits: readonly Exhibit[]
   container: HTMLElement | null
+  /** Extra circular obstacles (gallery benches). */
+  obstacles?: readonly Circle[]
 }
 
-export function Controls({ building, exhibits, container }: ControlsProps) {
+export function Controls({ building, exhibits, container, obstacles }: ControlsProps) {
   const { camera } = useThree()
   const segs = useMemo(
     () => [...buildCollisionSegments(building), ...buildExhibitSegments(exhibits)],
     [building, exhibits]
   )
-  const circles = useMemo(() => buildObstacles(building), [building])
+  const circles = useMemo(() => [...buildObstacles(building), ...(obstacles ?? [])], [building, obstacles])
   const bob = useRef(0)
   const zoneTick = useRef(0)
   const drag = useRef<{ x: number; y: number; moved: number } | null>(null)

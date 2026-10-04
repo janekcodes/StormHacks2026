@@ -1,21 +1,16 @@
 import * as THREE from 'three'
 
+/** Shared geometry and the few exhibit-only materials. Surfaces come from `museumMaterials()`. */
 export interface ExhibitMaterials {
-  plinth: THREE.MeshStandardMaterial
-  plinthGrey: THREE.MeshStandardMaterial
-  glass: THREE.MeshStandardMaterial
-  frame: THREE.MeshStandardMaterial
-  platform: THREE.MeshStandardMaterial
-  model: THREE.MeshStandardMaterial
-  brushed: THREE.MeshStandardMaterial
-  ring: THREE.MeshBasicMaterial
   iconCore: THREE.MeshStandardMaterial
   iconExt: THREE.MeshStandardMaterial
   unit: THREE.BoxGeometry
+  /** Unit-height cylinder (radius 0.5) for posts and stanchions. */
+  post: THREE.CylinderGeometry
   ringGeo: THREE.RingGeometry
-    plaqueGeo: THREE.PlaneGeometry
-    hitGeo: THREE.BoxGeometry
-    hit: THREE.MeshBasicMaterial
+  plaqueGeo: THREE.PlaneGeometry
+  hitGeo: THREE.BoxGeometry
+  hit: THREE.MeshBasicMaterial
   icons: THREE.BufferGeometry[]
 }
 
@@ -24,22 +19,6 @@ let cache: ExhibitMaterials | null = null
 export function exhibitMaterials(): ExhibitMaterials {
   if (cache) return cache
   cache = {
-    plinth: new THREE.MeshStandardMaterial({ color: 0xf0ece2, roughness: 0.5 }),
-    plinthGrey: new THREE.MeshStandardMaterial({ color: 0xded8cb, roughness: 0.6 }),
-    glass: new THREE.MeshStandardMaterial({
-      color: 0xd6e8ee,
-      roughness: 0.05,
-      metalness: 0,
-      transparent: true,
-      opacity: 0.22,
-      envMapIntensity: 1.6,
-      depthWrite: false
-    }),
-    frame: new THREE.MeshStandardMaterial({ color: 0x2e2a26, roughness: 0.4, metalness: 0.7 }),
-    platform: new THREE.MeshStandardMaterial({ color: 0xe2dccf, roughness: 0.55 }),
-    model: new THREE.MeshStandardMaterial({ color: 0xc5c0b6, roughness: 0.72 }),
-    brushed: new THREE.MeshStandardMaterial({ color: 0x9a9184, roughness: 0.35, metalness: 0.75 }),
-    ring: new THREE.MeshBasicMaterial({ color: 0x8b939c, side: THREE.DoubleSide }),
     iconCore: new THREE.MeshStandardMaterial({
       color: 0xffffff,
       roughness: 0.3,
@@ -55,6 +34,7 @@ export function exhibitMaterials(): ExhibitMaterials {
       emissiveIntensity: 0.04
     }),
     unit: new THREE.BoxGeometry(1, 1, 1),
+    post: new THREE.CylinderGeometry(0.5, 0.5, 1, 16),
     ringGeo: new THREE.RingGeometry(0.62, 0.68, 48),
     plaqueGeo: new THREE.PlaneGeometry(0.42, 0.25),
     hitGeo: new THREE.BoxGeometry(1, 2.6, 1),

@@ -23,3 +23,8 @@ The audit for plans 17 and 18 found that the 3D shell is entirely flat-colour pr
 - `apps/web/public/textures/` holds about 36 WebP files; the 512 px set alone is under 1 MB.
 - Artifact GLBs are regenerated without self-emission and with PBR kit materials.
 - BLUEPRINT section 9 visual tokens are unchanged; this record adds the 3D material palette alongside them.
+- Exhibit click and hover sightlines (`lineClear` in `packages/scene/src/exhibits/focus.ts`) now use a 0.16 m ray clearance instead of the 0.48 m walking clearance, so an exhibit seen through a doorway (G2 from the foyer) can be opened.
+
+## Known issue (out of scope for plan 17)
+
+Plan 17 verification found that 10 standpoints in `packages/content/generated/standpoints.json` (from the decision 0011 compaction) sit on the far side of a wall from their exhibit: A1, A3, B1, B3, C1, C3, E1, E3, G1 and G3. Walking to them leaves the visitor facing a wall. Regenerating standpoints is navmesh work, which plan 17 lists as out of scope, so this is left for a follow-up plan in `tools/plan`.
