@@ -22,10 +22,15 @@
       "types": "./dist/zones.d.ts",
       "import": "./dist/zones.js"
     },
+    "./tour-schema": {
+      "types": "./dist/tour-schema.d.ts",
+      "import": "./dist/tour-schema.js"
+    },
     "./generated/building.json": "./generated/building.json",
     "./generated/standpoints.json": "./generated/standpoints.json",
     "./generated/navmesh.bin": "./generated/navmesh.bin",
-    "./data/exhibits.json": "./data/exhibits.json"
+    "./data/exhibits.json": "./data/exhibits.json",
+    "./data/tour.json": "./data/tour.json"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

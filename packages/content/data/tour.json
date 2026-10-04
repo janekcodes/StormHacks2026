@@ -1,0 +1,21 @@
+{
+  "id": "demo",
+  "title": "Hello Museum in three minutes",
+  "intro": {
+    "text": "Welcome to Hello Museum. I am your guide. Follow me, and hold the mic button any time to ask me a question."
+  },
+  "stops": [
+    { "exhibitId": "A1", "bridge": { "text": "We begin in the logic wing, with an idea on paper." } },
+    { "exhibitId": "B2", "bridge": { "text": "Now we cross into the hardware wing, where ideas became machines." } },
+    { "exhibitId": "C3", "bridge": { "text": "Next, the software wing, where people learned to write for machines." } },
+    { "exhibitId": "E3", "bridge": { "text": "On to the interaction wing, and a famous demonstration." } },
+    { "exhibitId": "D7", "bridge": { "text": "Now we jump forward in time, to the network wing." } },
+    { "exhibitId": "F10", "bridge": { "text": "Our last stop is the AI wing, in the present day." } }
+  ],
+  "outro": {
+    "text": "That is the end of our tour. Every room has more to explore, so take your time."
+  },
+  "fallback": {
+    "text": "Sorry, I could not answer that one. Let's keep walking."
+  }
+}

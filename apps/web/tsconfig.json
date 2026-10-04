@@ -15,6 +15,7 @@
       "@museum/content/schema": ["../../packages/content/src/schema.ts"],
       "@museum/content/plan-schema": ["../../packages/content/src/plan-schema.ts"],
       "@museum/content/zones": ["../../packages/content/src/zones.ts"],
+      "@museum/content/tour-schema": ["../../packages/content/src/tour-schema.ts"],
       "@museum/content/generated/building.json": [
         "../../packages/content/generated/building.json"
       ],
@@ -22,6 +23,7 @@
         "../../packages/content/generated/standpoints.json"
       ],
       "@museum/content/data/exhibits.json": ["../../packages/content/data/exhibits.json"],
+      "@museum/content/data/tour.json": ["../../packages/content/data/tour.json"],
       "@museum/guide": ["../../packages/guide/src/index.ts"],
       "@museum/guide/client": ["../../packages/guide/src/client.ts"],
       "@museum/portal-a1": ["../../packages/portals/a1/src/index.ts"],
