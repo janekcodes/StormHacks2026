@@ -11,7 +11,9 @@ export type TourLine = z.infer<typeof TourLineSchema>
 
 export const TourStopSchema = z.object({
   exhibitId: ExhibitIdSchema,
-  bridge: TourLineSchema
+  bridge: TourLineSchema,
+  /** Short spoken line played while the exhibit is open; ends by inviting a try. */
+  line: TourLineSchema
 })
 export type TourStop = z.infer<typeof TourStopSchema>
 
@@ -25,7 +27,19 @@ export const TourSchema = z.object({
 })
 export type Tour = z.infer<typeof TourSchema>
 
-const DASHES = /[–—]/
+const DASHES = /[\u2013\u2014]/
+
+/** Maximum words per kind of tour line, so the whole tour fits about two minutes. */
+export const TOUR_WORD_LIMITS = { intro: 14, outro: 14, bridge: 8, line: 12 } as const
+
+function wordsOf(text: string): string[] {
+  return text.trim().split(/\s+/).filter(Boolean)
+}
+
+/** Expected spoken length of a line with no generated audio: 150 words per minute. */
+export function estimateSpeechMs(text: string): number {
+  return Math.max(1500, wordsOf(text).length * 400)
+}
 
 /** Content rules a schema cannot express (BLUEPRINT section 0 rule 6, section 6). */
 export function checkTour(tour: Tour, exhibits: readonly Exhibit[]): string[] {
@@ -39,14 +53,20 @@ export function checkTour(tour: Tour, exhibits: readonly Exhibit[]): string[] {
     seen.add(stop.exhibitId)
   }
 
-  const lines: Array<[string, string]> = [
-    ['intro', tour.intro.text],
-    ...tour.stops.map((stop): [string, string] => [`bridge ${stop.exhibitId}`, stop.bridge.text]),
-    ['outro', tour.outro.text],
-    ['fallback', tour.fallback.text]
+  // Each entry: where, text, word limit (none for the fallback).
+  const lines: Array<[string, string, number | null]> = [
+    ['intro', tour.intro.text, TOUR_WORD_LIMITS.intro],
+    ...tour.stops.flatMap((stop): Array<[string, string, number | null]> => [
+      [`bridge ${stop.exhibitId}`, stop.bridge.text, TOUR_WORD_LIMITS.bridge],
+      [`line ${stop.exhibitId}`, stop.line.text, TOUR_WORD_LIMITS.line]
+    ]),
+    ['outro', tour.outro.text, TOUR_WORD_LIMITS.outro],
+    ['fallback', tour.fallback.text, null]
   ]
-  for (const [where, text] of lines) {
+  for (const [where, text, limit] of lines) {
     if (DASHES.test(text)) errors.push(`${where} contains an em or en dash`)
+    const words = wordsOf(text).length
+    if (limit !== null && words > limit) errors.push(`${where} has ${words} words, limit ${limit}`)
   }
   return errors
 }

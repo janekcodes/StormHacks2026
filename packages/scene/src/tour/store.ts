@@ -1,6 +1,6 @@
 'use client'
 
-import type { Tour, TourLine } from '@museum/content/tour-schema'
+import { estimateSpeechMs, type Tour, type TourLine } from '@museum/content/tour-schema'
 import type { ExhibitId } from '@museum/content/schema'
 import { create } from 'zustand'
 import {
@@ -16,8 +16,9 @@ import {
 
 export function lineFor(tour: Tour, key: TourLineKey): TourLine | undefined {
   if (key === 'intro' || key === 'outro' || key === 'fallback') return tour[key]
-  const index = Number(key.slice('bridge:'.length))
-  return tour.stops[index]?.bridge
+  const [kind, rest] = key.split(':') as ['bridge' | 'stop', string]
+  const stop = tour.stops[Number(rest)]
+  return kind === 'stop' ? stop?.line : stop?.bridge
 }
 
 export function tourContext(tour: Tour): TourContext {
@@ -25,7 +26,8 @@ export function tourContext(tour: Tour): TourContext {
     stops: tour.stops.map((stop) => stop.exhibitId as ExhibitId),
     clipMs: (key) => {
       const line = lineFor(tour, key)
-      return line?.audio && line.durationMs ? line.durationMs : MISSING_CLIP_MS
+      if (!line) return MISSING_CLIP_MS
+      return line.audio && line.durationMs ? line.durationMs : estimateSpeechMs(line.text)
     }
   }
 }

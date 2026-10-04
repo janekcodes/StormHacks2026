@@ -1,19 +1,43 @@
 {
   "id": "demo",
-  "title": "Hello Museum in three minutes",
+  "title": "Hello Museum in two minutes",
   "intro": {
-    "text": "Welcome to Hello Museum. I am your guide. Follow me, and hold the mic button any time to ask me a question."
+    "text": "Welcome! Hold the mic button any time to ask me something."
   },
   "stops": [
-    { "exhibitId": "A1", "bridge": { "text": "We begin in the logic wing, with an idea on paper." } },
-    { "exhibitId": "B2", "bridge": { "text": "Now we cross into the hardware wing, where ideas became machines." } },
-    { "exhibitId": "C3", "bridge": { "text": "Next, the software wing, where people learned to write for machines." } },
-    { "exhibitId": "E3", "bridge": { "text": "On to the interaction wing, and a famous demonstration." } },
-    { "exhibitId": "D7", "bridge": { "text": "Now we jump forward in time, to the network wing." } },
-    { "exhibitId": "F10", "bridge": { "text": "Our last stop is the AI wing, in the present day." } }
+    {
+      "exhibitId": "A1",
+      "bridge": { "text": "First, the logic wing." },
+      "line": { "text": "A tape and rules can compute anything. Try it yourself." }
+    },
+    {
+      "exhibitId": "B2",
+      "bridge": { "text": "Next, the hardware wing." },
+      "line": { "text": "ENIAC's glowing dots stand for vacuum tubes. Swap the burned out ones." }
+    },
+    {
+      "exhibitId": "C3",
+      "bridge": { "text": "Now, the software wing." },
+      "line": { "text": "FORTRAN let engineers write formulas. Pick a statement and punch it." }
+    },
+    {
+      "exhibitId": "E3",
+      "bridge": { "text": "On to the interaction wing." },
+      "line": { "text": "Engelbart showed the mouse and hypertext links. Try clicking a link." }
+    },
+    {
+      "exhibitId": "D7",
+      "bridge": { "text": "Now, the network wing." },
+      "line": { "text": "Flip the article into nineteen ninety-one mode and watch the meaning stay." }
+    },
+    {
+      "exhibitId": "F10",
+      "bridge": { "text": "Last stop, the AI wing." },
+      "line": { "text": "The Transformer lets every token look at every other. Click a word." }
+    }
   ],
   "outro": {
-    "text": "That is the end of our tour. Every room has more to explore, so take your time."
+    "text": "That is our tour. Keep exploring every room at your own pace."
   },
   "fallback": {
     "text": "Sorry, I could not answer that one. Let's keep walking."

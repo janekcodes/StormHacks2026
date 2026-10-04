@@ -10,7 +10,10 @@ export function tourNarrationTargets(tour: Tour): TourNarrationTarget[] {
   const prefix = `tour-${tour.id}`
   return [
     { id: `${prefix}-intro`, line: tour.intro },
-    ...tour.stops.map((stop) => ({ id: `${prefix}-${stop.exhibitId}`, line: stop.bridge })),
+    ...tour.stops.flatMap((stop) => [
+      { id: `${prefix}-${stop.exhibitId}`, line: stop.bridge },
+      { id: `${prefix}-${stop.exhibitId}-stop`, line: stop.line }
+    ]),
     { id: `${prefix}-outro`, line: tour.outro },
     { id: `${prefix}-fallback`, line: tour.fallback }
   ]
