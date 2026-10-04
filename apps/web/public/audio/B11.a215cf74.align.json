@@ -1,0 +1,254 @@
+{
+  "words": [
+    {
+      "text": "AI",
+      "startMs": 0,
+      "endMs": 383
+    },
+    {
+      "text": "accelerators",
+      "startMs": 453,
+      "endMs": 1173
+    },
+    {
+      "text": "are",
+      "startMs": 1207,
+      "endMs": 1300
+    },
+    {
+      "text": "built",
+      "startMs": 1324,
+      "endMs": 1556
+    },
+    {
+      "text": "around",
+      "startMs": 1602,
+      "endMs": 1869
+    },
+    {
+      "text": "matrix",
+      "startMs": 1962,
+      "endMs": 2403
+    },
+    {
+      "text": "multiply.",
+      "startMs": 2473,
+      "endMs": 3239
+    },
+    {
+      "text": "A",
+      "startMs": 3622,
+      "endMs": 3704
+    },
+    {
+      "text": "systolic",
+      "startMs": 3785,
+      "endMs": 4284
+    },
+    {
+      "text": "array",
+      "startMs": 4342,
+      "endMs": 4656
+    },
+    {
+      "text": "pulses",
+      "startMs": 4748,
+      "endMs": 5178
+    },
+    {
+      "text": "data",
+      "startMs": 5236,
+      "endMs": 5619
+    },
+    {
+      "text": "through",
+      "startMs": 5666,
+      "endMs": 5909
+    },
+    {
+      "text": "a",
+      "startMs": 5933,
+      "endMs": 5956
+    },
+    {
+      "text": "grid",
+      "startMs": 6014,
+      "endMs": 6258
+    },
+    {
+      "text": "of",
+      "startMs": 6304,
+      "endMs": 6351
+    },
+    {
+      "text": "multiply",
+      "startMs": 6420,
+      "endMs": 6931
+    },
+    {
+      "text": "and",
+      "startMs": 7001,
+      "endMs": 7082
+    },
+    {
+      "text": "accumulate",
+      "startMs": 7117,
+      "endMs": 7674
+    },
+    {
+      "text": "cells,",
+      "startMs": 7709,
+      "endMs": 8278
+    },
+    {
+      "text": "so",
+      "startMs": 8603,
+      "endMs": 8731
+    },
+    {
+      "text": "every",
+      "startMs": 8824,
+      "endMs": 9102
+    },
+    {
+      "text": "value",
+      "startMs": 9160,
+      "endMs": 9474
+    },
+    {
+      "text": "is",
+      "startMs": 9509,
+      "endMs": 9590
+    },
+    {
+      "text": "reused",
+      "startMs": 9659,
+      "endMs": 10124
+    },
+    {
+      "text": "without",
+      "startMs": 10170,
+      "endMs": 10495
+    },
+    {
+      "text": "another",
+      "startMs": 10542,
+      "endMs": 10786
+    },
+    {
+      "text": "trip",
+      "startMs": 10832,
+      "endMs": 11041
+    },
+    {
+      "text": "to",
+      "startMs": 11099,
+      "endMs": 11169
+    },
+    {
+      "text": "memory.",
+      "startMs": 11238,
+      "endMs": 11807
+    },
+    {
+      "text": "The",
+      "startMs": 12318,
+      "endMs": 12434
+    },
+    {
+      "text": "first",
+      "startMs": 12492,
+      "endMs": 12759
+    },
+    {
+      "text": "TPU",
+      "startMs": 12806,
+      "endMs": 13340
+    },
+    {
+      "text": "went",
+      "startMs": 13456,
+      "endMs": 13677
+    },
+    {
+      "text": "into",
+      "startMs": 13723,
+      "endMs": 13862
+    },
+    {
+      "text": "service",
+      "startMs": 13932,
+      "endMs": 14280
+    },
+    {
+      "text": "in",
+      "startMs": 14315,
+      "endMs": 14385
+    },
+    {
+      "text": "2015,",
+      "startMs": 14454,
+      "endMs": 15755
+    },
+    {
+      "text": "and",
+      "startMs": 15999,
+      "endMs": 16126
+    },
+    {
+      "text": "its",
+      "startMs": 16184,
+      "endMs": 16300
+    },
+    {
+      "text": "matrix",
+      "startMs": 16370,
+      "endMs": 16811
+    },
+    {
+      "text": "unit",
+      "startMs": 16927,
+      "endMs": 17160
+    },
+    {
+      "text": "was",
+      "startMs": 17218,
+      "endMs": 17334
+    },
+    {
+      "text": "two",
+      "startMs": 17380,
+      "endMs": 17519
+    },
+    {
+      "text": "hundred",
+      "startMs": 17577,
+      "endMs": 17810
+    },
+    {
+      "text": "fifty-six",
+      "startMs": 17856,
+      "endMs": 18495
+    },
+    {
+      "text": "by",
+      "startMs": 18576,
+      "endMs": 18715
+    },
+    {
+      "text": "two",
+      "startMs": 18773,
+      "endMs": 18913
+    },
+    {
+      "text": "hundred",
+      "startMs": 18971,
+      "endMs": 19215
+    },
+    {
+      "text": "fifty-six.",
+      "startMs": 19261,
+      "endMs": 20294
+    }
+  ]
+}

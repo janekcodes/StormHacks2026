@@ -1,0 +1,269 @@
+{
+  "words": [
+    {
+      "text": "ENIAC's",
+      "startMs": 0,
+      "endMs": 836
+    },
+    {
+      "text": "first",
+      "startMs": 894,
+      "endMs": 1184
+    },
+    {
+      "text": "programmers,",
+      "startMs": 1242,
+      "endMs": 1916
+    },
+    {
+      "text": "including",
+      "startMs": 1962,
+      "endMs": 2438
+    },
+    {
+      "text": "Kay",
+      "startMs": 2519,
+      "endMs": 2717
+    },
+    {
+      "text": "McNulty,",
+      "startMs": 2752,
+      "endMs": 3529
+    },
+    {
+      "text": "Betty",
+      "startMs": 3738,
+      "endMs": 4040
+    },
+    {
+      "text": "Jennings",
+      "startMs": 4110,
+      "endMs": 4574
+    },
+    {
+      "text": "and",
+      "startMs": 4632,
+      "endMs": 4772
+    },
+    {
+      "text": "Frances",
+      "startMs": 4841,
+      "endMs": 5248
+    },
+    {
+      "text": "Bilas,",
+      "startMs": 5317,
+      "endMs": 5909
+    },
+    {
+      "text": "set",
+      "startMs": 6060,
+      "endMs": 6269
+    },
+    {
+      "text": "up",
+      "startMs": 6327,
+      "endMs": 6420
+    },
+    {
+      "text": "each",
+      "startMs": 6502,
+      "endMs": 6699
+    },
+    {
+      "text": "problem",
+      "startMs": 6757,
+      "endMs": 7094
+    },
+    {
+      "text": "by",
+      "startMs": 7152,
+      "endMs": 7279
+    },
+    {
+      "text": "rewiring",
+      "startMs": 7396,
+      "endMs": 8011
+    },
+    {
+      "text": "cables",
+      "startMs": 8081,
+      "endMs": 8499
+    },
+    {
+      "text": "and",
+      "startMs": 8545,
+      "endMs": 8626
+    },
+    {
+      "text": "switches.",
+      "startMs": 8684,
+      "endMs": 9369
+    },
+    {
+      "text": "Changing",
+      "startMs": 9810,
+      "endMs": 10205
+    },
+    {
+      "text": "the",
+      "startMs": 10252,
+      "endMs": 10321
+    },
+    {
+      "text": "program",
+      "startMs": 10368,
+      "endMs": 10786
+    },
+    {
+      "text": "meant",
+      "startMs": 10832,
+      "endMs": 10995
+    },
+    {
+      "text": "changing",
+      "startMs": 11041,
+      "endMs": 11401
+    },
+    {
+      "text": "the",
+      "startMs": 11447,
+      "endMs": 11517
+    },
+    {
+      "text": "machine",
+      "startMs": 11552,
+      "endMs": 11912
+    },
+    {
+      "text": "itself.",
+      "startMs": 11947,
+      "endMs": 12597
+    },
+    {
+      "text": "The",
+      "startMs": 13038,
+      "endMs": 13142
+    },
+    {
+      "text": "program",
+      "startMs": 13201,
+      "endMs": 13642
+    },
+    {
+      "text": "was",
+      "startMs": 13711,
+      "endMs": 13839
+    },
+    {
+      "text": "the",
+      "startMs": 13886,
+      "endMs": 13955
+    },
+    {
+      "text": "wiring.",
+      "startMs": 14002,
+      "endMs": 14582
+    },
+    {
+      "text": "The",
+      "startMs": 15093,
+      "endMs": 15221
+    },
+    {
+      "text": "idea",
+      "startMs": 15290,
+      "endMs": 15569
+    },
+    {
+      "text": "of",
+      "startMs": 15639,
+      "endMs": 15697
+    },
+    {
+      "text": "a",
+      "startMs": 15743,
+      "endMs": 15766
+    },
+    {
+      "text": "stored",
+      "startMs": 15824,
+      "endMs": 16138
+    },
+    {
+      "text": "program,",
+      "startMs": 16184,
+      "endMs": 16846
+    },
+    {
+      "text": "one",
+      "startMs": 17020,
+      "endMs": 17206
+    },
+    {
+      "text": "that",
+      "startMs": 17229,
+      "endMs": 17345
+    },
+    {
+      "text": "lives",
+      "startMs": 17380,
+      "endMs": 17566
+    },
+    {
+      "text": "in",
+      "startMs": 17612,
+      "endMs": 17670
+    },
+    {
+      "text": "memory",
+      "startMs": 17740,
+      "endMs": 18088
+    },
+    {
+      "text": "instead",
+      "startMs": 18158,
+      "endMs": 18495
+    },
+    {
+      "text": "of",
+      "startMs": 18529,
+      "endMs": 18576
+    },
+    {
+      "text": "in",
+      "startMs": 18634,
+      "endMs": 18704
+    },
+    {
+      "text": "cables,",
+      "startMs": 18785,
+      "endMs": 19389
+    },
+    {
+      "text": "came",
+      "startMs": 19632,
+      "endMs": 19876
+    },
+    {
+      "text": "with",
+      "startMs": 19899,
+      "endMs": 20039
+    },
+    {
+      "text": "EDVAC",
+      "startMs": 20097,
+      "endMs": 20515
+    },
+    {
+      "text": "in",
+      "startMs": 20573,
+      "endMs": 20654
+    },
+    {
+      "text": "1945.",
+      "startMs": 20712,
+      "endMs": 22152
+    }
+  ]
+}

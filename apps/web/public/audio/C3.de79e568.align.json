@@ -1,0 +1,254 @@
+{
+  "words": [
+    {
+      "text": "FORTRAN",
+      "startMs": 0,
+      "endMs": 534
+    },
+    {
+      "text": "let",
+      "startMs": 604,
+      "endMs": 755
+    },
+    {
+      "text": "engineers",
+      "startMs": 824,
+      "endMs": 1312
+    },
+    {
+      "text": "write",
+      "startMs": 1358,
+      "endMs": 1591
+    },
+    {
+      "text": "formulas",
+      "startMs": 1649,
+      "endMs": 2101
+    },
+    {
+      "text": "instead",
+      "startMs": 2159,
+      "endMs": 2461
+    },
+    {
+      "text": "of",
+      "startMs": 2496,
+      "endMs": 2543
+    },
+    {
+      "text": "machine",
+      "startMs": 2601,
+      "endMs": 2961
+    },
+    {
+      "text": "code.",
+      "startMs": 3019,
+      "endMs": 3483
+    },
+    {
+      "text": "IBM",
+      "startMs": 3994,
+      "endMs": 4481
+    },
+    {
+      "text": "shipped",
+      "startMs": 4551,
+      "endMs": 4807
+    },
+    {
+      "text": "its",
+      "startMs": 4841,
+      "endMs": 4946
+    },
+    {
+      "text": "compiler",
+      "startMs": 4992,
+      "endMs": 5457
+    },
+    {
+      "text": "in",
+      "startMs": 5515,
+      "endMs": 5573
+    },
+    {
+      "text": "1957.",
+      "startMs": 5631,
+      "endMs": 6769
+    },
+    {
+      "text": "One",
+      "startMs": 7210,
+      "endMs": 7407
+    },
+    {
+      "text": "line",
+      "startMs": 7442,
+      "endMs": 7639
+    },
+    {
+      "text": "of",
+      "startMs": 7663,
+      "endMs": 7721
+    },
+    {
+      "text": "code",
+      "startMs": 7790,
+      "endMs": 8104
+    },
+    {
+      "text": "was",
+      "startMs": 8139,
+      "endMs": 8255
+    },
+    {
+      "text": "one",
+      "startMs": 8336,
+      "endMs": 8522
+    },
+    {
+      "text": "card,",
+      "startMs": 8580,
+      "endMs": 9079
+    },
+    {
+      "text": "eighty",
+      "startMs": 9230,
+      "endMs": 9497
+    },
+    {
+      "text": "columns",
+      "startMs": 9555,
+      "endMs": 9903
+    },
+    {
+      "text": "wide,",
+      "startMs": 9961,
+      "endMs": 10449
+    },
+    {
+      "text": "and",
+      "startMs": 10565,
+      "endMs": 10693
+    },
+    {
+      "text": "a",
+      "startMs": 10739,
+      "endMs": 10762
+    },
+    {
+      "text": "program",
+      "startMs": 10809,
+      "endMs": 11204
+    },
+    {
+      "text": "was",
+      "startMs": 11238,
+      "endMs": 11343
+    },
+    {
+      "text": "a",
+      "startMs": 11389,
+      "endMs": 11424
+    },
+    {
+      "text": "deck",
+      "startMs": 11471,
+      "endMs": 11645
+    },
+    {
+      "text": "of",
+      "startMs": 11680,
+      "endMs": 11738
+    },
+    {
+      "text": "cards.",
+      "startMs": 11807,
+      "endMs": 12446
+    },
+    {
+      "text": "Its",
+      "startMs": 13142,
+      "endMs": 13328
+    },
+    {
+      "text": "sibling",
+      "startMs": 13363,
+      "endMs": 13735
+    },
+    {
+      "text": "LISP",
+      "startMs": 13816,
+      "endMs": 14153
+    },
+    {
+      "text": "arrived",
+      "startMs": 14269,
+      "endMs": 14675
+    },
+    {
+      "text": "at",
+      "startMs": 14710,
+      "endMs": 14779
+    },
+    {
+      "text": "MIT",
+      "startMs": 14838,
+      "endMs": 15279
+    },
+    {
+      "text": "in",
+      "startMs": 15453,
+      "endMs": 15523
+    },
+    {
+      "text": "1958.",
+      "startMs": 15581,
+      "endMs": 16765
+    },
+    {
+      "text": "Pick",
+      "startMs": 17148,
+      "endMs": 17345
+    },
+    {
+      "text": "a",
+      "startMs": 17392,
+      "endMs": 17415
+    },
+    {
+      "text": "statement",
+      "startMs": 17461,
+      "endMs": 17879
+    },
+    {
+      "text": "in",
+      "startMs": 17926,
+      "endMs": 17984
+    },
+    {
+      "text": "this",
+      "startMs": 18030,
+      "endMs": 18158
+    },
+    {
+      "text": "portal",
+      "startMs": 18216,
+      "endMs": 18576
+    },
+    {
+      "text": "and",
+      "startMs": 18646,
+      "endMs": 18762
+    },
+    {
+      "text": "punch",
+      "startMs": 18831,
+      "endMs": 19098
+    },
+    {
+      "text": "it.",
+      "startMs": 19168,
+      "endMs": 19644
+    }
+  ]
+}

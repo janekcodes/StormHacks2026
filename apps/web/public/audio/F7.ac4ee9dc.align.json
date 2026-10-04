@@ -1,0 +1,244 @@
+{
+  "words": [
+    {
+      "text": "IBM's",
+      "startMs": 0,
+      "endMs": 522
+    },
+    {
+      "text": "chess",
+      "startMs": 569,
+      "endMs": 836
+    },
+    {
+      "text": "machines",
+      "startMs": 882,
+      "endMs": 1277
+    },
+    {
+      "text": "grew",
+      "startMs": 1335,
+      "endMs": 1544
+    },
+    {
+      "text": "from",
+      "startMs": 1602,
+      "endMs": 1741
+    },
+    {
+      "text": "ChipTest",
+      "startMs": 1811,
+      "endMs": 2334
+    },
+    {
+      "text": "in",
+      "startMs": 2392,
+      "endMs": 2461
+    },
+    {
+      "text": "1985",
+      "startMs": 2519,
+      "endMs": 3460
+    },
+    {
+      "text": "to",
+      "startMs": 3738,
+      "endMs": 3855
+    },
+    {
+      "text": "Deep",
+      "startMs": 3924,
+      "endMs": 4133
+    },
+    {
+      "text": "Thought",
+      "startMs": 4191,
+      "endMs": 4470
+    },
+    {
+      "text": "in",
+      "startMs": 4516,
+      "endMs": 4574
+    },
+    {
+      "text": "1988,",
+      "startMs": 4632,
+      "endMs": 5561
+    },
+    {
+      "text": "and",
+      "startMs": 5735,
+      "endMs": 5863
+    },
+    {
+      "text": "then",
+      "startMs": 5898,
+      "endMs": 6049
+    },
+    {
+      "text": "to",
+      "startMs": 6118,
+      "endMs": 6188
+    },
+    {
+      "text": "Deep",
+      "startMs": 6258,
+      "endMs": 6455
+    },
+    {
+      "text": "Blue,",
+      "startMs": 6536,
+      "endMs": 7070
+    },
+    {
+      "text": "which",
+      "startMs": 7152,
+      "endMs": 7349
+    },
+    {
+      "text": "beat",
+      "startMs": 7396,
+      "endMs": 7605
+    },
+    {
+      "text": "Garry",
+      "startMs": 7674,
+      "endMs": 7930
+    },
+    {
+      "text": "Kasparov",
+      "startMs": 7999,
+      "endMs": 8499
+    },
+    {
+      "text": "in",
+      "startMs": 8580,
+      "endMs": 8673
+    },
+    {
+      "text": "1997.",
+      "startMs": 8731,
+      "endMs": 9961
+    },
+    {
+      "text": "Their",
+      "startMs": 10403,
+      "endMs": 10612
+    },
+    {
+      "text": "strength",
+      "startMs": 10658,
+      "endMs": 11006
+    },
+    {
+      "text": "was",
+      "startMs": 11053,
+      "endMs": 11169
+    },
+    {
+      "text": "raw",
+      "startMs": 11250,
+      "endMs": 11447
+    },
+    {
+      "text": "search,",
+      "startMs": 11529,
+      "endMs": 12040
+    },
+    {
+      "text": "looking",
+      "startMs": 12214,
+      "endMs": 12504
+    },
+    {
+      "text": "at",
+      "startMs": 12550,
+      "endMs": 12608
+    },
+    {
+      "text": "millions",
+      "startMs": 12678,
+      "endMs": 13038
+    },
+    {
+      "text": "of",
+      "startMs": 13073,
+      "endMs": 13131
+    },
+    {
+      "text": "positions",
+      "startMs": 13177,
+      "endMs": 13677
+    },
+    {
+      "text": "every",
+      "startMs": 13769,
+      "endMs": 14060
+    },
+    {
+      "text": "second.",
+      "startMs": 14118,
+      "endMs": 14687
+    },
+    {
+      "text": "Drag",
+      "startMs": 15290,
+      "endMs": 15604
+    },
+    {
+      "text": "the",
+      "startMs": 15650,
+      "endMs": 15720
+    },
+    {
+      "text": "depth",
+      "startMs": 15778,
+      "endMs": 16057
+    },
+    {
+      "text": "in",
+      "startMs": 16103,
+      "endMs": 16161
+    },
+    {
+      "text": "this",
+      "startMs": 16196,
+      "endMs": 16324
+    },
+    {
+      "text": "portal",
+      "startMs": 16393,
+      "endMs": 16788
+    },
+    {
+      "text": "and",
+      "startMs": 16904,
+      "endMs": 17055
+    },
+    {
+      "text": "watch",
+      "startMs": 17113,
+      "endMs": 17334
+    },
+    {
+      "text": "the",
+      "startMs": 17392,
+      "endMs": 17461
+    },
+    {
+      "text": "game",
+      "startMs": 17519,
+      "endMs": 17752
+    },
+    {
+      "text": "tree",
+      "startMs": 17786,
+      "endMs": 18007
+    },
+    {
+      "text": "explode.",
+      "startMs": 18042,
+      "endMs": 18994
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "words": [
+    {
+      "text": "React,",
+      "startMs": 0,
+      "endMs": 580
+    },
+    {
+      "text": "Next.js",
+      "startMs": 673,
+      "endMs": 1474
+    },
+    {
+      "text": "and",
+      "startMs": 1556,
+      "endMs": 1672
+    },
+    {
+      "text": "the",
+      "startMs": 1718,
+      "endMs": 1788
+    },
+    {
+      "text": "modern",
+      "startMs": 1823,
+      "endMs": 2090
+    },
+    {
+      "text": "web",
+      "startMs": 2136,
+      "endMs": 2310
+    },
+    {
+      "text": "stack",
+      "startMs": 2357,
+      "endMs": 2659
+    },
+    {
+      "text": "made",
+      "startMs": 2902,
+      "endMs": 3135
+    },
+    {
+      "text": "software",
+      "startMs": 3170,
+      "endMs": 3587
+    },
+    {
+      "text": "composable,",
+      "startMs": 3622,
+      "endMs": 4389
+    },
+    {
+      "text": "and",
+      "startMs": 4481,
+      "endMs": 4621
+    },
+    {
+      "text": "made",
+      "startMs": 4679,
+      "endMs": 4865
+    },
+    {
+      "text": "pages",
+      "startMs": 4911,
+      "endMs": 5283
+    },
+    {
+      "text": "heavier.",
+      "startMs": 5341,
+      "endMs": 5909
+    },
+    {
+      "text": "In",
+      "startMs": 6606,
+      "endMs": 6745
+    },
+    {
+      "text": "this",
+      "startMs": 6792,
+      "endMs": 6920
+    },
+    {
+      "text": "portal,",
+      "startMs": 6989,
+      "endMs": 7419
+    },
+    {
+      "text": "each",
+      "startMs": 7512,
+      "endMs": 7721
+    },
+    {
+      "text": "square",
+      "startMs": 7755,
+      "endMs": 8104
+    },
+    {
+      "text": "stands",
+      "startMs": 8162,
+      "endMs": 8499
+    },
+    {
+      "text": "for",
+      "startMs": 8533,
+      "endMs": 8638
+    },
+    {
+      "text": "one",
+      "startMs": 8707,
+      "endMs": 8893
+    },
+    {
+      "text": "kilobyte.",
+      "startMs": 8951,
+      "endMs": 9694
+    },
+    {
+      "text": "The",
+      "startMs": 10136,
+      "endMs": 10252
+    },
+    {
+      "text": "median",
+      "startMs": 10321,
+      "endMs": 10658
+    },
+    {
+      "text": "mobile",
+      "startMs": 10728,
+      "endMs": 11099
+    },
+    {
+      "text": "page",
+      "startMs": 11146,
+      "endMs": 11471
+    },
+    {
+      "text": "of",
+      "startMs": 11494,
+      "endMs": 11552
+    },
+    {
+      "text": "2025",
+      "startMs": 11610,
+      "endMs": 12550
+    },
+    {
+      "text": "is",
+      "startMs": 12875,
+      "endMs": 13026
+    },
+    {
+      "text": "about",
+      "startMs": 13061,
+      "endMs": 13293
+    },
+    {
+      "text": "two",
+      "startMs": 13340,
+      "endMs": 13514
+    },
+    {
+      "text": "point",
+      "startMs": 13595,
+      "endMs": 13804
+    },
+    {
+      "text": "five",
+      "startMs": 13874,
+      "endMs": 14164
+    },
+    {
+      "text": "six",
+      "startMs": 14211,
+      "endMs": 14454
+    },
+    {
+      "text": "megabytes,",
+      "startMs": 14547,
+      "endMs": 15267
+    },
+    {
+      "text": "with",
+      "startMs": 15441,
+      "endMs": 15615
+    },
+    {
+      "text": "seventy-five",
+      "startMs": 15662,
+      "endMs": 16300
+    },
+    {
+      "text": "requests",
+      "startMs": 16335,
+      "endMs": 16881
+    },
+    {
+      "text": "and",
+      "startMs": 16997,
+      "endMs": 17194
+    },
+    {
+      "text": "over",
+      "startMs": 17252,
+      "endMs": 17415
+    },
+    {
+      "text": "six",
+      "startMs": 17473,
+      "endMs": 17682
+    },
+    {
+      "text": "hundred",
+      "startMs": 17728,
+      "endMs": 17995
+    },
+    {
+      "text": "kilobytes",
+      "startMs": 18042,
+      "endMs": 18588
+    },
+    {
+      "text": "of",
+      "startMs": 18622,
+      "endMs": 18669
+    },
+    {
+      "text": "JavaScript.",
+      "startMs": 18738,
+      "endMs": 19737
+    }
+  ]
+}

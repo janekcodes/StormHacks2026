@@ -1,0 +1,314 @@
+{
+  "words": [
+    {
+      "text": "ENIAC",
+      "startMs": 0,
+      "endMs": 871
+    },
+    {
+      "text": "was",
+      "startMs": 940,
+      "endMs": 1068
+    },
+    {
+      "text": "the",
+      "startMs": 1115,
+      "endMs": 1184
+    },
+    {
+      "text": "first",
+      "startMs": 1254,
+      "endMs": 1533
+    },
+    {
+      "text": "general-purpose",
+      "startMs": 1591,
+      "endMs": 2357
+    },
+    {
+      "text": "electronic",
+      "startMs": 2403,
+      "endMs": 2972
+    },
+    {
+      "text": "digital",
+      "startMs": 3042,
+      "endMs": 3437
+    },
+    {
+      "text": "computer.",
+      "startMs": 3506,
+      "endMs": 4261
+    },
+    {
+      "text": "It",
+      "startMs": 4865,
+      "endMs": 4981
+    },
+    {
+      "text": "was",
+      "startMs": 5016,
+      "endMs": 5120
+    },
+    {
+      "text": "finished",
+      "startMs": 5178,
+      "endMs": 5526
+    },
+    {
+      "text": "in",
+      "startMs": 5573,
+      "endMs": 5631
+    },
+    {
+      "text": "1945",
+      "startMs": 5689,
+      "endMs": 6711
+    },
+    {
+      "text": "and",
+      "startMs": 6920,
+      "endMs": 7082
+    },
+    {
+      "text": "unveiled",
+      "startMs": 7152,
+      "endMs": 7581
+    },
+    {
+      "text": "in",
+      "startMs": 7628,
+      "endMs": 7686
+    },
+    {
+      "text": "February",
+      "startMs": 7767,
+      "endMs": 8150
+    },
+    {
+      "text": "1946.",
+      "startMs": 8208,
+      "endMs": 9381
+    },
+    {
+      "text": "Inside",
+      "startMs": 9822,
+      "endMs": 10356
+    },
+    {
+      "text": "sat",
+      "startMs": 10391,
+      "endMs": 10553
+    },
+    {
+      "text": "about",
+      "startMs": 10600,
+      "endMs": 10809
+    },
+    {
+      "text": "seventeen",
+      "startMs": 10879,
+      "endMs": 11366
+    },
+    {
+      "text": "thousand",
+      "startMs": 11424,
+      "endMs": 11819
+    },
+    {
+      "text": "five",
+      "startMs": 11900,
+      "endMs": 12167
+    },
+    {
+      "text": "hundred",
+      "startMs": 12190,
+      "endMs": 12457
+    },
+    {
+      "text": "vacuum",
+      "startMs": 12504,
+      "endMs": 12887
+    },
+    {
+      "text": "tubes,",
+      "startMs": 12945,
+      "endMs": 13468
+    },
+    {
+      "text": "and",
+      "startMs": 13677,
+      "endMs": 13816
+    },
+    {
+      "text": "the",
+      "startMs": 13851,
+      "endMs": 13920
+    },
+    {
+      "text": "machine",
+      "startMs": 13955,
+      "endMs": 14303
+    },
+    {
+      "text": "weighed",
+      "startMs": 14338,
+      "endMs": 14594
+    },
+    {
+      "text": "about",
+      "startMs": 14617,
+      "endMs": 14825
+    },
+    {
+      "text": "twenty-seven",
+      "startMs": 14849,
+      "endMs": 15441
+    },
+    {
+      "text": "tons.",
+      "startMs": 15499,
+      "endMs": 16068
+    },
+    {
+      "text": "It",
+      "startMs": 16509,
+      "endMs": 16648
+    },
+    {
+      "text": "could",
+      "startMs": 16683,
+      "endMs": 16822
+    },
+    {
+      "text": "run",
+      "startMs": 16857,
+      "endMs": 17031
+    },
+    {
+      "text": "five",
+      "startMs": 17124,
+      "endMs": 17414
+    },
+    {
+      "text": "thousand",
+      "startMs": 17449,
+      "endMs": 17809
+    },
+    {
+      "text": "additions",
+      "startMs": 17856,
+      "endMs": 18308
+    },
+    {
+      "text": "every",
+      "startMs": 18390,
+      "endMs": 18657
+    },
+    {
+      "text": "second.",
+      "startMs": 18715,
+      "endMs": 19272
+    },
+    {
+      "text": "In",
+      "startMs": 19876,
+      "endMs": 20003
+    },
+    {
+      "text": "this",
+      "startMs": 20050,
+      "endMs": 20189
+    },
+    {
+      "text": "portal,",
+      "startMs": 20259,
+      "endMs": 20758
+    },
+    {
+      "text": "every",
+      "startMs": 20932,
+      "endMs": 21234
+    },
+    {
+      "text": "glowing",
+      "startMs": 21292,
+      "endMs": 21617
+    },
+    {
+      "text": "dot",
+      "startMs": 21687,
+      "endMs": 21954
+    },
+    {
+      "text": "stands",
+      "startMs": 22024,
+      "endMs": 22384
+    },
+    {
+      "text": "for",
+      "startMs": 22418,
+      "endMs": 22523
+    },
+    {
+      "text": "fifty",
+      "startMs": 22569,
+      "endMs": 22871
+    },
+    {
+      "text": "tubes.",
+      "startMs": 22929,
+      "endMs": 23510
+    },
+    {
+      "text": "Some",
+      "startMs": 23951,
+      "endMs": 24171
+    },
+    {
+      "text": "have",
+      "startMs": 24195,
+      "endMs": 24311
+    },
+    {
+      "text": "just",
+      "startMs": 24346,
+      "endMs": 24555
+    },
+    {
+      "text": "burned",
+      "startMs": 24613,
+      "endMs": 24891
+    },
+    {
+      "text": "out.",
+      "startMs": 24949,
+      "endMs": 25332
+    },
+    {
+      "text": "Find",
+      "startMs": 25774,
+      "endMs": 26041
+    },
+    {
+      "text": "them",
+      "startMs": 26075,
+      "endMs": 26203
+    },
+    {
+      "text": "and",
+      "startMs": 26238,
+      "endMs": 26308
+    },
+    {
+      "text": "swap",
+      "startMs": 26366,
+      "endMs": 26621
+    },
+    {
+      "text": "them.",
+      "startMs": 26691,
+      "endMs": 27213
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+{
+  "words": [
+    {
+      "text": "In",
+      "startMs": 0,
+      "endMs": 163
+    },
+    {
+      "text": "1936,",
+      "startMs": 209,
+      "endMs": 1312
+    },
+    {
+      "text": "Alan",
+      "startMs": 1428,
+      "endMs": 1707
+    },
+    {
+      "text": "Turing",
+      "startMs": 1776,
+      "endMs": 2125
+    },
+    {
+      "text": "described",
+      "startMs": 2183,
+      "endMs": 2635
+    },
+    {
+      "text": "a",
+      "startMs": 2670,
+      "endMs": 2694
+    },
+    {
+      "text": "machine",
+      "startMs": 2740,
+      "endMs": 3123
+    },
+    {
+      "text": "with",
+      "startMs": 3158,
+      "endMs": 3286
+    },
+    {
+      "text": "a",
+      "startMs": 3320,
+      "endMs": 3355
+    },
+    {
+      "text": "tape,",
+      "startMs": 3402,
+      "endMs": 3820
+    },
+    {
+      "text": "a",
+      "startMs": 3936,
+      "endMs": 4005
+    },
+    {
+      "text": "read",
+      "startMs": 4122,
+      "endMs": 4342
+    },
+    {
+      "text": "and",
+      "startMs": 4389,
+      "endMs": 4458
+    },
+    {
+      "text": "write",
+      "startMs": 4505,
+      "endMs": 4772
+    },
+    {
+      "text": "head,",
+      "startMs": 4818,
+      "endMs": 5213
+    },
+    {
+      "text": "and",
+      "startMs": 5457,
+      "endMs": 5608
+    },
+    {
+      "text": "a",
+      "startMs": 5666,
+      "endMs": 5689
+    },
+    {
+      "text": "small",
+      "startMs": 5735,
+      "endMs": 6002
+    },
+    {
+      "text": "table",
+      "startMs": 6060,
+      "endMs": 6351
+    },
+    {
+      "text": "of",
+      "startMs": 6374,
+      "endMs": 6420
+    },
+    {
+      "text": "rules.",
+      "startMs": 6478,
+      "endMs": 7059
+    },
+    {
+      "text": "He",
+      "startMs": 7442,
+      "endMs": 7558
+    },
+    {
+      "text": "showed",
+      "startMs": 7628,
+      "endMs": 7906
+    },
+    {
+      "text": "that",
+      "startMs": 7930,
+      "endMs": 8034
+    },
+    {
+      "text": "it",
+      "startMs": 8069,
+      "endMs": 8115
+    },
+    {
+      "text": "could",
+      "startMs": 8150,
+      "endMs": 8290
+    },
+    {
+      "text": "carry",
+      "startMs": 8336,
+      "endMs": 8626
+    },
+    {
+      "text": "out",
+      "startMs": 8684,
+      "endMs": 8824
+    },
+    {
+      "text": "any",
+      "startMs": 8893,
+      "endMs": 9102
+    },
+    {
+      "text": "computation",
+      "startMs": 9172,
+      "endMs": 9892
+    },
+    {
+      "text": "that",
+      "startMs": 10008,
+      "endMs": 10182
+    },
+    {
+      "text": "a",
+      "startMs": 10217,
+      "endMs": 10240
+    },
+    {
+      "text": "person",
+      "startMs": 10298,
+      "endMs": 10623
+    },
+    {
+      "text": "could",
+      "startMs": 10670,
+      "endMs": 10809
+    },
+    {
+      "text": "follow",
+      "startMs": 10855,
+      "endMs": 11146
+    },
+    {
+      "text": "step",
+      "startMs": 11238,
+      "endMs": 11482
+    },
+    {
+      "text": "by",
+      "startMs": 11540,
+      "endMs": 11668
+    },
+    {
+      "text": "step.",
+      "startMs": 11749,
+      "endMs": 12272
+    },
+    {
+      "text": "This",
+      "startMs": 12713,
+      "endMs": 12922
+    },
+    {
+      "text": "exhibit",
+      "startMs": 12992,
+      "endMs": 13386
+    },
+    {
+      "text": "adds",
+      "startMs": 13444,
+      "endMs": 13723
+    },
+    {
+      "text": "one",
+      "startMs": 13793,
+      "endMs": 14025
+    },
+    {
+      "text": "to",
+      "startMs": 14060,
+      "endMs": 14129
+    },
+    {
+      "text": "a",
+      "startMs": 14211,
+      "endMs": 14234
+    },
+    {
+      "text": "binary",
+      "startMs": 14292,
+      "endMs": 14675
+    },
+    {
+      "text": "number.",
+      "startMs": 14733,
+      "endMs": 15244
+    },
+    {
+      "text": "Step",
+      "startMs": 15848,
+      "endMs": 16149
+    },
+    {
+      "text": "it,",
+      "startMs": 16219,
+      "endMs": 16486
+    },
+    {
+      "text": "and",
+      "startMs": 16602,
+      "endMs": 16742
+    },
+    {
+      "text": "watch",
+      "startMs": 16811,
+      "endMs": 17043
+    },
+    {
+      "text": "the",
+      "startMs": 17101,
+      "endMs": 17171
+    },
+    {
+      "text": "carry",
+      "startMs": 17218,
+      "endMs": 17496
+    },
+    {
+      "text": "ripple",
+      "startMs": 17566,
+      "endMs": 17845
+    },
+    {
+      "text": "to",
+      "startMs": 17879,
+      "endMs": 17937
+    },
+    {
+      "text": "the",
+      "startMs": 17995,
+      "endMs": 18065
+    },
+    {
+      "text": "left.",
+      "startMs": 18112,
+      "endMs": 18808
+    }
+  ]
+}

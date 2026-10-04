@@ -1,0 +1,254 @@
+{
+  "words": [
+    {
+      "text": "Bell",
+      "startMs": 0,
+      "endMs": 290
+    },
+    {
+      "text": "Labs",
+      "startMs": 348,
+      "endMs": 662
+    },
+    {
+      "text": "built",
+      "startMs": 720,
+      "endMs": 929
+    },
+    {
+      "text": "the",
+      "startMs": 964,
+      "endMs": 1033
+    },
+    {
+      "text": "first",
+      "startMs": 1080,
+      "endMs": 1324
+    },
+    {
+      "text": "transistor",
+      "startMs": 1358,
+      "endMs": 1950
+    },
+    {
+      "text": "in",
+      "startMs": 2009,
+      "endMs": 2067
+    },
+    {
+      "text": "1947,",
+      "startMs": 2125,
+      "endMs": 3262
+    },
+    {
+      "text": "from",
+      "startMs": 3355,
+      "endMs": 3518
+    },
+    {
+      "text": "germanium.",
+      "startMs": 3576,
+      "endMs": 4249
+    },
+    {
+      "text": "In",
+      "startMs": 4690,
+      "endMs": 4830
+    },
+    {
+      "text": "1954,",
+      "startMs": 4876,
+      "endMs": 5933
+    },
+    {
+      "text": "Morris",
+      "startMs": 6084,
+      "endMs": 6397
+    },
+    {
+      "text": "Tanenbaum",
+      "startMs": 6467,
+      "endMs": 6978
+    },
+    {
+      "text": "made",
+      "startMs": 7036,
+      "endMs": 7221
+    },
+    {
+      "text": "the",
+      "startMs": 7245,
+      "endMs": 7314
+    },
+    {
+      "text": "first",
+      "startMs": 7361,
+      "endMs": 7651
+    },
+    {
+      "text": "silicon",
+      "startMs": 7709,
+      "endMs": 8092
+    },
+    {
+      "text": "one",
+      "startMs": 8173,
+      "endMs": 8336
+    },
+    {
+      "text": "there.",
+      "startMs": 8371,
+      "endMs": 8777
+    },
+    {
+      "text": "The",
+      "startMs": 9218,
+      "endMs": 9323
+    },
+    {
+      "text": "work",
+      "startMs": 9381,
+      "endMs": 9613
+    },
+    {
+      "text": "won",
+      "startMs": 9671,
+      "endMs": 9822
+    },
+    {
+      "text": "the",
+      "startMs": 9868,
+      "endMs": 9938
+    },
+    {
+      "text": "Nobel",
+      "startMs": 9996,
+      "endMs": 10321
+    },
+    {
+      "text": "Prize",
+      "startMs": 10391,
+      "endMs": 10786
+    },
+    {
+      "text": "in",
+      "startMs": 10832,
+      "endMs": 10902
+    },
+    {
+      "text": "1956.",
+      "startMs": 10948,
+      "endMs": 12167
+    },
+    {
+      "text": "A",
+      "startMs": 12678,
+      "endMs": 12759
+    },
+    {
+      "text": "transistor",
+      "startMs": 12829,
+      "endMs": 13410
+    },
+    {
+      "text": "is",
+      "startMs": 13456,
+      "endMs": 13537
+    },
+    {
+      "text": "a",
+      "startMs": 13584,
+      "endMs": 13618
+    },
+    {
+      "text": "switch",
+      "startMs": 13677,
+      "endMs": 13978
+    },
+    {
+      "text": "with",
+      "startMs": 14025,
+      "endMs": 14153
+    },
+    {
+      "text": "no",
+      "startMs": 14211,
+      "endMs": 14327
+    },
+    {
+      "text": "filament",
+      "startMs": 14408,
+      "endMs": 14779
+    },
+    {
+      "text": "to",
+      "startMs": 14826,
+      "endMs": 14884
+    },
+    {
+      "text": "burn",
+      "startMs": 14942,
+      "endMs": 15174
+    },
+    {
+      "text": "out.",
+      "startMs": 15221,
+      "endMs": 15592
+    },
+    {
+      "text": "Flip",
+      "startMs": 16033,
+      "endMs": 16312
+    },
+    {
+      "text": "the",
+      "startMs": 16370,
+      "endMs": 16440
+    },
+    {
+      "text": "base",
+      "startMs": 16486,
+      "endMs": 16742
+    },
+    {
+      "text": "in",
+      "startMs": 16776,
+      "endMs": 16834
+    },
+    {
+      "text": "this",
+      "startMs": 16869,
+      "endMs": 16997
+    },
+    {
+      "text": "portal",
+      "startMs": 17055,
+      "endMs": 17415
+    },
+    {
+      "text": "and",
+      "startMs": 17485,
+      "endMs": 17601
+    },
+    {
+      "text": "watch",
+      "startMs": 17659,
+      "endMs": 17868
+    },
+    {
+      "text": "the",
+      "startMs": 17926,
+      "endMs": 17995
+    },
+    {
+      "text": "current",
+      "startMs": 18042,
+      "endMs": 18355
+    },
+    {
+      "text": "flow.",
+      "startMs": 18413,
+      "endMs": 19133
+    }
+  ]
+}
