@@ -45,7 +45,7 @@ jobs:
         run: pnpm --filter @museum/guide eval
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GUIDE_MODEL: ${{ secrets.GUIDE_MODEL }}
+          GUIDE_MODEL: ${{ secrets.GUIDE_MODEL || 'gemini-3.8-flash' }}
 
       - name: Commit eval report
         uses: stefanzweifel/git-auto-commit-action@v5
