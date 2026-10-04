@@ -210,8 +210,8 @@ describe('reduceTour', () => {
     }
   })
 
-  it('PLAY_MS is 4 s and the narration timeout 45 s', () => {
-    expect(PLAY_MS).toBe(4000)
+  it('PLAY_MS is 3 s and the narration timeout 45 s', () => {
+    expect(PLAY_MS).toBe(3000)
     expect(NARRATION_TIMEOUT_MS).toBe(45_000)
   })
 

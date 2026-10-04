@@ -56,7 +56,7 @@ export type TourEffect =
   | { type: 'clearTimers' }
 
 /** Play time at each stop after the exhibit narration, before Auto advances. */
-export const PLAY_MS = 4000
+export const PLAY_MS = 3000
 /** Backstop if the exhibit narration never reports its end (longest narration is 27 s). */
 export const NARRATION_TIMEOUT_MS = 45_000
 export const CLIP_GRACE_MS = 3000
