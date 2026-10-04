@@ -120,9 +120,18 @@ export async function askGuide(
   opts: StreamOptions
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   let history: GuideMessage[] = [{ role: 'user', text }]
+  let streamError: string | null = null
+  const inner: StreamOptions = {
+    ...opts,
+    onStreamError: (message) => {
+      streamError ??= message
+      opts.onStreamError?.(message)
+    }
+  }
   try {
     for (let turn = 0; turn < MAX_TURNS; turn++) {
-      history = await streamGuideTurn(history, opts)
+      history = await streamGuideTurn(history, inner)
+      if (streamError) return { ok: false, error: streamError }
       const last = history[history.length - 1]
       if (last?.role === 'assistant' && !(last.toolCalls && last.toolCalls.length > 0)) break
     }

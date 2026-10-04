@@ -26,6 +26,6 @@ describe('TOUR_MODE_RULES', () => {
   it('asks for two spoken sentences and forbids moving the visitor', () => {
     expect(TOUR_MODE_RULES).toContain('two')
     expect(TOUR_MODE_RULES).toMatch(/do not (walk|move)/i)
-    expect(TOUR_MODE_RULES).not.toMatch(/[–—]/)
+    expect(TOUR_MODE_RULES).not.toMatch(/[\u2013\u2014]/)
   })
 })
