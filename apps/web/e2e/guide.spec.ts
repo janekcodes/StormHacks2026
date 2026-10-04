@@ -8,6 +8,7 @@ const NDJSON = (events: Array<Record<string, unknown>>): string =>
 
 test.describe('AI guide', () => {
   test('3D panel streams a mocked answer and shows a walkTo chip', async ({ page }) => {
+    test.setTimeout(120_000)
     await page.route('**/api/guide', (route) =>
       route.fulfill({
         contentType: 'application/x-ndjson',
@@ -55,6 +56,7 @@ test.describe('AI guide', () => {
   })
 
   test('rate limit shows a friendly message, not an error page', async ({ page }) => {
+    test.setTimeout(120_000)
     await page.route('**/api/guide', (route) =>
       route.fulfill({
         status: 429,

@@ -144,7 +144,13 @@ function movementKeyDown(keys: Record<string, boolean>): boolean {
 export function TravelDriver() {
   // Priority -1: update pose before Controls copies it onto the camera.
   useFrame((_, dt) => {
-    const clamped = Math.min(0.05, dt)
+    // Cap each frame's simulated advance so a backgrounded tab (huge dt) does
+    // not teleport the player across the map, but keep the cap wide enough
+    // that auto-travel stays real-time at low frame rates. Software WebGL in
+    // CI runs far below 20 FPS, so a 50ms cap would slow walks below real-time
+    // and time out the e2e travel checks. A 500ms cap keeps travel real-time
+    // down to 2 FPS while still bounding background-tab jumps to 4m.
+    const clamped = Math.min(0.5, dt)
     const player = usePlayer.getState()
 
     if (!travel) return
