@@ -1,7 +1,7 @@
 # Guide v1 eval report
 
 Model: gemini-3.8-flash
-Pass rate: 39/40 (97.5%)
+Pass rate: 42/42 (100.0%)
 Tool calls with valid IDs: 100%
 
 ## Results
@@ -35,6 +35,8 @@ PASS | What is AlphaGo?
 PASS | Which exhibit covers ChatGPT?
 PASS | What was Sketchpad?
 PASS | What was Engelbart's demo?
+PASS | What did Engelbart show in the Mother of All Demos?
+PASS | Who built the first computer mouse?
 PASS | Show me the transistor
 PASS | Take me to the ENIAC
 PASS | Open the Turing machine exhibit
@@ -43,6 +45,5 @@ PASS | Highlight the AI exhibits for me
 PASS | Give me a tour of AI and hardware
 PASS | Is the Turing test on display?
 PASS | Is the Manchester Baby on display?
-FAIL | Can I open the smartphone exhibit?
-      unexpected tool call
+PASS | Can I open the smartphone exhibit?
 PASS | What's the weather like today?
