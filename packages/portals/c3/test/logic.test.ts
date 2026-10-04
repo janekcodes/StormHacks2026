@@ -1,7 +1,7 @@
 import file from '@museum/content/data/exhibits.json'
 import { describe, expect, it } from 'vitest'
 import { meta } from '../src/index'
-import { cardLine, columnRows, rowsFor } from '../src/logic'
+import { cardLine, cleanLabel, cleanStatement, columnRows, rowsFor } from '../src/logic'
 
 /**
  * Column-by-column row sets for `ISUM = ISUM + I`.
@@ -54,5 +54,27 @@ describe('C3 Hollerith card', () => {
     const row = file.exhibits.find((item) => item.id === 'C3')
     expect(meta.title).toBe(row?.title)
     expect(meta.year).toBe(row?.year)
+  })
+})
+
+describe('C3 typed input', () => {
+  it('uppercases and keeps only characters the card encodes', () => {
+    expect(cleanStatement('x = y + 1')).toEqual({ text: 'X = Y + 1', dropped: false })
+    expect(cleanStatement('A = (B*2)/C.')).toEqual({ text: 'A = B2C', dropped: true })
+  })
+
+  it('caps the statement at the 66 columns of the statement field', () => {
+    expect(cleanStatement('A'.repeat(80)).text).toHaveLength(66)
+  })
+
+  it('keeps labels to at most five digits', () => {
+    expect(cleanLabel('10')).toEqual({ text: '10', dropped: false })
+    expect(cleanLabel('1a2345678')).toEqual({ text: '12345', dropped: true })
+  })
+
+  it('every kept character punches at least one hole except the space', () => {
+    for (const ch of cleanStatement('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=+,').text) {
+      expect(rowsFor(ch).length, ch).toBeGreaterThan(0)
+    }
   })
 })
