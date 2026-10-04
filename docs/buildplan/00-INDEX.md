@@ -30,7 +30,7 @@ The prototype files use a canvas-specific format (`<x-dc>` markup, `class Compon
 |---|---|---|---|---|---|
 | 01 | [Monorepo scaffold](01-monorepo-scaffold.md) | none | §10 | ☑ | abf1747 |
 | 02 | [Content package](02-content-package.md) | 01 | §6, §7, §10 | ☑ | 48ed970 |
-| 03 | [Plan geometry generator](03-plan-geometry.md) | 02 | §5, §10 | ☐ | |
+| 03 | [Plan geometry generator](03-plan-geometry.md) | 02 | §5, §10 | ☑ | e7830aa |
 | 04 | [2D floor plan and exhibit pages](04-floor-plan-2d.md) | 03 | §5, §10 | ☐ | |
 | 05 | [3D scene shell](05-scene-shell.md) | 03 | §5, §9, §10 | ☐ | |
 | 06 | [Navmesh and travel](06-navmesh-travel.md) | 05 | §10, §11 | ☐ | |
