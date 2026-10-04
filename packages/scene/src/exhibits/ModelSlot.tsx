@@ -31,7 +31,9 @@ function makeLoader(gl: THREE.WebGLRenderer): GLTFLoader {
   const draco = new DRACOLoader()
   draco.setDecoderPath(DRACO_DECODER)
   loader.setDRACOLoader(draco)
-  loader.setMeshoptDecoder(MeshoptDecoder)
+  // three-stdlib exports MeshoptDecoder as a factory; three's GLTFLoader
+  // expects the instantiated decoder (with `.supported` / `.ready`).
+  loader.setMeshoptDecoder(MeshoptDecoder())
   if (!sharedKtx2) {
     sharedKtx2 = new KTX2Loader()
     sharedKtx2.setTranscoderPath(BASIS_TRANSCODER)
