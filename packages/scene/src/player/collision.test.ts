@@ -3,8 +3,10 @@ import { describe, expect, it } from 'vitest'
 import {
   blocked,
   buildCollisionSegments,
+  buildExhibitSegments,
   buildObstacles,
-  slideMove
+  slideMove,
+  type ExhibitCollision
 } from './collision'
 
 describe('collision', () => {
@@ -25,5 +27,29 @@ describe('collision', () => {
     const next = slideMove(-48.4, 0, -1, 0.5, segs, circles)
     expect(next.x).toBe(-48.4)
     expect(next.z).toBe(0.5)
+  })
+})
+
+describe('exhibit collision', () => {
+  const exhibit: ExhibitCollision = {
+    tier: 'built',
+    footprint: { w: 2, d: 2, h: 1, floor: false },
+    position: { x: 0, z: 0, face: [0, 1] }
+  }
+  const segs = buildExhibitSegments([exhibit])
+
+  it('blocks points within clearance of an exhibit edge', () => {
+    // Front edge faces +Z at z = 1; 0.7 is 0.3 m from it.
+    expect(blocked(0, 0.7, segs, [])).toBe(true)
+  })
+
+  it('allows standing away from the exhibit', () => {
+    expect(blocked(0, 3, segs, [])).toBe(false)
+  })
+
+  it('refuses to step into the exhibit footprint', () => {
+    // Start just outside clearance (z = 1.6) and step 0.5 m toward the centre.
+    const next = slideMove(0, 1.6, 0, -0.5, segs, [])
+    expect(next.z).toBe(1.6)
   })
 })

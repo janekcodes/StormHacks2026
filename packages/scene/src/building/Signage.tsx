@@ -50,11 +50,18 @@ export function Signage({ building }: { building: Building }) {
       g.fillRect(0, h - 18, w, 18)
       g.fillStyle = '#1d2024'
       g.textAlign = 'center'
-      g.font = '700 150px "Chakra Petch", sans-serif'
-      g.fillText('HELLO MUSEUM', w / 2, 190)
+      g.font = '700 140px "Chakra Petch", sans-serif'
+      g.fillText('Hello Museum', w / 2, 175)
       g.fillStyle = '#5a6068'
-      g.font = '500 54px "IBM Plex Mono", monospace'
-      g.fillText('COMPUTER SCIENCE WING  ·  ATRIUM AND ALL WINGS AHEAD', w / 2, 300)
+      g.font = '500 42px "IBM Plex Mono", monospace'
+      wrapText(
+        g,
+        'A virtual museum showcasing major milestones in the history of Computer Science',
+        w / 2,
+        285,
+        1920,
+        56
+      )
     })
     const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.7 })
     return { tex, mat }
