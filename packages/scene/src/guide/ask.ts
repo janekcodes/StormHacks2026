@@ -139,6 +139,11 @@ export async function askGuide(
   text: string,
   opts: StreamOptions
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  // Early return if caller signal is already aborted
+  if (opts.signal?.aborted) {
+    return { ok: false, error: 'The question was cancelled.' }
+  }
+
   let history: GuideMessage[] = [{ role: 'user', text }]
   let streamError: string | null = null
 

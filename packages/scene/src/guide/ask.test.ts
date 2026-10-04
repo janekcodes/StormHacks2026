@@ -12,6 +12,10 @@ function ndjson(events: unknown[]): Response {
   return new Response(body, { headers: { 'Content-Type': 'application/x-ndjson' } })
 }
 
+function ctx() {
+  return { room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }
+}
+
 describe('askGuide', () => {
   it('streams text to onText and sends tour mode', async () => {
     const fetchImpl = vi.fn(async () =>
@@ -37,7 +41,7 @@ describe('askGuide', () => {
     const out = await askGuide('Hi', {
       exhibits: [],
       mode: 'tour',
-      context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+      context: ctx,
       onText: () => undefined,
       fetchImpl
     })
@@ -52,7 +56,7 @@ describe('askGuide', () => {
     const out = await askGuide('Take me to B3', {
       exhibits: [],
       mode: 'tour',
-      context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+      context: ctx,
       onText: () => undefined,
       fetchImpl
     })
@@ -73,158 +77,156 @@ describe('askGuide', () => {
     const out = await askGuide('Hi', {
       exhibits: [],
       mode: 'tour',
-      context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
+      context: ctx,
       onText: () => undefined,
       fetchImpl
     })
     expect(out).toEqual({ ok: false, error: 'Model failed.' })
   })
 
-  it('times out a stalled stream with timeoutMs: 50', async () => {
+  it('times out a stream that stalls after its first chunk and cancels the body', async () => {
     vi.useFakeTimers()
-    try {
-      const fetchImpl = vi.fn(async () => {
-        // Return a response with a ReadableStream that never ends
-        return new Response(
-          new ReadableStream(() => {
-            // Never close or error; just hang
-          }),
-          { headers: { 'Content-Type': 'application/x-ndjson' } }
-        )
-      })
-
-      const promise = askGuide('Hi', {
-        exhibits: [],
-        mode: 'tour',
-        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
-        onText: () => undefined,
-        timeoutMs: 50,
-        fetchImpl
-      })
-
-      // Advance past timeout to trigger abort
-      vi.advanceTimersByTime(100)
-      const out = await promise
-      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
-    } finally {
-      vi.useRealTimers()
-    }
+    const cancel = vi.fn()
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new TextEncoder().encode(JSON.stringify({ type: 'text', text: 'Hello ' }) + '\n'))
+        // never closes: the stream stalls after one chunk
+      },
+      cancel
+    })
+    const chunks: string[] = []
+    const fetchImpl = vi.fn(async () => new Response(body, { headers: { 'Content-Type': 'application/x-ndjson' } }))
+    const pending = askGuide('Hi there', { exhibits: [], mode: 'tour', timeoutMs: 50, context: ctx, onText: (t) => chunks.push(t), fetchImpl })
+    // let fetch resolve and the first chunk be read before the timeout fires
+    // flush microtasks to let the chunk be processed
+    await Promise.resolve()
+    await Promise.resolve()
+    await Promise.resolve()
+    await vi.advanceTimersByTimeAsync(60)
+    await expect(pending).resolves.toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    expect(cancel).toHaveBeenCalled()
+    vi.useRealTimers()
   })
 
   it('times out fetch rejecting on abort with Node message "This operation was aborted"', async () => {
     vi.useFakeTimers()
-    try {
-      const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
-        const signal = init.signal
-        return new Promise<Response>((_, reject) => {
-          signal?.addEventListener('abort', () => {
-            // Node's error message (different from Firefox)
-            reject(new DOMException('This operation was aborted', 'AbortError'))
-          })
-          // Never resolve or reject naturally
+    const fetchImpl = vi.fn(async (url: string, init: RequestInit) => {
+      const signal = init.signal
+      return new Promise<Response>((_, reject) => {
+        signal?.addEventListener('abort', () => {
+          // Node's error message (different from Firefox)
+          reject(new DOMException('This operation was aborted', 'AbortError'))
         })
+        // Never resolve or reject naturally
       })
-      const promise = askGuide('Hi', {
-        exhibits: [],
-        mode: 'tour',
-        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
-        onText: () => undefined,
-        timeoutMs: 50,
-        fetchImpl
-      })
-      // Advance timers to trigger the timeout
-      vi.advanceTimersByTime(100)
-      const out = await promise
-      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
-    } finally {
-      vi.useRealTimers()
-    }
+    })
+    const promise = askGuide('Hi', {
+      exhibits: [],
+      mode: 'tour',
+      context: ctx,
+      onText: () => undefined,
+      timeoutMs: 50,
+      fetchImpl
+    })
+    // Advance timers to trigger the timeout
+    vi.advanceTimersByTime(100)
+    const out = await promise
+    expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    vi.useRealTimers()
   })
 
   it('returns "The question was cancelled." when caller signal aborts', async () => {
     vi.useFakeTimers()
-    try {
-      const callerController = new AbortController()
-      const fetchImpl = vi.fn(async () => {
-        // Hang forever waiting for abort
-        return new Promise<Response>((_, reject) => {
-          callerController.signal.addEventListener('abort', () => {
-            reject(new DOMException('Aborted by caller', 'AbortError'))
-          })
+    const callerController = new AbortController()
+    const removeEventListenerSpy = vi.spyOn(callerController.signal, 'removeEventListener')
+    const fetchImpl = vi.fn(async () => {
+      // Hang forever waiting for abort
+      return new Promise<Response>((_, reject) => {
+        callerController.signal.addEventListener('abort', () => {
+          reject(new DOMException('Aborted by caller', 'AbortError'))
         })
       })
-      const promise = askGuide('Hi', {
-        exhibits: [],
-        mode: 'tour',
-        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
-        onText: () => undefined,
-        signal: callerController.signal,
-        fetchImpl
-      })
-      // Abort from caller (not timeout)
-      vi.advanceTimersByTime(10)
-      callerController.abort()
-      vi.advanceTimersByTime(10)
-      const out = await promise
-      expect(out).toEqual({ ok: false, error: 'The question was cancelled.' })
-    } finally {
-      vi.useRealTimers()
-    }
+    })
+    const promise = askGuide('Hi', {
+      exhibits: [],
+      mode: 'tour',
+      context: ctx,
+      onText: () => undefined,
+      signal: callerController.signal,
+      fetchImpl
+    })
+    // Abort from caller (not timeout)
+    vi.advanceTimersByTime(10)
+    callerController.abort()
+    vi.advanceTimersByTime(10)
+    const out = await promise
+    expect(out).toEqual({ ok: false, error: 'The question was cancelled.' })
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('abort', expect.any(Function))
+    vi.useRealTimers()
   })
 
   it('times out during tool execution, preventing a second fetch', async () => {
     vi.useFakeTimers()
-    try {
-      const fetchImpl = vi
-        .fn()
-        .mockResolvedValueOnce(
-          ndjson([{ type: 'tool', id: 'c1', name: 'walkTo', args: { exhibitId: 'B3' } }, { type: 'done' }])
-        )
-        // This second call should never happen if timeout fires during tool execution
-        .mockResolvedValueOnce(ndjson([{ type: 'text', text: 'Done.' }, { type: 'done' }]))
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValueOnce(
+        ndjson([{ type: 'tool', id: 'c1', name: 'getVisitorContext', args: {} }, { type: 'done' }])
+      )
+      .mockResolvedValueOnce(ndjson([{ type: 'text', text: 'Done.' }, { type: 'done' }]))
 
-      const promise = askGuide('Take me to B3', {
-        exhibits: [],
-        mode: 'tour',
-        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
-        onText: () => undefined,
-        timeoutMs: 100,
-        fetchImpl
-      })
+    const pending = askGuide('Tell me context', {
+      exhibits: [],
+      mode: 'tour',
+      context: ctx,
+      onText: () => undefined,
+      onTool: () => {
+        // Fire the timeout during tool handling
+        vi.advanceTimersByTime(60)
+      },
+      timeoutMs: 50,
+      fetchImpl
+    })
 
-      // Advance past the timeout before tool execution completes
-      vi.advanceTimersByTime(150)
-      const out = await promise
+    await expect(pending).resolves.toEqual({ ok: false, error: 'The guide took too long to answer.' })
+    // Should have only called fetch once (the timeout prevented the second turn)
+    expect(fetchImpl).toHaveBeenCalledTimes(1)
+    vi.useRealTimers()
+  })
 
-      // Should timeout, not complete successfully
-      expect(out).toEqual({ ok: false, error: 'The guide took too long to answer.' })
-      // Should have only called fetch once (the timeout prevented the second turn)
-      expect(fetchImpl).toHaveBeenCalledTimes(1)
-    } finally {
-      vi.useRealTimers()
-    }
+  it('returns cancellation error if signal is already aborted when called', async () => {
+    const abortedController = new AbortController()
+    abortedController.abort()
+    const fetchImpl = vi.fn()
+    const out = await askGuide('Hi', {
+      exhibits: [],
+      mode: 'tour',
+      context: ctx,
+      onText: () => undefined,
+      signal: abortedController.signal,
+      fetchImpl
+    })
+    expect(out).toEqual({ ok: false, error: 'The question was cancelled.' })
+    // Should not have made a fetch
+    expect(fetchImpl).not.toHaveBeenCalled()
   })
 
   it('returns ok: true for a fast answer and leaves no pending timer', async () => {
     vi.useFakeTimers()
-    try {
-      const fetchImpl = vi.fn(async () =>
-        ndjson([{ type: 'text', text: 'Quick.' }, { type: 'done' }])
-      )
-      const out = await askGuide('Hi', {
-        exhibits: [],
-        mode: 'tour',
-        context: () => ({ room: '', roomKey: '', nearestExhibitId: null, openPortalId: null, visitedIds: [] }),
-        onText: () => undefined,
-        timeoutMs: 5000,
-        fetchImpl
-      })
-      expect(out).toEqual({ ok: true })
-      const timerCount = vi.getTimerCount()
-      expect(timerCount).toBe(0)
-    } finally {
-      vi.useRealTimers()
-    }
+    const fetchImpl = vi.fn(async () =>
+      ndjson([{ type: 'text', text: 'Quick.' }, { type: 'done' }])
+    )
+    const out = await askGuide('Hi', {
+      exhibits: [],
+      mode: 'tour',
+      context: ctx,
+      onText: () => undefined,
+      timeoutMs: 5000,
+      fetchImpl
+    })
+    expect(out).toEqual({ ok: true })
+    const timerCount = vi.getTimerCount()
+    expect(timerCount).toBe(0)
+    vi.useRealTimers()
   })
 
   afterEach(() => {
