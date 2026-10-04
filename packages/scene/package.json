@@ -14,6 +14,10 @@
       "types": "./dist/map.d.ts",
       "import": "./dist/map.js"
     },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "import": "./dist/ui.js"
+    },
     "./portal": {
       "types": "./dist/portal/registry.d.ts",
       "import": "./dist/portal/registry.js"

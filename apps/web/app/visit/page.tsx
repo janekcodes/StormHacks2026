@@ -1,14 +1,28 @@
 'use client'
 
-import { building, exhibits, standpoints, isExhibitId } from '../../lib/museum-data'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
+import { SiteHeader } from '../../components/SiteHeader'
+import { building, exhibits, standpoints, isExhibitId } from '../../lib/museum-data'
+
+function VisitLoading() {
+  return (
+    <div className="museum-loading" role="status">
+      <div className="museum-loading-card">
+        <span className="museum-loading-mark" aria-hidden="true">
+          HM
+        </span>
+        <p className="museum-loading-title">Hello Museum</p>
+        <p className="museum-loading-stage">Opening the doors</p>
+      </div>
+    </div>
+  )
+}
 
 const Museum = dynamic(() => import('@museum/scene').then((m) => m.Museum), {
   ssr: false,
-  loading: () => <div className="visit-loading">Loading museum…</div>
+  loading: VisitLoading
 })
 
 function VisitMuseum() {
@@ -27,39 +41,14 @@ function VisitMuseum() {
 
 export default function VisitPage() {
   return (
-    <main className="visit-page">
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      />
-      <header className="visit-header">
-        <Link href="/" className="visit-brand">
-          Hello Museum
-        </Link>
-        <nav aria-label="Museum">
-          <Link href="/map">Floor plan</Link>
-          <Link href="/exhibits">Exhibits</Link>
-        </nav>
-      </header>
-      <Suspense fallback={<div className="visit-loading">Loading museum…</div>}>
-        <VisitMuseum />
-      </Suspense>
-      <style>{`
-        .visit-page { min-height: 100vh; background: #1d2024; color: #eef1f4; }
-        .visit-header {
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 16px; padding: 12px 16px;
-          font-family: "Chakra Petch", sans-serif;
-        }
-        .visit-brand { font-weight: 700; color: #ffb347; text-decoration: none; letter-spacing: 0.04em; }
-        .visit-header nav { display: flex; gap: 14px; }
-        .visit-header a { color: #c3c9d0; text-decoration: none; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
-        .visit-header a:hover { color: #ffb347; }
-        .visit-loading {
-          display: grid; place-items: center; min-height: 520px;
-          font-family: "Chakra Petch", sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #5b6168;
-        }
-      `}</style>
-    </main>
+    <div className="visit-shell theme-night">
+      <SiteHeader night mainId="museum" />
+      <main id="museum" className="visit-stage" tabIndex={-1}>
+        <h1 className="visually-hidden">Visit Hello Museum</h1>
+        <Suspense fallback={<VisitLoading />}>
+          <VisitMuseum />
+        </Suspense>
+      </main>
+    </div>
   )
 }

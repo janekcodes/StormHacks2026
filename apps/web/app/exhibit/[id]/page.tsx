@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { CSSProperties } from 'react'
 import { EXHIBIT_IDS, type ExhibitId } from '@museum/content/schema'
+import { zoneByCode } from '@museum/content/zones'
 import { FloorMap } from '@museum/scene/map'
 import { ExhibitPortal } from '../../../components/ExhibitPortal'
 import { GuideWidget } from '../../../components/GuideWidget'
-import { SiteNav } from '../../../components/SiteNav'
+import { SiteFooter } from '../../../components/SiteFooter'
+import { SiteHeader } from '../../../components/SiteHeader'
 import {
   bandLabel,
   exhibitDescription,
@@ -14,13 +17,7 @@ import {
   tierLabel,
   zoneLabel
 } from '../../../lib/exhibit-copy'
-import {
-  building,
-  exhibits,
-  exhibitsByZone,
-  getExhibit,
-  isExhibitId
-} from '../../../lib/museum-data'
+import { building, exhibits, exhibitsByZone, getExhibit, isExhibitId } from '../../../lib/museum-data'
 import styles from '../../museum.module.css'
 
 type PageProps = {
@@ -70,27 +67,81 @@ export default async function ExhibitPage({ params }: PageProps) {
   const { prev, next } = neighbours(id)
   const prevExhibit = prev ? getExhibit(prev) : undefined
   const nextExhibit = next ? getExhibit(next) : undefined
+  const ink = zoneByCode(exhibit.zone)?.ink
+  const band = bandLabel(exhibit.band)
 
   return (
-    <div className={styles.shell}>
-      <SiteNav />
-      <main className={styles.main}>
+    <div className="site">
+      <SiteHeader />
+      <main
+        id="main"
+        className={`site-main container ${styles.main}`}
+        style={ink ? ({ '--zone-ink': ink } as CSSProperties) : undefined}
+      >
         <article className={styles.article}>
-          <header>
+          <header className={styles.exhibitHead}>
+            <p className={styles.exhibitKicker}>
+              <span className={styles.zoneCode}>{exhibit.zone}</span>
+              {zoneLabel(exhibit.zone)}
+            </p>
             <h1>
-              {exhibit.id}. {exhibit.title}
+              <span className={styles.exhibitId}>{exhibit.id}</span> {exhibit.title}
             </h1>
-            <ul className={styles.meta}>
-              <li>Year: {exhibit.year}</li>
-              <li>Zone: {zoneLabel(exhibit.zone)}</li>
-              <li>Band: {bandLabel(exhibit.band)}</li>
-              <li>Tier: {tierLabel(exhibit.tier)}</li>
-            </ul>
+            <dl className={styles.meta}>
+              <div>
+                <dt>Year</dt>
+                <dd>{exhibit.year}</dd>
+              </div>
+              {band ? (
+                <div>
+                  <dt>Era</dt>
+                  <dd>{band}</dd>
+                </div>
+              ) : null}
+              <div>
+                <dt>Status</dt>
+                <dd>
+                  <span className="badge" data-tier={exhibit.tier}>
+                    {tierLabel(exhibit.tier)}
+                  </span>
+                </dd>
+              </div>
+            </dl>
           </header>
 
           {planned ? <p className={styles.planned}>{plannedExhibitNote(exhibit)}</p> : null}
 
           {exhibit.caption ? <p className={styles.caption}>{exhibit.caption}</p> : null}
+
+          <div className={styles.actions}>
+            <Link className="btn btn--primary" href={`/visit?exhibit=${exhibit.id}`}>
+              Open in museum
+            </Link>
+            <Link className="btn" href="/map">
+              View on floor plan
+            </Link>
+          </div>
+
+          {exhibit.tier === 'built' ? (
+            <section className={styles.section} aria-labelledby="portal-heading">
+              <h2 id="portal-heading" className={styles.sectionTitle}>
+                Try it
+              </h2>
+              <div className={`theme-night ${styles.screen}`}>
+                <div className={styles.screenBar} aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <span className={styles.screenLabel}>
+                    {exhibit.id} portal
+                  </span>
+                </div>
+                <div className={styles.screenBody}>
+                  <ExhibitPortal id={exhibit.id} />
+                </div>
+              </div>
+            </section>
+          ) : null}
 
           {exhibit.stats && exhibit.stats.length > 0 ? (
             <ul className={styles.stats}>
@@ -103,87 +154,76 @@ export default async function ExhibitPage({ params }: PageProps) {
             </ul>
           ) : null}
 
-          {exhibit.tier === 'built' ? (
-            <section className={styles.section} aria-label={`${exhibit.title} portal`}>
-              <h2>Portal</h2>
-              <ExhibitPortal id={exhibit.id} />
-            </section>
-          ) : null}
+          <div className={styles.columns}>
+            <div>
+              {exhibit.caveat ? (
+                <section className={styles.section} aria-labelledby="caveat-heading">
+                  <h2 id="caveat-heading" className={styles.sectionTitle}>
+                    Caveat
+                  </h2>
+                  <p className={styles.caveat}>{exhibit.caveat}</p>
+                </section>
+              ) : null}
 
-          <div className={styles.actions}>
-            <Link className={styles.cta} href={`/visit?exhibit=${exhibit.id}`}>
-              Open in museum
-            </Link>
-            <Link className={styles.link} href="/map">
-              View on floor plan
-            </Link>
-            <Link className={styles.link} href="/exhibits">
-              All exhibits
-            </Link>
+              {exhibit.sources && exhibit.sources.length > 0 ? (
+                <section className={styles.section} aria-labelledby="sources-heading">
+                  <h2 id="sources-heading" className={styles.sectionTitle}>
+                    Sources
+                  </h2>
+                  <ol className={styles.sources}>
+                    {exhibit.sources.map((source) => (
+                      <li key={source.id}>
+                        {source.url.startsWith('[TBD') ? (
+                          <span>
+                            {source.label} ({source.id})
+                          </span>
+                        ) : (
+                          <a className="link" href={source.url} rel="noopener noreferrer">
+                            {source.label}
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ) : null}
+            </div>
+
+            <section className={styles.section} aria-labelledby="map-heading">
+              <h2 id="map-heading" className={styles.sectionTitle}>
+                Where to find it
+              </h2>
+              <div className={`panel ${styles.miniMap}`}>
+                <FloorMap building={building} exhibits={exhibits} highlight={[exhibit.id]} compact />
+              </div>
+            </section>
           </div>
 
-          {exhibit.sources && exhibit.sources.length > 0 ? (
-            <section className={styles.section}>
-              <h2>Sources</h2>
-              <ul className={styles.sources}>
-                {exhibit.sources.map((source) => (
-                  <li key={source.id}>
-                    {source.url.startsWith('[TBD') ? (
-                      <span>
-                        {source.label} ({source.id})
-                      </span>
-                    ) : (
-                      <a href={source.url} rel="noopener noreferrer">
-                        {source.label}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {exhibit.caveat ? (
-            <section className={styles.section}>
-              <h2>Caveat</h2>
-              <p className={styles.caveat}>{exhibit.caveat}</p>
-            </section>
-          ) : null}
-
-          <section className={styles.section}>
-            <h2>On the map</h2>
-            <div className={styles.miniMap}>
-              <FloorMap
-                building={building}
-                exhibits={exhibits}
-                highlight={[exhibit.id]}
-                compact
-              />
-            </div>
-          </section>
-
-          <nav className={styles.pager} aria-label="Nearby exhibits in this zone">
-            <div>
+          {prevExhibit || nextExhibit ? (
+            <nav className={styles.pager} aria-label="Nearby exhibits in this gallery">
               {prev && prevExhibit ? (
-                <Link className={styles.link} href={`/exhibit/${prev}`}>
-                  Previous: {prev} {prevExhibit.title}
+                <Link className={styles.pagerLink} href={`/exhibit/${prev}`} rel="prev">
+                  <span className="kicker">Previous</span>
+                  <span>
+                    {prev} {prevExhibit.title}
+                  </span>
                 </Link>
               ) : (
-                <span>Previous: none</span>
+                <span />
               )}
-            </div>
-            <div>
               {next && nextExhibit ? (
-                <Link className={styles.link} href={`/exhibit/${next}`}>
-                  Next: {next} {nextExhibit.title}
+                <Link className={`${styles.pagerLink} ${styles.pagerNext}`} href={`/exhibit/${next}`} rel="next">
+                  <span className="kicker">Next</span>
+                  <span>
+                    {next} {nextExhibit.title}
+                  </span>
                 </Link>
-              ) : (
-                <span>Next: none</span>
-              )}
-            </div>
-          </nav>
+              ) : null}
+            </nav>
+          ) : null}
         </article>
       </main>
+      <SiteFooter />
       <GuideWidget exhibits={exhibits} currentExhibitId={exhibit.id} />
     </div>
   )

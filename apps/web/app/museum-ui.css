@@ -1,0 +1,1115 @@
+/*
+ * Museum UI: the /visit HUD, the shared guide panel (3D and 2D), the portal
+ * overlay, narration controls and the floor map. Rendered by @museum/scene and
+ * apps/web components; all colours come from the tokens in globals.css.
+ */
+
+/* ---- /visit shell --------------------------------------------------------- */
+
+.visit-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--c-night);
+}
+
+.visit-shell .site-header {
+  position: relative;
+}
+
+.visit-stage {
+  position: relative;
+  min-height: 0;
+  outline: none;
+}
+
+/* ---- scene viewport ------------------------------------------------------- */
+
+.museum-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  outline: none;
+  background: var(--c-sky);
+  color: var(--c-night-text);
+  font-family: var(--font-body-stack);
+  --fg: var(--c-night-text);
+  --fg-muted: var(--c-night-muted);
+  --line: var(--c-night-line);
+  --surface: var(--c-night-1);
+  --accent-fg: var(--c-accent);
+  --focus: var(--c-accent);
+}
+
+.museum-view:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--c-accent);
+}
+
+.museum-view canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+  cursor: grab;
+}
+
+.museum-view canvas:active {
+  cursor: grabbing;
+}
+
+.museum-view canvas.hot {
+  cursor: pointer;
+}
+
+.museum-glass {
+  background: var(--c-night-glass);
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-night);
+}
+
+/* ---- loading and welcome -------------------------------------------------- */
+
+.museum-loading {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-loading);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 480px at 50% 40%, color-mix(in srgb, var(--c-accent) 12%, transparent), transparent 70%),
+    var(--c-night);
+  transition: opacity var(--dur-slow) var(--ease-out), visibility var(--dur-slow);
+}
+
+.museum-loading[data-done='true'] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.museum-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: min(420px, calc(100% - 2 * var(--space-5)));
+  text-align: center;
+}
+
+.museum-loading-mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: var(--c-accent);
+  color: var(--c-ink);
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-xl);
+}
+
+.museum-loading-title {
+  margin: 0;
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  color: var(--c-night-text);
+}
+
+.museum-loading-stage {
+  margin: 0;
+  min-height: 1.6em;
+  font-size: var(--text-sm);
+  color: var(--c-night-muted);
+}
+
+.museum-progress {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--c-night-line);
+}
+
+.museum-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--c-accent);
+  transition: width var(--dur) var(--ease-out);
+}
+
+.museum-welcome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-5);
+  z-index: var(--z-menu);
+  width: min(560px, calc(100% - 2 * var(--space-4)));
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.museum-welcome h2 {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--text-xl);
+}
+
+.museum-welcome p {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--c-night-muted);
+}
+
+.museum-keys {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.museum-keys li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.museum-keys .keycap {
+  border-color: var(--c-night-line);
+  background: var(--c-night-2);
+  color: var(--c-night-text);
+}
+
+.museum-keys-label {
+  margin-left: var(--space-1);
+}
+
+.museum-welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.museum-welcome-actions .museum-welcome-hint {
+  margin: 0;
+  font-size: var(--text-xs);
+}
+
+/* Visibility utilities win over component display rules. */
+.only-touch {
+  display: none !important;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .only-touch {
+    display: revert !important;
+  }
+
+  .only-pointer {
+    display: none !important;
+  }
+}
+
+/* ---- HUD ------------------------------------------------------------------ */
+
+.museum-left {
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  z-index: var(--z-hud);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.museum-zone {
+  min-width: 210px;
+  max-width: 340px;
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  border-left: 3px solid var(--zone-ink, var(--c-accent));
+  pointer-events: none;
+}
+
+.museum-kicker {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--zone-ink-light, var(--c-accent));
+}
+
+.museum-zone-name {
+  margin-top: 2px;
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: 1.2;
+}
+
+.museum-passport-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.museum-passport-row .museum-progress {
+  flex: 1 1 auto;
+  height: 3px;
+}
+
+.museum-passport {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+
+.museum-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  pointer-events: auto;
+}
+
+.museum-guide-btn {
+  --btn-fg: var(--c-accent);
+  --btn-line: color-mix(in srgb, var(--c-accent) 60%, transparent);
+}
+
+.museum-toolbar .btn[aria-pressed='true'],
+.museum-toolbar .btn[aria-expanded='true'] {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+.museum-nav {
+  position: relative;
+}
+
+.museum-nav-menu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+  max-height: min(60vh, 460px);
+  margin: 0;
+  padding: var(--space-2);
+  overflow-y: auto;
+  list-style: none;
+  background: color-mix(in srgb, var(--c-night) 94%, transparent);
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-night);
+  animation: rise-in var(--dur) var(--ease-out) both;
+}
+
+.museum-nav-item {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--c-night-text);
+  font-family: var(--font-display-stack);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.museum-nav-item:hover,
+.museum-nav-item:focus-visible {
+  background: var(--c-night-2);
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--c-accent);
+}
+
+.museum-nav-item[aria-current='location'] {
+  color: var(--c-accent);
+}
+
+.museum-nav-item[aria-current='location']::after {
+  content: 'Here';
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--c-night-muted);
+}
+
+.museum-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 88px;
+  z-index: var(--z-hud);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: calc(100% - 2 * var(--space-4));
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+
+.museum-prompt-id {
+  font-weight: 600;
+  color: var(--c-accent);
+}
+
+.museum-prompt-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-md);
+}
+
+.museum-prompt-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--c-night-2);
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.museum-prompt-key .keycap {
+  border-color: var(--c-night-line);
+  background: var(--c-night-1);
+  color: var(--c-night-text);
+}
+
+.museum-crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c-night-text) 90%, transparent);
+  box-shadow: 0 0 0 1px var(--c-scrim);
+  pointer-events: none;
+}
+
+.museum-minimap {
+  position: absolute;
+  right: var(--space-3);
+  top: var(--space-3);
+  z-index: var(--z-hud);
+  width: 288px;
+  padding: var(--space-2);
+  pointer-events: auto;
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+
+.museum-minimap-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-1) var(--space-2);
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--c-night-muted);
+}
+
+.museum-minimap-head .keycap {
+  border-color: var(--c-night-line);
+  background: var(--c-night-2);
+  color: var(--c-night-text);
+}
+
+.museum-minimap .floor-map {
+  max-width: none;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.museum-help {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  max-width: min(640px, calc(100% - 260px));
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: var(--c-night-muted);
+  pointer-events: none;
+}
+
+.museum-help span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.museum-help .keycap {
+  min-width: 1.7em;
+  height: 1.7em;
+  border-color: var(--c-night-line);
+  background: var(--c-night-2);
+  color: var(--c-night-text);
+}
+
+.museum-touch {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-hud);
+  display: grid;
+  grid-template-columns: repeat(3, var(--target));
+  gap: var(--space-1);
+  pointer-events: auto;
+}
+
+.museum-touch .btn {
+  padding: 0;
+  font-size: var(--text-xs);
+  touch-action: none;
+}
+
+.museum-touch [data-key='vf'] {
+  grid-column: 2;
+}
+
+.museum-touch [data-key='vl'] {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.museum-touch [data-key='vb'] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.museum-touch [data-key='vr'] {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .museum-touch {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .museum-minimap {
+    width: 184px;
+  }
+
+  .museum-help {
+    max-width: calc(100% - 3 * var(--target) - 3 * var(--space-3));
+  }
+
+  .museum-help .only-pointer {
+    display: none !important;
+  }
+
+  .museum-help .only-touch {
+    display: inline !important;
+  }
+
+  .museum-welcome .museum-keys {
+    display: none;
+  }
+
+  .museum-zone {
+    min-width: 0;
+    max-width: 200px;
+  }
+
+  .museum-zone-name {
+    font-size: var(--text-lg);
+  }
+
+  .museum-prompt {
+    bottom: 136px;
+  }
+}
+
+/* ---- guide panel (shared by the 3D panel and the 2D widget) --------------- */
+
+.guide-panel {
+  width: min(400px, calc(100vw - 2 * var(--space-4)));
+  max-height: min(600px, calc(100% - 160px));
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.guide-panel[data-state='closing'] {
+  animation: fade-in var(--dur) var(--ease-out) reverse both;
+}
+
+.guide-panel--scene {
+  position: absolute;
+  right: var(--space-3);
+  bottom: 88px;
+  z-index: var(--z-guide);
+}
+
+.guide-panel--page {
+  max-height: min(620px, calc(100vh - 120px));
+}
+
+.guide-dock {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-widget);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.guide-launcher {
+  --btn-fg: var(--c-accent);
+  --btn-bg: var(--c-night);
+  --btn-line: color-mix(in srgb, var(--c-accent) 60%, transparent);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-night);
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.guide-launcher-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent) 25%, transparent);
+}
+
+.guide-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--c-night-line-soft);
+}
+
+.guide-title {
+  margin: 0;
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+
+.guide-scope {
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.guide-close {
+  margin-left: auto;
+  --btn-line: transparent;
+  --btn-fg: var(--c-night-muted);
+}
+
+.guide-close:hover {
+  --btn-fg: var(--c-night-text);
+}
+
+.guide-log {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 140px;
+  padding: var(--space-3) var(--space-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.guide-empty {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--c-night-muted);
+}
+
+.guide-row {
+  max-width: 92%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+
+.guide-user {
+  align-self: flex-end;
+  background: var(--c-night-user);
+  color: var(--c-night-text);
+  white-space: pre-wrap;
+}
+
+.guide-assistant {
+  align-self: flex-start;
+  background: var(--c-night-1);
+  border: 1px solid var(--c-night-line-soft);
+}
+
+.guide-assistant p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.guide-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.guide-chips .chip {
+  color: var(--c-accent);
+}
+
+.guide-error {
+  margin: 0 var(--space-4) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-left: 2px solid var(--c-danger);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--c-danger) 10%, transparent);
+  font-size: var(--text-sm);
+  color: var(--c-danger);
+}
+
+.guide-tour {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--c-night-line-soft);
+  background: color-mix(in srgb, var(--c-accent) 6%, transparent);
+}
+
+.guide-tour-title {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--c-accent);
+}
+
+.guide-tour-stop {
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.guide-tour-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.guide-input {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--c-night-line-soft);
+}
+
+.guide-input textarea {
+  flex: 1 1 auto;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  resize: none;
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius-sm);
+  background: var(--c-night);
+  color: var(--c-night-text);
+  font: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.guide-input textarea::placeholder {
+  color: var(--c-night-muted);
+}
+
+.guide-input textarea:focus-visible {
+  outline: none;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 1px var(--c-accent);
+}
+
+.guide-voice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--c-night-line-soft);
+}
+
+.guide-voice-toggle[aria-checked='true'] {
+  --btn-bg: var(--c-accent);
+  --btn-fg: var(--c-ink);
+  --btn-line: var(--c-accent);
+}
+
+.guide-voice-caption {
+  flex: 1 1 160px;
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--c-night-muted);
+}
+
+/* ---- portal overlay ------------------------------------------------------- */
+
+.portal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-overlay);
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-4);
+  background: var(--c-scrim);
+  backdrop-filter: blur(4px);
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+
+.portal-overlay[data-state='closing'] {
+  animation: fade-in var(--dur) var(--ease-out) reverse both;
+}
+
+.portal-panel {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  border: 1px solid color-mix(in srgb, var(--t) 70%, var(--c-night-line));
+  border-radius: var(--radius-lg);
+  background: var(--c-night);
+  color: var(--c-night-text);
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--c-night-line-soft),
+    0 24px 80px color-mix(in srgb, var(--t) 22%, transparent);
+  animation: rise-in var(--dur-slow) var(--ease-out) both;
+}
+
+.portal-panel:focus-visible {
+  box-shadow: 0 0 0 2px var(--c-accent);
+}
+
+.portal-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.portal-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.portal-copy {
+  display: flex;
+  flex: 1 1 420px;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.portal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.portal-chips .badge {
+  --badge-ink: var(--t-light, var(--c-night-text));
+}
+
+.portal-id {
+  font-size: var(--text-sm);
+  color: var(--c-night-muted);
+}
+
+.portal-copy h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  line-height: 1.08;
+  color: var(--c-night-text);
+}
+
+.portal-copy p {
+  margin: 0;
+  max-width: 760px;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--c-night-muted);
+}
+
+.portal-passport {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.portal-copy .portal-passport {
+  font-size: var(--text-xs);
+  color: var(--c-accent);
+}
+
+.portal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.portal-actions .keycap {
+  border-color: currentColor;
+  background: transparent;
+  color: inherit;
+}
+
+.portal-screen,
+.portal-planned {
+  border-radius: var(--radius);
+}
+
+.portal-planned {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-5);
+  border: 1px dashed color-mix(in srgb, var(--t) 50%, transparent);
+  background: var(--c-night-1);
+  text-align: center;
+}
+
+.portal-planned-id {
+  font-family: var(--font-screen-stack);
+  font-size: 72px;
+  line-height: 1;
+  color: var(--t-light, var(--c-night-text));
+}
+
+.portal-planned-title {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--c-night-text);
+}
+
+.portal-planned p {
+  margin: 0;
+  max-width: 520px;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--c-night-muted);
+}
+
+.portal-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--c-night-muted);
+}
+
+.portal-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--t) 28%, transparent);
+  border-radius: var(--radius-sm);
+  background: var(--c-night-1);
+}
+
+.portal-stat-k {
+  font-family: var(--font-display-stack);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--c-night-muted);
+}
+
+.portal-stat-v {
+  font-size: var(--text-xl);
+  line-height: 1.15;
+  color: var(--t-light, var(--c-night-text));
+}
+
+@media (max-width: 640px) {
+  .portal-overlay {
+    padding: var(--space-2);
+  }
+
+  .portal-inner {
+    padding: var(--space-4);
+  }
+}
+
+.portal-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 240px;
+  padding: var(--space-6) var(--space-4);
+  color: var(--c-night-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.portal-fallback p {
+  margin: 0;
+}
+
+.portal-fallback-title {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--c-night-text);
+}
+
+/* ---- narration ------------------------------------------------------------ */
+
+.narrator {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--c-night-line-soft);
+}
+
+.narrator-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.narrator-captions {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.75;
+  color: var(--c-night-muted);
+}
+
+.narrator-word {
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.narrator-word-current {
+  color: var(--c-accent);
+}
+
+.narrator-error {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--c-night-muted);
+}
+
+/* ---- floor map ------------------------------------------------------------ */
+
+.floor-map {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.floor-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.floor-map-marker {
+  outline: none;
+}
+
+.floor-map-marker .floor-map-focus {
+  fill: none;
+  stroke: none;
+}
+
+.floor-map-marker:focus-visible .floor-map-focus {
+  stroke: var(--c-accent);
+  stroke-width: 3px;
+  paint-order: stroke;
+}
+
+.floor-map-marker:focus-visible .floor-map-focus-outer {
+  stroke: var(--c-ink);
+  stroke-width: 2px;
+}
+
+.floor-map-marker:hover .floor-map-focus {
+  stroke: var(--c-accent);
+  stroke-width: 2px;
+}

@@ -1,8 +1,9 @@
 'use client'
 
 import type { Building } from '@museum/content/plan-schema'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { cellOffsets, withAtlasCells } from './atlas'
 import { canvasTexture, fontFamily, fontsReady, museumMaterials, wrapText } from './materials'
 import { boxPart, mergeParts, type MergePart } from './merge'
 
@@ -10,6 +11,9 @@ const SIGN_W = 4.6
 const SIGN_H = 0.98
 const SIGN_Y = 4.0
 const FACE_Z = 0.232
+const CELL_W = 1400
+const CELL_H = 300
+const COLS = 4
 
 /** Raised lettering: a soft shadow under ivory text on dark walnut. */
 function raised(g: CanvasRenderingContext2D): void {
@@ -31,45 +35,84 @@ function useFontTick(): number {
   return tick
 }
 
+function drawWingSign(
+  g: CanvasRenderingContext2D,
+  ox: number,
+  oy: number,
+  k: string,
+  title: string,
+  ink: string,
+  subtitle: string
+): void {
+  const display = fontFamily('display')
+  g.save()
+  g.translate(ox, oy)
+  g.fillStyle = '#2a1a12'
+  g.fillRect(0, 0, CELL_W, CELL_H)
+  g.strokeStyle = '#b8955a'
+  g.lineWidth = 5
+  g.strokeRect(14, 14, CELL_W - 28, CELL_H - 28)
+  g.fillStyle = ink
+  g.fillRect(44, 54, 192, 192)
+  g.strokeStyle = '#d6b678'
+  g.lineWidth = 4
+  g.strokeRect(44, 54, 192, 192)
+  raised(g)
+  g.fillStyle = '#fbf6ea'
+  g.font = `700 150px ${display}`
+  g.textAlign = 'center'
+  g.fillText(k, 140, 205)
+  g.textAlign = 'left'
+  g.fillStyle = '#d6b678'
+  g.font = `700 44px ${display}`
+  g.fillText(subtitle, 288, 108)
+  g.fillStyle = '#f4ecdb'
+  g.font = `700 70px ${display}`
+  wrapText(g, title, 288, 196, 1060, 76)
+  g.restore()
+}
+
 export function Signage({ building }: { building: Building }) {
   const fontTick = useFontTick()
+  const meshRef = useRef<THREE.InstancedMesh>(null)
+  const rows = Math.ceil(building.signs.length / COLS)
 
-  const signs = useMemo(() => {
+  const atlas = useMemo(() => {
     void fontTick
-    const display = fontFamily('display')
-    return building.signs.map((sg) => {
+    const c = document.createElement('canvas')
+    c.width = CELL_W * COLS
+    c.height = CELL_H * rows
+    const g = c.getContext('2d')
+    if (!g) throw new Error('2d context unavailable')
+    building.signs.forEach((sg, i) => {
       const k = sg.k === 'Sx' ? 'S' : sg.k
       const z = building.zones[k]
       const title = sg.k === 'Sx' ? 'Society & Ethics · Future Lab' : (z?.name ?? k)
       const ink = z?.ink ?? '#1d2024'
-      const tex = canvasTexture(1400, 300, (g, w, h) => {
-        g.fillStyle = '#2a1a12'
-        g.fillRect(0, 0, w, h)
-        g.strokeStyle = '#b8955a'
-        g.lineWidth = 5
-        g.strokeRect(14, 14, w - 28, h - 28)
-        g.fillStyle = ink
-        g.fillRect(44, 54, 192, 192)
-        g.strokeStyle = '#d6b678'
-        g.lineWidth = 4
-        g.strokeRect(44, 54, 192, 192)
-        raised(g)
-        g.fillStyle = '#fbf6ea'
-        g.font = `700 150px ${display}`
-        g.textAlign = 'center'
-        g.fillText(k, 140, 205)
-        g.textAlign = 'left'
-        g.fillStyle = '#d6b678'
-        g.font = `700 44px ${display}`
-        g.fillText(sg.k === 'Sx' ? 'FRONT GALLERY · EAST' : `WING ${k}`, 288, 108)
-        g.fillStyle = '#f4ecdb'
-        g.font = `700 70px ${display}`
-        wrapText(g, title, 288, 196, 1060, 76)
-      })
-      const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.5 })
-      return { tex, mat, x: sg.p[0], z: sg.p[1], rotY: Math.atan2(-sg.u[0], -sg.u[1]) }
+      const subtitle = sg.k === 'Sx' ? 'FRONT GALLERY · EAST' : `WING ${k}`
+      drawWingSign(g, (i % COLS) * CELL_W, Math.floor(i / COLS) * CELL_H, k, title, ink, subtitle)
     })
-  }, [building, fontTick])
+    const tex = new THREE.CanvasTexture(c)
+    tex.colorSpace = THREE.SRGBColorSpace
+    tex.anisotropy = 8
+    const mat = withAtlasCells(
+      new THREE.MeshStandardMaterial({ map: tex, roughness: 0.5 }),
+      COLS,
+      rows,
+      'wing-signs'
+    )
+    const geo = new THREE.PlaneGeometry(SIGN_W, SIGN_H)
+    geo.setAttribute('cellOffset', cellOffsets(building.signs.length, COLS, rows))
+    const matrices = building.signs.map((sg) => {
+      const rotY = Math.atan2(-sg.u[0], -sg.u[1])
+      const m = new THREE.Matrix4().makeRotationY(rotY)
+      const c = Math.cos(rotY)
+      const s = Math.sin(rotY)
+      m.setPosition(sg.p[0] + FACE_Z * s, SIGN_Y, sg.p[1] + FACE_Z * c)
+      return m
+    })
+    return { tex, mat, geo, matrices }
+  }, [building, rows, fontTick])
 
   const welcome = useMemo(() => {
     void fontTick
@@ -122,16 +165,23 @@ export function Signage({ building }: { building: Building }) {
     return mergeParts(parts)
   }, [building])
 
+  useLayoutEffect(() => {
+    const mesh = meshRef.current
+    if (!mesh) return
+    atlas.matrices.forEach((m, i) => mesh.setMatrixAt(i, m))
+    mesh.instanceMatrix.needsUpdate = true
+    mesh.computeBoundingSphere()
+  }, [atlas])
+
   useEffect(() => {
     return () => {
-      for (const s of signs) {
-        s.tex.dispose()
-        s.mat.dispose()
-      }
+      atlas.tex.dispose()
+      atlas.mat.dispose()
+      atlas.geo.dispose()
       welcome.tex.dispose()
       welcome.mat.dispose()
     }
-  }, [signs, welcome])
+  }, [atlas, welcome])
 
   useEffect(() => () => frames.forEach((m) => m.geometry.dispose()), [frames])
 
@@ -140,13 +190,11 @@ export function Signage({ building }: { building: Building }) {
       {frames.map((m, i) => (
         <mesh key={i} geometry={m.geometry} material={m.material} castShadow={m.castShadow} receiveShadow={m.receiveShadow} />
       ))}
-      {signs.map((sg, i) => (
-        <group key={i} position={[sg.x, 0, sg.z]} rotation={[0, sg.rotY, 0]}>
-          <mesh position={[0, SIGN_Y, FACE_Z]} material={sg.mat}>
-            <planeGeometry args={[SIGN_W, SIGN_H]} />
-          </mesh>
-        </group>
-      ))}
+      <instancedMesh
+        ref={meshRef}
+        args={[atlas.geo, atlas.mat, building.signs.length]}
+        dispose={null}
+      />
       <mesh position={[0, 4.0, 14.585]} material={welcome.mat}>
         <planeGeometry args={[5.4, 1.69]} />
       </mesh>

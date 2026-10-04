@@ -44,15 +44,19 @@ function makeLoader(gl: THREE.WebGLRenderer): GLTFLoader {
   return loader
 }
 
-/** Mirror the prototype: opaque meshes cast and receive shadows, transparent ones do not. */
-function castShadows(root: THREE.Object3D): void {
+/**
+ * Opaque meshes receive shadows. Only procedural models cast them: the 63
+ * GLB kits are two meshes each and would blow the shadow-pass draw budget
+ * (BLUEPRINT §10, under 400 calls on `high`).
+ */
+function applyShadows(root: THREE.Object3D, cast: boolean): void {
   root.traverse((object) => {
     const mesh = object as THREE.Mesh
     if (!mesh.isMesh) return
     const material = mesh.material as THREE.Material | THREE.Material[] | undefined
     const materials = Array.isArray(material) ? material : material ? [material] : []
     if (materials.some((m) => m && m.transparent)) return
-    mesh.castShadow = true
+    mesh.castShadow = cast
     mesh.receiveShadow = true
   })
 }
@@ -71,7 +75,7 @@ function ShadowModel({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     const root = ref.current
     if (!root) return
-    castShadows(root)
+    applyShadows(root, true)
     merger.current = new StaticMerger(root)
     frames.current = 0
     return () => {
@@ -122,7 +126,7 @@ export function ModelSlot({ exhibit }: { exhibit: Exhibit }) {
       `/models/${exhibit.id}.glb`,
       (result) => {
         if (!alive) return
-        castShadows(result.scene)
+        applyShadows(result.scene, false)
         setGlb(result.scene)
       },
       undefined,

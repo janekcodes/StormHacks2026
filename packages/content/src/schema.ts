@@ -27,6 +27,20 @@ export const BandSchema = z.enum(BANDS)
 export type Tier = (typeof TIERS)[number]
 export const TierSchema = z.enum(TIERS)
 
+/** Display label for a tier, shared by the site, the HUD and the floor map. */
+export function tierLabel(tier: Tier): string {
+  switch (tier) {
+    case 'built':
+      return 'Built'
+    case 'core':
+      return 'Core'
+    case 'extended':
+      return 'Extended'
+    case 'open':
+      return 'Open'
+  }
+}
+
 export const PositionSchema = z.object({
   x: z.number(),
   z: z.number(),

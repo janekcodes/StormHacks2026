@@ -1,7 +1,7 @@
 'use client'
 
 import type { Building } from '@museum/content/plan-schema'
-import type { Exhibit, ExhibitId, Tier } from '@museum/content/schema'
+import { tierLabel, type Exhibit, type ExhibitId, type Tier } from '@museum/content/schema'
 import type { MouseEvent as ReactMouseEvent } from 'react'
 import { PLAN_HEIGHT_PX, PLAN_WIDTH_PX, fromSvg, toSvg } from './projection'
 import { sortExhibitsForMap } from './sortExhibits'
@@ -28,19 +28,7 @@ const INK = '#1d2024'
 const WALL = '#2e3339'
 const GLASS = '#1f6699'
 const DASH = '#5b6168'
-
-function tierLabel(tier: Tier): string {
-  switch (tier) {
-    case 'built':
-      return 'Built'
-    case 'core':
-      return 'Core'
-    case 'extended':
-      return 'Extended'
-    case 'open':
-      return 'Open'
-  }
-}
+const ACCENT = '#ffb347'
 
 function MarkerShape({
   tier,
@@ -122,17 +110,6 @@ export function FloorMap({
 
   return (
     <div className="floor-map" data-compact={compact ? 'true' : 'false'}>
-      <style>{`
-        .floor-map { width: 100%; max-width: 1000px; }
-        .floor-map svg { display: block; width: 100%; height: auto; }
-        .floor-map-marker {
-          outline: none;
-        }
-        .floor-map-marker:focus-visible {
-          outline: 2px solid ${INK};
-          outline-offset: 3px;
-        }
-      `}</style>
       <svg
         role="group"
         aria-label="Museum floor plan"
@@ -283,6 +260,8 @@ export function FloorMap({
                 y={p.y}
                 highlighted={highlighted}
               />
+              <circle className="floor-map-focus-outer" cx={p.x} cy={p.y} r={14} fill="none" />
+              <circle className="floor-map-focus" cx={p.x} cy={p.y} r={11.5} fill="none" />
               {/* Invisible hit target so nearby labels cannot steal clicks. */}
               <circle cx={p.x} cy={p.y} r={10} fill="transparent" />
               {!compact ? (
@@ -306,7 +285,8 @@ export function FloorMap({
             transform={`translate(${playerPoint.x} ${playerPoint.y}) rotate(${(player.yaw * 180) / Math.PI})`}
             aria-hidden="true"
           >
-            <polygon points="0,-8 5,6 -5,6" fill={INK} />
+            <circle r={11} fill={ACCENT} fillOpacity={0.28} />
+            <polygon points="0,-8 5,6 -5,6" fill={INK} stroke={ACCENT} strokeWidth={1.5} strokeLinejoin="round" />
           </g>
         ) : null}
       </svg>

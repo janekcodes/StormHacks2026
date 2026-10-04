@@ -2,11 +2,13 @@
 
 import type { Exhibit } from '@museum/content/schema'
 import type { GuideMessage, ToolCall, ToolResponse } from '@museum/guide/client'
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { finish as finishSpeech, isSpeaking, pushText, stop as stopSpeech } from '../audio/guideVoiceBus'
 import { GuideVoice } from '../audio/GuideVoice'
 import { museum } from '../nav/api'
+import { useFocusReturn, usePresence } from '../ui'
 import { chipLabel, executeToolCall, visitorContext } from './executor'
+import { GuideFrame } from './GuideFrame'
 import { getSessionId } from './session'
 import { useGuideStore } from './state'
 
@@ -33,6 +35,7 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const tour = useGuideStore((s) => s.tour)
   const advanceTour = useGuideStore((s) => s.advanceTour)
   const endTour = useGuideStore((s) => s.endTour)
+  const presence = usePresence(open)
 
   const [messages, setMessages] = useState<GuideMessage[]>([])
   const [input, setInput] = useState('')
@@ -41,9 +44,10 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const logRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const busyRef = useRef(false)
+
+  useFocusReturn(open, () => document.querySelector<HTMLElement>('[data-testid="guide-open"]'))
 
   useEffect(() => {
     if (open) {
@@ -56,11 +60,6 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
     if (!open) stopSpeech()
   }, [open])
 
-  useEffect(() => {
-    const log = logRef.current
-    if (log) log.scrollTop = log.scrollHeight
-  }, [messages, streamText, chips, tour])
-
   const sendTurn = async (history: GuideMessage[]): Promise<GuideMessage[]> => {
     const context = visitorContext(exhibits)
     const res = await fetch('/api/guide', {
@@ -71,9 +70,6 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
 
     if (!res.ok) {
       const message = await readError(res)
-      if (res.status === 429) {
-        throw { status: 429, message } as StreamError
-      }
       throw { status: res.status, message } as StreamError
     }
     if (!res.body) {
@@ -178,212 +174,66 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
     }
   }
 
-  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault()
-      void handleSend()
-    }
-  }
+  if (!presence) return null
 
-  const renderMessage = (message: GuideMessage, index: number) => {
-    if (message.role === 'user') {
-      return (
-        <div key={index} className="guide-row guide-user">
-          {message.text}
-        </div>
-      )
-    }
-    if (message.role === 'assistant') {
-      if (!message.text && !(message.toolCalls && message.toolCalls.length > 0)) return null
-      return (
-        <div key={index} className="guide-row guide-assistant">
-          {message.text ? <p>{message.text}</p> : null}
-          {message.toolCalls && message.toolCalls.length > 0 ? (
-            <div className="guide-chips">
-              {message.toolCalls.map((call, i) => (
-                <span key={`${call.id || i}`} className="guide-chip">
-                  {chipLabel(call)}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      )
-    }
-    return null
-  }
-
-  if (!open) return null
+  const tourBar = tour ? (
+    <div className="guide-tour" data-testid="guide-tour">
+      <span className="guide-tour-title">{tour.title}</span>
+      <span className="guide-tour-stop">
+        Stop {tour.index + 1} of {tour.stops.length}: {tour.stops[tour.index]}
+      </span>
+      <div className="guide-tour-actions">
+        {tour.index < tour.stops.length - 1 ? (
+          <button
+            type="button"
+            className="btn btn--outline-accent"
+            onClick={() => {
+              const next = tour.index + 1
+              advanceTour(next)
+              const id = tour.stops[next]
+              if (id) museum.walkTo(id)
+            }}
+          >
+            Next stop
+          </button>
+        ) : null}
+        <button type="button" className="btn" onClick={endTour}>
+          End tour
+        </button>
+      </div>
+    </div>
+  ) : null
 
   return (
-    <div className="guide-panel" data-testid="guide-panel" role="dialog" aria-label="AI guide">
-      <header className="guide-head">
-        <span className="guide-badge">AI guide</span>
-        <span className="guide-scope">answers from the collection</span>
-        <button
-          type="button"
-          className="guide-close"
-          aria-label="Close the guide"
-          onClick={() => setOpen(false)}
-        >
-          ×
-        </button>
-      </header>
-
-      <div className="guide-log" ref={logRef} data-testid="guide-log">
-        {messages.length === 0 && !streamText ? (
-          <p className="guide-empty">
-            Ask about any exhibit. I can walk you there, open a portal, or plan a tour.
-          </p>
-        ) : null}
-        {messages.map(renderMessage)}
-        {streamText ? (
-          <div className="guide-row guide-assistant">
-            <p>{streamText}</p>
-          </div>
-        ) : null}
-        {chips.length > 0 ? (
-          <div className="guide-chips">
-            {chips.map((call, i) => (
-              <span key={`${call.id || i}`} className="guide-chip">
-                {chipLabel(call)}
-              </span>
-            ))}
-          </div>
-        ) : null}
-        {error ? <p className="guide-error">{error}</p> : null}
-      </div>
-
-      {tour ? (
-        <div className="guide-tour" data-testid="guide-tour">
-          <span className="guide-tour-title">{tour.title}</span>
-          <span className="guide-tour-stop">
-            Stop {tour.index + 1} of {tour.stops.length}: {tour.stops[tour.index]}
-          </span>
-          <div className="guide-tour-actions">
-            {tour.index < tour.stops.length - 1 ? (
-              <button
-                type="button"
-                className="guide-btn"
-                onClick={() => {
-                  const next = tour.index + 1
-                  advanceTour(next)
-                  const id = tour.stops[next]
-                  if (id) museum.walkTo(id)
-                }}
-              >
-                Next stop
-              </button>
-            ) : null}
-            <button type="button" className="guide-btn" onClick={endTour}>
-              End tour
-            </button>
-          </div>
-        </div>
-      ) : null}
-
-      <GuideVoice />
-
-      <footer className="guide-input">
-        <textarea
-          ref={inputRef}
-          value={input}
-          rows={2}
-          placeholder="Ask the guide…"
-          aria-label="Ask the guide"
-          onChange={(event) => {
-            setInput(event.target.value)
-            if (isSpeaking()) stopSpeech()
-          }}
-          onKeyDown={onKeyDown}
-          disabled={busy}
-        />
-        <button
-          type="button"
-          className="guide-send"
-          onClick={() => void handleSend()}
-          disabled={busy || input.trim() === ''}
-        >
-          {busy ? '…' : 'Ask'}
-        </button>
-      </footer>
-
-      <style>{guideCss}</style>
-    </div>
+    <GuideFrame
+      variant="scene"
+      state={presence}
+      scope="Answers from the collection"
+      emptyText="Ask about any exhibit. I can walk you there, open a portal, or plan a tour."
+      messages={messages}
+      streamText={streamText}
+      pendingChips={chips}
+      error={error}
+      busy={busy}
+      input={input}
+      inputRef={inputRef}
+      onInput={(value) => {
+        setInput(value)
+        if (isSpeaking()) stopSpeech()
+      }}
+      onSend={() => void handleSend()}
+      onClose={() => setOpen(false)}
+      renderChip={(call, key) => (
+        <span key={key} className="chip">
+          {chipLabel(call)}
+        </span>
+      )}
+      extras={
+        <>
+          {tourBar}
+          <GuideVoice />
+        </>
+      }
+    />
   )
 }
-
-const guideCss = `
-.guide-panel {
-  position: absolute; right: 14px; bottom: 96px; z-index: 7;
-  width: min(380px, calc(100vw - 28px));
-  max-height: min(560px, calc(100% - 160px));
-  display: flex; flex-direction: column;
-  background: rgba(10,12,14,.92); backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.14); border-radius: 14px;
-  color: #eef1f4; box-shadow: 0 12px 40px rgba(0,0,0,.5);
-  overflow: hidden;
-}
-.guide-head {
-  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
-}
-.guide-badge {
-  font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 13px;
-  letter-spacing: 0.1em; text-transform: uppercase; color: #ffb347;
-}
-.guide-scope { font-size: 11px; color: #8b939c; }
-.guide-close {
-  margin-left: auto; appearance: none; cursor: pointer; border: 0; background: transparent;
-  color: #aab2bb; font-size: 22px; line-height: 1; padding: 0 4px;
-}
-.guide-close:hover { color: #ffb347; }
-.guide-log {
-  flex: 1 1 auto; overflow-y: auto; padding: 12px;
-  display: flex; flex-direction: column; gap: 10px; min-height: 120px;
-}
-.guide-empty { margin: 0; font-size: 13px; line-height: 1.6; color: #8b939c; }
-.guide-row { max-width: 92%; padding: 9px 12px; border-radius: 10px; font-size: 13px; line-height: 1.55; }
-.guide-user { align-self: flex-end; background: #1d3a52; color: #eef1f4; white-space: pre-wrap; }
-.guide-assistant { align-self: flex-start; background: #161a1e; border: 1px solid rgba(255,255,255,.08); }
-.guide-assistant p { margin: 0; white-space: pre-wrap; }
-.guide-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 12px 4px; }
-.guide-chip {
-  font-size: 11px; padding: 4px 9px; border-radius: 999px;
-  border: 1px solid rgba(255,179,71,.5); color: #ffb347;
-  font-family: "Chakra Petch", sans-serif; letter-spacing: 0.04em;
-}
-.guide-error { margin: 0; font-size: 12px; color: #ff8a80; padding: 0 2px; }
-.guide-tour {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
-  padding: 8px 12px; border-top: 1px solid rgba(255,255,255,.1);
-  background: rgba(255,179,71,.06);
-}
-.guide-tour-title { font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 12px; color: #ffb347; }
-.guide-tour-stop { font-size: 12px; color: #c3c9d0; }
-.guide-tour-actions { margin-left: auto; display: flex; gap: 6px; }
-.guide-btn {
-  appearance: none; cursor: pointer; min-height: 28px; padding: 0 10px; border-radius: 7px;
-  border: 1px solid rgba(255,179,71,.5); background: transparent; color: #ffb347;
-  font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 11px;
-  letter-spacing: 0.06em; text-transform: uppercase;
-}
-.guide-btn:hover { background: rgba(255,179,71,.12); }
-.guide-input {
-  display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid rgba(255,255,255,.1);
-  align-items: flex-end;
-}
-.guide-input textarea {
-  flex: 1 1 auto; resize: none; min-height: 38px; padding: 9px 10px;
-  border-radius: 9px; border: 1px solid rgba(255,255,255,.16);
-  background: #0e1114; color: #eef1f4; font: inherit; font-size: 13px; line-height: 1.4;
-}
-.guide-input textarea:focus { outline: none; border-color: #ffb347; }
-.guide-send {
-  appearance: none; cursor: pointer; min-height: 40px; padding: 0 16px; border-radius: 9px;
-  border: 1px solid #ffb347; background: #ffb347; color: #14181c;
-  font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 12px;
-  letter-spacing: 0.06em; text-transform: uppercase;
-}
-.guide-send:disabled { opacity: .5; cursor: default; }
-`

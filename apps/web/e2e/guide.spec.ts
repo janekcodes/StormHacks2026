@@ -7,6 +7,16 @@ const NDJSON = (events: Array<Record<string, unknown>>): string =>
   events.map((event) => JSON.stringify(event)).join('\n')
 
 test.describe('AI guide', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        sessionStorage.setItem('museum.welcome.v1', '1')
+      } catch {
+        /* private mode */
+      }
+    })
+  })
+
   test('3D panel streams a mocked answer and shows a walkTo chip', async ({ page }) => {
     test.setTimeout(120_000)
     await page.route('**/api/guide', (route) =>

@@ -2,7 +2,7 @@
 
 import type { ExhibitId } from '@museum/content/schema'
 import { portalLoader, type PortalModule } from '@museum/scene/portal'
-import { lazy, Suspense, type ComponentType, type LazyExoticComponent } from 'react'
+import { Component, lazy, Suspense, type ComponentType, type LazyExoticComponent, type ReactNode } from 'react'
 
 type PortalView = ComponentType<{ onClose?: () => void }>
 
@@ -18,12 +18,53 @@ function viewFor(id: ExhibitId): LazyExoticComponent<PortalView> | null {
   return Comp
 }
 
+function PortalFallback({ children }: { children: ReactNode }) {
+  return (
+    <div className="portal-fallback" role="status">
+      {children}
+    </div>
+  )
+}
+
+class PortalBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+
+  static getDerivedStateFromError(): { failed: boolean } {
+    return { failed: true }
+  }
+
+  render(): ReactNode {
+    if (this.state.failed) {
+      return (
+        <PortalFallback>
+          <p className="portal-fallback-title">This portal could not start</p>
+          <p>Reload the page to try again, or open the exhibit in the museum.</p>
+        </PortalFallback>
+      )
+    }
+    return this.props.children
+  }
+}
+
 export function ExhibitPortal({ id }: { id: ExhibitId }) {
   const Portal = viewFor(id)
   if (!Portal) return null
   return (
-    <Suspense fallback={<p>Loading portal...</p>}>
-      <Portal />
-    </Suspense>
+    <PortalBoundary>
+      <Suspense
+        fallback={
+          <PortalFallback>
+            <span className="loader" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+            <p>Loading portal</p>
+          </PortalFallback>
+        }
+      >
+        <Portal />
+      </Suspense>
+    </PortalBoundary>
   )
 }

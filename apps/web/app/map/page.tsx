@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { FloorMap } from '@museum/scene/map'
-import { SiteNav } from '../../components/SiteNav'
+import { FloorMap, FloorMapLegend } from '@museum/scene/map'
+import { SiteFooter } from '../../components/SiteFooter'
+import { SiteHeader } from '../../components/SiteHeader'
 import { building, exhibits } from '../../lib/museum-data'
 import styles from '../museum.module.css'
 
@@ -11,20 +12,27 @@ export const metadata: Metadata = {
 
 export default function MapPage() {
   return (
-    <div className={styles.shell}>
-      <SiteNav />
-      <main className={styles.main}>
+    <div className="site">
+      <SiteHeader />
+      <main id="main" className={`site-main container ${styles.main}`}>
         <header className={styles.header}>
-          <h1>Floor plan</h1>
+          <p className="kicker">Floor plan</p>
+          <h1>The whole museum on one page</h1>
           <p className={styles.lede}>
-            All 77 exhibits on one map. Tab through markers in zone order, or click a marker to open
-            its page.
+            All {exhibits.length} exhibits in place. Tab through the markers in zone order, or click one to
+            read its exhibit page.
           </p>
         </header>
-        <div className={styles.mapWrap}>
-          <FloorMap building={building} exhibits={exhibits} />
+        <div className={styles.mapLayout}>
+          <div className={`panel ${styles.mapWrap}`}>
+            <FloorMap building={building} exhibits={exhibits} />
+          </div>
+          <aside className={`panel ${styles.legend}`} aria-label="Map key">
+            <FloorMapLegend building={building} exhibits={exhibits} />
+          </aside>
         </div>
       </main>
+      <SiteFooter />
     </div>
   )
 }

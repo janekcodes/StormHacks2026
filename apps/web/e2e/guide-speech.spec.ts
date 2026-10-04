@@ -8,11 +8,14 @@ const NDJSON = (events: Array<Record<string, unknown>>): string =>
   events.map((event) => JSON.stringify(event)).join('\n')
 
 test.describe('Guide speech', () => {
-  test('speaks streamed answers when enabled, shows a caption, and stops', async ({ page }) => {
-    test.setTimeout(120_000)
+  test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
-      // Replace the audio element with a stub that never emits `ended`, so the
-      // current sentence caption stays put until the visitor acts.
+      try {
+        sessionStorage.setItem('museum.welcome.v1', '1')
+      } catch {
+        /* private mode */
+      }
+      // Replace Audio before any page script runs so captions stay put until Stop.
       class FakeAudio {
         src = ''
         onended: ((this: HTMLAudioElement, ev: Event) => unknown) | null = null
@@ -30,6 +33,10 @@ test.describe('Guide speech', () => {
       }
       ;(window as unknown as { Audio: unknown }).Audio = FakeAudio
     })
+  })
+
+  test('speaks streamed answers when enabled, shows a caption, and stops', async ({ page }) => {
+    test.setTimeout(120_000)
 
     await page.route('**/api/guide', (route) =>
       route.fulfill({

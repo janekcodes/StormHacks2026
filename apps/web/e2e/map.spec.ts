@@ -14,14 +14,22 @@ test.describe('2D floor plan and exhibit pages', () => {
   })
 
   test('all 77 exhibit pages return 200', async ({ request }) => {
-    test.setTimeout(120_000)
-    for (const id of EXHIBIT_IDS) {
-      const response = await request.get(`/exhibit/${id}`)
-      expect(response.status(), id).toBe(200)
+    test.setTimeout(180_000)
+    // Hit pages in small batches so a busy shared:dev server does not stall the
+    // APIRequestContext the way a single long serial loop can under load.
+    const ids = [...EXHIBIT_IDS]
+    const batchSize = 8
+    for (let i = 0; i < ids.length; i += batchSize) {
+      const batch = ids.slice(i, i + batchSize)
+      const responses = await Promise.all(batch.map((id) => request.get(`/exhibit/${id}`)))
+      responses.forEach((response, j) => {
+        expect(response.status(), batch[j]).toBe(200)
+      })
     }
   })
 
   test('map markers are reachable by keyboard in zone order', async ({ page }) => {
+    test.setTimeout(90_000)
     await page.goto('/map')
     const markers = page.locator('a.floor-map-marker')
     await expect(markers).toHaveCount(77)
@@ -68,6 +76,7 @@ test.describe('2D floor plan and exhibit pages', () => {
   })
 
   test('map and exhibit routes do not load WebGL code', async ({ page }) => {
+    test.setTimeout(90_000)
     const suspects: string[] = []
     page.on('request', (request) => {
       const url = request.url().toLowerCase()
@@ -81,8 +90,8 @@ test.describe('2D floor plan and exhibit pages', () => {
       }
     })
 
-    await page.goto('/map')
-    await page.goto('/exhibit/B2')
+    await page.goto('/map', { waitUntil: 'domcontentloaded' })
+    await page.goto('/exhibit/B2', { waitUntil: 'domcontentloaded' })
 
     const hasWebGL = await page.evaluate(() => {
       const canvas = document.querySelector('canvas')

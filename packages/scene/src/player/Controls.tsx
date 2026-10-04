@@ -24,6 +24,7 @@ import { isTravelling } from '../nav/travel'
 import { requestOpen } from '../exhibits/open'
 import { useExhibitUi } from '../exhibits/ui'
 import { usePassport } from '../passport'
+import { useReducedMotion } from '../ui'
 
 const MOVE_KEYS = new Set([
   'w',
@@ -48,15 +49,19 @@ function keyName(e: KeyboardEvent): string {
   return k
 }
 
-/** Typing targets (the guide input, any future fields) must never drive movement. */
-function isEditableTarget(e: KeyboardEvent): boolean {
+/**
+ * Typing targets (the guide input, any future fields) and keyboard-driven
+ * widgets (the Navigate menu, dialogs) must never drive movement.
+ */
+function isUiTarget(e: KeyboardEvent): boolean {
   const target = e.target
   if (!(target instanceof HTMLElement)) return false
   return (
     target.tagName === 'INPUT' ||
     target.tagName === 'TEXTAREA' ||
     target.tagName === 'SELECT' ||
-    target.isContentEditable
+    target.isContentEditable ||
+    target.closest('[role="menu"], [role="dialog"]') !== null
   )
 }
 
@@ -76,6 +81,7 @@ export function Controls({ building, exhibits, container, obstacles }: ControlsP
   )
   const circles = useMemo(() => [...buildObstacles(building), ...(obstacles ?? [])], [building, obstacles])
   const bob = useRef(0)
+  const reducedMotion = useReducedMotion()
   const zoneTick = useRef(0)
   const drag = useRef<{ x: number; y: number; moved: number } | null>(null)
 
@@ -88,7 +94,7 @@ export function Controls({ building, exhibits, container, obstacles }: ControlsP
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (usePassport.getState().openId) return
-      if (isEditableTarget(e)) return
+      if (isUiTarget(e)) return
       const k = keyName(e)
       if (MOVE_KEYS.has(k)) {
         e.preventDefault()
@@ -216,7 +222,8 @@ export function Controls({ building, exhibits, container, obstacles }: ControlsP
 
     if (moving) bob.current += clamped * 9
 
-    camera.position.set(x, EYE_HEIGHT + (moving ? Math.sin(bob.current) * 0.018 : 0), z)
+    const sway = moving && !reducedMotion ? Math.sin(bob.current) * 0.018 : 0
+    camera.position.set(x, EYE_HEIGHT + sway, z)
     camera.rotation.set(s.pitch, yaw, 0)
 
     zoneTick.current++
@@ -234,9 +241,6 @@ export function Controls({ building, exhibits, container, obstacles }: ControlsP
 /** On-screen hold buttons for touch. Rendered outside the Canvas. */
 export function TouchControls() {
   const setKey = usePlayer((s) => s.setKey)
-  const clearKeys = usePlayer((s) => s.clearKeys)
-  const toggleMap = usePlayer((s) => s.toggleMap)
-  const showMap = usePlayer((s) => s.showMap)
 
   const hold = (key: string) => ({
     onPointerDown: (e: ReactPointerEvent<HTMLButtonElement>) => {
@@ -250,27 +254,18 @@ export function TouchControls() {
   })
 
   return (
-    <div className="museum-touch" aria-label="Touch movement controls">
-      <button type="button" className="museum-btn" aria-label="Turn left" {...hold('vl')}>
-        Left
+    <div className="museum-touch" role="group" aria-label="Touch movement controls">
+      <button type="button" className="btn btn--glass" data-key="vf" aria-label="Walk forward" {...hold('vf')}>
+        <span aria-hidden="true">▲</span>
       </button>
-      <button type="button" className="museum-btn" aria-label="Walk forward" {...hold('vf')}>
-        Fwd
+      <button type="button" className="btn btn--glass" data-key="vl" aria-label="Turn left" {...hold('vl')}>
+        <span aria-hidden="true">◀</span>
       </button>
-      <button type="button" className="museum-btn" aria-label="Walk back" {...hold('vb')}>
-        Back
+      <button type="button" className="btn btn--glass" data-key="vb" aria-label="Walk back" {...hold('vb')}>
+        <span aria-hidden="true">▼</span>
       </button>
-      <button type="button" className="museum-btn" aria-label="Turn right" {...hold('vr')}>
-        Right
-      </button>
-      <button
-        type="button"
-        className="museum-btn"
-        aria-pressed={showMap}
-        onClick={() => toggleMap()}
-        onPointerUp={() => clearKeys()}
-      >
-        Map
+      <button type="button" className="btn btn--glass" data-key="vr" aria-label="Turn right" {...hold('vr')}>
+        <span aria-hidden="true">▶</span>
       </button>
     </div>
   )

@@ -119,7 +119,7 @@ export function Narrator({ audio, title }: NarratorProps) {
       <div className="narrator-controls">
         <button
           type="button"
-          className="narrator-btn"
+          className="btn"
           onClick={togglePlay}
           aria-label={playing ? `Pause narration for ${title}` : `Play narration for ${title}`}
         >
@@ -127,7 +127,7 @@ export function Narrator({ audio, title }: NarratorProps) {
         </button>
         <button
           type="button"
-          className="narrator-btn"
+          className="btn"
           onClick={toggleMute}
           aria-pressed={muted}
           aria-label={muted ? 'Unmute narration' : 'Mute narration'}
@@ -136,7 +136,7 @@ export function Narrator({ audio, title }: NarratorProps) {
         </button>
         <button
           type="button"
-          className="narrator-btn"
+          className="btn"
           onClick={toggleSpeed}
           aria-pressed={speed !== 1}
           aria-label="Playback speed"
@@ -157,27 +157,6 @@ export function Narrator({ audio, title }: NarratorProps) {
           ))}
         </p>
       ) : null}
-      <style>{narratorCss}</style>
     </div>
   )
 }
-
-const narratorCss = `
-.narrator { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; }
-.narrator-controls { display: flex; gap: 8px; flex-wrap: wrap; }
-.narrator-btn {
-  appearance: none; cursor: pointer; min-height: 36px; padding: 0 12px; border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--t) 50%, #3d434b); background: transparent; color: #e6e9ec;
-  font-family: "Chakra Petch", sans-serif; font-weight: 700; font-size: 12px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-}
-.narrator-btn:hover { background: color-mix(in srgb, var(--t) 12%, transparent); }
-.narrator-btn:focus-visible { outline: 2px solid #ffb347; outline-offset: 2px; }
-.narrator-captions { margin: 0; font-size: 15px; line-height: 1.7; color: #c9d1d6; }
-.narrator-word { transition: color .15s ease; }
-.narrator-word-current { color: #ffb347; font-weight: 600; }
-.narrator-error { margin: 0; font-size: 13px; color: #aab2bb; }
-@media (prefers-reduced-motion: reduce) {
-  .narrator-word { transition: none; }
-}
-`

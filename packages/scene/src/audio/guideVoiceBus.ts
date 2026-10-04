@@ -111,6 +111,13 @@ function enqueue(text: string): void {
   const gen = generation
   const item: QueuedSentence = { text: trimmed, status: 'loading', url: null }
   queue.push(item)
+  // Caption appears as soon as a sentence is ready to speak, so visitors (and
+  // e2e) see it even while /api/speak is still fetching audio.
+  if (queue.length === 1) {
+    caption = trimmed
+    speaking = true
+    emit()
+  }
   void loadSentence(item, gen)
 }
 

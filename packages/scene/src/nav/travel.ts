@@ -3,6 +3,7 @@
 import { useFrame } from '@react-three/fiber'
 import { stopNarration } from '../audio/narratorBus'
 import { usePlayer } from '../player/usePlayer'
+import { prefersReducedMotion } from '../ui'
 import { findPath, type NavPoint2 } from './useNav'
 
 export const TRAVEL_SPEED_M_S = 8
@@ -105,7 +106,8 @@ export function cancelTravel(): void {
 
 /**
  * Pathfind and walk to a world target along the navmesh.
- * Any movement key cancels travel.
+ * Any movement key cancels travel. With reduced motion the walk is a cut:
+ * the next frame lands on the target.
  */
 export function travelTo(
   target: { x: number; z: number },
@@ -126,7 +128,7 @@ export function travelTo(
   player.clearKeys()
   travel = {
     points: path.points,
-    done: 0,
+    done: prefersReducedMotion() ? path.length : 0,
     length: path.length,
     face: options.face ?? null,
     pitch: options.pitch ?? null,
