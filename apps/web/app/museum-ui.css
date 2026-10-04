@@ -1113,3 +1113,63 @@
   stroke: var(--c-accent);
   stroke-width: 2px;
 }
+
+/* Guided tour */
+.tour-bar {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-4);
+  transform: translateX(-50%);
+  z-index: calc(var(--z-widget) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: min(960px, calc(100vw - 32px));
+  padding: var(--space-3) var(--space-4);
+}
+
+.tour-bar-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.tour-bar-stop {
+  font-weight: 600;
+}
+
+.tour-bar-caption {
+  opacity: 0.9;
+}
+
+.tour-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tour-bar-mic[aria-pressed='true'] {
+  outline: 2px solid var(--c-accent);
+}
+
+.tour-bar-ask {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.tour-start {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: calc(var(--z-widget) + 2);
+  background: rgb(0 0 0 / 0.45);
+}
+
+@media (max-width: 640px) {
+  .tour-bar {
+    bottom: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+  }
+}

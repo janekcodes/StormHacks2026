@@ -53,7 +53,7 @@ function keyName(e: KeyboardEvent): string {
  * Typing targets (the guide input, any future fields) and keyboard-driven
  * widgets (the Navigate menu, dialogs) must never drive movement.
  */
-function isUiTarget(e: KeyboardEvent): boolean {
+export function isUiTarget(e: KeyboardEvent): boolean {
   const target = e.target
   if (!(target instanceof HTMLElement)) return false
   return (

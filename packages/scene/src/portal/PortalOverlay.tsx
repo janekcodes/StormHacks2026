@@ -15,6 +15,7 @@ import {
 import { Narrator } from '../audio/Narrator'
 import { closePortal, showNeighbour } from '../exhibits/open'
 import { useGuideStore } from '../guide/state'
+import { useTourStore } from '../tour/store'
 import { PASSPORT_TOTAL, passportCount, usePassport } from '../passport'
 import { lightInk, useFocusTrap, usePresence } from '../ui'
 import { portalLoader, type PortalModule } from './registry'
@@ -112,7 +113,10 @@ export function PortalOverlay({
   const presence = usePresence(Boolean(current))
   const exhibit = current ?? (presence ? last.current : undefined)
 
-  useFocusTrap(panelRef, Boolean(current) && !guideOpen)
+  // The tour bar must stay reachable while the visitor plays with the exhibit.
+  const touring = useTourStore((s) => s.state.phase !== 'idle' && s.state.phase !== 'done')
+
+  useFocusTrap(panelRef, Boolean(current) && !guideOpen && !touring)
 
   useEffect(() => {
     if (current) {
@@ -157,7 +161,7 @@ export function PortalOverlay({
         ref={panelRef}
         className="portal-panel"
         role="dialog"
-        aria-modal={guideOpen ? undefined : true}
+        aria-modal={guideOpen || touring ? undefined : true}
         aria-labelledby={titleId}
         tabIndex={-1}
         style={{ ['--t' as string]: ink, ['--t-light' as string]: lightInk(ink) }}

@@ -1,6 +1,7 @@
 'use client'
 
 import type { Building } from '@museum/content/plan-schema'
+import type { Tour } from '@museum/content/tour-schema'
 import type { Exhibit, ExhibitId } from '@museum/content/schema'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -30,6 +31,9 @@ import { buildCollisionSegments } from './player/collision'
 import { Controls } from './player/Controls'
 import { usePlayer } from './player/usePlayer'
 import { detectQuality, settingsFor, type QualityTier } from './quality'
+import { TourBar } from './tour/TourBar'
+import { TourDriver } from './tour/TourDriver'
+import { useTourStore } from './tour/store'
 
 export interface MuseumProps {
   building: Building
@@ -39,6 +43,10 @@ export interface MuseumProps {
   navmeshUrl?: string
   /** Deep link: walk to this exhibit and open its portal once the navmesh is ready. */
   initialExhibit?: ExhibitId | null
+  /** Guided tour content; enables the Take the tour button and the tour bar. */
+  tour?: Tour | null
+  /** Offer to start the tour once the scene is ready (from ?tour=demo). */
+  startTour?: boolean
 }
 
 const WELCOME_KEY = 'museum.welcome.v1'
@@ -205,7 +213,9 @@ export function Museum({
   exhibits,
   standpoints,
   navmeshUrl = '/navmesh.bin',
-  initialExhibit = null
+  initialExhibit = null,
+  tour = null,
+  startTour = false
 }: MuseumProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [quality, setQuality] = useState<QualityTier | null>(null)
@@ -281,7 +291,8 @@ export function Museum({
 
   const settings = quality ? settingsFor(quality) : null
   const sceneReady = ready && navReady
-  const welcome = useWelcome(sceneReady, initialExhibit !== null, container)
+  const tourPhase = useTourStore((s) => s.state.phase)
+  const welcome = useWelcome(sceneReady, initialExhibit !== null || startTour, container)
 
   return (
     <div
@@ -326,6 +337,23 @@ export function Museum({
       ) : null}
       <PortalOverlay exhibits={exhibits} returnFocus={container} />
       <GuidePanel exhibits={exhibits} />
+      {tour ? <TourDriver tour={tour} /> : null}
+      {tour ? <TourBar exhibits={exhibits} /> : null}
+      {tour && startTour && sceneReady && tourPhase === 'idle' ? (
+        <div className="tour-start" role="dialog" aria-label="Start the tour">
+          <button
+            type="button"
+            className="btn btn--primary"
+            data-testid="tour-start"
+            onClick={() => {
+              welcome.dismiss()
+              useTourStore.getState().dispatch({ type: 'START' })
+            }}
+          >
+            Start the tour
+          </button>
+        </div>
+      ) : null}
       <LoadingScreen stages={{ quality: quality !== null, nav: navReady, scene: ready }} />
     </div>
   )

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { SiteHeader } from '../../components/SiteHeader'
-import { building, exhibits, standpoints, isExhibitId } from '../../lib/museum-data'
+import { building, exhibits, standpoints, tour, isExhibitId } from '../../lib/museum-data'
 
 function VisitLoading() {
   return (
@@ -35,6 +35,8 @@ function VisitMuseum() {
       exhibits={exhibits}
       standpoints={standpoints}
       initialExhibit={initialExhibit}
+      tour={tour}
+      startTour={params.get('tour') === tour.id}
     />
   )
 }
