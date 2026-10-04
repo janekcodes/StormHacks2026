@@ -259,7 +259,12 @@ export function reduceTour(state: TourState, event: TourEvent, ctx: TourContext)
       if (state.phase === 'intro') return enterBridge(state, 0, ctx, TEARDOWN)
       return back(state, ctx)
     case 'PAUSE':
-      if (state.pauseReason) return same({ ...state, pauseReason: event.reason })
+      if (state.pauseReason) {
+        const isListening = state.pauseReason === 'listening' || state.pauseReason === 'answering'
+        const isNewListening = event.reason === 'listening' || event.reason === 'answering'
+        if (isListening && !isNewListening) return same(state)
+        return same({ ...state, pauseReason: event.reason })
+      }
       return { state: { ...state, pauseReason: event.reason }, effects: pauseEffects(state) }
     case 'RESUME':
       if (!state.pauseReason) return same(state)
@@ -278,7 +283,7 @@ export function reduceTour(state: TourState, event: TourEvent, ctx: TourContext)
 
   switch (event.type) {
     case 'WALK_CANCELLED':
-      if (state.phase !== 'bridge') return same(state)
+      if (state.phase !== 'bridge' || state.walkDone) return same(state)
       return {
         state: { ...state, pauseReason: 'user-move' },
         effects: [{ type: 'pauseClip' }, { type: 'clearTimers' }]

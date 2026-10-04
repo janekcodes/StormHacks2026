@@ -178,4 +178,94 @@ describe('reduceTour', () => {
     expect(ended.state).toEqual({ ...initialTourState, auto: false })
     expect(types(ended.effects)).toEqual(['clearTimers', 'stopClip', 'cancelWalk', 'closePortal'])
   })
+
+  it('WALK_CANCELLED is ignored once the walk has arrived', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }]).state // clip done, walking
+    const withWalkDone = { ...bridge, walkDone: true } // manually set walkDone without clip done
+    const out = run([{ type: 'WALK_CANCELLED' }], withWalkDone)
+    expect(out.state).toEqual(withWalkDone)
+    expect(out.effects).toEqual([])
+  })
+
+  it('PAUSE user-pause over listening keeps listening', () => {
+    const paused = run([{ type: 'PAUSE', reason: 'listening' }], atNarrate).state
+    const out = run([{ type: 'PAUSE', reason: 'user-pause' }], paused)
+    expect(out.state.pauseReason).toBe('listening')
+    expect(out.effects).toEqual([])
+    expect(run([{ type: 'NEXT' }], out.state).state.pauseReason).toBe('listening')
+  })
+
+  it('PAUSE answering over listening becomes answering', () => {
+    const paused = run([{ type: 'PAUSE', reason: 'listening' }], atNarrate).state
+    const out = run([{ type: 'PAUSE', reason: 'answering' }], paused)
+    expect(out.state.pauseReason).toBe('answering')
+    expect(out.effects).toEqual([])
+  })
+
+  it('PORTAL_CLOSED in dwell pauses with portalLost; RESUME re-opens portal and starts dwell timer', () => {
+    const dwell = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }, { type: 'WALK_ARRIVED' }, { type: 'NARRATION_ENDED' }]).state
+    const closed = run([{ type: 'PORTAL_CLOSED' }], dwell)
+    expect(closed.state).toMatchObject({ pauseReason: 'portal-closed', portalLost: true, phase: 'dwell' })
+    expect(closed.effects).toContainEqual({ type: 'clearTimers' })
+    const resumed = run([{ type: 'RESUME' }], closed.state)
+    expect(resumed.effects).toContainEqual({ type: 'openPortal', id: 'A1' })
+    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'dwell', ms: DWELL_MS })
+    expect(resumed.state.portalLost).toBe(false)
+  })
+
+  it('pause and resume in intro', () => {
+    const intro = run([{ type: 'START' }]).state
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], intro)
+    expect(types(paused.effects)).toEqual(['pauseClip', 'clearTimers'])
+    const resumed = run([{ type: 'RESUME' }], paused.state)
+    expect(types(resumed.effects)).toEqual(['resumeClip', 'startTimer'])
+    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+  })
+
+  it('pause and resume in outro', () => {
+    let state = atNarrate
+    state = run([{ type: 'NEXT' }, { type: 'NEXT' }, { type: 'NEXT' }], state).state
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], state)
+    expect(types(paused.effects)).toEqual(['pauseClip', 'clearTimers'])
+    const resumed = run([{ type: 'RESUME' }], paused.state)
+    expect(types(resumed.effects)).toEqual(['resumeClip', 'startTimer'])
+    expect(resumed.effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+  })
+
+  it('RESUME mid-bridge with clip unfinished resumes clip and re-walks if walk unfinished', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }]).state // in bridge, clipDone=false, walkDone=false
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], bridge).state
+    const resumed = run([{ type: 'RESUME' }], paused)
+    expect(resumed.effects).toContainEqual({ type: 'resumeClip' })
+    expect(resumed.effects).toContainEqual({ type: 'walk', id: 'A1' })
+  })
+
+  it('skip from dwell', () => {
+    const dwell = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }, { type: 'WALK_ARRIVED' }, { type: 'NARRATION_ENDED' }]).state
+    const out = run([{ type: 'NEXT' }], dwell)
+    expect(out.state.phase).toBe('bridge')
+    expect(out.state.index).toBe(1)
+  })
+
+  it('skip from outro goes to done', () => {
+    let state = atNarrate
+    state = run([{ type: 'NEXT' }, { type: 'NEXT' }, { type: 'NEXT' }], state).state
+    const out = run([{ type: 'NEXT' }], state)
+    expect(out.state.phase).toBe('done')
+  })
+
+  it('skip from portal-closed pause', () => {
+    const closed = run([{ type: 'PORTAL_CLOSED' }], atNarrate).state
+    const out = run([{ type: 'NEXT' }], closed)
+    expect(out.state.phase).toBe('bridge')
+    expect(out.state.index).toBe(1)
+    expect(out.state.pauseReason).toBeNull()
+  })
+
+  it('progress events are ignored while paused in bridge', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }]).state
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], bridge).state
+    expect(run([{ type: 'CLIP_ENDED' }], paused).state).toEqual(paused)
+    expect(run([{ type: 'WALK_ARRIVED' }], paused).state).toEqual(paused)
+  })
 })
