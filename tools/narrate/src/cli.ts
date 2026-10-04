@@ -64,12 +64,18 @@ ExhibitsFileSchema.parse(raw)
 
 const dictionary = loadPronunciation(pronunciationPath)
 
-const built = raw.exhibits.filter(
-  (exhibit) => exhibit.tier === 'built' && (exhibit.narration ?? '').trim() !== ''
+// Narration is generated for every tier with a written narration: Built, Core
+// and Extended (BLUEPRINT section 12; plan 16 widened this from Built only).
+const NARRATED_TIERS = new Set(['built', 'core', 'extended'])
+const targets = raw.exhibits.filter(
+  (exhibit) =>
+    exhibit.tier !== undefined &&
+    NARRATED_TIERS.has(exhibit.tier) &&
+    (exhibit.narration ?? '').trim() !== ''
 )
-const selected = options.only ? built.filter((exhibit) => exhibit.id === options.only) : built
+const selected = options.only ? targets.filter((exhibit) => exhibit.id === options.only) : targets
 if (options.only && selected.length === 0) {
-  throw new Error(`no built exhibit with narration matched --only ${options.only}`)
+  throw new Error(`no exhibit with narration matched --only ${options.only}`)
 }
 
 let changed = 0
