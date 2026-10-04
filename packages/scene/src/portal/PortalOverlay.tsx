@@ -174,27 +174,50 @@ export function PortalOverlay({
           }
         }}
       >
-        <div className="portal-inner">
-          <div className="portal-head">
-            <div className="portal-copy">
-              <div className="portal-chips">
-                <span className="badge" data-tier={exhibit.tier}>
-                  {tierLabel(exhibit.tier)}
+        {/* A display case: the wall label on the left, the interactive on the stage. */}
+        <div className="portal-case" data-touring={touring ? 'true' : undefined}>
+          <aside className="portal-label">
+            <button type="button" className="portal-close" data-testid="portal-close" onClick={() => closePortal()}>
+              <span aria-hidden="true">←</span> Back to museum
+              <span className="keycap" aria-hidden="true">
+                Esc
+              </span>
+            </button>
+            <div className="portal-label-scroll">
+              <div className="portal-plate">
+                <span className="portal-plate-id" aria-hidden="true">
+                  {exhibit.id}
                 </span>
-                <span className="portal-id">
-                  {exhibit.id} · {exhibit.year} · {zone}
-                </span>
+                {exhibit.tier === 'built' ? null : (
+                  <span className="badge" data-tier={exhibit.tier}>
+                    {tierLabel(exhibit.tier)}
+                  </span>
+                )}
               </div>
               <h2 id={titleId}>{exhibit.title}</h2>
-              <p>{caption}</p>
-              <p className="portal-passport">
-                Passport {count} of {PASSPORT_TOTAL}
+              <p className="portal-meta">
+                <span className="visually-hidden">{exhibit.id}, </span>
+                {exhibit.year}, {zone}
               </p>
+              <p className="portal-caption">{caption}</p>
+              {exhibit.tier === 'built' && exhibit.audio ? (
+                <Narrator audio={exhibit.audio} title={exhibit.title} />
+              ) : null}
+              {exhibit.tier === 'built' && exhibit.stats && exhibit.stats.length > 0 ? (
+                <dl className="portal-stats">
+                  {exhibit.stats.map((stat) => (
+                    <div key={`${stat.k}-${stat.v}`}>
+                      <dt>{stat.k}</dt>
+                      <dd>{stat.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
             </div>
-            <div className="portal-actions">
+            <div className="portal-label-foot">
               <button
                 type="button"
-                className="btn btn--outline-accent"
+                className="btn btn--outline-accent portal-ask"
                 data-testid="portal-ask-guide"
                 aria-label="Ask the AI guide about this exhibit"
                 onClick={() =>
@@ -204,7 +227,7 @@ export function PortalOverlay({
                 Ask the guide
               </button>
               {touring ? null : (
-                <>
+                <div className="portal-walk">
                   <button
                     type="button"
                     className="btn"
@@ -221,27 +244,25 @@ export function PortalOverlay({
                   >
                     Next <span aria-hidden="true">→</span>
                   </button>
-                </>
+                </div>
               )}
-              <button type="button" className="btn btn--primary" data-testid="portal-close" onClick={() => closePortal()}>
-                Back to museum <span className="keycap" aria-hidden="true">Esc</span>
-              </button>
+              <p className="portal-passport">
+                <span>
+                  Passport {count} of {PASSPORT_TOTAL}
+                </span>
+                <span className="portal-passport-track" aria-hidden="true">
+                  <span style={{ width: `${Math.min(100, (count / PASSPORT_TOTAL) * 100)}%` }} />
+                </span>
+              </p>
             </div>
+          </aside>
+          <div className="portal-stage">
+            <PortalBody exhibit={exhibit} />
           </div>
-          {touring ? <TourBar variant="inline" exhibits={exhibits} /> : null}
-          {exhibit.tier === 'built' && exhibit.audio ? (
-            <Narrator audio={exhibit.audio} title={exhibit.title} />
-          ) : null}
-          <PortalBody exhibit={exhibit} />
-          {exhibit.tier === 'built' && exhibit.stats && exhibit.stats.length > 0 ? (
-            <ul className="portal-stats">
-              {exhibit.stats.map((stat) => (
-                <li key={`${stat.k}-${stat.v}`}>
-                  <span className="portal-stat-k">{stat.k}</span>
-                  <span className="portal-stat-v">{stat.v}</span>
-                </li>
-              ))}
-            </ul>
+          {touring ? (
+            <div className="portal-tour">
+              <TourBar variant="inline" exhibits={exhibits} />
+            </div>
           ) : null}
         </div>
       </section>
