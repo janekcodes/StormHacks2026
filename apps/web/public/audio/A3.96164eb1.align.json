@@ -1,0 +1,179 @@
+{
+  "words": [
+    {
+      "text": "At",
+      "startMs": 0,
+      "endMs": 151
+    },
+    {
+      "text": "Bletchley",
+      "startMs": 197,
+      "endMs": 592
+    },
+    {
+      "text": "Park,",
+      "startMs": 650,
+      "endMs": 1080
+    },
+    {
+      "text": "the",
+      "startMs": 1196,
+      "endMs": 1289
+    },
+    {
+      "text": "Bombe",
+      "startMs": 1335,
+      "endMs": 1567
+    },
+    {
+      "text": "helped",
+      "startMs": 1625,
+      "endMs": 1881
+    },
+    {
+      "text": "break",
+      "startMs": 1950,
+      "endMs": 2241
+    },
+    {
+      "text": "German",
+      "startMs": 2322,
+      "endMs": 2659
+    },
+    {
+      "text": "Enigma",
+      "startMs": 2717,
+      "endMs": 3065
+    },
+    {
+      "text": "messages,",
+      "startMs": 3111,
+      "endMs": 3704
+    },
+    {
+      "text": "and",
+      "startMs": 3878,
+      "endMs": 4017
+    },
+    {
+      "text": "in",
+      "startMs": 4075,
+      "endMs": 4145
+    },
+    {
+      "text": "1944",
+      "startMs": 4191,
+      "endMs": 5108
+    },
+    {
+      "text": "Colossus",
+      "startMs": 5387,
+      "endMs": 6502
+    },
+    {
+      "text": "attacked",
+      "startMs": 6571,
+      "endMs": 6954
+    },
+    {
+      "text": "the",
+      "startMs": 6978,
+      "endMs": 7047
+    },
+    {
+      "text": "Lorenz",
+      "startMs": 7105,
+      "endMs": 7488
+    },
+    {
+      "text": "cipher.",
+      "startMs": 7523,
+      "endMs": 8150
+    },
+    {
+      "text": "Colossus",
+      "startMs": 8591,
+      "endMs": 9485
+    },
+    {
+      "text": "used",
+      "startMs": 9810,
+      "endMs": 10101
+    },
+    {
+      "text": "valves",
+      "startMs": 10147,
+      "endMs": 10542
+    },
+    {
+      "text": "and",
+      "startMs": 10577,
+      "endMs": 10658
+    },
+    {
+      "text": "paper",
+      "startMs": 10716,
+      "endMs": 10995
+    },
+    {
+      "text": "tape,",
+      "startMs": 11041,
+      "endMs": 11447
+    },
+    {
+      "text": "and",
+      "startMs": 11622,
+      "endMs": 11761
+    },
+    {
+      "text": "it",
+      "startMs": 11819,
+      "endMs": 11877
+    },
+    {
+      "text": "is",
+      "startMs": 11923,
+      "endMs": 11993
+    },
+    {
+      "text": "counted",
+      "startMs": 12051,
+      "endMs": 12399
+    },
+    {
+      "text": "as",
+      "startMs": 12434,
+      "endMs": 12516
+    },
+    {
+      "text": "the",
+      "startMs": 12562,
+      "endMs": 12632
+    },
+    {
+      "text": "first",
+      "startMs": 12690,
+      "endMs": 12992
+    },
+    {
+      "text": "programmable",
+      "startMs": 13061,
+      "endMs": 13653
+    },
+    {
+      "text": "electronic",
+      "startMs": 13711,
+      "endMs": 14280
+    },
+    {
+      "text": "digital",
+      "startMs": 14338,
+      "endMs": 14710
+    },
+    {
+      "text": "computer.",
+      "startMs": 14768,
+      "endMs": 15650
+    }
+  ]
+}

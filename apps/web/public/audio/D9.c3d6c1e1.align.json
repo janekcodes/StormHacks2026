@@ -1,0 +1,144 @@
+{
+  "words": [
+    {
+      "text": "Larry",
+      "startMs": 0,
+      "endMs": 348
+    },
+    {
+      "text": "Page",
+      "startMs": 406,
+      "endMs": 743
+    },
+    {
+      "text": "and",
+      "startMs": 778,
+      "endMs": 859
+    },
+    {
+      "text": "Sergey",
+      "startMs": 940,
+      "endMs": 1347
+    },
+    {
+      "text": "Brin's",
+      "startMs": 1428,
+      "endMs": 1776
+    },
+    {
+      "text": "PageRank,",
+      "startMs": 1823,
+      "endMs": 2543
+    },
+    {
+      "text": "published",
+      "startMs": 2717,
+      "endMs": 3135
+    },
+    {
+      "text": "in",
+      "startMs": 3170,
+      "endMs": 3239
+    },
+    {
+      "text": "1998,",
+      "startMs": 3297,
+      "endMs": 4319
+    },
+    {
+      "text": "ranked",
+      "startMs": 4563,
+      "endMs": 4876
+    },
+    {
+      "text": "web",
+      "startMs": 4946,
+      "endMs": 5132
+    },
+    {
+      "text": "pages",
+      "startMs": 5190,
+      "endMs": 5677
+    },
+    {
+      "text": "by",
+      "startMs": 5770,
+      "endMs": 5909
+    },
+    {
+      "text": "counting",
+      "startMs": 5991,
+      "endMs": 6362
+    },
+    {
+      "text": "their",
+      "startMs": 6409,
+      "endMs": 6548
+    },
+    {
+      "text": "incoming",
+      "startMs": 6606,
+      "endMs": 7059
+    },
+    {
+      "text": "links.",
+      "startMs": 7129,
+      "endMs": 7628
+    },
+    {
+      "text": "It",
+      "startMs": 8069,
+      "endMs": 8231
+    },
+    {
+      "text": "powered",
+      "startMs": 8301,
+      "endMs": 8649
+    },
+    {
+      "text": "Google's",
+      "startMs": 8707,
+      "endMs": 9091
+    },
+    {
+      "text": "search",
+      "startMs": 9125,
+      "endMs": 9474
+    },
+    {
+      "text": "and",
+      "startMs": 9543,
+      "endMs": 9683
+    },
+    {
+      "text": "changed",
+      "startMs": 9741,
+      "endMs": 10136
+    },
+    {
+      "text": "how",
+      "startMs": 10170,
+      "endMs": 10275
+    },
+    {
+      "text": "the",
+      "startMs": 10321,
+      "endMs": 10391
+    },
+    {
+      "text": "web",
+      "startMs": 10449,
+      "endMs": 10635
+    },
+    {
+      "text": "is",
+      "startMs": 10681,
+      "endMs": 10762
+    },
+    {
+      "text": "organized.",
+      "startMs": 10832,
+      "endMs": 11796
+    }
+  ]
+}

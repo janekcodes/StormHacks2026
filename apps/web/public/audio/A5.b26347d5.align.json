@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "Edsger",
+      "startMs": 0,
+      "endMs": 395
+    },
+    {
+      "text": "Dijkstra's",
+      "startMs": 464,
+      "endMs": 1161
+    },
+    {
+      "text": "algorithm",
+      "startMs": 1231,
+      "endMs": 1788
+    },
+    {
+      "text": "from",
+      "startMs": 1846,
+      "endMs": 1985
+    },
+    {
+      "text": "1959",
+      "startMs": 2043,
+      "endMs": 3077
+    },
+    {
+      "text": "finds",
+      "startMs": 3355,
+      "endMs": 3657
+    },
+    {
+      "text": "the",
+      "startMs": 3704,
+      "endMs": 3773
+    },
+    {
+      "text": "shortest",
+      "startMs": 3831,
+      "endMs": 4226
+    },
+    {
+      "text": "route",
+      "startMs": 4284,
+      "endMs": 4481
+    },
+    {
+      "text": "through",
+      "startMs": 4505,
+      "endMs": 4702
+    },
+    {
+      "text": "a",
+      "startMs": 4725,
+      "endMs": 4748
+    },
+    {
+      "text": "graph",
+      "startMs": 4795,
+      "endMs": 5132
+    },
+    {
+      "text": "without",
+      "startMs": 5190,
+      "endMs": 5503
+    },
+    {
+      "text": "needing",
+      "startMs": 5550,
+      "endMs": 5817
+    },
+    {
+      "text": "a",
+      "startMs": 5863,
+      "endMs": 5886
+    },
+    {
+      "text": "map",
+      "startMs": 5956,
+      "endMs": 6177
+    },
+    {
+      "text": "of",
+      "startMs": 6235,
+      "endMs": 6293
+    },
+    {
+      "text": "the",
+      "startMs": 6339,
+      "endMs": 6409
+    },
+    {
+      "text": "whole",
+      "startMs": 6444,
+      "endMs": 6629
+    },
+    {
+      "text": "network.",
+      "startMs": 6664,
+      "endMs": 7256
+    },
+    {
+      "text": "It",
+      "startMs": 7767,
+      "endMs": 7918
+    },
+    {
+      "text": "still",
+      "startMs": 7964,
+      "endMs": 8197
+    },
+    {
+      "text": "steers",
+      "startMs": 8266,
+      "endMs": 8615
+    },
+    {
+      "text": "car",
+      "startMs": 8684,
+      "endMs": 8916
+    },
+    {
+      "text": "navigation",
+      "startMs": 8975,
+      "endMs": 9555
+    },
+    {
+      "text": "and",
+      "startMs": 9625,
+      "endMs": 9729
+    },
+    {
+      "text": "internet",
+      "startMs": 9799,
+      "endMs": 10147
+    },
+    {
+      "text": "routing",
+      "startMs": 10217,
+      "endMs": 10553
+    },
+    {
+      "text": "today.",
+      "startMs": 10600,
+      "endMs": 11378
+    }
+  ]
+}

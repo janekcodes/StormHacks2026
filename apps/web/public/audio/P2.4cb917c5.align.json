@@ -1,0 +1,194 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 151
+    },
+    {
+      "text": "mathematician",
+      "startMs": 209,
+      "endMs": 882
+    },
+    {
+      "text": "al-Khwarizmi",
+      "startMs": 964,
+      "endMs": 2415
+    },
+    {
+      "text": "wrote",
+      "startMs": 2589,
+      "endMs": 2856
+    },
+    {
+      "text": "the",
+      "startMs": 2891,
+      "endMs": 2961
+    },
+    {
+      "text": "book",
+      "startMs": 3007,
+      "endMs": 3193
+    },
+    {
+      "text": "that",
+      "startMs": 3239,
+      "endMs": 3367
+    },
+    {
+      "text": "named",
+      "startMs": 3413,
+      "endMs": 3669
+    },
+    {
+      "text": "algebra,",
+      "startMs": 3738,
+      "endMs": 4400
+    },
+    {
+      "text": "and",
+      "startMs": 4574,
+      "endMs": 4714
+    },
+    {
+      "text": "his",
+      "startMs": 4772,
+      "endMs": 4865
+    },
+    {
+      "text": "own",
+      "startMs": 4923,
+      "endMs": 5155
+    },
+    {
+      "text": "name,",
+      "startMs": 5213,
+      "endMs": 5561
+    },
+    {
+      "text": "written",
+      "startMs": 5654,
+      "endMs": 5944
+    },
+    {
+      "text": "in",
+      "startMs": 5991,
+      "endMs": 6060
+    },
+    {
+      "text": "Latin",
+      "startMs": 6130,
+      "endMs": 6455
+    },
+    {
+      "text": "as",
+      "startMs": 6525,
+      "endMs": 6618
+    },
+    {
+      "text": "Algoritmi,",
+      "startMs": 6699,
+      "endMs": 7546
+    },
+    {
+      "text": "became",
+      "startMs": 7697,
+      "endMs": 8022
+    },
+    {
+      "text": "the",
+      "startMs": 8057,
+      "endMs": 8127
+    },
+    {
+      "text": "word",
+      "startMs": 8162,
+      "endMs": 8429
+    },
+    {
+      "text": "algorithm.",
+      "startMs": 8499,
+      "endMs": 9242
+    },
+    {
+      "text": "His",
+      "startMs": 9752,
+      "endMs": 9927
+    },
+    {
+      "text": "step",
+      "startMs": 9973,
+      "endMs": 10205
+    },
+    {
+      "text": "by",
+      "startMs": 10263,
+      "endMs": 10379
+    },
+    {
+      "text": "step",
+      "startMs": 10437,
+      "endMs": 10681
+    },
+    {
+      "text": "methods",
+      "startMs": 10762,
+      "endMs": 11134
+    },
+    {
+      "text": "for",
+      "startMs": 11180,
+      "endMs": 11285
+    },
+    {
+      "text": "arithmetic",
+      "startMs": 11331,
+      "endMs": 11912
+    },
+    {
+      "text": "and",
+      "startMs": 11981,
+      "endMs": 12074
+    },
+    {
+      "text": "equation",
+      "startMs": 12144,
+      "endMs": 12574
+    },
+    {
+      "text": "solving",
+      "startMs": 12643,
+      "endMs": 13038
+    },
+    {
+      "text": "are",
+      "startMs": 13282,
+      "endMs": 13433
+    },
+    {
+      "text": "the",
+      "startMs": 13468,
+      "endMs": 13537
+    },
+    {
+      "text": "ancestors",
+      "startMs": 13595,
+      "endMs": 14176
+    },
+    {
+      "text": "of",
+      "startMs": 14211,
+      "endMs": 14269
+    },
+    {
+      "text": "every",
+      "startMs": 14327,
+      "endMs": 14547
+    },
+    {
+      "text": "program.",
+      "startMs": 14605,
+      "endMs": 15464
+    }
+  ]
+}

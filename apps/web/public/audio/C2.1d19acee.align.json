@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "Grace",
+      "startMs": 0,
+      "endMs": 372
+    },
+    {
+      "text": "Hopper's",
+      "startMs": 406,
+      "endMs": 836
+    },
+    {
+      "text": "A-0",
+      "startMs": 952,
+      "endMs": 1567
+    },
+    {
+      "text": "system,",
+      "startMs": 1625,
+      "endMs": 2148
+    },
+    {
+      "text": "finished",
+      "startMs": 2241,
+      "endMs": 2601
+    },
+    {
+      "text": "in",
+      "startMs": 2647,
+      "endMs": 2705
+    },
+    {
+      "text": "1952,",
+      "startMs": 2763,
+      "endMs": 3924
+    },
+    {
+      "text": "translated",
+      "startMs": 4098,
+      "endMs": 4725
+    },
+    {
+      "text": "symbolic",
+      "startMs": 4783,
+      "endMs": 5271
+    },
+    {
+      "text": "instructions",
+      "startMs": 5329,
+      "endMs": 5991
+    },
+    {
+      "text": "into",
+      "startMs": 6049,
+      "endMs": 6246
+    },
+    {
+      "text": "machine",
+      "startMs": 6304,
+      "endMs": 6676
+    },
+    {
+      "text": "code",
+      "startMs": 6734,
+      "endMs": 7117
+    },
+    {
+      "text": "for",
+      "startMs": 7233,
+      "endMs": 7372
+    },
+    {
+      "text": "the",
+      "startMs": 7396,
+      "endMs": 7465
+    },
+    {
+      "text": "UNIVAC",
+      "startMs": 7558,
+      "endMs": 8034
+    },
+    {
+      "text": "I.",
+      "startMs": 8150,
+      "endMs": 8719
+    },
+    {
+      "text": "It",
+      "startMs": 9160,
+      "endMs": 9276
+    },
+    {
+      "text": "was",
+      "startMs": 9311,
+      "endMs": 9404
+    },
+    {
+      "text": "an",
+      "startMs": 9439,
+      "endMs": 9509
+    },
+    {
+      "text": "early",
+      "startMs": 9567,
+      "endMs": 9822
+    },
+    {
+      "text": "compiler,",
+      "startMs": 9880,
+      "endMs": 10553
+    },
+    {
+      "text": "a",
+      "startMs": 10623,
+      "endMs": 10693
+    },
+    {
+      "text": "first",
+      "startMs": 10786,
+      "endMs": 11064
+    },
+    {
+      "text": "step",
+      "startMs": 11157,
+      "endMs": 11436
+    },
+    {
+      "text": "toward",
+      "startMs": 11494,
+      "endMs": 11784
+    },
+    {
+      "text": "programming",
+      "startMs": 11842,
+      "endMs": 12399
+    },
+    {
+      "text": "in",
+      "startMs": 12446,
+      "endMs": 12516
+    },
+    {
+      "text": "something",
+      "startMs": 12585,
+      "endMs": 12910
+    },
+    {
+      "text": "closer",
+      "startMs": 12968,
+      "endMs": 13282
+    },
+    {
+      "text": "to",
+      "startMs": 13328,
+      "endMs": 13386
+    },
+    {
+      "text": "English.",
+      "startMs": 13468,
+      "endMs": 14257
+    }
+  ]
+}

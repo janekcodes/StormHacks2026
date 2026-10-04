@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "OpenAI",
+      "startMs": 0,
+      "endMs": 604
+    },
+    {
+      "text": "released",
+      "startMs": 697,
+      "endMs": 998
+    },
+    {
+      "text": "ChatGPT",
+      "startMs": 1033,
+      "endMs": 1753
+    },
+    {
+      "text": "on",
+      "startMs": 1869,
+      "endMs": 1962
+    },
+    {
+      "text": "November",
+      "startMs": 2020,
+      "endMs": 2368
+    },
+    {
+      "text": "30,",
+      "startMs": 2426,
+      "endMs": 2902
+    },
+    {
+      "text": "2022,",
+      "startMs": 3053,
+      "endMs": 4180
+    },
+    {
+      "text": "a",
+      "startMs": 4505,
+      "endMs": 4574
+    },
+    {
+      "text": "chatbot",
+      "startMs": 4644,
+      "endMs": 5108
+    },
+    {
+      "text": "built",
+      "startMs": 5166,
+      "endMs": 5410
+    },
+    {
+      "text": "on",
+      "startMs": 5468,
+      "endMs": 5538
+    },
+    {
+      "text": "a",
+      "startMs": 5584,
+      "endMs": 5608
+    },
+    {
+      "text": "large",
+      "startMs": 5677,
+      "endMs": 5968
+    },
+    {
+      "text": "language",
+      "startMs": 6014,
+      "endMs": 6385
+    },
+    {
+      "text": "model.",
+      "startMs": 6420,
+      "endMs": 6815
+    },
+    {
+      "text": "It",
+      "startMs": 7059,
+      "endMs": 7198
+    },
+    {
+      "text": "reached",
+      "startMs": 7256,
+      "endMs": 7500
+    },
+    {
+      "text": "about",
+      "startMs": 7523,
+      "endMs": 7721
+    },
+    {
+      "text": "a",
+      "startMs": 7755,
+      "endMs": 7779
+    },
+    {
+      "text": "hundred",
+      "startMs": 7837,
+      "endMs": 8104
+    },
+    {
+      "text": "million",
+      "startMs": 8150,
+      "endMs": 8429
+    },
+    {
+      "text": "users",
+      "startMs": 8510,
+      "endMs": 8835
+    },
+    {
+      "text": "in",
+      "startMs": 8882,
+      "endMs": 8951
+    },
+    {
+      "text": "two",
+      "startMs": 8998,
+      "endMs": 9160
+    },
+    {
+      "text": "months",
+      "startMs": 9230,
+      "endMs": 9543
+    },
+    {
+      "text": "and",
+      "startMs": 9787,
+      "endMs": 9950
+    },
+    {
+      "text": "made",
+      "startMs": 10008,
+      "endMs": 10182
+    },
+    {
+      "text": "generative",
+      "startMs": 10228,
+      "endMs": 10693
+    },
+    {
+      "text": "AI",
+      "startMs": 10751,
+      "endMs": 11088
+    },
+    {
+      "text": "a",
+      "startMs": 11146,
+      "endMs": 11192
+    },
+    {
+      "text": "daily",
+      "startMs": 11262,
+      "endMs": 11540
+    },
+    {
+      "text": "tool.",
+      "startMs": 11598,
+      "endMs": 12307
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "words": [
+    {
+      "text": "Herman",
+      "startMs": 0,
+      "endMs": 395
+    },
+    {
+      "text": "Hollerith's",
+      "startMs": 476,
+      "endMs": 1173
+    },
+    {
+      "text": "punched",
+      "startMs": 1219,
+      "endMs": 1544
+    },
+    {
+      "text": "card",
+      "startMs": 1614,
+      "endMs": 1869
+    },
+    {
+      "text": "tabulator",
+      "startMs": 1916,
+      "endMs": 2577
+    },
+    {
+      "text": "counted",
+      "startMs": 2821,
+      "endMs": 3193
+    },
+    {
+      "text": "the",
+      "startMs": 3228,
+      "endMs": 3297
+    },
+    {
+      "text": "1890",
+      "startMs": 3344,
+      "endMs": 4005
+    },
+    {
+      "text": "United",
+      "startMs": 4122,
+      "endMs": 4481
+    },
+    {
+      "text": "States",
+      "startMs": 4516,
+      "endMs": 4830
+    },
+    {
+      "text": "census",
+      "startMs": 4865,
+      "endMs": 5387
+    },
+    {
+      "text": "far",
+      "startMs": 5538,
+      "endMs": 5770
+    },
+    {
+      "text": "faster",
+      "startMs": 5840,
+      "endMs": 6200
+    },
+    {
+      "text": "than",
+      "startMs": 6235,
+      "endMs": 6351
+    },
+    {
+      "text": "hand",
+      "startMs": 6432,
+      "endMs": 6629
+    },
+    {
+      "text": "tallying.",
+      "startMs": 6676,
+      "endMs": 7268
+    },
+    {
+      "text": "His",
+      "startMs": 7709,
+      "endMs": 7872
+    },
+    {
+      "text": "Tabulating",
+      "startMs": 7918,
+      "endMs": 8475
+    },
+    {
+      "text": "Machine",
+      "startMs": 8533,
+      "endMs": 8870
+    },
+    {
+      "text": "Company",
+      "startMs": 8916,
+      "endMs": 9334
+    },
+    {
+      "text": "later",
+      "startMs": 9543,
+      "endMs": 9822
+    },
+    {
+      "text": "grew",
+      "startMs": 9857,
+      "endMs": 10043
+    },
+    {
+      "text": "into",
+      "startMs": 10089,
+      "endMs": 10252
+    },
+    {
+      "text": "IBM.",
+      "startMs": 10333,
+      "endMs": 11285
+    }
+  ]
+}

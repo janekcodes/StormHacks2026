@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 174
+    },
+    {
+      "text": "ARM1,",
+      "startMs": 267,
+      "endMs": 1010
+    },
+    {
+      "text": "finished",
+      "startMs": 1126,
+      "endMs": 1474
+    },
+    {
+      "text": "at",
+      "startMs": 1509,
+      "endMs": 1579
+    },
+    {
+      "text": "Acorn",
+      "startMs": 1649,
+      "endMs": 2020
+    },
+    {
+      "text": "in",
+      "startMs": 2078,
+      "endMs": 2148
+    },
+    {
+      "text": "1985,",
+      "startMs": 2194,
+      "endMs": 3251
+    },
+    {
+      "text": "was",
+      "startMs": 3402,
+      "endMs": 3541
+    },
+    {
+      "text": "a",
+      "startMs": 3587,
+      "endMs": 3611
+    },
+    {
+      "text": "deliberately",
+      "startMs": 3657,
+      "endMs": 4145
+    },
+    {
+      "text": "simple",
+      "startMs": 4203,
+      "endMs": 4574
+    },
+    {
+      "text": "RISC",
+      "startMs": 4632,
+      "endMs": 4899
+    },
+    {
+      "text": "chip",
+      "startMs": 4981,
+      "endMs": 5283
+    },
+    {
+      "text": "designed",
+      "startMs": 5399,
+      "endMs": 5840
+    },
+    {
+      "text": "by",
+      "startMs": 5886,
+      "endMs": 6002
+    },
+    {
+      "text": "a",
+      "startMs": 6049,
+      "endMs": 6072
+    },
+    {
+      "text": "small",
+      "startMs": 6118,
+      "endMs": 6397
+    },
+    {
+      "text": "team.",
+      "startMs": 6455,
+      "endMs": 6908
+    },
+    {
+      "text": "Its",
+      "startMs": 7349,
+      "endMs": 7546
+    },
+    {
+      "text": "low",
+      "startMs": 7605,
+      "endMs": 7767
+    },
+    {
+      "text": "power",
+      "startMs": 7837,
+      "endMs": 8081
+    },
+    {
+      "text": "design",
+      "startMs": 8139,
+      "endMs": 8533
+    },
+    {
+      "text": "now",
+      "startMs": 8591,
+      "endMs": 8731
+    },
+    {
+      "text": "runs",
+      "startMs": 8812,
+      "endMs": 9079
+    },
+    {
+      "text": "inside",
+      "startMs": 9125,
+      "endMs": 9520
+    },
+    {
+      "text": "billions",
+      "startMs": 9567,
+      "endMs": 9927
+    },
+    {
+      "text": "of",
+      "startMs": 9961,
+      "endMs": 10019
+    },
+    {
+      "text": "phones",
+      "startMs": 10066,
+      "endMs": 10461
+    },
+    {
+      "text": "and",
+      "startMs": 10519,
+      "endMs": 10635
+    },
+    {
+      "text": "embedded",
+      "startMs": 10693,
+      "endMs": 11088
+    },
+    {
+      "text": "devices.",
+      "startMs": 11134,
+      "endMs": 12074
+    }
+  ]
+}

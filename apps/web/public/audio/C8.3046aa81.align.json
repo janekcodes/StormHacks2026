@@ -1,0 +1,189 @@
+{
+  "words": [
+    {
+      "text": "Richard",
+      "startMs": 0,
+      "endMs": 406
+    },
+    {
+      "text": "Stallman",
+      "startMs": 464,
+      "endMs": 1045
+    },
+    {
+      "text": "launched",
+      "startMs": 1161,
+      "endMs": 1509
+    },
+    {
+      "text": "the",
+      "startMs": 1544,
+      "endMs": 1614
+    },
+    {
+      "text": "GNU",
+      "startMs": 1683,
+      "endMs": 2090
+    },
+    {
+      "text": "project",
+      "startMs": 2159,
+      "endMs": 2554
+    },
+    {
+      "text": "in",
+      "startMs": 2612,
+      "endMs": 2682
+    },
+    {
+      "text": "1983",
+      "startMs": 2740,
+      "endMs": 3587
+    },
+    {
+      "text": "to",
+      "startMs": 3913,
+      "endMs": 4005
+    },
+    {
+      "text": "build",
+      "startMs": 4063,
+      "endMs": 4272
+    },
+    {
+      "text": "a",
+      "startMs": 4319,
+      "endMs": 4342
+    },
+    {
+      "text": "free",
+      "startMs": 4412,
+      "endMs": 4644
+    },
+    {
+      "text": "operating",
+      "startMs": 4690,
+      "endMs": 5166
+    },
+    {
+      "text": "system,",
+      "startMs": 5224,
+      "endMs": 5805
+    },
+    {
+      "text": "and",
+      "startMs": 6014,
+      "endMs": 6165
+    },
+    {
+      "text": "Linus",
+      "startMs": 6235,
+      "endMs": 6548
+    },
+    {
+      "text": "Torvalds",
+      "startMs": 6629,
+      "endMs": 7442
+    },
+    {
+      "text": "released",
+      "startMs": 7825,
+      "endMs": 8173
+    },
+    {
+      "text": "the",
+      "startMs": 8208,
+      "endMs": 8278
+    },
+    {
+      "text": "Linux",
+      "startMs": 8324,
+      "endMs": 8603
+    },
+    {
+      "text": "kernel",
+      "startMs": 8673,
+      "endMs": 9033
+    },
+    {
+      "text": "in",
+      "startMs": 9102,
+      "endMs": 9183
+    },
+    {
+      "text": "1991.",
+      "startMs": 9242,
+      "endMs": 10298
+    },
+    {
+      "text": "Together",
+      "startMs": 10577,
+      "endMs": 10983
+    },
+    {
+      "text": "they",
+      "startMs": 11041,
+      "endMs": 11169
+    },
+    {
+      "text": "power",
+      "startMs": 11227,
+      "endMs": 11505
+    },
+    {
+      "text": "most",
+      "startMs": 11575,
+      "endMs": 11796
+    },
+    {
+      "text": "of",
+      "startMs": 11842,
+      "endMs": 11889
+    },
+    {
+      "text": "the",
+      "startMs": 11935,
+      "endMs": 12005
+    },
+    {
+      "text": "servers",
+      "startMs": 12051,
+      "endMs": 12399
+    },
+    {
+      "text": "on",
+      "startMs": 12446,
+      "endMs": 12516
+    },
+    {
+      "text": "the",
+      "startMs": 12550,
+      "endMs": 12620
+    },
+    {
+      "text": "internet",
+      "startMs": 12666,
+      "endMs": 13108
+    },
+    {
+      "text": "and",
+      "startMs": 13317,
+      "endMs": 13526
+    },
+    {
+      "text": "every",
+      "startMs": 13584,
+      "endMs": 13804
+    },
+    {
+      "text": "Android",
+      "startMs": 13874,
+      "endMs": 14257
+    },
+    {
+      "text": "phone.",
+      "startMs": 14303,
+      "endMs": 15047
+    }
+  ]
+}

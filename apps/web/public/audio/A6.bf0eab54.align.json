@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "Stephen",
+      "startMs": 0,
+      "endMs": 418
+    },
+    {
+      "text": "Cook's",
+      "startMs": 476,
+      "endMs": 720
+    },
+    {
+      "text": "theorem",
+      "startMs": 755,
+      "endMs": 1080
+    },
+    {
+      "text": "from",
+      "startMs": 1126,
+      "endMs": 1254
+    },
+    {
+      "text": "1971",
+      "startMs": 1324,
+      "endMs": 2252
+    },
+    {
+      "text": "showed",
+      "startMs": 2577,
+      "endMs": 2902
+    },
+    {
+      "text": "that",
+      "startMs": 2937,
+      "endMs": 3053
+    },
+    {
+      "text": "many",
+      "startMs": 3123,
+      "endMs": 3355
+    },
+    {
+      "text": "hard",
+      "startMs": 3437,
+      "endMs": 3680
+    },
+    {
+      "text": "problems",
+      "startMs": 3738,
+      "endMs": 4168
+    },
+    {
+      "text": "are",
+      "startMs": 4214,
+      "endMs": 4377
+    },
+    {
+      "text": "all",
+      "startMs": 4412,
+      "endMs": 4598
+    },
+    {
+      "text": "equally",
+      "startMs": 4690,
+      "endMs": 5027
+    },
+    {
+      "text": "hard:",
+      "startMs": 5097,
+      "endMs": 5631
+    },
+    {
+      "text": "solve",
+      "startMs": 6142,
+      "endMs": 6490
+    },
+    {
+      "text": "one",
+      "startMs": 6548,
+      "endMs": 6722
+    },
+    {
+      "text": "fast",
+      "startMs": 6780,
+      "endMs": 7152
+    },
+    {
+      "text": "and",
+      "startMs": 7210,
+      "endMs": 7326
+    },
+    {
+      "text": "you",
+      "startMs": 7372,
+      "endMs": 7442
+    },
+    {
+      "text": "solve",
+      "startMs": 7500,
+      "endMs": 7755
+    },
+    {
+      "text": "them",
+      "startMs": 7779,
+      "endMs": 7895
+    },
+    {
+      "text": "all.",
+      "startMs": 7953,
+      "endMs": 8359
+    },
+    {
+      "text": "The",
+      "startMs": 9056,
+      "endMs": 9172
+    },
+    {
+      "text": "P",
+      "startMs": 9242,
+      "endMs": 9300
+    },
+    {
+      "text": "versus",
+      "startMs": 9474,
+      "endMs": 9810
+    },
+    {
+      "text": "NP",
+      "startMs": 9903,
+      "endMs": 10170
+    },
+    {
+      "text": "question",
+      "startMs": 10344,
+      "endMs": 10716
+    },
+    {
+      "text": "it",
+      "startMs": 10762,
+      "endMs": 10832
+    },
+    {
+      "text": "opened",
+      "startMs": 10890,
+      "endMs": 11273
+    },
+    {
+      "text": "remains",
+      "startMs": 11517,
+      "endMs": 11900
+    },
+    {
+      "text": "unsolved.",
+      "startMs": 11981,
+      "endMs": 13003
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "words": [
+    {
+      "text": "Quantum",
+      "startMs": 0,
+      "endMs": 441
+    },
+    {
+      "text": "processors",
+      "startMs": 511,
+      "endMs": 1161
+    },
+    {
+      "text": "like",
+      "startMs": 1370,
+      "endMs": 1579
+    },
+    {
+      "text": "Google's",
+      "startMs": 1625,
+      "endMs": 2043
+    },
+    {
+      "text": "Sycamore,",
+      "startMs": 2078,
+      "endMs": 2659
+    },
+    {
+      "text": "announced",
+      "startMs": 2705,
+      "endMs": 3135
+    },
+    {
+      "text": "in",
+      "startMs": 3181,
+      "endMs": 3251
+    },
+    {
+      "text": "2019,",
+      "startMs": 3320,
+      "endMs": 4540
+    },
+    {
+      "text": "run",
+      "startMs": 4783,
+      "endMs": 4957
+    },
+    {
+      "text": "on",
+      "startMs": 5004,
+      "endMs": 5097
+    },
+    {
+      "text": "qubits",
+      "startMs": 5166,
+      "endMs": 5631
+    },
+    {
+      "text": "instead",
+      "startMs": 5689,
+      "endMs": 6026
+    },
+    {
+      "text": "of",
+      "startMs": 6060,
+      "endMs": 6107
+    },
+    {
+      "text": "bits.",
+      "startMs": 6177,
+      "endMs": 6653
+    },
+    {
+      "text": "Their",
+      "startMs": 7094,
+      "endMs": 7303
+    },
+    {
+      "text": "claimed",
+      "startMs": 7349,
+      "endMs": 7686
+    },
+    {
+      "text": "advantage",
+      "startMs": 7721,
+      "endMs": 8231
+    },
+    {
+      "text": "on",
+      "startMs": 8278,
+      "endMs": 8406
+    },
+    {
+      "text": "one",
+      "startMs": 8499,
+      "endMs": 8696
+    },
+    {
+      "text": "sampling",
+      "startMs": 8742,
+      "endMs": 9172
+    },
+    {
+      "text": "task",
+      "startMs": 9230,
+      "endMs": 9555
+    },
+    {
+      "text": "is",
+      "startMs": 9613,
+      "endMs": 9741
+    },
+    {
+      "text": "still",
+      "startMs": 9776,
+      "endMs": 9996
+    },
+    {
+      "text": "debated.",
+      "startMs": 10054,
+      "endMs": 10913
+    }
+  ]
+}

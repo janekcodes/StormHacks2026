@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 151
+    },
+    {
+      "text": "1986",
+      "startMs": 197,
+      "endMs": 1022
+    },
+    {
+      "text": "paper",
+      "startMs": 1103,
+      "endMs": 1416
+    },
+    {
+      "text": "by",
+      "startMs": 1486,
+      "endMs": 1614
+    },
+    {
+      "text": "Rumelhart,",
+      "startMs": 1695,
+      "endMs": 2624
+    },
+    {
+      "text": "Hinton",
+      "startMs": 2798,
+      "endMs": 3320
+    },
+    {
+      "text": "and",
+      "startMs": 3355,
+      "endMs": 3437
+    },
+    {
+      "text": "Williams",
+      "startMs": 3506,
+      "endMs": 3959
+    },
+    {
+      "text": "popularized",
+      "startMs": 4075,
+      "endMs": 4772
+    },
+    {
+      "text": "backpropagation,",
+      "startMs": 4818,
+      "endMs": 5909
+    },
+    {
+      "text": "the",
+      "startMs": 6235,
+      "endMs": 6339
+    },
+    {
+      "text": "method",
+      "startMs": 6397,
+      "endMs": 6676
+    },
+    {
+      "text": "that",
+      "startMs": 6711,
+      "endMs": 6827
+    },
+    {
+      "text": "teaches",
+      "startMs": 6861,
+      "endMs": 7233
+    },
+    {
+      "text": "a",
+      "startMs": 7279,
+      "endMs": 7303
+    },
+    {
+      "text": "neural",
+      "startMs": 7396,
+      "endMs": 7686
+    },
+    {
+      "text": "network",
+      "startMs": 7755,
+      "endMs": 8173
+    },
+    {
+      "text": "by",
+      "startMs": 8382,
+      "endMs": 8533
+    },
+    {
+      "text": "sending",
+      "startMs": 8603,
+      "endMs": 8928
+    },
+    {
+      "text": "errors",
+      "startMs": 8998,
+      "endMs": 9300
+    },
+    {
+      "text": "backward",
+      "startMs": 9358,
+      "endMs": 9718
+    },
+    {
+      "text": "through",
+      "startMs": 9752,
+      "endMs": 10008
+    },
+    {
+      "text": "it.",
+      "startMs": 10054,
+      "endMs": 10368
+    },
+    {
+      "text": "It",
+      "startMs": 10809,
+      "endMs": 10925
+    },
+    {
+      "text": "became",
+      "startMs": 10971,
+      "endMs": 11250
+    },
+    {
+      "text": "the",
+      "startMs": 11285,
+      "endMs": 11355
+    },
+    {
+      "text": "engine",
+      "startMs": 11436,
+      "endMs": 11796
+    },
+    {
+      "text": "of",
+      "startMs": 11819,
+      "endMs": 11877
+    },
+    {
+      "text": "modern",
+      "startMs": 11958,
+      "endMs": 12237
+    },
+    {
+      "text": "deep",
+      "startMs": 12295,
+      "endMs": 12492
+    },
+    {
+      "text": "learning.",
+      "startMs": 12550,
+      "endMs": 13282
+    }
+  ]
+}

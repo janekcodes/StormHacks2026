@@ -1,0 +1,174 @@
+{
+  "words": [
+    {
+      "text": "Frank",
+      "startMs": 0,
+      "endMs": 337
+    },
+    {
+      "text": "Rosenblatt's",
+      "startMs": 453,
+      "endMs": 1625
+    },
+    {
+      "text": "perceptron,",
+      "startMs": 1672,
+      "endMs": 2380
+    },
+    {
+      "text": "demonstrated",
+      "startMs": 2438,
+      "endMs": 3100
+    },
+    {
+      "text": "in",
+      "startMs": 3146,
+      "endMs": 3204
+    },
+    {
+      "text": "1958,",
+      "startMs": 3251,
+      "endMs": 4389
+    },
+    {
+      "text": "was",
+      "startMs": 4667,
+      "endMs": 4818
+    },
+    {
+      "text": "an",
+      "startMs": 4865,
+      "endMs": 4923
+    },
+    {
+      "text": "early",
+      "startMs": 4992,
+      "endMs": 5283
+    },
+    {
+      "text": "artificial",
+      "startMs": 5352,
+      "endMs": 5886
+    },
+    {
+      "text": "neuron",
+      "startMs": 5968,
+      "endMs": 6385
+    },
+    {
+      "text": "that",
+      "startMs": 6502,
+      "endMs": 6676
+    },
+    {
+      "text": "learned",
+      "startMs": 6722,
+      "endMs": 6989
+    },
+    {
+      "text": "by",
+      "startMs": 7047,
+      "endMs": 7152
+    },
+    {
+      "text": "adjusting",
+      "startMs": 7198,
+      "endMs": 7628
+    },
+    {
+      "text": "its",
+      "startMs": 7674,
+      "endMs": 7790
+    },
+    {
+      "text": "weights.",
+      "startMs": 7848,
+      "endMs": 8406
+    },
+    {
+      "text": "It",
+      "startMs": 8847,
+      "endMs": 8975
+    },
+    {
+      "text": "could",
+      "startMs": 9009,
+      "endMs": 9149
+    },
+    {
+      "text": "recognise",
+      "startMs": 9195,
+      "endMs": 9729
+    },
+    {
+      "text": "simple",
+      "startMs": 9764,
+      "endMs": 10077
+    },
+    {
+      "text": "patterns,",
+      "startMs": 10124,
+      "endMs": 10716
+    },
+    {
+      "text": "and",
+      "startMs": 10832,
+      "endMs": 10960
+    },
+    {
+      "text": "its",
+      "startMs": 11018,
+      "endMs": 11134
+    },
+    {
+      "text": "limits",
+      "startMs": 11192,
+      "endMs": 11505
+    },
+    {
+      "text": "later",
+      "startMs": 11598,
+      "endMs": 11865
+    },
+    {
+      "text": "motivated",
+      "startMs": 11923,
+      "endMs": 12423
+    },
+    {
+      "text": "the",
+      "startMs": 12457,
+      "endMs": 12527
+    },
+    {
+      "text": "work",
+      "startMs": 12585,
+      "endMs": 12852
+    },
+    {
+      "text": "that",
+      "startMs": 12910,
+      "endMs": 13038
+    },
+    {
+      "text": "powers",
+      "startMs": 13084,
+      "endMs": 13456
+    },
+    {
+      "text": "neural",
+      "startMs": 13526,
+      "endMs": 13827
+    },
+    {
+      "text": "networks",
+      "startMs": 13897,
+      "endMs": 14315
+    },
+    {
+      "text": "today.",
+      "startMs": 14362,
+      "endMs": 15093
+    }
+  ]
+}

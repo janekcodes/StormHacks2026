@@ -1,0 +1,184 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 163
+    },
+    {
+      "text": "Intel",
+      "startMs": 232,
+      "endMs": 557
+    },
+    {
+      "text": "4004,",
+      "startMs": 639,
+      "endMs": 1718
+    },
+    {
+      "text": "released",
+      "startMs": 1892,
+      "endMs": 2229
+    },
+    {
+      "text": "in",
+      "startMs": 2276,
+      "endMs": 2334
+    },
+    {
+      "text": "1971,",
+      "startMs": 2392,
+      "endMs": 3495
+    },
+    {
+      "text": "packed",
+      "startMs": 3738,
+      "endMs": 4029
+    },
+    {
+      "text": "a",
+      "startMs": 4063,
+      "endMs": 4087
+    },
+    {
+      "text": "four",
+      "startMs": 4156,
+      "endMs": 4365
+    },
+    {
+      "text": "bit",
+      "startMs": 4423,
+      "endMs": 4609
+    },
+    {
+      "text": "central",
+      "startMs": 4679,
+      "endMs": 5016
+    },
+    {
+      "text": "processing",
+      "startMs": 5074,
+      "endMs": 5584
+    },
+    {
+      "text": "unit",
+      "startMs": 5666,
+      "endMs": 5944
+    },
+    {
+      "text": "onto",
+      "startMs": 6060,
+      "endMs": 6327
+    },
+    {
+      "text": "a",
+      "startMs": 6409,
+      "endMs": 6432
+    },
+    {
+      "text": "single",
+      "startMs": 6490,
+      "endMs": 6827
+    },
+    {
+      "text": "chip.",
+      "startMs": 6861,
+      "endMs": 7361
+    },
+    {
+      "text": "It",
+      "startMs": 7802,
+      "endMs": 7930
+    },
+    {
+      "text": "was",
+      "startMs": 7964,
+      "endMs": 8057
+    },
+    {
+      "text": "the",
+      "startMs": 8104,
+      "endMs": 8173
+    },
+    {
+      "text": "first",
+      "startMs": 8243,
+      "endMs": 8522
+    },
+    {
+      "text": "commercially",
+      "startMs": 8591,
+      "endMs": 9079
+    },
+    {
+      "text": "available",
+      "startMs": 9125,
+      "endMs": 9590
+    },
+    {
+      "text": "microprocessor,",
+      "startMs": 9636,
+      "endMs": 10623
+    },
+    {
+      "text": "putting",
+      "startMs": 10797,
+      "endMs": 11099
+    },
+    {
+      "text": "a",
+      "startMs": 11146,
+      "endMs": 11169
+    },
+    {
+      "text": "computer",
+      "startMs": 11227,
+      "endMs": 11656
+    },
+    {
+      "text": "brain",
+      "startMs": 11691,
+      "endMs": 11958
+    },
+    {
+      "text": "in",
+      "startMs": 12040,
+      "endMs": 12132
+    },
+    {
+      "text": "a",
+      "startMs": 12179,
+      "endMs": 12202
+    },
+    {
+      "text": "package",
+      "startMs": 12260,
+      "endMs": 12643
+    },
+    {
+      "text": "the",
+      "startMs": 12690,
+      "endMs": 12759
+    },
+    {
+      "text": "size",
+      "startMs": 12806,
+      "endMs": 13084
+    },
+    {
+      "text": "of",
+      "startMs": 13108,
+      "endMs": 13154
+    },
+    {
+      "text": "a",
+      "startMs": 13201,
+      "endMs": 13224
+    },
+    {
+      "text": "fingernail.",
+      "startMs": 13282,
+      "endMs": 14164
+    }
+  ]
+}

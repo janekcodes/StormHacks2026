@@ -1,0 +1,129 @@
+{
+  "words": [
+    {
+      "text": "Wikipedia",
+      "startMs": 0,
+      "endMs": 685
+    },
+    {
+      "text": "launched",
+      "startMs": 755,
+      "endMs": 1103
+    },
+    {
+      "text": "in",
+      "startMs": 1149,
+      "endMs": 1231
+    },
+    {
+      "text": "2001",
+      "startMs": 1300,
+      "endMs": 2136
+    },
+    {
+      "text": "as",
+      "startMs": 2415,
+      "endMs": 2566
+    },
+    {
+      "text": "a",
+      "startMs": 2612,
+      "endMs": 2647
+    },
+    {
+      "text": "free",
+      "startMs": 2705,
+      "endMs": 2914
+    },
+    {
+      "text": "encyclopedia",
+      "startMs": 2949,
+      "endMs": 3820
+    },
+    {
+      "text": "anyone",
+      "startMs": 3878,
+      "endMs": 4249
+    },
+    {
+      "text": "could",
+      "startMs": 4284,
+      "endMs": 4423
+    },
+    {
+      "text": "edit.",
+      "startMs": 4481,
+      "endMs": 5004
+    },
+    {
+      "text": "It",
+      "startMs": 5515,
+      "endMs": 5631
+    },
+    {
+      "text": "became",
+      "startMs": 5666,
+      "endMs": 5933
+    },
+    {
+      "text": "one",
+      "startMs": 5968,
+      "endMs": 6072
+    },
+    {
+      "text": "of",
+      "startMs": 6095,
+      "endMs": 6142
+    },
+    {
+      "text": "the",
+      "startMs": 6188,
+      "endMs": 6258
+    },
+    {
+      "text": "world's",
+      "startMs": 6293,
+      "endMs": 6606
+    },
+    {
+      "text": "most",
+      "startMs": 6653,
+      "endMs": 6838
+    },
+    {
+      "text": "read",
+      "startMs": 6920,
+      "endMs": 7094
+    },
+    {
+      "text": "websites,",
+      "startMs": 7152,
+      "endMs": 7848
+    },
+    {
+      "text": "written",
+      "startMs": 7976,
+      "endMs": 8301
+    },
+    {
+      "text": "and",
+      "startMs": 8348,
+      "endMs": 8440
+    },
+    {
+      "text": "checked",
+      "startMs": 8487,
+      "endMs": 8812
+    },
+    {
+      "text": "by",
+      "startMs": 8870,
+      "endMs": 8975
+    },
+    {
+      "text": "volunteers.",
+      "startMs": 9044,
+      "endMs": 10077
+    }
+  ]
+}

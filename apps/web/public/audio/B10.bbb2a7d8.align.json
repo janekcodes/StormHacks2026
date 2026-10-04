@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "Nvidia",
+      "startMs": 0,
+      "endMs": 453
+    },
+    {
+      "text": "released",
+      "startMs": 511,
+      "endMs": 824
+    },
+    {
+      "text": "CUDA",
+      "startMs": 871,
+      "endMs": 1219
+    },
+    {
+      "text": "in",
+      "startMs": 1277,
+      "endMs": 1358
+    },
+    {
+      "text": "2007,",
+      "startMs": 1428,
+      "endMs": 2519
+    },
+    {
+      "text": "opening",
+      "startMs": 2728,
+      "endMs": 3088
+    },
+    {
+      "text": "the",
+      "startMs": 3135,
+      "endMs": 3204
+    },
+    {
+      "text": "graphics",
+      "startMs": 3239,
+      "endMs": 3622
+    },
+    {
+      "text": "processing",
+      "startMs": 3669,
+      "endMs": 4191
+    },
+    {
+      "text": "unit",
+      "startMs": 4284,
+      "endMs": 4574
+    },
+    {
+      "text": "to",
+      "startMs": 4644,
+      "endMs": 4760
+    },
+    {
+      "text": "general",
+      "startMs": 4830,
+      "endMs": 5166
+    },
+    {
+      "text": "purpose",
+      "startMs": 5236,
+      "endMs": 5608
+    },
+    {
+      "text": "computing.",
+      "startMs": 5642,
+      "endMs": 6374
+    },
+    {
+      "text": "Thousands",
+      "startMs": 6885,
+      "endMs": 7419
+    },
+    {
+      "text": "of",
+      "startMs": 7465,
+      "endMs": 7523
+    },
+    {
+      "text": "small",
+      "startMs": 7581,
+      "endMs": 7860
+    },
+    {
+      "text": "cores",
+      "startMs": 7941,
+      "endMs": 8290
+    },
+    {
+      "text": "running",
+      "startMs": 8371,
+      "endMs": 8638
+    },
+    {
+      "text": "together",
+      "startMs": 8673,
+      "endMs": 9067
+    },
+    {
+      "text": "made",
+      "startMs": 9311,
+      "endMs": 9532
+    },
+    {
+      "text": "GPUs",
+      "startMs": 9578,
+      "endMs": 10228
+    },
+    {
+      "text": "the",
+      "startMs": 10286,
+      "endMs": 10379
+    },
+    {
+      "text": "engine",
+      "startMs": 10461,
+      "endMs": 10797
+    },
+    {
+      "text": "of",
+      "startMs": 10820,
+      "endMs": 10879
+    },
+    {
+      "text": "the",
+      "startMs": 10925,
+      "endMs": 10995
+    },
+    {
+      "text": "deep",
+      "startMs": 11041,
+      "endMs": 11250
+    },
+    {
+      "text": "learning",
+      "startMs": 11320,
+      "endMs": 11645
+    },
+    {
+      "text": "boom.",
+      "startMs": 11703,
+      "endMs": 12353
+    }
+  ]
+}

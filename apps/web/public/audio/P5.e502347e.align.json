@@ -1,0 +1,179 @@
+{
+  "words": [
+    {
+      "text": "Ada",
+      "startMs": 0,
+      "endMs": 290
+    },
+    {
+      "text": "Lovelace's",
+      "startMs": 348,
+      "endMs": 952
+    },
+    {
+      "text": "notes",
+      "startMs": 1033,
+      "endMs": 1312
+    },
+    {
+      "text": "from",
+      "startMs": 1347,
+      "endMs": 1486
+    },
+    {
+      "text": "1843",
+      "startMs": 1544,
+      "endMs": 2508
+    },
+    {
+      "text": "on",
+      "startMs": 2624,
+      "endMs": 2728
+    },
+    {
+      "text": "the",
+      "startMs": 2763,
+      "endMs": 2833
+    },
+    {
+      "text": "Analytical",
+      "startMs": 2902,
+      "endMs": 3425
+    },
+    {
+      "text": "Engine",
+      "startMs": 3506,
+      "endMs": 3855
+    },
+    {
+      "text": "include",
+      "startMs": 3901,
+      "endMs": 4377
+    },
+    {
+      "text": "Note",
+      "startMs": 4458,
+      "endMs": 4702
+    },
+    {
+      "text": "G,",
+      "startMs": 4748,
+      "endMs": 5248
+    },
+    {
+      "text": "which",
+      "startMs": 5631,
+      "endMs": 5840
+    },
+    {
+      "text": "steps",
+      "startMs": 5886,
+      "endMs": 6165
+    },
+    {
+      "text": "through",
+      "startMs": 6200,
+      "endMs": 6444
+    },
+    {
+      "text": "a",
+      "startMs": 6467,
+      "endMs": 6502
+    },
+    {
+      "text": "method",
+      "startMs": 6560,
+      "endMs": 6873
+    },
+    {
+      "text": "for",
+      "startMs": 6920,
+      "endMs": 7024
+    },
+    {
+      "text": "computing",
+      "startMs": 7070,
+      "endMs": 7558
+    },
+    {
+      "text": "Bernoulli",
+      "startMs": 7628,
+      "endMs": 8011
+    },
+    {
+      "text": "numbers.",
+      "startMs": 8081,
+      "endMs": 8673
+    },
+    {
+      "text": "It",
+      "startMs": 9114,
+      "endMs": 9242
+    },
+    {
+      "text": "is",
+      "startMs": 9288,
+      "endMs": 9369
+    },
+    {
+      "text": "widely",
+      "startMs": 9439,
+      "endMs": 9834
+    },
+    {
+      "text": "read",
+      "startMs": 9903,
+      "endMs": 10124
+    },
+    {
+      "text": "as",
+      "startMs": 10182,
+      "endMs": 10298
+    },
+    {
+      "text": "the",
+      "startMs": 10344,
+      "endMs": 10414
+    },
+    {
+      "text": "first",
+      "startMs": 10484,
+      "endMs": 10786
+    },
+    {
+      "text": "published",
+      "startMs": 10855,
+      "endMs": 11262
+    },
+    {
+      "text": "algorithm",
+      "startMs": 11320,
+      "endMs": 11889
+    },
+    {
+      "text": "written",
+      "startMs": 12098,
+      "endMs": 12411
+    },
+    {
+      "text": "for",
+      "startMs": 12458,
+      "endMs": 12562
+    },
+    {
+      "text": "a",
+      "startMs": 12608,
+      "endMs": 12632
+    },
+    {
+      "text": "computing",
+      "startMs": 12678,
+      "endMs": 13142
+    },
+    {
+      "text": "machine.",
+      "startMs": 13189,
+      "endMs": 13978
+    }
+  ]
+}

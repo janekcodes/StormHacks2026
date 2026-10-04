@@ -1,0 +1,169 @@
+{
+  "words": [
+    {
+      "text": "Claude",
+      "startMs": 0,
+      "endMs": 406
+    },
+    {
+      "text": "Shannon's",
+      "startMs": 430,
+      "endMs": 1045
+    },
+    {
+      "text": "master's",
+      "startMs": 1115,
+      "endMs": 1556
+    },
+    {
+      "text": "thesis",
+      "startMs": 1602,
+      "endMs": 1985
+    },
+    {
+      "text": "from",
+      "startMs": 2032,
+      "endMs": 2159
+    },
+    {
+      "text": "1937",
+      "startMs": 2218,
+      "endMs": 3204
+    },
+    {
+      "text": "showed",
+      "startMs": 3587,
+      "endMs": 3866
+    },
+    {
+      "text": "that",
+      "startMs": 3889,
+      "endMs": 3994
+    },
+    {
+      "text": "electrical",
+      "startMs": 4052,
+      "endMs": 4516
+    },
+    {
+      "text": "switches",
+      "startMs": 4586,
+      "endMs": 5004
+    },
+    {
+      "text": "could",
+      "startMs": 5050,
+      "endMs": 5190
+    },
+    {
+      "text": "carry",
+      "startMs": 5224,
+      "endMs": 5480
+    },
+    {
+      "text": "out",
+      "startMs": 5538,
+      "endMs": 5666
+    },
+    {
+      "text": "Boolean",
+      "startMs": 5724,
+      "endMs": 6118
+    },
+    {
+      "text": "logic.",
+      "startMs": 6188,
+      "endMs": 6780
+    },
+    {
+      "text": "It",
+      "startMs": 7221,
+      "endMs": 7372
+    },
+    {
+      "text": "linked",
+      "startMs": 7430,
+      "endMs": 7686
+    },
+    {
+      "text": "algebra",
+      "startMs": 7767,
+      "endMs": 8301
+    },
+    {
+      "text": "and",
+      "startMs": 8348,
+      "endMs": 8440
+    },
+    {
+      "text": "circuits,",
+      "startMs": 8510,
+      "endMs": 9091
+    },
+    {
+      "text": "and",
+      "startMs": 9207,
+      "endMs": 9334
+    },
+    {
+      "text": "it",
+      "startMs": 9404,
+      "endMs": 9474
+    },
+    {
+      "text": "is",
+      "startMs": 9520,
+      "endMs": 9601
+    },
+    {
+      "text": "often",
+      "startMs": 9659,
+      "endMs": 9892
+    },
+    {
+      "text": "called",
+      "startMs": 9961,
+      "endMs": 10217
+    },
+    {
+      "text": "the",
+      "startMs": 10240,
+      "endMs": 10310
+    },
+    {
+      "text": "most",
+      "startMs": 10356,
+      "endMs": 10530
+    },
+    {
+      "text": "important",
+      "startMs": 10577,
+      "endMs": 11006
+    },
+    {
+      "text": "master's",
+      "startMs": 11053,
+      "endMs": 11471
+    },
+    {
+      "text": "thesis",
+      "startMs": 11517,
+      "endMs": 11889
+    },
+    {
+      "text": "of",
+      "startMs": 11935,
+      "endMs": 11993
+    },
+    {
+      "text": "the",
+      "startMs": 12040,
+      "endMs": 12109
+    },
+    {
+      "text": "century.",
+      "startMs": 12156,
+      "endMs": 13003
+    }
+  ]
+}

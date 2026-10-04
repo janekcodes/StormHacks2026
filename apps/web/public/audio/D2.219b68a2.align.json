@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "In",
+      "startMs": 0,
+      "endMs": 151
+    },
+    {
+      "text": "1971,",
+      "startMs": 197,
+      "endMs": 1312
+    },
+    {
+      "text": "Ray",
+      "startMs": 1463,
+      "endMs": 1683
+    },
+    {
+      "text": "Tomlinson",
+      "startMs": 1765,
+      "endMs": 2624
+    },
+    {
+      "text": "sent",
+      "startMs": 2868,
+      "endMs": 3088
+    },
+    {
+      "text": "the",
+      "startMs": 3123,
+      "endMs": 3193
+    },
+    {
+      "text": "first",
+      "startMs": 3239,
+      "endMs": 3495
+    },
+    {
+      "text": "message",
+      "startMs": 3576,
+      "endMs": 3924
+    },
+    {
+      "text": "between",
+      "startMs": 3959,
+      "endMs": 4261
+    },
+    {
+      "text": "computers",
+      "startMs": 4319,
+      "endMs": 4830
+    },
+    {
+      "text": "over",
+      "startMs": 4888,
+      "endMs": 5108
+    },
+    {
+      "text": "the",
+      "startMs": 5155,
+      "endMs": 5224
+    },
+    {
+      "text": "ARPANET,",
+      "startMs": 5294,
+      "endMs": 5944
+    },
+    {
+      "text": "and",
+      "startMs": 6188,
+      "endMs": 6327
+    },
+    {
+      "text": "he",
+      "startMs": 6385,
+      "endMs": 6432
+    },
+    {
+      "text": "chose",
+      "startMs": 6490,
+      "endMs": 6792
+    },
+    {
+      "text": "the",
+      "startMs": 6827,
+      "endMs": 6908
+    },
+    {
+      "text": "at",
+      "startMs": 6978,
+      "endMs": 7140
+    },
+    {
+      "text": "sign",
+      "startMs": 7210,
+      "endMs": 7535
+    },
+    {
+      "text": "to",
+      "startMs": 7570,
+      "endMs": 7639
+    },
+    {
+      "text": "join",
+      "startMs": 7697,
+      "endMs": 7895
+    },
+    {
+      "text": "a",
+      "startMs": 7941,
+      "endMs": 7976
+    },
+    {
+      "text": "user",
+      "startMs": 8069,
+      "endMs": 8336
+    },
+    {
+      "text": "to",
+      "startMs": 8382,
+      "endMs": 8452
+    },
+    {
+      "text": "a",
+      "startMs": 8522,
+      "endMs": 8557
+    },
+    {
+      "text": "machine.",
+      "startMs": 8603,
+      "endMs": 9230
+    },
+    {
+      "text": "His",
+      "startMs": 9613,
+      "endMs": 9776
+    },
+    {
+      "text": "choice",
+      "startMs": 9834,
+      "endMs": 10089
+    },
+    {
+      "text": "of",
+      "startMs": 10124,
+      "endMs": 10182
+    },
+    {
+      "text": "separator",
+      "startMs": 10240,
+      "endMs": 10762
+    },
+    {
+      "text": "became",
+      "startMs": 10809,
+      "endMs": 11099
+    },
+    {
+      "text": "universal.",
+      "startMs": 11157,
+      "endMs": 12121
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "words": [
+    {
+      "text": "COBOL,",
+      "startMs": 0,
+      "endMs": 1138
+    },
+    {
+      "text": "specified",
+      "startMs": 1289,
+      "endMs": 1904
+    },
+    {
+      "text": "in",
+      "startMs": 1950,
+      "endMs": 2009
+    },
+    {
+      "text": "1959",
+      "startMs": 2055,
+      "endMs": 3042
+    },
+    {
+      "text": "by",
+      "startMs": 3158,
+      "endMs": 3309
+    },
+    {
+      "text": "a",
+      "startMs": 3367,
+      "endMs": 3390
+    },
+    {
+      "text": "committee",
+      "startMs": 3437,
+      "endMs": 3796
+    },
+    {
+      "text": "that",
+      "startMs": 3831,
+      "endMs": 3959
+    },
+    {
+      "text": "included",
+      "startMs": 4005,
+      "endMs": 4458
+    },
+    {
+      "text": "Grace",
+      "startMs": 4528,
+      "endMs": 4807
+    },
+    {
+      "text": "Hopper,",
+      "startMs": 4853,
+      "endMs": 5433
+    },
+    {
+      "text": "was",
+      "startMs": 5642,
+      "endMs": 5782
+    },
+    {
+      "text": "written",
+      "startMs": 5828,
+      "endMs": 6072
+    },
+    {
+      "text": "to",
+      "startMs": 6107,
+      "endMs": 6165
+    },
+    {
+      "text": "read",
+      "startMs": 6235,
+      "endMs": 6432
+    },
+    {
+      "text": "like",
+      "startMs": 6478,
+      "endMs": 6664
+    },
+    {
+      "text": "English",
+      "startMs": 6711,
+      "endMs": 7105
+    },
+    {
+      "text": "so",
+      "startMs": 7279,
+      "endMs": 7430
+    },
+    {
+      "text": "business",
+      "startMs": 7500,
+      "endMs": 7825
+    },
+    {
+      "text": "people",
+      "startMs": 7872,
+      "endMs": 8127
+    },
+    {
+      "text": "could",
+      "startMs": 8162,
+      "endMs": 8313
+    },
+    {
+      "text": "understand",
+      "startMs": 8359,
+      "endMs": 8847
+    },
+    {
+      "text": "it.",
+      "startMs": 8916,
+      "endMs": 9195
+    },
+    {
+      "text": "Decades",
+      "startMs": 9799,
+      "endMs": 10252
+    },
+    {
+      "text": "later,",
+      "startMs": 10310,
+      "endMs": 10728
+    },
+    {
+      "text": "it",
+      "startMs": 10809,
+      "endMs": 10937
+    },
+    {
+      "text": "still",
+      "startMs": 10983,
+      "endMs": 11215
+    },
+    {
+      "text": "runs",
+      "startMs": 11285,
+      "endMs": 11529
+    },
+    {
+      "text": "much",
+      "startMs": 11598,
+      "endMs": 11796
+    },
+    {
+      "text": "of",
+      "startMs": 11842,
+      "endMs": 11900
+    },
+    {
+      "text": "banking",
+      "startMs": 11970,
+      "endMs": 12330
+    },
+    {
+      "text": "and",
+      "startMs": 12365,
+      "endMs": 12434
+    },
+    {
+      "text": "government.",
+      "startMs": 12492,
+      "endMs": 13282
+    }
+  ]
+}

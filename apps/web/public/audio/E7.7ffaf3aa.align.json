@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 174
+    },
+    {
+      "text": "iPhone,",
+      "startMs": 244,
+      "endMs": 755
+    },
+    {
+      "text": "announced",
+      "startMs": 778,
+      "endMs": 1196
+    },
+    {
+      "text": "in",
+      "startMs": 1242,
+      "endMs": 1312
+    },
+    {
+      "text": "2007,",
+      "startMs": 1382,
+      "endMs": 2473
+    },
+    {
+      "text": "combined",
+      "startMs": 2647,
+      "endMs": 3077
+    },
+    {
+      "text": "a",
+      "startMs": 3111,
+      "endMs": 3135
+    },
+    {
+      "text": "phone,",
+      "startMs": 3193,
+      "endMs": 3634
+    },
+    {
+      "text": "an",
+      "startMs": 3704,
+      "endMs": 3820
+    },
+    {
+      "text": "internet",
+      "startMs": 3878,
+      "endMs": 4249
+    },
+    {
+      "text": "device",
+      "startMs": 4307,
+      "endMs": 4818
+    },
+    {
+      "text": "and",
+      "startMs": 4899,
+      "endMs": 5062
+    },
+    {
+      "text": "a",
+      "startMs": 5108,
+      "endMs": 5132
+    },
+    {
+      "text": "music",
+      "startMs": 5178,
+      "endMs": 5480
+    },
+    {
+      "text": "player",
+      "startMs": 5526,
+      "endMs": 5805
+    },
+    {
+      "text": "behind",
+      "startMs": 5875,
+      "endMs": 6130
+    },
+    {
+      "text": "a",
+      "startMs": 6188,
+      "endMs": 6211
+    },
+    {
+      "text": "multi",
+      "startMs": 6269,
+      "endMs": 6548
+    },
+    {
+      "text": "touch",
+      "startMs": 6606,
+      "endMs": 6850
+    },
+    {
+      "text": "screen.",
+      "startMs": 6885,
+      "endMs": 7454
+    },
+    {
+      "text": "Direct",
+      "startMs": 8057,
+      "endMs": 8440
+    },
+    {
+      "text": "manipulation",
+      "startMs": 8510,
+      "endMs": 9195
+    },
+    {
+      "text": "by",
+      "startMs": 9253,
+      "endMs": 9381
+    },
+    {
+      "text": "touch",
+      "startMs": 9462,
+      "endMs": 9776
+    },
+    {
+      "text": "changed",
+      "startMs": 10054,
+      "endMs": 10495
+    },
+    {
+      "text": "how",
+      "startMs": 10530,
+      "endMs": 10635
+    },
+    {
+      "text": "billions",
+      "startMs": 10704,
+      "endMs": 11064
+    },
+    {
+      "text": "of",
+      "startMs": 11099,
+      "endMs": 11157
+    },
+    {
+      "text": "people",
+      "startMs": 11215,
+      "endMs": 11517
+    },
+    {
+      "text": "use",
+      "startMs": 11575,
+      "endMs": 11784
+    },
+    {
+      "text": "computers.",
+      "startMs": 11819,
+      "endMs": 12771
+    }
+  ]
+}

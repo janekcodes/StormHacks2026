@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "In",
+      "startMs": 0,
+      "endMs": 151
+    },
+    {
+      "text": "2024,",
+      "startMs": 221,
+      "endMs": 1300
+    },
+    {
+      "text": "NIST",
+      "startMs": 1474,
+      "endMs": 1753
+    },
+    {
+      "text": "published",
+      "startMs": 1811,
+      "endMs": 2229
+    },
+    {
+      "text": "the",
+      "startMs": 2264,
+      "endMs": 2334
+    },
+    {
+      "text": "first",
+      "startMs": 2415,
+      "endMs": 2740
+    },
+    {
+      "text": "standardized",
+      "startMs": 2833,
+      "endMs": 3518
+    },
+    {
+      "text": "post",
+      "startMs": 3587,
+      "endMs": 3878
+    },
+    {
+      "text": "quantum",
+      "startMs": 3936,
+      "endMs": 4272
+    },
+    {
+      "text": "algorithms,",
+      "startMs": 4354,
+      "endMs": 5132
+    },
+    {
+      "text": "designed",
+      "startMs": 5341,
+      "endMs": 5770
+    },
+    {
+      "text": "to",
+      "startMs": 5793,
+      "endMs": 5851
+    },
+    {
+      "text": "resist",
+      "startMs": 5921,
+      "endMs": 6246
+    },
+    {
+      "text": "attack",
+      "startMs": 6304,
+      "endMs": 6653
+    },
+    {
+      "text": "by",
+      "startMs": 6722,
+      "endMs": 6850
+    },
+    {
+      "text": "a",
+      "startMs": 6908,
+      "endMs": 6931
+    },
+    {
+      "text": "quantum",
+      "startMs": 6989,
+      "endMs": 7338
+    },
+    {
+      "text": "computer.",
+      "startMs": 7396,
+      "endMs": 8081
+    },
+    {
+      "text": "They",
+      "startMs": 8464,
+      "endMs": 8626
+    },
+    {
+      "text": "replace",
+      "startMs": 8696,
+      "endMs": 9056
+    },
+    {
+      "text": "today’s",
+      "startMs": 9102,
+      "endMs": 9439
+    },
+    {
+      "text": "key",
+      "startMs": 9497,
+      "endMs": 9683
+    },
+    {
+      "text": "exchange",
+      "startMs": 9741,
+      "endMs": 10252
+    },
+    {
+      "text": "and",
+      "startMs": 10286,
+      "endMs": 10368
+    },
+    {
+      "text": "signatures",
+      "startMs": 10426,
+      "endMs": 11006
+    },
+    {
+      "text": "before",
+      "startMs": 11215,
+      "endMs": 11529
+    },
+    {
+      "text": "a",
+      "startMs": 11564,
+      "endMs": 11587
+    },
+    {
+      "text": "large",
+      "startMs": 11645,
+      "endMs": 11947
+    },
+    {
+      "text": "quantum",
+      "startMs": 11981,
+      "endMs": 12307
+    },
+    {
+      "text": "machine",
+      "startMs": 12353,
+      "endMs": 12713
+    },
+    {
+      "text": "arrives.",
+      "startMs": 12748,
+      "endMs": 13560
+    }
+  ]
+}

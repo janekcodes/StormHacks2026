@@ -1,0 +1,159 @@
+{
+  "words": [
+    {
+      "text": "ARPANET",
+      "startMs": 0,
+      "endMs": 511
+    },
+    {
+      "text": "went",
+      "startMs": 580,
+      "endMs": 755
+    },
+    {
+      "text": "live",
+      "startMs": 824,
+      "endMs": 1103
+    },
+    {
+      "text": "in",
+      "startMs": 1149,
+      "endMs": 1207
+    },
+    {
+      "text": "1969,",
+      "startMs": 1265,
+      "endMs": 2519
+    },
+    {
+      "text": "connecting",
+      "startMs": 2670,
+      "endMs": 3100
+    },
+    {
+      "text": "four",
+      "startMs": 3170,
+      "endMs": 3402
+    },
+    {
+      "text": "university",
+      "startMs": 3483,
+      "endMs": 4052
+    },
+    {
+      "text": "sites",
+      "startMs": 4122,
+      "endMs": 4481
+    },
+    {
+      "text": "by",
+      "startMs": 4540,
+      "endMs": 4679
+    },
+    {
+      "text": "packet",
+      "startMs": 4760,
+      "endMs": 5062
+    },
+    {
+      "text": "switching.",
+      "startMs": 5097,
+      "endMs": 5700
+    },
+    {
+      "text": "Its",
+      "startMs": 6142,
+      "endMs": 6327
+    },
+    {
+      "text": "first",
+      "startMs": 6374,
+      "endMs": 6641
+    },
+    {
+      "text": "message,",
+      "startMs": 6711,
+      "endMs": 7175
+    },
+    {
+      "text": "LOGIN",
+      "startMs": 7268,
+      "endMs": 7686
+    },
+    {
+      "text": "from",
+      "startMs": 7755,
+      "endMs": 7906
+    },
+    {
+      "text": "UCLA",
+      "startMs": 7988,
+      "endMs": 8557
+    },
+    {
+      "text": "to",
+      "startMs": 8626,
+      "endMs": 8707
+    },
+    {
+      "text": "Stanford,",
+      "startMs": 8777,
+      "endMs": 9369
+    },
+    {
+      "text": "crashed",
+      "startMs": 9578,
+      "endMs": 9961
+    },
+    {
+      "text": "after",
+      "startMs": 10008,
+      "endMs": 10228
+    },
+    {
+      "text": "two",
+      "startMs": 10286,
+      "endMs": 10449
+    },
+    {
+      "text": "letters,",
+      "startMs": 10519,
+      "endMs": 11041
+    },
+    {
+      "text": "but",
+      "startMs": 11250,
+      "endMs": 11401
+    },
+    {
+      "text": "the",
+      "startMs": 11424,
+      "endMs": 11494
+    },
+    {
+      "text": "network",
+      "startMs": 11540,
+      "endMs": 11923
+    },
+    {
+      "text": "grew",
+      "startMs": 11970,
+      "endMs": 12179
+    },
+    {
+      "text": "into",
+      "startMs": 12237,
+      "endMs": 12376
+    },
+    {
+      "text": "the",
+      "startMs": 12434,
+      "endMs": 12504
+    },
+    {
+      "text": "internet.",
+      "startMs": 12562,
+      "endMs": 13375
+    }
+  ]
+}

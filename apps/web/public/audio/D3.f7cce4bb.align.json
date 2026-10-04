@@ -1,0 +1,129 @@
+{
+  "words": [
+    {
+      "text": "Robert",
+      "startMs": 0,
+      "endMs": 383
+    },
+    {
+      "text": "Metcalfe",
+      "startMs": 476,
+      "endMs": 1126
+    },
+    {
+      "text": "sketched",
+      "startMs": 1370,
+      "endMs": 1776
+    },
+    {
+      "text": "Ethernet",
+      "startMs": 1858,
+      "endMs": 2287
+    },
+    {
+      "text": "at",
+      "startMs": 2345,
+      "endMs": 2403
+    },
+    {
+      "text": "Xerox",
+      "startMs": 2461,
+      "endMs": 2891
+    },
+    {
+      "text": "PARC",
+      "startMs": 2961,
+      "endMs": 3344
+    },
+    {
+      "text": "in",
+      "startMs": 3437,
+      "endMs": 3576
+    },
+    {
+      "text": "1973",
+      "startMs": 3622,
+      "endMs": 4632
+    },
+    {
+      "text": "as",
+      "startMs": 4957,
+      "endMs": 5120
+    },
+    {
+      "text": "a",
+      "startMs": 5166,
+      "endMs": 5190
+    },
+    {
+      "text": "shared",
+      "startMs": 5248,
+      "endMs": 5561
+    },
+    {
+      "text": "wire",
+      "startMs": 5608,
+      "endMs": 5898
+    },
+    {
+      "text": "for",
+      "startMs": 5933,
+      "endMs": 6037
+    },
+    {
+      "text": "office",
+      "startMs": 6095,
+      "endMs": 6385
+    },
+    {
+      "text": "computers.",
+      "startMs": 6409,
+      "endMs": 7152
+    },
+    {
+      "text": "It",
+      "startMs": 7593,
+      "endMs": 7721
+    },
+    {
+      "text": "became",
+      "startMs": 7767,
+      "endMs": 8057
+    },
+    {
+      "text": "the",
+      "startMs": 8081,
+      "endMs": 8150
+    },
+    {
+      "text": "standard",
+      "startMs": 8197,
+      "endMs": 8568
+    },
+    {
+      "text": "way",
+      "startMs": 8626,
+      "endMs": 8835
+    },
+    {
+      "text": "to",
+      "startMs": 8893,
+      "endMs": 8963
+    },
+    {
+      "text": "wire",
+      "startMs": 9044,
+      "endMs": 9381
+    },
+    {
+      "text": "local",
+      "startMs": 9427,
+      "endMs": 9718
+    },
+    {
+      "text": "networks.",
+      "startMs": 9787,
+      "endMs": 10681
+    }
+  ]
+}

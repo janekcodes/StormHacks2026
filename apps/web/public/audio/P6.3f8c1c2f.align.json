@@ -1,0 +1,154 @@
+{
+  "words": [
+    {
+      "text": "George",
+      "startMs": 0,
+      "endMs": 372
+    },
+    {
+      "text": "Boole's",
+      "startMs": 418,
+      "endMs": 720
+    },
+    {
+      "text": "book",
+      "startMs": 766,
+      "endMs": 998
+    },
+    {
+      "text": "from",
+      "startMs": 1068,
+      "endMs": 1231
+    },
+    {
+      "text": "1854",
+      "startMs": 1277,
+      "endMs": 2218
+    },
+    {
+      "text": "reduced",
+      "startMs": 2543,
+      "endMs": 2937
+    },
+    {
+      "text": "logic",
+      "startMs": 2995,
+      "endMs": 3320
+    },
+    {
+      "text": "to",
+      "startMs": 3379,
+      "endMs": 3437
+    },
+    {
+      "text": "algebra,",
+      "startMs": 3506,
+      "endMs": 4180
+    },
+    {
+      "text": "with",
+      "startMs": 4296,
+      "endMs": 4470
+    },
+    {
+      "text": "variables",
+      "startMs": 4516,
+      "endMs": 5016
+    },
+    {
+      "text": "that",
+      "startMs": 5050,
+      "endMs": 5155
+    },
+    {
+      "text": "are",
+      "startMs": 5190,
+      "endMs": 5283
+    },
+    {
+      "text": "only",
+      "startMs": 5329,
+      "endMs": 5526
+    },
+    {
+      "text": "ever",
+      "startMs": 5584,
+      "endMs": 5759
+    },
+    {
+      "text": "true",
+      "startMs": 5805,
+      "endMs": 6026
+    },
+    {
+      "text": "or",
+      "startMs": 6072,
+      "endMs": 6153
+    },
+    {
+      "text": "false.",
+      "startMs": 6235,
+      "endMs": 6757
+    },
+    {
+      "text": "A",
+      "startMs": 7198,
+      "endMs": 7279
+    },
+    {
+      "text": "century",
+      "startMs": 7349,
+      "endMs": 7721
+    },
+    {
+      "text": "later,",
+      "startMs": 7779,
+      "endMs": 8220
+    },
+    {
+      "text": "his",
+      "startMs": 8313,
+      "endMs": 8452
+    },
+    {
+      "text": "rules",
+      "startMs": 8510,
+      "endMs": 8789
+    },
+    {
+      "text": "became",
+      "startMs": 8847,
+      "endMs": 9137
+    },
+    {
+      "text": "the",
+      "startMs": 9160,
+      "endMs": 9230
+    },
+    {
+      "text": "foundation",
+      "startMs": 9276,
+      "endMs": 9799
+    },
+    {
+      "text": "of",
+      "startMs": 9845,
+      "endMs": 9892
+    },
+    {
+      "text": "digital",
+      "startMs": 9961,
+      "endMs": 10356
+    },
+    {
+      "text": "circuit",
+      "startMs": 10437,
+      "endMs": 10786
+    },
+    {
+      "text": "design.",
+      "startMs": 10832,
+      "endMs": 11656
+    }
+  ]
+}

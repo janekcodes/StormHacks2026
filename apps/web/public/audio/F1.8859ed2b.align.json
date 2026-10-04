@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "Alan",
+      "startMs": 0,
+      "endMs": 290
+    },
+    {
+      "text": "Turing's",
+      "startMs": 348,
+      "endMs": 778
+    },
+    {
+      "text": "paper",
+      "startMs": 824,
+      "endMs": 1138
+    },
+    {
+      "text": "from",
+      "startMs": 1184,
+      "endMs": 1312
+    },
+    {
+      "text": "1950",
+      "startMs": 1370,
+      "endMs": 2067
+    },
+    {
+      "text": "proposed",
+      "startMs": 2345,
+      "endMs": 2798
+    },
+    {
+      "text": "the",
+      "startMs": 2821,
+      "endMs": 2891
+    },
+    {
+      "text": "Imitation",
+      "startMs": 2961,
+      "endMs": 3483
+    },
+    {
+      "text": "Game:",
+      "startMs": 3553,
+      "endMs": 4017
+    },
+    {
+      "text": "if",
+      "startMs": 4528,
+      "endMs": 4667
+    },
+    {
+      "text": "a",
+      "startMs": 4725,
+      "endMs": 4748
+    },
+    {
+      "text": "machine's",
+      "startMs": 4807,
+      "endMs": 5213
+    },
+    {
+      "text": "replies",
+      "startMs": 5259,
+      "endMs": 5700
+    },
+    {
+      "text": "are",
+      "startMs": 5735,
+      "endMs": 5828
+    },
+    {
+      "text": "indistinguishable",
+      "startMs": 5875,
+      "endMs": 6687
+    },
+    {
+      "text": "from",
+      "startMs": 6711,
+      "endMs": 6838
+    },
+    {
+      "text": "a",
+      "startMs": 6885,
+      "endMs": 6908
+    },
+    {
+      "text": "person's,",
+      "startMs": 6966,
+      "endMs": 7535
+    },
+    {
+      "text": "call",
+      "startMs": 7686,
+      "endMs": 7883
+    },
+    {
+      "text": "it",
+      "startMs": 7941,
+      "endMs": 8022
+    },
+    {
+      "text": "intelligent.",
+      "startMs": 8069,
+      "endMs": 8858
+    },
+    {
+      "text": "The",
+      "startMs": 9369,
+      "endMs": 9485
+    },
+    {
+      "text": "test",
+      "startMs": 9543,
+      "endMs": 9857
+    },
+    {
+      "text": "still",
+      "startMs": 9950,
+      "endMs": 10194
+    },
+    {
+      "text": "frames",
+      "startMs": 10275,
+      "endMs": 10600
+    },
+    {
+      "text": "debates",
+      "startMs": 10646,
+      "endMs": 11018
+    },
+    {
+      "text": "about",
+      "startMs": 11053,
+      "endMs": 11262
+    },
+    {
+      "text": "machine",
+      "startMs": 11308,
+      "endMs": 11633
+    },
+    {
+      "text": "intelligence.",
+      "startMs": 11668,
+      "endMs": 12678
+    }
+  ]
+}

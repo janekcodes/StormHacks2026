@@ -1,0 +1,189 @@
+{
+  "words": [
+    {
+      "text": "Vint",
+      "startMs": 0,
+      "endMs": 290
+    },
+    {
+      "text": "Cerf",
+      "startMs": 372,
+      "endMs": 662
+    },
+    {
+      "text": "and",
+      "startMs": 731,
+      "endMs": 813
+    },
+    {
+      "text": "Bob",
+      "startMs": 882,
+      "endMs": 1080
+    },
+    {
+      "text": "Kahn",
+      "startMs": 1161,
+      "endMs": 1405
+    },
+    {
+      "text": "described",
+      "startMs": 1486,
+      "endMs": 1927
+    },
+    {
+      "text": "TCP",
+      "startMs": 1974,
+      "endMs": 2415
+    },
+    {
+      "text": "in",
+      "startMs": 2589,
+      "endMs": 2682
+    },
+    {
+      "text": "1974",
+      "startMs": 2728,
+      "endMs": 3762
+    },
+    {
+      "text": "as",
+      "startMs": 4087,
+      "endMs": 4249
+    },
+    {
+      "text": "a",
+      "startMs": 4296,
+      "endMs": 4319
+    },
+    {
+      "text": "way",
+      "startMs": 4365,
+      "endMs": 4516
+    },
+    {
+      "text": "to",
+      "startMs": 4574,
+      "endMs": 4632
+    },
+    {
+      "text": "connect",
+      "startMs": 4690,
+      "endMs": 4992
+    },
+    {
+      "text": "separate",
+      "startMs": 5062,
+      "endMs": 5433
+    },
+    {
+      "text": "networks",
+      "startMs": 5468,
+      "endMs": 5944
+    },
+    {
+      "text": "into",
+      "startMs": 6002,
+      "endMs": 6223
+    },
+    {
+      "text": "an",
+      "startMs": 6293,
+      "endMs": 6351
+    },
+    {
+      "text": "internet.",
+      "startMs": 6420,
+      "endMs": 7094
+    },
+    {
+      "text": "On",
+      "startMs": 7697,
+      "endMs": 7872
+    },
+    {
+      "text": "January",
+      "startMs": 7941,
+      "endMs": 8313
+    },
+    {
+      "text": "1,",
+      "startMs": 8382,
+      "endMs": 8742
+    },
+    {
+      "text": "1983,",
+      "startMs": 8800,
+      "endMs": 9857
+    },
+    {
+      "text": "ARPANET",
+      "startMs": 10031,
+      "endMs": 10507
+    },
+    {
+      "text": "switched",
+      "startMs": 10577,
+      "endMs": 10890
+    },
+    {
+      "text": "to",
+      "startMs": 10913,
+      "endMs": 10971
+    },
+    {
+      "text": "TCP",
+      "startMs": 11029,
+      "endMs": 11505
+    },
+    {
+      "text": "and",
+      "startMs": 11656,
+      "endMs": 11761
+    },
+    {
+      "text": "IP,",
+      "startMs": 11842,
+      "endMs": 12492
+    },
+    {
+      "text": "the",
+      "startMs": 12666,
+      "endMs": 12771
+    },
+    {
+      "text": "event",
+      "startMs": 12829,
+      "endMs": 13108
+    },
+    {
+      "text": "many",
+      "startMs": 13189,
+      "endMs": 13410
+    },
+    {
+      "text": "mark",
+      "startMs": 13479,
+      "endMs": 13746
+    },
+    {
+      "text": "as",
+      "startMs": 13816,
+      "endMs": 13897
+    },
+    {
+      "text": "the",
+      "startMs": 13944,
+      "endMs": 14013
+    },
+    {
+      "text": "internet's",
+      "startMs": 14083,
+      "endMs": 14536
+    },
+    {
+      "text": "birthday.",
+      "startMs": 14582,
+      "endMs": 15511
+    }
+  ]
+}

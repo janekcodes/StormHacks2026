@@ -1,0 +1,174 @@
+{
+  "words": [
+    {
+      "text": "Ken",
+      "startMs": 0,
+      "endMs": 255
+    },
+    {
+      "text": "Thompson",
+      "startMs": 325,
+      "endMs": 882
+    },
+    {
+      "text": "and",
+      "startMs": 940,
+      "endMs": 1057
+    },
+    {
+      "text": "Dennis",
+      "startMs": 1115,
+      "endMs": 1393
+    },
+    {
+      "text": "Ritchie",
+      "startMs": 1474,
+      "endMs": 1962
+    },
+    {
+      "text": "built",
+      "startMs": 2113,
+      "endMs": 2368
+    },
+    {
+      "text": "Unix",
+      "startMs": 2485,
+      "endMs": 2798
+    },
+    {
+      "text": "at",
+      "startMs": 2844,
+      "endMs": 2926
+    },
+    {
+      "text": "Bell",
+      "startMs": 2984,
+      "endMs": 3170
+    },
+    {
+      "text": "Labs",
+      "startMs": 3239,
+      "endMs": 3541
+    },
+    {
+      "text": "in",
+      "startMs": 3599,
+      "endMs": 3692
+    },
+    {
+      "text": "1969,",
+      "startMs": 3750,
+      "endMs": 4957
+    },
+    {
+      "text": "and",
+      "startMs": 5201,
+      "endMs": 5341
+    },
+    {
+      "text": "Ritchie",
+      "startMs": 5410,
+      "endMs": 5700
+    },
+    {
+      "text": "designed",
+      "startMs": 5759,
+      "endMs": 6130
+    },
+    {
+      "text": "C",
+      "startMs": 6188,
+      "endMs": 6304
+    },
+    {
+      "text": "in",
+      "startMs": 6478,
+      "endMs": 6548
+    },
+    {
+      "text": "1972",
+      "startMs": 6606,
+      "endMs": 7546
+    },
+    {
+      "text": "to",
+      "startMs": 7628,
+      "endMs": 7709
+    },
+    {
+      "text": "rewrite",
+      "startMs": 7802,
+      "endMs": 8231
+    },
+    {
+      "text": "it.",
+      "startMs": 8266,
+      "endMs": 8545
+    },
+    {
+      "text": "Unix",
+      "startMs": 9056,
+      "endMs": 9404
+    },
+    {
+      "text": "tools",
+      "startMs": 9451,
+      "endMs": 9776
+    },
+    {
+      "text": "and",
+      "startMs": 9810,
+      "endMs": 9903
+    },
+    {
+      "text": "the",
+      "startMs": 9938,
+      "endMs": 10008
+    },
+    {
+      "text": "portability",
+      "startMs": 10043,
+      "endMs": 10612
+    },
+    {
+      "text": "of",
+      "startMs": 10670,
+      "endMs": 10728
+    },
+    {
+      "text": "C",
+      "startMs": 10786,
+      "endMs": 10937
+    },
+    {
+      "text": "became",
+      "startMs": 11378,
+      "endMs": 11680
+    },
+    {
+      "text": "the",
+      "startMs": 11714,
+      "endMs": 11784
+    },
+    {
+      "text": "foundation",
+      "startMs": 11831,
+      "endMs": 12341
+    },
+    {
+      "text": "of",
+      "startMs": 12376,
+      "endMs": 12423
+    },
+    {
+      "text": "modern",
+      "startMs": 12492,
+      "endMs": 12771
+    },
+    {
+      "text": "software.",
+      "startMs": 12829,
+      "endMs": 13700
+    }
+  ]
+}

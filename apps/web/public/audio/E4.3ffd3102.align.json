@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 163
+    },
+    {
+      "text": "Xerox",
+      "startMs": 232,
+      "endMs": 650
+    },
+    {
+      "text": "Alto,",
+      "startMs": 731,
+      "endMs": 1324
+    },
+    {
+      "text": "built",
+      "startMs": 1440,
+      "endMs": 1695
+    },
+    {
+      "text": "in",
+      "startMs": 1753,
+      "endMs": 1823
+    },
+    {
+      "text": "1973,",
+      "startMs": 1881,
+      "endMs": 3077
+    },
+    {
+      "text": "was",
+      "startMs": 3228,
+      "endMs": 3390
+    },
+    {
+      "text": "the",
+      "startMs": 3437,
+      "endMs": 3506
+    },
+    {
+      "text": "first",
+      "startMs": 3564,
+      "endMs": 3831
+    },
+    {
+      "text": "computer",
+      "startMs": 3889,
+      "endMs": 4319
+    },
+    {
+      "text": "designed",
+      "startMs": 4377,
+      "endMs": 4760
+    },
+    {
+      "text": "around",
+      "startMs": 4795,
+      "endMs": 5016
+    },
+    {
+      "text": "a",
+      "startMs": 5062,
+      "endMs": 5085
+    },
+    {
+      "text": "graphical",
+      "startMs": 5143,
+      "endMs": 5573
+    },
+    {
+      "text": "interface",
+      "startMs": 5654,
+      "endMs": 6316
+    },
+    {
+      "text": "with",
+      "startMs": 6374,
+      "endMs": 6560
+    },
+    {
+      "text": "windows,",
+      "startMs": 6618,
+      "endMs": 7187
+    },
+    {
+      "text": "a",
+      "startMs": 7256,
+      "endMs": 7326
+    },
+    {
+      "text": "mouse",
+      "startMs": 7419,
+      "endMs": 7755
+    },
+    {
+      "text": "and",
+      "startMs": 7802,
+      "endMs": 7918
+    },
+    {
+      "text": "a",
+      "startMs": 7976,
+      "endMs": 7999
+    },
+    {
+      "text": "bitmap",
+      "startMs": 8046,
+      "endMs": 8417
+    },
+    {
+      "text": "screen.",
+      "startMs": 8475,
+      "endMs": 9079
+    },
+    {
+      "text": "It",
+      "startMs": 9590,
+      "endMs": 9729
+    },
+    {
+      "text": "inspired",
+      "startMs": 9787,
+      "endMs": 10298
+    },
+    {
+      "text": "the",
+      "startMs": 10321,
+      "endMs": 10391
+    },
+    {
+      "text": "Macintosh",
+      "startMs": 10437,
+      "endMs": 10995
+    },
+    {
+      "text": "and",
+      "startMs": 11041,
+      "endMs": 11134
+    },
+    {
+      "text": "nearly",
+      "startMs": 11180,
+      "endMs": 11436
+    },
+    {
+      "text": "every",
+      "startMs": 11505,
+      "endMs": 11773
+    },
+    {
+      "text": "computer",
+      "startMs": 11819,
+      "endMs": 12272
+    },
+    {
+      "text": "since.",
+      "startMs": 12330,
+      "endMs": 13096
+    }
+  ]
+}

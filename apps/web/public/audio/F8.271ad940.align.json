@@ -1,0 +1,154 @@
+{
+  "words": [
+    {
+      "text": "AlexNet",
+      "startMs": 0,
+      "endMs": 604
+    },
+    {
+      "text": "won",
+      "startMs": 720,
+      "endMs": 917
+    },
+    {
+      "text": "the",
+      "startMs": 964,
+      "endMs": 1033
+    },
+    {
+      "text": "2012",
+      "startMs": 1080,
+      "endMs": 1962
+    },
+    {
+      "text": "ImageNet",
+      "startMs": 2032,
+      "endMs": 2519
+    },
+    {
+      "text": "competition",
+      "startMs": 2577,
+      "endMs": 3123
+    },
+    {
+      "text": "by",
+      "startMs": 3193,
+      "endMs": 3332
+    },
+    {
+      "text": "a",
+      "startMs": 3390,
+      "endMs": 3413
+    },
+    {
+      "text": "wide",
+      "startMs": 3495,
+      "endMs": 3785
+    },
+    {
+      "text": "margin,",
+      "startMs": 3831,
+      "endMs": 4435
+    },
+    {
+      "text": "using",
+      "startMs": 4818,
+      "endMs": 5108
+    },
+    {
+      "text": "a",
+      "startMs": 5155,
+      "endMs": 5178
+    },
+    {
+      "text": "deep",
+      "startMs": 5236,
+      "endMs": 5457
+    },
+    {
+      "text": "convolutional",
+      "startMs": 5550,
+      "endMs": 6235
+    },
+    {
+      "text": "network",
+      "startMs": 6304,
+      "endMs": 6734
+    },
+    {
+      "text": "trained",
+      "startMs": 6850,
+      "endMs": 7210
+    },
+    {
+      "text": "on",
+      "startMs": 7256,
+      "endMs": 7326
+    },
+    {
+      "text": "GPUs.",
+      "startMs": 7407,
+      "endMs": 8278
+    },
+    {
+      "text": "Its",
+      "startMs": 8719,
+      "endMs": 8905
+    },
+    {
+      "text": "victory",
+      "startMs": 8963,
+      "endMs": 9323
+    },
+    {
+      "text": "launched",
+      "startMs": 9381,
+      "endMs": 9741
+    },
+    {
+      "text": "the",
+      "startMs": 9776,
+      "endMs": 9845
+    },
+    {
+      "text": "deep",
+      "startMs": 9903,
+      "endMs": 10101
+    },
+    {
+      "text": "learning",
+      "startMs": 10182,
+      "endMs": 10519
+    },
+    {
+      "text": "era",
+      "startMs": 10588,
+      "endMs": 10844
+    },
+    {
+      "text": "that",
+      "startMs": 10902,
+      "endMs": 11018
+    },
+    {
+      "text": "produced",
+      "startMs": 11064,
+      "endMs": 11471
+    },
+    {
+      "text": "modern",
+      "startMs": 11552,
+      "endMs": 11865
+    },
+    {
+      "text": "AI",
+      "startMs": 11935,
+      "endMs": 12225
+    },
+    {
+      "text": "systems.",
+      "startMs": 12307,
+      "endMs": 13142
+    }
+  ]
+}

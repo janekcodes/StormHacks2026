@@ -1,0 +1,179 @@
+{
+  "words": [
+    {
+      "text": "Amazon",
+      "startMs": 0,
+      "endMs": 430
+    },
+    {
+      "text": "Web",
+      "startMs": 511,
+      "endMs": 697
+    },
+    {
+      "text": "Services",
+      "startMs": 766,
+      "endMs": 1242
+    },
+    {
+      "text": "launched",
+      "startMs": 1324,
+      "endMs": 1672
+    },
+    {
+      "text": "S3",
+      "startMs": 1788,
+      "endMs": 2183
+    },
+    {
+      "text": "storage",
+      "startMs": 2264,
+      "endMs": 2717
+    },
+    {
+      "text": "and",
+      "startMs": 2752,
+      "endMs": 2833
+    },
+    {
+      "text": "EC2",
+      "startMs": 2914,
+      "endMs": 3448
+    },
+    {
+      "text": "compute",
+      "startMs": 3529,
+      "endMs": 3971
+    },
+    {
+      "text": "in",
+      "startMs": 4005,
+      "endMs": 4075
+    },
+    {
+      "text": "2006,",
+      "startMs": 4145,
+      "endMs": 5236
+    },
+    {
+      "text": "letting",
+      "startMs": 5561,
+      "endMs": 5851
+    },
+    {
+      "text": "anyone",
+      "startMs": 5921,
+      "endMs": 6327
+    },
+    {
+      "text": "rent",
+      "startMs": 6385,
+      "endMs": 6583
+    },
+    {
+      "text": "servers",
+      "startMs": 6653,
+      "endMs": 7012
+    },
+    {
+      "text": "by",
+      "startMs": 7059,
+      "endMs": 7175
+    },
+    {
+      "text": "the",
+      "startMs": 7233,
+      "endMs": 7314
+    },
+    {
+      "text": "hour",
+      "startMs": 7384,
+      "endMs": 7616
+    },
+    {
+      "text": "over",
+      "startMs": 7686,
+      "endMs": 7872
+    },
+    {
+      "text": "the",
+      "startMs": 7918,
+      "endMs": 7988
+    },
+    {
+      "text": "internet.",
+      "startMs": 8034,
+      "endMs": 8638
+    },
+    {
+      "text": "The",
+      "startMs": 9149,
+      "endMs": 9265
+    },
+    {
+      "text": "cloud",
+      "startMs": 9311,
+      "endMs": 9625
+    },
+    {
+      "text": "turned",
+      "startMs": 9671,
+      "endMs": 9915
+    },
+    {
+      "text": "computing",
+      "startMs": 9973,
+      "endMs": 10449
+    },
+    {
+      "text": "into",
+      "startMs": 10495,
+      "endMs": 10658
+    },
+    {
+      "text": "a",
+      "startMs": 10739,
+      "endMs": 10774
+    },
+    {
+      "text": "utility",
+      "startMs": 10855,
+      "endMs": 11436
+    },
+    {
+      "text": "and",
+      "startMs": 11587,
+      "endMs": 11738
+    },
+    {
+      "text": "became",
+      "startMs": 11784,
+      "endMs": 12063
+    },
+    {
+      "text": "the",
+      "startMs": 12086,
+      "endMs": 12156
+    },
+    {
+      "text": "default",
+      "startMs": 12202,
+      "endMs": 12632
+    },
+    {
+      "text": "way",
+      "startMs": 12690,
+      "endMs": 12899
+    },
+    {
+      "text": "software",
+      "startMs": 12980,
+      "endMs": 13468
+    },
+    {
+      "text": "runs.",
+      "startMs": 13502,
+      "endMs": 14257
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "words": [
+    {
+      "text": "Edgar",
+      "startMs": 0,
+      "endMs": 325
+    },
+    {
+      "text": "Codd's",
+      "startMs": 372,
+      "endMs": 673
+    },
+    {
+      "text": "1970",
+      "startMs": 720,
+      "endMs": 1428
+    },
+    {
+      "text": "paper",
+      "startMs": 1509,
+      "endMs": 1881
+    },
+    {
+      "text": "described",
+      "startMs": 1997,
+      "endMs": 2461
+    },
+    {
+      "text": "data",
+      "startMs": 2496,
+      "endMs": 2821
+    },
+    {
+      "text": "as",
+      "startMs": 2879,
+      "endMs": 2961
+    },
+    {
+      "text": "relations,",
+      "startMs": 3030,
+      "endMs": 3727
+    },
+    {
+      "text": "or",
+      "startMs": 3878,
+      "endMs": 4017
+    },
+    {
+      "text": "tables,",
+      "startMs": 4075,
+      "endMs": 4656
+    },
+    {
+      "text": "that",
+      "startMs": 4807,
+      "endMs": 4946
+    },
+    {
+      "text": "could",
+      "startMs": 4981,
+      "endMs": 5108
+    },
+    {
+      "text": "be",
+      "startMs": 5143,
+      "endMs": 5213
+    },
+    {
+      "text": "queried",
+      "startMs": 5259,
+      "endMs": 5666
+    },
+    {
+      "text": "in",
+      "startMs": 5712,
+      "endMs": 5782
+    },
+    {
+      "text": "a",
+      "startMs": 5828,
+      "endMs": 5863
+    },
+    {
+      "text": "uniform",
+      "startMs": 5956,
+      "endMs": 6397
+    },
+    {
+      "text": "way.",
+      "startMs": 6455,
+      "endMs": 6954
+    },
+    {
+      "text": "The",
+      "startMs": 7396,
+      "endMs": 7500
+    },
+    {
+      "text": "relational",
+      "startMs": 7570,
+      "endMs": 8022
+    },
+    {
+      "text": "model",
+      "startMs": 8092,
+      "endMs": 8336
+    },
+    {
+      "text": "became",
+      "startMs": 8406,
+      "endMs": 8696
+    },
+    {
+      "text": "the",
+      "startMs": 8719,
+      "endMs": 8789
+    },
+    {
+      "text": "basis",
+      "startMs": 8835,
+      "endMs": 9207
+    },
+    {
+      "text": "of",
+      "startMs": 9253,
+      "endMs": 9311
+    },
+    {
+      "text": "SQL",
+      "startMs": 9392,
+      "endMs": 9985
+    },
+    {
+      "text": "and",
+      "startMs": 10159,
+      "endMs": 10333
+    },
+    {
+      "text": "nearly",
+      "startMs": 10403,
+      "endMs": 10670
+    },
+    {
+      "text": "every",
+      "startMs": 10739,
+      "endMs": 11018
+    },
+    {
+      "text": "database",
+      "startMs": 11064,
+      "endMs": 11622
+    },
+    {
+      "text": "in",
+      "startMs": 11656,
+      "endMs": 11726
+    },
+    {
+      "text": "use",
+      "startMs": 11807,
+      "endMs": 12028
+    },
+    {
+      "text": "today.",
+      "startMs": 12063,
+      "endMs": 12817
+    }
+  ]
+}

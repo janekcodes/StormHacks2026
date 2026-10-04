@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "Peter",
+      "startMs": 0,
+      "endMs": 348
+    },
+    {
+      "text": "Shor's",
+      "startMs": 383,
+      "endMs": 685
+    },
+    {
+      "text": "algorithm",
+      "startMs": 755,
+      "endMs": 1277
+    },
+    {
+      "text": "from",
+      "startMs": 1335,
+      "endMs": 1474
+    },
+    {
+      "text": "1994",
+      "startMs": 1533,
+      "endMs": 2496
+    },
+    {
+      "text": "showed",
+      "startMs": 2775,
+      "endMs": 3030
+    },
+    {
+      "text": "that",
+      "startMs": 3053,
+      "endMs": 3158
+    },
+    {
+      "text": "a",
+      "startMs": 3193,
+      "endMs": 3216
+    },
+    {
+      "text": "quantum",
+      "startMs": 3274,
+      "endMs": 3611
+    },
+    {
+      "text": "computer",
+      "startMs": 3680,
+      "endMs": 4180
+    },
+    {
+      "text": "could",
+      "startMs": 4249,
+      "endMs": 4400
+    },
+    {
+      "text": "factor",
+      "startMs": 4447,
+      "endMs": 4783
+    },
+    {
+      "text": "large",
+      "startMs": 4853,
+      "endMs": 5155
+    },
+    {
+      "text": "numbers",
+      "startMs": 5201,
+      "endMs": 5503
+    },
+    {
+      "text": "fast,",
+      "startMs": 5561,
+      "endMs": 6072
+    },
+    {
+      "text": "which",
+      "startMs": 6281,
+      "endMs": 6455
+    },
+    {
+      "text": "would",
+      "startMs": 6490,
+      "endMs": 6629
+    },
+    {
+      "text": "break",
+      "startMs": 6664,
+      "endMs": 6931
+    },
+    {
+      "text": "RSA",
+      "startMs": 7047,
+      "endMs": 7500
+    },
+    {
+      "text": "encryption.",
+      "startMs": 7558,
+      "endMs": 8290
+    },
+    {
+      "text": "It",
+      "startMs": 8800,
+      "endMs": 8940
+    },
+    {
+      "text": "made",
+      "startMs": 8986,
+      "endMs": 9183
+    },
+    {
+      "text": "quantum",
+      "startMs": 9230,
+      "endMs": 9543
+    },
+    {
+      "text": "computing",
+      "startMs": 9613,
+      "endMs": 10112
+    },
+    {
+      "text": "a",
+      "startMs": 10182,
+      "endMs": 10228
+    },
+    {
+      "text": "matter",
+      "startMs": 10298,
+      "endMs": 10530
+    },
+    {
+      "text": "of",
+      "startMs": 10577,
+      "endMs": 10635
+    },
+    {
+      "text": "real",
+      "startMs": 10716,
+      "endMs": 10948
+    },
+    {
+      "text": "urgency.",
+      "startMs": 11018,
+      "endMs": 11981
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "words": [
+    {
+      "text": "Whitfield",
+      "startMs": 0,
+      "endMs": 522
+    },
+    {
+      "text": "Diffie",
+      "startMs": 569,
+      "endMs": 1370
+    },
+    {
+      "text": "and",
+      "startMs": 1428,
+      "endMs": 1567
+    },
+    {
+      "text": "Martin",
+      "startMs": 1660,
+      "endMs": 2020
+    },
+    {
+      "text": "Hellman",
+      "startMs": 2090,
+      "endMs": 2601
+    },
+    {
+      "text": "proposed",
+      "startMs": 2844,
+      "endMs": 3297
+    },
+    {
+      "text": "public",
+      "startMs": 3355,
+      "endMs": 3669
+    },
+    {
+      "text": "key",
+      "startMs": 3715,
+      "endMs": 3866
+    },
+    {
+      "text": "cryptography",
+      "startMs": 3924,
+      "endMs": 4563
+    },
+    {
+      "text": "in",
+      "startMs": 4621,
+      "endMs": 4690
+    },
+    {
+      "text": "1976,",
+      "startMs": 4748,
+      "endMs": 6049
+    },
+    {
+      "text": "so",
+      "startMs": 6293,
+      "endMs": 6432
+    },
+    {
+      "text": "two",
+      "startMs": 6502,
+      "endMs": 6664
+    },
+    {
+      "text": "people",
+      "startMs": 6722,
+      "endMs": 7012
+    },
+    {
+      "text": "could",
+      "startMs": 7047,
+      "endMs": 7187
+    },
+    {
+      "text": "agree",
+      "startMs": 7221,
+      "endMs": 7477
+    },
+    {
+      "text": "on",
+      "startMs": 7523,
+      "endMs": 7593
+    },
+    {
+      "text": "a",
+      "startMs": 7639,
+      "endMs": 7663
+    },
+    {
+      "text": "secret",
+      "startMs": 7732,
+      "endMs": 8162
+    },
+    {
+      "text": "over",
+      "startMs": 8278,
+      "endMs": 8545
+    },
+    {
+      "text": "a",
+      "startMs": 8603,
+      "endMs": 8626
+    },
+    {
+      "text": "public",
+      "startMs": 8684,
+      "endMs": 8998
+    },
+    {
+      "text": "channel.",
+      "startMs": 9056,
+      "endMs": 9601
+    },
+    {
+      "text": "In",
+      "startMs": 10043,
+      "endMs": 10194
+    },
+    {
+      "text": "1977,",
+      "startMs": 10240,
+      "endMs": 11343
+    },
+    {
+      "text": "Ron",
+      "startMs": 11517,
+      "endMs": 11761
+    },
+    {
+      "text": "Rivest,",
+      "startMs": 11854,
+      "endMs": 12585
+    },
+    {
+      "text": "Adi",
+      "startMs": 12701,
+      "endMs": 12957
+    },
+    {
+      "text": "Shamir",
+      "startMs": 13026,
+      "endMs": 13653
+    },
+    {
+      "text": "and",
+      "startMs": 13932,
+      "endMs": 14095
+    },
+    {
+      "text": "Leonard",
+      "startMs": 14153,
+      "endMs": 14454
+    },
+    {
+      "text": "Adleman",
+      "startMs": 14536,
+      "endMs": 15685
+    },
+    {
+      "text": "turned",
+      "startMs": 15801,
+      "endMs": 16126
+    },
+    {
+      "text": "the",
+      "startMs": 16149,
+      "endMs": 16219
+    },
+    {
+      "text": "idea",
+      "startMs": 16289,
+      "endMs": 16591
+    },
+    {
+      "text": "into",
+      "startMs": 16660,
+      "endMs": 16823
+    },
+    {
+      "text": "RSA.",
+      "startMs": 16939,
+      "endMs": 17879
+    }
+  ]
+}

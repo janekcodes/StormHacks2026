@@ -1,0 +1,249 @@
+{
+  "words": [
+    {
+      "text": "Charles",
+      "startMs": 0,
+      "endMs": 441
+    },
+    {
+      "text": "Babbage",
+      "startMs": 499,
+      "endMs": 1207
+    },
+    {
+      "text": "designed",
+      "startMs": 1277,
+      "endMs": 1730
+    },
+    {
+      "text": "the",
+      "startMs": 1765,
+      "endMs": 1834
+    },
+    {
+      "text": "Difference",
+      "startMs": 1881,
+      "endMs": 2229
+    },
+    {
+      "text": "Engine",
+      "startMs": 2276,
+      "endMs": 2647
+    },
+    {
+      "text": "to",
+      "startMs": 2798,
+      "endMs": 2914
+    },
+    {
+      "text": "compute",
+      "startMs": 2984,
+      "endMs": 3355
+    },
+    {
+      "text": "mathematical",
+      "startMs": 3402,
+      "endMs": 3994
+    },
+    {
+      "text": "tables,",
+      "startMs": 4063,
+      "endMs": 4656
+    },
+    {
+      "text": "and",
+      "startMs": 4865,
+      "endMs": 5004
+    },
+    {
+      "text": "the",
+      "startMs": 5039,
+      "endMs": 5108
+    },
+    {
+      "text": "Analytical",
+      "startMs": 5190,
+      "endMs": 5735
+    },
+    {
+      "text": "Engine",
+      "startMs": 5817,
+      "endMs": 6200
+    },
+    {
+      "text": "to",
+      "startMs": 6281,
+      "endMs": 6385
+    },
+    {
+      "text": "run",
+      "startMs": 6455,
+      "endMs": 6618
+    },
+    {
+      "text": "any",
+      "startMs": 6687,
+      "endMs": 6885
+    },
+    {
+      "text": "calculation",
+      "startMs": 6954,
+      "endMs": 7581
+    },
+    {
+      "text": "from",
+      "startMs": 7639,
+      "endMs": 7779
+    },
+    {
+      "text": "punched",
+      "startMs": 7848,
+      "endMs": 8150
+    },
+    {
+      "text": "cards.",
+      "startMs": 8208,
+      "endMs": 8789
+    },
+    {
+      "text": "Neither",
+      "startMs": 9392,
+      "endMs": 9741
+    },
+    {
+      "text": "engine",
+      "startMs": 9810,
+      "endMs": 10112
+    },
+    {
+      "text": "was",
+      "startMs": 10147,
+      "endMs": 10252
+    },
+    {
+      "text": "finished",
+      "startMs": 10310,
+      "endMs": 10635
+    },
+    {
+      "text": "in",
+      "startMs": 10670,
+      "endMs": 10728
+    },
+    {
+      "text": "his",
+      "startMs": 10774,
+      "endMs": 10867
+    },
+    {
+      "text": "lifetime,",
+      "startMs": 10937,
+      "endMs": 11552
+    },
+    {
+      "text": "but",
+      "startMs": 11726,
+      "endMs": 11877
+    },
+    {
+      "text": "the",
+      "startMs": 11912,
+      "endMs": 11981
+    },
+    {
+      "text": "Analytical",
+      "startMs": 12051,
+      "endMs": 12574
+    },
+    {
+      "text": "Engine's",
+      "startMs": 12643,
+      "endMs": 13015
+    },
+    {
+      "text": "design",
+      "startMs": 13061,
+      "endMs": 13572
+    },
+    {
+      "text": "held",
+      "startMs": 13723,
+      "endMs": 13967
+    },
+    {
+      "text": "every",
+      "startMs": 14036,
+      "endMs": 14304
+    },
+    {
+      "text": "part",
+      "startMs": 14362,
+      "endMs": 14582
+    },
+    {
+      "text": "of",
+      "startMs": 14629,
+      "endMs": 14675
+    },
+    {
+      "text": "a",
+      "startMs": 14721,
+      "endMs": 14745
+    },
+    {
+      "text": "modern",
+      "startMs": 14814,
+      "endMs": 15093
+    },
+    {
+      "text": "computer:",
+      "startMs": 15151,
+      "endMs": 15801
+    },
+    {
+      "text": "a",
+      "startMs": 15952,
+      "endMs": 16022
+    },
+    {
+      "text": "store,",
+      "startMs": 16103,
+      "endMs": 16486
+    },
+    {
+      "text": "a",
+      "startMs": 16533,
+      "endMs": 16591
+    },
+    {
+      "text": "mill,",
+      "startMs": 16684,
+      "endMs": 16974
+    },
+    {
+      "text": "and",
+      "startMs": 16997,
+      "endMs": 17113
+    },
+    {
+      "text": "control",
+      "startMs": 17171,
+      "endMs": 17589
+    },
+    {
+      "text": "by",
+      "startMs": 17659,
+      "endMs": 17787
+    },
+    {
+      "text": "a",
+      "startMs": 17845,
+      "endMs": 17868
+    },
+    {
+      "text": "program.",
+      "startMs": 17914,
+      "endMs": 18762
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "words": [
+    {
+      "text": "Jack",
+      "startMs": 0,
+      "endMs": 337
+    },
+    {
+      "text": "Kilby",
+      "startMs": 430,
+      "endMs": 1149
+    },
+    {
+      "text": "built",
+      "startMs": 1300,
+      "endMs": 1544
+    },
+    {
+      "text": "the",
+      "startMs": 1579,
+      "endMs": 1649
+    },
+    {
+      "text": "first",
+      "startMs": 1707,
+      "endMs": 2009
+    },
+    {
+      "text": "integrated",
+      "startMs": 2078,
+      "endMs": 2635
+    },
+    {
+      "text": "circuit",
+      "startMs": 2694,
+      "endMs": 3088
+    },
+    {
+      "text": "in",
+      "startMs": 3146,
+      "endMs": 3216
+    },
+    {
+      "text": "1958,",
+      "startMs": 3274,
+      "endMs": 4365
+    },
+    {
+      "text": "and",
+      "startMs": 4540,
+      "endMs": 4679
+    },
+    {
+      "text": "Robert",
+      "startMs": 4748,
+      "endMs": 5004
+    },
+    {
+      "text": "Noyce",
+      "startMs": 5062,
+      "endMs": 5317
+    },
+    {
+      "text": "made",
+      "startMs": 5387,
+      "endMs": 5573
+    },
+    {
+      "text": "a",
+      "startMs": 5608,
+      "endMs": 5631
+    },
+    {
+      "text": "silicon",
+      "startMs": 5677,
+      "endMs": 6037
+    },
+    {
+      "text": "version",
+      "startMs": 6107,
+      "endMs": 6455
+    },
+    {
+      "text": "in",
+      "startMs": 6513,
+      "endMs": 6571
+    },
+    {
+      "text": "1959",
+      "startMs": 6629,
+      "endMs": 7628
+    },
+    {
+      "text": "that",
+      "startMs": 7872,
+      "endMs": 8011
+    },
+    {
+      "text": "was",
+      "startMs": 8046,
+      "endMs": 8127
+    },
+    {
+      "text": "easier",
+      "startMs": 8197,
+      "endMs": 8533
+    },
+    {
+      "text": "to",
+      "startMs": 8568,
+      "endMs": 8626
+    },
+    {
+      "text": "mass",
+      "startMs": 8684,
+      "endMs": 8882
+    },
+    {
+      "text": "produce.",
+      "startMs": 8928,
+      "endMs": 9555
+    },
+    {
+      "text": "Putting",
+      "startMs": 9996,
+      "endMs": 10298
+    },
+    {
+      "text": "many",
+      "startMs": 10356,
+      "endMs": 10553
+    },
+    {
+      "text": "components",
+      "startMs": 10612,
+      "endMs": 11122
+    },
+    {
+      "text": "on",
+      "startMs": 11169,
+      "endMs": 11250
+    },
+    {
+      "text": "one",
+      "startMs": 11331,
+      "endMs": 11517
+    },
+    {
+      "text": "chip",
+      "startMs": 11564,
+      "endMs": 11854
+    },
+    {
+      "text": "made",
+      "startMs": 12063,
+      "endMs": 12272
+    },
+    {
+      "text": "the",
+      "startMs": 12295,
+      "endMs": 12365
+    },
+    {
+      "text": "microelectronics",
+      "startMs": 12399,
+      "endMs": 13270
+    },
+    {
+      "text": "revolution",
+      "startMs": 13328,
+      "endMs": 13827
+    },
+    {
+      "text": "possible.",
+      "startMs": 13897,
+      "endMs": 14675
+    }
+  ]
+}

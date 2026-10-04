@@ -1,0 +1,179 @@
+{
+  "words": [
+    {
+      "text": "Ivan",
+      "startMs": 0,
+      "endMs": 337
+    },
+    {
+      "text": "Sutherland's",
+      "startMs": 430,
+      "endMs": 1184
+    },
+    {
+      "text": "Sketchpad,",
+      "startMs": 1300,
+      "endMs": 2101
+    },
+    {
+      "text": "from",
+      "startMs": 2310,
+      "endMs": 2473
+    },
+    {
+      "text": "his",
+      "startMs": 2531,
+      "endMs": 2635
+    },
+    {
+      "text": "1963",
+      "startMs": 2694,
+      "endMs": 3704
+    },
+    {
+      "text": "MIT",
+      "startMs": 3855,
+      "endMs": 4249
+    },
+    {
+      "text": "thesis,",
+      "startMs": 4400,
+      "endMs": 5004
+    },
+    {
+      "text": "let",
+      "startMs": 5213,
+      "endMs": 5410
+    },
+    {
+      "text": "a",
+      "startMs": 5457,
+      "endMs": 5492
+    },
+    {
+      "text": "user",
+      "startMs": 5584,
+      "endMs": 5875
+    },
+    {
+      "text": "draw",
+      "startMs": 5933,
+      "endMs": 6188
+    },
+    {
+      "text": "on",
+      "startMs": 6258,
+      "endMs": 6351
+    },
+    {
+      "text": "screen",
+      "startMs": 6432,
+      "endMs": 6815
+    },
+    {
+      "text": "with",
+      "startMs": 6896,
+      "endMs": 7059
+    },
+    {
+      "text": "a",
+      "startMs": 7094,
+      "endMs": 7117
+    },
+    {
+      "text": "light",
+      "startMs": 7187,
+      "endMs": 7396
+    },
+    {
+      "text": "pen",
+      "startMs": 7454,
+      "endMs": 7732
+    },
+    {
+      "text": "and",
+      "startMs": 7906,
+      "endMs": 8104
+    },
+    {
+      "text": "move",
+      "startMs": 8185,
+      "endMs": 8452
+    },
+    {
+      "text": "shapes",
+      "startMs": 8487,
+      "endMs": 8777
+    },
+    {
+      "text": "as",
+      "startMs": 8812,
+      "endMs": 8905
+    },
+    {
+      "text": "objects.",
+      "startMs": 8986,
+      "endMs": 9752
+    },
+    {
+      "text": "It",
+      "startMs": 10194,
+      "endMs": 10333
+    },
+    {
+      "text": "pioneered",
+      "startMs": 10391,
+      "endMs": 10890
+    },
+    {
+      "text": "interactive",
+      "startMs": 10960,
+      "endMs": 11587
+    },
+    {
+      "text": "computer",
+      "startMs": 11622,
+      "endMs": 12074
+    },
+    {
+      "text": "graphics",
+      "startMs": 12109,
+      "endMs": 12597
+    },
+    {
+      "text": "and",
+      "startMs": 12748,
+      "endMs": 12957
+    },
+    {
+      "text": "the",
+      "startMs": 13003,
+      "endMs": 13073
+    },
+    {
+      "text": "idea",
+      "startMs": 13142,
+      "endMs": 13456
+    },
+    {
+      "text": "of",
+      "startMs": 13526,
+      "endMs": 13584
+    },
+    {
+      "text": "the",
+      "startMs": 13630,
+      "endMs": 13700
+    },
+    {
+      "text": "graphical",
+      "startMs": 13746,
+      "endMs": 14129
+    },
+    {
+      "text": "interface.",
+      "startMs": 14211,
+      "endMs": 15186
+    }
+  ]
+}

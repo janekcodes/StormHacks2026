@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "Claude",
+      "startMs": 0,
+      "endMs": 418
+    },
+    {
+      "text": "Shannon's",
+      "startMs": 453,
+      "endMs": 1254
+    },
+    {
+      "text": "1948",
+      "startMs": 1312,
+      "endMs": 2171
+    },
+    {
+      "text": "paper,",
+      "startMs": 2218,
+      "endMs": 2786
+    },
+    {
+      "text": "A",
+      "startMs": 2961,
+      "endMs": 3030
+    },
+    {
+      "text": "Mathematical",
+      "startMs": 3123,
+      "endMs": 3762
+    },
+    {
+      "text": "Theory",
+      "startMs": 3843,
+      "endMs": 4145
+    },
+    {
+      "text": "of",
+      "startMs": 4191,
+      "endMs": 4249
+    },
+    {
+      "text": "Communication,",
+      "startMs": 4307,
+      "endMs": 5271
+    },
+    {
+      "text": "defined",
+      "startMs": 5596,
+      "endMs": 6026
+    },
+    {
+      "text": "the",
+      "startMs": 6060,
+      "endMs": 6130
+    },
+    {
+      "text": "bit",
+      "startMs": 6177,
+      "endMs": 6420
+    },
+    {
+      "text": "and",
+      "startMs": 6490,
+      "endMs": 6618
+    },
+    {
+      "text": "showed",
+      "startMs": 6676,
+      "endMs": 6920
+    },
+    {
+      "text": "how",
+      "startMs": 6978,
+      "endMs": 7094
+    },
+    {
+      "text": "much",
+      "startMs": 7140,
+      "endMs": 7314
+    },
+    {
+      "text": "information",
+      "startMs": 7361,
+      "endMs": 7941
+    },
+    {
+      "text": "a",
+      "startMs": 8022,
+      "endMs": 8069
+    },
+    {
+      "text": "channel",
+      "startMs": 8139,
+      "endMs": 8452
+    },
+    {
+      "text": "can",
+      "startMs": 8510,
+      "endMs": 8626
+    },
+    {
+      "text": "carry.",
+      "startMs": 8684,
+      "endMs": 9276
+    },
+    {
+      "text": "It",
+      "startMs": 9718,
+      "endMs": 9880
+    },
+    {
+      "text": "founded",
+      "startMs": 9950,
+      "endMs": 10310
+    },
+    {
+      "text": "information",
+      "startMs": 10368,
+      "endMs": 10937
+    },
+    {
+      "text": "theory",
+      "startMs": 11006,
+      "endMs": 11343
+    },
+    {
+      "text": "and",
+      "startMs": 11413,
+      "endMs": 11540
+    },
+    {
+      "text": "underpins",
+      "startMs": 11610,
+      "endMs": 12109
+    },
+    {
+      "text": "every",
+      "startMs": 12190,
+      "endMs": 12446
+    },
+    {
+      "text": "digital",
+      "startMs": 12504,
+      "endMs": 12899
+    },
+    {
+      "text": "system",
+      "startMs": 12957,
+      "endMs": 13340
+    },
+    {
+      "text": "built",
+      "startMs": 13421,
+      "endMs": 13677
+    },
+    {
+      "text": "since.",
+      "startMs": 13735,
+      "endMs": 14489
+    }
+  ]
+}

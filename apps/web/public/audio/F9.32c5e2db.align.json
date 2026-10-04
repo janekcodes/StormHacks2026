@@ -1,0 +1,164 @@
+{
+  "words": [
+    {
+      "text": "In",
+      "startMs": 0,
+      "endMs": 163
+    },
+    {
+      "text": "March",
+      "startMs": 221,
+      "endMs": 511
+    },
+    {
+      "text": "2016,",
+      "startMs": 569,
+      "endMs": 1765
+    },
+    {
+      "text": "DeepMind's",
+      "startMs": 1974,
+      "endMs": 2926
+    },
+    {
+      "text": "AlphaGo",
+      "startMs": 3053,
+      "endMs": 3924
+    },
+    {
+      "text": "beat",
+      "startMs": 4168,
+      "endMs": 4412
+    },
+    {
+      "text": "the",
+      "startMs": 4458,
+      "endMs": 4528
+    },
+    {
+      "text": "champion",
+      "startMs": 4574,
+      "endMs": 5004
+    },
+    {
+      "text": "Lee",
+      "startMs": 5085,
+      "endMs": 5248
+    },
+    {
+      "text": "Sedol",
+      "startMs": 5306,
+      "endMs": 5805
+    },
+    {
+      "text": "four",
+      "startMs": 5921,
+      "endMs": 6165
+    },
+    {
+      "text": "games",
+      "startMs": 6223,
+      "endMs": 6513
+    },
+    {
+      "text": "to",
+      "startMs": 6560,
+      "endMs": 6629
+    },
+    {
+      "text": "one.",
+      "startMs": 6745,
+      "endMs": 7175
+    },
+    {
+      "text": "Its",
+      "startMs": 7500,
+      "endMs": 7686
+    },
+    {
+      "text": "self",
+      "startMs": 7721,
+      "endMs": 7953
+    },
+    {
+      "text": "play",
+      "startMs": 8011,
+      "endMs": 8266
+    },
+    {
+      "text": "and",
+      "startMs": 8324,
+      "endMs": 8440
+    },
+    {
+      "text": "neural",
+      "startMs": 8522,
+      "endMs": 8824
+    },
+    {
+      "text": "networks",
+      "startMs": 8893,
+      "endMs": 9358
+    },
+    {
+      "text": "marked",
+      "startMs": 9451,
+      "endMs": 9764
+    },
+    {
+      "text": "a",
+      "startMs": 9799,
+      "endMs": 9834
+    },
+    {
+      "text": "leap",
+      "startMs": 9892,
+      "endMs": 10089
+    },
+    {
+      "text": "for",
+      "startMs": 10147,
+      "endMs": 10252
+    },
+    {
+      "text": "AI",
+      "startMs": 10310,
+      "endMs": 10751
+    },
+    {
+      "text": "at",
+      "startMs": 10925,
+      "endMs": 11088
+    },
+    {
+      "text": "a",
+      "startMs": 11134,
+      "endMs": 11157
+    },
+    {
+      "text": "game",
+      "startMs": 11215,
+      "endMs": 11482
+    },
+    {
+      "text": "once",
+      "startMs": 11529,
+      "endMs": 11749
+    },
+    {
+      "text": "thought",
+      "startMs": 11784,
+      "endMs": 12028
+    },
+    {
+      "text": "decades",
+      "startMs": 12074,
+      "endMs": 12481
+    },
+    {
+      "text": "away.",
+      "startMs": 12516,
+      "endMs": 13282
+    }
+  ]
+}

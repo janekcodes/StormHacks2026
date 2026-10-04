@@ -1,0 +1,169 @@
+{
+  "words": [
+    {
+      "text": "Joseph",
+      "startMs": 0,
+      "endMs": 488
+    },
+    {
+      "text": "Weizenbaum's",
+      "startMs": 557,
+      "endMs": 1834
+    },
+    {
+      "text": "ELIZA,",
+      "startMs": 1904,
+      "endMs": 2659
+    },
+    {
+      "text": "written",
+      "startMs": 2775,
+      "endMs": 3065
+    },
+    {
+      "text": "in",
+      "startMs": 3100,
+      "endMs": 3158
+    },
+    {
+      "text": "1966,",
+      "startMs": 3216,
+      "endMs": 4296
+    },
+    {
+      "text": "played",
+      "startMs": 4354,
+      "endMs": 4632
+    },
+    {
+      "text": "a",
+      "startMs": 4667,
+      "endMs": 4690
+    },
+    {
+      "text": "therapist",
+      "startMs": 4760,
+      "endMs": 5283
+    },
+    {
+      "text": "by",
+      "startMs": 5364,
+      "endMs": 5492
+    },
+    {
+      "text": "pattern",
+      "startMs": 5573,
+      "endMs": 5991
+    },
+    {
+      "text": "matching",
+      "startMs": 6316,
+      "endMs": 6699
+    },
+    {
+      "text": "a",
+      "startMs": 6745,
+      "endMs": 6769
+    },
+    {
+      "text": "user's",
+      "startMs": 6861,
+      "endMs": 7210
+    },
+    {
+      "text": "words.",
+      "startMs": 7256,
+      "endMs": 7837
+    },
+    {
+      "text": "People",
+      "startMs": 8348,
+      "endMs": 8684
+    },
+    {
+      "text": "confided",
+      "startMs": 8719,
+      "endMs": 9253
+    },
+    {
+      "text": "in",
+      "startMs": 9300,
+      "endMs": 9369
+    },
+    {
+      "text": "it",
+      "startMs": 9416,
+      "endMs": 9543
+    },
+    {
+      "text": "even",
+      "startMs": 9752,
+      "endMs": 10008
+    },
+    {
+      "text": "though",
+      "startMs": 10031,
+      "endMs": 10194
+    },
+    {
+      "text": "it",
+      "startMs": 10228,
+      "endMs": 10286
+    },
+    {
+      "text": "understood",
+      "startMs": 10344,
+      "endMs": 10786
+    },
+    {
+      "text": "nothing,",
+      "startMs": 10844,
+      "endMs": 11343
+    },
+    {
+      "text": "the",
+      "startMs": 11471,
+      "endMs": 11564
+    },
+    {
+      "text": "first",
+      "startMs": 11633,
+      "endMs": 11900
+    },
+    {
+      "text": "hint",
+      "startMs": 11958,
+      "endMs": 12190
+    },
+    {
+      "text": "of",
+      "startMs": 12237,
+      "endMs": 12283
+    },
+    {
+      "text": "how",
+      "startMs": 12330,
+      "endMs": 12434
+    },
+    {
+      "text": "persuasive",
+      "startMs": 12504,
+      "endMs": 13038
+    },
+    {
+      "text": "chatbots",
+      "startMs": 13073,
+      "endMs": 13607
+    },
+    {
+      "text": "can",
+      "startMs": 13653,
+      "endMs": 13781
+    },
+    {
+      "text": "be.",
+      "startMs": 13851,
+      "endMs": 14443
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "Linus",
+      "startMs": 0,
+      "endMs": 395
+    },
+    {
+      "text": "Torvalds",
+      "startMs": 464,
+      "endMs": 1265
+    },
+    {
+      "text": "wrote",
+      "startMs": 1474,
+      "endMs": 1765
+    },
+    {
+      "text": "Git",
+      "startMs": 1811,
+      "endMs": 2032
+    },
+    {
+      "text": "in",
+      "startMs": 2101,
+      "endMs": 2183
+    },
+    {
+      "text": "2005",
+      "startMs": 2252,
+      "endMs": 3239
+    },
+    {
+      "text": "to",
+      "startMs": 3483,
+      "endMs": 3587
+    },
+    {
+      "text": "manage",
+      "startMs": 3657,
+      "endMs": 3971
+    },
+    {
+      "text": "the",
+      "startMs": 4005,
+      "endMs": 4075
+    },
+    {
+      "text": "Linux",
+      "startMs": 4122,
+      "endMs": 4423
+    },
+    {
+      "text": "kernel",
+      "startMs": 4493,
+      "endMs": 4911
+    },
+    {
+      "text": "after",
+      "startMs": 5085,
+      "endMs": 5399
+    },
+    {
+      "text": "its",
+      "startMs": 5445,
+      "endMs": 5561
+    },
+    {
+      "text": "previous",
+      "startMs": 5608,
+      "endMs": 6037
+    },
+    {
+      "text": "tool",
+      "startMs": 6084,
+      "endMs": 6327
+    },
+    {
+      "text": "became",
+      "startMs": 6385,
+      "endMs": 6711
+    },
+    {
+      "text": "unavailable.",
+      "startMs": 6780,
+      "endMs": 7651
+    },
+    {
+      "text": "Its",
+      "startMs": 8255,
+      "endMs": 8440
+    },
+    {
+      "text": "distributed,",
+      "startMs": 8487,
+      "endMs": 9114
+    },
+    {
+      "text": "branch",
+      "startMs": 9149,
+      "endMs": 9509
+    },
+    {
+      "text": "friendly",
+      "startMs": 9555,
+      "endMs": 9892
+    },
+    {
+      "text": "design",
+      "startMs": 9950,
+      "endMs": 10449
+    },
+    {
+      "text": "now",
+      "startMs": 10728,
+      "endMs": 10937
+    },
+    {
+      "text": "underpins",
+      "startMs": 11018,
+      "endMs": 11494
+    },
+    {
+      "text": "most",
+      "startMs": 11575,
+      "endMs": 11796
+    },
+    {
+      "text": "of",
+      "startMs": 11842,
+      "endMs": 11889
+    },
+    {
+      "text": "the",
+      "startMs": 11923,
+      "endMs": 11993
+    },
+    {
+      "text": "world's",
+      "startMs": 12028,
+      "endMs": 12318
+    },
+    {
+      "text": "software.",
+      "startMs": 12341,
+      "endMs": 13235
+    }
+  ]
+}

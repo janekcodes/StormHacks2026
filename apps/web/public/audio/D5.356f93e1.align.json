@@ -1,0 +1,154 @@
+{
+  "words": [
+    {
+      "text": "Paul",
+      "startMs": 0,
+      "endMs": 302
+    },
+    {
+      "text": "Mockapetris",
+      "startMs": 383,
+      "endMs": 1289
+    },
+    {
+      "text": "designed",
+      "startMs": 1358,
+      "endMs": 1811
+    },
+    {
+      "text": "the",
+      "startMs": 1846,
+      "endMs": 1916
+    },
+    {
+      "text": "Domain",
+      "startMs": 1962,
+      "endMs": 2276
+    },
+    {
+      "text": "Name",
+      "startMs": 2345,
+      "endMs": 2554
+    },
+    {
+      "text": "System",
+      "startMs": 2589,
+      "endMs": 2926
+    },
+    {
+      "text": "in",
+      "startMs": 3007,
+      "endMs": 3100
+    },
+    {
+      "text": "1983",
+      "startMs": 3158,
+      "endMs": 4005
+    },
+    {
+      "text": "to",
+      "startMs": 4389,
+      "endMs": 4481
+    },
+    {
+      "text": "replace",
+      "startMs": 4551,
+      "endMs": 4911
+    },
+    {
+      "text": "a",
+      "startMs": 4946,
+      "endMs": 4969
+    },
+    {
+      "text": "single",
+      "startMs": 5027,
+      "endMs": 5352
+    },
+    {
+      "text": "hand",
+      "startMs": 5410,
+      "endMs": 5677
+    },
+    {
+      "text": "edited",
+      "startMs": 5770,
+      "endMs": 6153
+    },
+    {
+      "text": "hosts",
+      "startMs": 6223,
+      "endMs": 6536
+    },
+    {
+      "text": "file.",
+      "startMs": 6606,
+      "endMs": 7210
+    },
+    {
+      "text": "It",
+      "startMs": 7814,
+      "endMs": 7964
+    },
+    {
+      "text": "turned",
+      "startMs": 7999,
+      "endMs": 8278
+    },
+    {
+      "text": "names",
+      "startMs": 8359,
+      "endMs": 8649
+    },
+    {
+      "text": "like",
+      "startMs": 8696,
+      "endMs": 8870
+    },
+    {
+      "text": "example",
+      "startMs": 8905,
+      "endMs": 9392
+    },
+    {
+      "text": "dot",
+      "startMs": 9427,
+      "endMs": 9625
+    },
+    {
+      "text": "com",
+      "startMs": 9683,
+      "endMs": 9973
+    },
+    {
+      "text": "into",
+      "startMs": 10217,
+      "endMs": 10437
+    },
+    {
+      "text": "addresses",
+      "startMs": 10507,
+      "endMs": 10937
+    },
+    {
+      "text": "across",
+      "startMs": 10983,
+      "endMs": 11285
+    },
+    {
+      "text": "a",
+      "startMs": 11320,
+      "endMs": 11355
+    },
+    {
+      "text": "distributed",
+      "startMs": 11401,
+      "endMs": 11981
+    },
+    {
+      "text": "network.",
+      "startMs": 12040,
+      "endMs": 12864
+    }
+  ]
+}

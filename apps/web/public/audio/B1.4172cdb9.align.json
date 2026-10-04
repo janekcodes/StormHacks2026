@@ -1,0 +1,139 @@
+{
+  "words": [
+    {
+      "text": "Konrad",
+      "startMs": 0,
+      "endMs": 464
+    },
+    {
+      "text": "Zuse's",
+      "startMs": 522,
+      "endMs": 1486
+    },
+    {
+      "text": "Z3,",
+      "startMs": 1695,
+      "endMs": 2392
+    },
+    {
+      "text": "completed",
+      "startMs": 2566,
+      "endMs": 3065
+    },
+    {
+      "text": "in",
+      "startMs": 3111,
+      "endMs": 3181
+    },
+    {
+      "text": "Berlin",
+      "startMs": 3251,
+      "endMs": 3634
+    },
+    {
+      "text": "in",
+      "startMs": 3692,
+      "endMs": 3750
+    },
+    {
+      "text": "1941,",
+      "startMs": 3808,
+      "endMs": 4807
+    },
+    {
+      "text": "was",
+      "startMs": 5050,
+      "endMs": 5201
+    },
+    {
+      "text": "the",
+      "startMs": 5248,
+      "endMs": 5317
+    },
+    {
+      "text": "first",
+      "startMs": 5375,
+      "endMs": 5677
+    },
+    {
+      "text": "working",
+      "startMs": 5735,
+      "endMs": 6084
+    },
+    {
+      "text": "programmable,",
+      "startMs": 6142,
+      "endMs": 6838
+    },
+    {
+      "text": "fully",
+      "startMs": 6954,
+      "endMs": 7245
+    },
+    {
+      "text": "automatic",
+      "startMs": 7314,
+      "endMs": 7872
+    },
+    {
+      "text": "digital",
+      "startMs": 7941,
+      "endMs": 8324
+    },
+    {
+      "text": "computer.",
+      "startMs": 8382,
+      "endMs": 9102
+    },
+    {
+      "text": "It",
+      "startMs": 9543,
+      "endMs": 9671
+    },
+    {
+      "text": "ran",
+      "startMs": 9718,
+      "endMs": 9880
+    },
+    {
+      "text": "on",
+      "startMs": 9938,
+      "endMs": 10019
+    },
+    {
+      "text": "relays",
+      "startMs": 10101,
+      "endMs": 10553
+    },
+    {
+      "text": "and",
+      "startMs": 10612,
+      "endMs": 10728
+    },
+    {
+      "text": "was",
+      "startMs": 10774,
+      "endMs": 10879
+    },
+    {
+      "text": "controlled",
+      "startMs": 10925,
+      "endMs": 11401
+    },
+    {
+      "text": "by",
+      "startMs": 11447,
+      "endMs": 11552
+    },
+    {
+      "text": "punched",
+      "startMs": 11633,
+      "endMs": 11947
+    },
+    {
+      "text": "film.",
+      "startMs": 11993,
+      "endMs": 12725
+    }
+  ]
+}

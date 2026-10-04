@@ -1,0 +1,149 @@
+{
+  "words": [
+    {
+      "text": "The",
+      "startMs": 0,
+      "endMs": 163
+    },
+    {
+      "text": "IBM",
+      "startMs": 255,
+      "endMs": 639
+    },
+    {
+      "text": "PC,",
+      "startMs": 720,
+      "endMs": 1277
+    },
+    {
+      "text": "released",
+      "startMs": 1451,
+      "endMs": 1788
+    },
+    {
+      "text": "in",
+      "startMs": 1834,
+      "endMs": 1904
+    },
+    {
+      "text": "1981,",
+      "startMs": 1950,
+      "endMs": 2844
+    },
+    {
+      "text": "set",
+      "startMs": 3053,
+      "endMs": 3262
+    },
+    {
+      "text": "the",
+      "startMs": 3297,
+      "endMs": 3367
+    },
+    {
+      "text": "standard",
+      "startMs": 3413,
+      "endMs": 3808
+    },
+    {
+      "text": "for",
+      "startMs": 3855,
+      "endMs": 3947
+    },
+    {
+      "text": "personal",
+      "startMs": 4005,
+      "endMs": 4389
+    },
+    {
+      "text": "computers",
+      "startMs": 4447,
+      "endMs": 4969
+    },
+    {
+      "text": "in",
+      "startMs": 5027,
+      "endMs": 5120
+    },
+    {
+      "text": "business.",
+      "startMs": 5190,
+      "endMs": 5817
+    },
+    {
+      "text": "In",
+      "startMs": 6258,
+      "endMs": 6397
+    },
+    {
+      "text": "1984,",
+      "startMs": 6444,
+      "endMs": 7361
+    },
+    {
+      "text": "the",
+      "startMs": 7477,
+      "endMs": 7570
+    },
+    {
+      "text": "Macintosh",
+      "startMs": 7628,
+      "endMs": 8127
+    },
+    {
+      "text": "brought",
+      "startMs": 8173,
+      "endMs": 8440
+    },
+    {
+      "text": "the",
+      "startMs": 8475,
+      "endMs": 8545
+    },
+    {
+      "text": "mouse",
+      "startMs": 8591,
+      "endMs": 8893
+    },
+    {
+      "text": "and",
+      "startMs": 8940,
+      "endMs": 9056
+    },
+    {
+      "text": "a",
+      "startMs": 9102,
+      "endMs": 9125
+    },
+    {
+      "text": "graphical",
+      "startMs": 9172,
+      "endMs": 9567
+    },
+    {
+      "text": "interface",
+      "startMs": 9636,
+      "endMs": 10170
+    },
+    {
+      "text": "to",
+      "startMs": 10205,
+      "endMs": 10275
+    },
+    {
+      "text": "a",
+      "startMs": 10356,
+      "endMs": 10391
+    },
+    {
+      "text": "mass",
+      "startMs": 10449,
+      "endMs": 10704
+    },
+    {
+      "text": "audience.",
+      "startMs": 10751,
+      "endMs": 11610
+    }
+  ]
+}
