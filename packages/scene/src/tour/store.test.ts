@@ -112,3 +112,13 @@ describe('dispatch queue', () => {
     expect(useTourStore.getState().state.phase).toBe('idle')
   })
 })
+
+describe('useTourStore thinking flag', () => {
+  it('is set by setThinking and cleared when a tour is configured', () => {
+    useTourStore.getState().setThinking(true)
+    expect(useTourStore.getState().thinking).toBe(true)
+    useTourStore.getState().configure(tour, null)
+    expect(useTourStore.getState().thinking).toBe(false)
+    useTourStore.getState().configure(null, null)
+  })
+})

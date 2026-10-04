@@ -37,9 +37,12 @@ interface TourStore {
   tour: Tour | null
   state: TourState
   caption: string | null
+  /** The guide's answer is still streaming (shown as "Thinking" until a sentence is spoken). */
+  thinking: boolean
   configure: (tour: Tour | null, run: ((effects: TourEffect[]) => void) | null) => void
   dispatch: (event: TourEvent) => void
   setCaption: (text: string | null) => void
+  setThinking: (on: boolean) => void
 }
 
 let runEffects: ((effects: TourEffect[]) => void) | null = null
@@ -51,11 +54,12 @@ export const useTourStore = create<TourStore>((set, get) => ({
   tour: null,
   state: initialTourState,
   caption: null,
+  thinking: false,
   configure: (tour, run) => {
     runEffects = run
     ctx = tour ? tourContext(tour) : null
     queue.length = 0
-    set({ tour, state: { ...initialTourState, auto: get().state.auto }, caption: null })
+    set({ tour, state: { ...initialTourState, auto: get().state.auto }, caption: null, thinking: false })
   },
   // Effects can dispatch synchronously (a failed walk); queue so each event
   // reduces against the state left by the one before it.
@@ -79,5 +83,6 @@ export const useTourStore = create<TourStore>((set, get) => ({
       draining = false
     }
   },
-  setCaption: (caption) => set({ caption })
+  setCaption: (caption) => set({ caption }),
+  setThinking: (thinking) => set({ thinking })
 }))

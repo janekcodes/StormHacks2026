@@ -1,14 +1,22 @@
 'use client'
 
 import type { Exhibit } from '@museum/content/schema'
-import { useEffect, useRef, useState } from 'react'
-import { finish as finishSpeech, isSpeaking, pushText, setSpeakOverride, subscribe as subscribeSpeech } from '../audio/guideVoiceBus'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import {
+  finish as finishSpeech,
+  getCaption as getGuideCaption,
+  isSpeaking,
+  pushText,
+  setSpeakOverride,
+  subscribe as subscribeSpeech
+} from '../audio/guideVoiceBus'
 import { isMuted } from '../audio/narratorBus'
 import { askGuide } from '../guide/ask'
 import { visitorContext } from '../guide/executor'
 import { usePassport } from '../passport'
 import { useVoiceInput } from '../voice/useVoiceInput'
 import { answerQuestion } from './answer'
+import { tourCaption } from './caption'
 import { PLAY_MS } from './machine'
 import { lineFor, useTourStore } from './store'
 
@@ -47,6 +55,8 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
   const tour = useTourStore((s) => s.tour)
   const state = useTourStore((s) => s.state)
   const caption = useTourStore((s) => s.caption)
+  const thinking = useTourStore((s) => s.thinking)
+  const guideCaption = useSyncExternalStore(subscribeSpeech, getGuideCaption, () => null)
   const dispatch = useTourStore((s) => s.dispatch)
   const voice = useVoiceInput()
   const [typed, setTyped] = useState('')
@@ -87,13 +97,21 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
   const ask = (text: string) =>
     answerQuestion(text, {
       dispatch,
-      ask: (question) =>
-        askGuide(question, {
-          exhibits,
-          mode: 'tour',
-          context: () => visitorContext(exhibits),
-          onText: (chunk) => pushText(chunk)
-        }),
+      ask: async (question) => {
+        // In the store, not local state: the pop-up switch can remount this bar mid-answer.
+        const { setThinking } = useTourStore.getState()
+        setThinking(true)
+        try {
+          return await askGuide(question, {
+            exhibits,
+            mode: 'tour',
+            context: () => visitorContext(exhibits),
+            onText: (chunk) => pushText(chunk)
+          })
+        } finally {
+          setThinking(false)
+        }
+      },
       setSpeakOverride,
       finishSpeech,
       isSpeaking,
@@ -224,9 +242,14 @@ function TourBarBody({ exhibits, variant }: { exhibits: readonly Exhibit[]; vari
       : state.phase === 'outro' || state.phase === 'done'
         ? 'Tour complete'
         : `Stop ${state.index + 1} of ${tour.stops.length}: ${stop?.id ?? ''} ${stop?.title ?? ''}`
-  // Until the session is live nothing is heard, so do not invite speech yet.
-  const listenCaption = voice.status === 'listening' ? 'Listening' : 'Starting the mic'
-  const liveCaption = state.pauseReason === 'listening' ? voice.partial || listenCaption : caption
+  const liveCaption = tourCaption({
+    pauseReason: state.pauseReason,
+    partial: voice.partial,
+    voiceStatus: voice.status,
+    guideCaption,
+    thinking,
+    tourCaption: caption
+  })
   const playing = state.phase === 'dwell' && state.pauseReason === null
 
   return (
