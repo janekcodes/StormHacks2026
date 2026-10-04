@@ -157,3 +157,13 @@ export const GUIDE_TOOL_DECLARATIONS: GuideToolDeclaration[] = [
     }
   }
 ]
+
+/** Tools allowed during the guided tour: nothing that moves the visitor off the route. */
+export const TOUR_TOOL_NAMES: readonly GuideToolName[] = ['highlight', 'getVisitorContext']
+
+export type GuideMode = 'visit' | 'tour'
+
+export function toolDeclarationsFor(names?: readonly GuideToolName[]): GuideToolDeclaration[] {
+  if (!names) return GUIDE_TOOL_DECLARATIONS
+  return GUIDE_TOOL_DECLARATIONS.filter((tool) => names.includes(tool.name))
+}

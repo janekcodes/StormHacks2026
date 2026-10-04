@@ -51,3 +51,4 @@ export { museum, bindMuseumApi, setMapBuilding, type MuseumNavApi } from './nav/
 
 export { interruptNarration } from './audio/narratorBus'
 export { Narrator } from './audio/Narrator'
+export { useTourStore } from './tour/store'

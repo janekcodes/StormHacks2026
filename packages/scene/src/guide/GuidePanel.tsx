@@ -1,32 +1,16 @@
 'use client'
 
 import type { Exhibit } from '@museum/content/schema'
-import type { GuideMessage, ToolCall, ToolResponse } from '@museum/guide/client'
+import type { GuideMessage, ToolCall } from '@museum/guide/client'
 import { useEffect, useRef, useState } from 'react'
 import { finish as finishSpeech, isSpeaking, pushText, stop as stopSpeech } from '../audio/guideVoiceBus'
 import { GuideVoice } from '../audio/GuideVoice'
 import { museum } from '../nav/api'
 import { useFocusReturn, usePresence } from '../ui'
-import { chipLabel, executeToolCall, visitorContext } from './executor'
+import { GuideRequestError, MAX_TURNS, streamGuideTurn } from './ask'
+import { chipLabel, visitorContext } from './executor'
 import { GuideFrame } from './GuideFrame'
-import { getSessionId } from './session'
 import { useGuideStore } from './state'
-
-const MAX_TURNS = 6
-
-interface StreamError {
-  status: number
-  message: string
-}
-
-async function readError(res: Response): Promise<string> {
-  try {
-    const data = (await res.json()) as { error?: string }
-    return data.error ?? 'Something went wrong. Please try again.'
-  } catch {
-    return 'Something went wrong. Please try again.'
-  }
-}
 
 export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
   const open = useGuideStore((s) => s.open)
@@ -60,85 +44,6 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
     if (!open) stopSpeech()
   }, [open])
 
-  const sendTurn = async (history: GuideMessage[]): Promise<GuideMessage[]> => {
-    const context = visitorContext(exhibits)
-    const res = await fetch('/api/guide', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionId: getSessionId(), messages: history, visitorContext: context })
-    })
-
-    if (!res.ok) {
-      const message = await readError(res)
-      throw { status: res.status, message } as StreamError
-    }
-    if (!res.body) {
-      throw { status: res.status, message: 'No response stream.' } as StreamError
-    }
-
-    const reader = res.body.getReader()
-    const decoder = new TextDecoder()
-    let buffer = ''
-    let text = ''
-    const toolCalls: ToolCall[] = []
-
-    const handleEvent = (raw: unknown) => {
-      const event = raw as {
-        type?: string
-        text?: string
-        id?: string
-        name?: string
-        args?: Record<string, unknown>
-        thoughtSignature?: string
-        error?: string
-      }
-      if (event.type === 'text' && typeof event.text === 'string') {
-        text += event.text
-        setStreamText(text)
-        pushText(event.text)
-      } else if (event.type === 'tool') {
-        const call: ToolCall = {
-          id: event.id ?? '',
-          name: event.name as ToolCall['name'],
-          args: event.args ?? {}
-        }
-        if (typeof event.thoughtSignature === 'string') call.thoughtSignature = event.thoughtSignature
-        toolCalls.push(call)
-        setChips((prev) => [...prev, call])
-      } else if (event.type === 'error' && typeof event.error === 'string') {
-        setError(event.error)
-      }
-    }
-
-    for (;;) {
-      const { value, done } = await reader.read()
-      if (done) break
-      buffer += decoder.decode(value, { stream: true })
-      let nl = buffer.indexOf('\n')
-      while (nl >= 0) {
-        const line = buffer.slice(0, nl).trim()
-        buffer = buffer.slice(nl + 1)
-        nl = buffer.indexOf('\n')
-        if (!line) continue
-        try {
-          handleEvent(JSON.parse(line))
-        } catch {
-          // Ignore malformed lines and keep streaming.
-        }
-      }
-    }
-
-    const next: GuideMessage[] = [
-      ...history,
-      { role: 'assistant', text, ...(toolCalls.length > 0 ? { toolCalls } : {}) }
-    ]
-    if (toolCalls.length > 0) {
-      const toolResponses: ToolResponse[] = toolCalls.map((call) => executeToolCall(call, exhibits))
-      next.push({ role: 'tool', toolResponses })
-    }
-    return next
-  }
-
   const handleSend = async () => {
     const text = input.trim()
     if (!text || busyRef.current) return
@@ -155,7 +60,17 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
 
     try {
       for (let turn = 0; turn < MAX_TURNS; turn++) {
-        history = await sendTurn(history)
+        history = await streamGuideTurn(history, {
+          exhibits,
+          mode: 'visit',
+          context: () => visitorContext(exhibits),
+          onText: (chunk, full) => {
+            setStreamText(full)
+            pushText(chunk)
+          },
+          onTool: (call) => setChips((prev) => [...prev, call]),
+          onStreamError: (message) => setError(message)
+        })
         setMessages(history)
         const last = history[history.length - 1]
         const doneAssistant = last?.role === 'assistant' && !(last.toolCalls && last.toolCalls.length > 0)
@@ -164,8 +79,7 @@ export function GuidePanel({ exhibits }: { exhibits: readonly Exhibit[] }) {
       finishSpeech()
     } catch (err) {
       stopSpeech()
-      const streamErr = err as StreamError
-      setError(streamErr.message ?? 'Something went wrong. Please try again.')
+      setError(err instanceof GuideRequestError ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setBusy(false)
       busyRef.current = false

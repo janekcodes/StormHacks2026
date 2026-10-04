@@ -811,12 +811,18 @@
 
 /* ---- portal overlay ------------------------------------------------------- */
 
+/*
+ * The pop-up is a display case: a wall label on the left (zone stripe, ID,
+ * title, caption, narration, facts) and a stage on the right that gives the
+ * interactive the full height. During a tour the transport docks along the
+ * bottom of the case. Below 960px everything stacks and the panel scrolls.
+ */
 .portal-overlay {
   position: absolute;
   inset: 0;
   z-index: var(--z-overlay);
-  overflow-y: auto;
-  padding: var(--space-5) var(--space-4);
+  display: flex;
+  padding: var(--space-4);
   background: var(--c-scrim);
   backdrop-filter: blur(4px);
   animation: fade-in var(--dur) var(--ease-out) both;
@@ -828,16 +834,18 @@
 
 .portal-panel {
   position: relative;
-  max-width: 1120px;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  max-width: 1760px;
   margin: 0 auto;
-  border: 1px solid color-mix(in srgb, var(--t) 70%, var(--c-night-line));
+  overflow: hidden;
+  border: 1px solid var(--c-night-line);
   border-radius: var(--radius-lg);
   background: var(--c-night);
   color: var(--c-night-text);
   outline: none;
-  box-shadow:
-    0 0 0 1px var(--c-night-line-soft),
-    0 24px 80px color-mix(in srgb, var(--t) 22%, transparent);
+  box-shadow: 0 24px 80px color-mix(in srgb, var(--t) 18%, transparent);
   animation: rise-in var(--dur-slow) var(--ease-out) both;
 }
 
@@ -845,82 +853,243 @@
   box-shadow: 0 0 0 2px var(--c-accent);
 }
 
-.portal-inner {
+.portal-case {
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'label stage'
+    'tour tour';
+  height: 100%;
+}
+
+/* Wall label. The inset stripe is the zone colour, as on the floor plan. */
+.portal-label {
+  grid-area: label;
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-5);
+  min-height: 0;
+  border-right: 1px solid var(--c-night-line-soft);
+  background: var(--c-night-1);
+  box-shadow: inset 3px 0 0 var(--t);
 }
 
-.portal-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.portal-copy {
-  display: flex;
-  flex: 1 1 420px;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-}
-
-.portal-chips {
-  display: flex;
-  flex-wrap: wrap;
+.portal-close {
+  display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: var(--space-2);
-}
-
-.portal-chips .badge {
-  --badge-ink: var(--t-light, var(--c-night-text));
-}
-
-.portal-id {
-  font-size: var(--text-sm);
+  min-height: var(--target);
+  margin: var(--space-3) var(--space-3) 0 var(--space-4);
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
   color: var(--c-night-muted);
+  font-family: var(--font-body-stack);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
 }
 
-.portal-copy h2 {
-  margin: 0;
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-  line-height: 1.08;
+.portal-close:hover {
+  background: var(--c-night-2);
   color: var(--c-night-text);
 }
 
-.portal-copy p {
+.portal-close:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+.portal-close .keycap {
+  height: 1.7em;
+  border-color: var(--c-night-line);
+  background: transparent;
+  color: inherit;
+  font-size: var(--text-xs);
+}
+
+.portal-label-scroll {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-5) var(--space-5);
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-night-line) transparent;
+}
+
+.portal-plate {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.portal-plate-id {
+  font-family: var(--font-screen-stack);
+  font-size: 4.5rem;
+  line-height: 0.8;
+  color: var(--t-light, var(--c-night-text));
+}
+
+.portal-plate .badge {
+  --badge-ink: var(--t-light, var(--c-night-text));
+}
+
+.portal-label h2 {
   margin: 0;
-  max-width: 760px;
+  font-size: clamp(1.6rem, 2.3vw, 2.1rem);
+  line-height: 1.05;
+  text-wrap: balance;
+  color: var(--c-night-text);
+}
+
+.portal-meta {
+  margin: calc(-1 * var(--space-1)) 0 0;
   font-size: var(--text-sm);
-  line-height: 1.65;
+  color: var(--t-light, var(--c-night-text));
+}
+
+.portal-caption {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.7;
   color: var(--c-night-muted);
 }
 
-.portal-passport {
-  font-family: var(--font-display-stack);
-  font-weight: 700;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
+/* Narration in the label: transport row, live line, transcript link. */
+.portal-label .narrator {
+  gap: var(--space-2);
+  padding-top: var(--space-3);
 }
 
-.portal-copy .portal-passport {
-  font-size: var(--text-xs);
-  color: var(--c-accent);
-}
-
-.portal-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+.portal-label .narrator-bar {
   gap: var(--space-2);
 }
 
-.portal-actions .keycap {
-  border-color: currentColor;
-  background: transparent;
-  color: inherit;
+.portal-label .narrator-controls .btn {
+  padding: 0 var(--space-3);
+}
+
+.portal-label .narrator-strip {
+  order: 2;
+  flex-basis: 100%;
+  min-height: calc(3 * 1.5em);
+  -webkit-line-clamp: 3;
+  color: var(--c-night-text);
+}
+
+.portal-label .narrator-toggle {
+  --btn-bg: transparent;
+  --btn-line: transparent;
+  --btn-fg: var(--c-night-muted);
+  order: 3;
+  min-height: 0;
+  min-width: 0;
+  margin-left: 0;
+  padding: var(--space-1) 0;
+  font-family: var(--font-body-stack);
+  font-weight: 500;
+  font-size: var(--text-xs);
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.portal-label .narrator-toggle:hover {
+  --btn-fg: var(--c-night-text);
+}
+
+.portal-label .narrator-captions {
+  font-size: var(--text-sm);
+}
+
+.portal-stats {
+  margin: 0;
+}
+
+.portal-stats > div {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--c-night-line-soft);
+}
+
+.portal-stats dt {
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.portal-stats dd {
+  margin: 0;
+  font-family: var(--font-display-stack);
+  font-weight: 600;
+  font-size: var(--text-md);
+  line-height: 1.3;
+  color: var(--c-night-text);
+}
+
+.portal-label-foot {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5) var(--space-4);
+  border-top: 1px solid var(--c-night-line-soft);
+}
+
+.portal-walk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.portal-passport {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  color: var(--c-night-muted);
+}
+
+.portal-passport-track {
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--c-night-line-soft);
+}
+
+.portal-passport-track > span {
+  display: block;
+  height: 100%;
+  background: var(--c-accent);
+}
+
+/* Stage: the interactive owns this space and scrolls on its own. */
+.portal-stage {
+  grid-area: stage;
+  display: grid;
+  align-content: safe center;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-5);
+}
+
+.portal-stage > * {
+  min-width: 0;
+}
+
+.portal-tour {
+  grid-area: tour;
+  border-top: 1px solid color-mix(in srgb, var(--c-accent) 45%, var(--c-night-line));
+  background: var(--c-night-1);
 }
 
 .portal-screen,
@@ -932,7 +1101,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: var(--space-3);
+  min-height: 100%;
   padding: var(--space-7) var(--space-5);
   border: 1px dashed color-mix(in srgb, var(--t) 50%, transparent);
   background: var(--c-night-1);
@@ -971,47 +1142,97 @@
   color: var(--c-night-muted);
 }
 
-.portal-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* Short, wide screens: the whole label scrolls as one column, exit pinned. */
+@media (min-width: 961px) and (max-height: 720px) {
+  .portal-label {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-night-line) transparent;
+  }
+
+  .portal-close {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+    padding: var(--space-3) var(--space-4) var(--space-2) var(--space-5);
+    border-radius: 0;
+    background: var(--c-night-1);
+  }
+
+  .portal-close:hover {
+    background: var(--c-night-1);
+  }
+
+  .portal-label-scroll {
+    flex: none;
+    overflow: visible;
+  }
+
+  .portal-plate-id {
+    font-size: 3.5rem;
+  }
 }
 
-.portal-stats li {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid color-mix(in srgb, var(--t) 28%, transparent);
-  border-radius: var(--radius-sm);
-  background: var(--c-night-1);
-}
-
-.portal-stat-k {
-  font-family: var(--font-display-stack);
-  font-weight: 600;
-  font-size: var(--text-xs);
-  letter-spacing: var(--track-kicker);
-  text-transform: uppercase;
-  color: var(--c-night-muted);
-}
-
-.portal-stat-v {
-  font-size: var(--text-xl);
-  line-height: 1.15;
-  color: var(--t-light, var(--c-night-text));
-}
-
-@media (max-width: 640px) {
+/*
+ * Narrow screens: one scrolling column. The label is flattened so the
+ * interactive follows the caption and narration; facts and actions come after.
+ */
+@media (max-width: 960px) {
   .portal-overlay {
     padding: var(--space-2);
   }
 
-  .portal-inner {
-    padding: var(--space-4);
+  .portal-panel {
+    overflow-y: auto;
+  }
+
+  .portal-case {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: auto;
+    min-height: 100%;
+    padding: 0 var(--space-4) var(--space-4);
+    box-shadow: inset 3px 0 0 var(--t);
+  }
+
+  .portal-label,
+  .portal-label-scroll {
+    display: contents;
+  }
+
+  .portal-close {
+    margin: var(--space-2) 0 0 calc(-1 * var(--space-2));
+  }
+
+  .portal-plate-id {
+    font-size: 3.5rem;
+  }
+
+  .portal-stage {
+    order: 2;
+    display: block;
+    overflow: visible;
+    margin: var(--space-2) 0;
+    padding: 0;
+  }
+
+  .portal-stats {
+    order: 3;
+  }
+
+  .portal-label-foot {
+    order: 4;
+    padding: var(--space-3) 0 0;
+  }
+
+  .portal-tour {
+    order: 5;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-4));
   }
 }
 
@@ -1142,4 +1363,224 @@
 .floor-map-marker:hover .floor-map-focus {
   stroke: var(--c-accent);
   stroke-width: 2px;
+}
+
+/* Guided tour */
+.tour-bar {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-4);
+  transform: translateX(-50%);
+  z-index: calc(var(--z-widget) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: min(960px, calc(100vw - 32px));
+  padding: var(--space-3) var(--space-4);
+}
+
+.tour-bar-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.tour-bar-stop {
+  font-weight: 600;
+}
+
+.tour-bar-caption,
+.tour-bar-note {
+  opacity: 0.9;
+}
+
+/* The live region stays mounted while empty; out of flow so it adds no flex gap. */
+.tour-bar-caption:empty {
+  position: absolute;
+}
+
+.tour-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tour-bar-mic[aria-pressed='true'] {
+  outline: 2px solid var(--c-accent);
+}
+
+/* Auto: a switch with a visible on/off state (track, knob and label). */
+.tour-bar-auto {
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+}
+
+.tour-bar-auto-track {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 16px;
+  border: 1px solid var(--c-night-line);
+  border-radius: var(--radius-pill);
+  background: var(--c-night-2);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.tour-bar-auto-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--c-night-muted);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.tour-bar-auto-state {
+  min-width: 3ch;
+  color: var(--c-night-muted);
+  text-align: left;
+}
+
+.tour-bar-auto[aria-checked='true'] {
+  border-color: color-mix(in srgb, var(--c-accent) 70%, transparent);
+  background: var(--c-accent-soft);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-track {
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-knob {
+  transform: translateX(14px);
+  background: var(--c-ink);
+}
+
+.tour-bar-auto[aria-checked='true'] .tour-bar-auto-state {
+  color: var(--c-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-bar-auto-track,
+  .tour-bar-auto-knob {
+    transition: none;
+  }
+}
+
+.tour-bar-ask {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.tour-start {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: calc(var(--z-widget) + 2);
+  background: rgb(0 0 0 / 0.45);
+}
+
+/* Inline variant: the tour transport docked along the bottom of the exhibit pop-up. */
+.tour-bar--inline {
+  position: static;
+  transform: none;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-5);
+  max-width: none;
+  padding: var(--space-3) var(--space-5);
+  color: var(--c-night-text);
+}
+
+.tour-bar--inline .tour-bar-status {
+  flex: 1 1 320px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tour-bar--inline .tour-bar-stop {
+  font-family: var(--font-display-stack);
+  font-size: var(--text-md);
+  color: var(--c-accent);
+}
+
+.tour-bar--inline .tour-bar-caption,
+.tour-bar--inline .tour-bar-note {
+  font-size: var(--text-sm);
+  color: var(--c-night-muted);
+  opacity: 1;
+}
+
+.tour-bar--inline .tour-bar-actions {
+  flex: 0 1 auto;
+}
+
+.tour-bar--inline .tour-bar-ask input {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  /* Phones: two even rows of three so the docked band stays short. */
+  .tour-bar--inline {
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+
+  .tour-bar--inline .tour-bar-status {
+    flex-basis: 100%;
+  }
+
+  .tour-bar--inline .tour-bar-actions {
+    display: grid;
+    flex: 1 1 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1);
+  }
+
+  .tour-bar--inline .tour-bar-actions .btn {
+    min-width: 0;
+    padding: 0 var(--space-2);
+    font-size: var(--text-xs);
+    line-height: 1.15;
+    white-space: normal;
+  }
+
+  .tour-bar--inline .tour-bar-ask {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Landscape phones: one row of controls, and the band scrolls with the page. */
+@media (max-width: 960px) and (max-height: 520px) {
+  .portal-tour {
+    position: static;
+  }
+
+  .tour-bar--inline .tour-bar-actions {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+
+  .tour-bar--inline .tour-bar-ask input {
+    flex: 1;
+  }
+
+  .tour-bar:not(.tour-bar--inline) {
+    bottom: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+  }
 }

@@ -15,6 +15,7 @@ interface QueuedSentence {
 }
 
 let enabled = readEnabled()
+let override = false
 let queue: QueuedSentence[] = []
 let audio: HTMLAudioElement | null = null
 let speaking = false
@@ -44,6 +45,16 @@ export function subscribe(listener: Listener): () => void {
   }
 }
 
+/** The tour forces spoken answers on without changing the visitor's saved setting. */
+export function setSpeakOverride(on: boolean): void {
+  override = on
+  emit()
+}
+
+function active(): boolean {
+  return enabled || override
+}
+
 export function isSpeakEnabled(): boolean {
   return enabled
 }
@@ -69,13 +80,13 @@ export function getCaption(): string | null {
 
 /** Feed a chunk of streamed guide text. Queues any complete sentences. */
 export function pushText(chunk: string): void {
-  if (!enabled) return
+  if (!active()) return
   for (const sentence of splitter.push(chunk)) enqueue(sentence)
 }
 
 /** Flush any remaining buffered text when the answer stream ends. */
 export function finish(): void {
-  if (!enabled) return
+  if (!active()) return
   for (const sentence of splitter.flush()) enqueue(sentence)
 }
 

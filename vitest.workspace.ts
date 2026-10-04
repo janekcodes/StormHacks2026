@@ -7,5 +7,6 @@ export default defineWorkspace([
   'packages/content',
   'packages/guide',
   'packages/portals/*',
-  'tools/*'
+  'tools/*',
+  'apps/web'
 ])

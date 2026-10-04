@@ -70,7 +70,14 @@ export function chipLabel(call: ToolCall): string {
  * Validate and run one tool call against the scene API. A rejected call is
  * returned to the model as the tool result so it can correct itself.
  */
-export function executeToolCall(call: ToolCall, exhibits: readonly Exhibit[]): ToolResponse {
+export function executeToolCall(
+  call: ToolCall,
+  exhibits: readonly Exhibit[],
+  allowed?: readonly string[]
+): ToolResponse {
+  if (allowed && !allowed.includes(call.name)) {
+    return { id: call.id, name: call.name, result: { ok: false, error: `${call.name} is not available during the tour` } }
+  }
   const validation = validateToolCall(call, { builtIds: builtIdSet(exhibits) })
   if (!validation.ok) {
     return { id: call.id, name: call.name, result: { ok: false, error: validation.error } }

@@ -10,6 +10,7 @@ import { museum } from '../nav/api'
 import { PASSPORT_TOTAL, passportCount, usePassport } from '../passport'
 import { TouchControls } from '../player/Controls'
 import { usePlayer } from '../player/usePlayer'
+import { useTourStore } from '../tour/store'
 import { lightInk } from '../ui'
 import { NavigateMenu } from './NavigateMenu'
 
@@ -55,9 +56,21 @@ function Toolbar() {
   const showMap = usePlayer((s) => s.showMap)
   const toggleMap = usePlayer((s) => s.toggleMap)
   const guideOpen = useGuideStore((s) => s.open)
+  const hasTour = useTourStore((s) => s.tour !== null)
+  const tourIdle = useTourStore((s) => s.state.phase === 'idle' || s.state.phase === 'done')
 
   return (
     <div className="museum-toolbar" role="toolbar" aria-label="Museum tools">
+      {hasTour && tourIdle ? (
+        <button
+          type="button"
+          className="btn btn--glass"
+          data-testid="tour-open"
+          onClick={() => useTourStore.getState().dispatch({ type: 'START' })}
+        >
+          Take the tour
+        </button>
+      ) : null}
       <button
         type="button"
         className="btn btn--glass museum-guide-btn"

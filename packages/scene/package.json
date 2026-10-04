@@ -30,6 +30,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@elevenlabs/client": "^1.26.0",
     "@museum/content": "workspace:*",
     "@museum/guide": "workspace:*",
     "@museum/portal-a1": "workspace:*",

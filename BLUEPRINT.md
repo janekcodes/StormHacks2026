@@ -388,8 +388,9 @@ pnpm workspaces + Turborepo. A task such as "build portal E3" should touch exact
 | `ELEVENLABS_VOICE_ID` | server and CI      | The museum voice (one voice for narrator and guide) |
 | `NARRATION_MODEL`     | CI                 | ElevenLabs model for build-time narration           |
 | `SPEECH_MODEL`        | server             | ElevenLabs model for live guide speech              |
+| `LISTEN_MODEL`        | server             | ElevenLabs realtime speech to text model for the tour microphone |
 
-Values as of 2026-10: `GUIDE_MODEL = gemini-3.8-flash`, `NARRATION_MODEL = eleven_multilingual_v2` (or `eleven_v3`), `SPEECH_MODEL = eleven_flash_v2_5` (or `eleven_v4_turbo`). Check the providers' model pages before changing them; both retire models regularly.
+Values as of 2026-10: `GUIDE_MODEL = gemini-3.8-flash`, `NARRATION_MODEL = eleven_multilingual_v2` (or `eleven_v3`), `SPEECH_MODEL = eleven_flash_v2_5` (or `eleven_v4_turbo`), `LISTEN_MODEL = scribe_v2_realtime`. Check the providers' model pages before changing them; both retire models regularly.
 
 ### Performance budget (enforced in CI)
 
@@ -609,6 +610,7 @@ Code and data layout is in [§10](#10-production-stack). Machine-readable mirror
 
 | Version | Date       | Change                                                                                                                                                                                                              |
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.6     | 2026-10-04 | Guided demo tour (A1, B2, C3, E3, D7, F10) with push-to-talk questions; adds LISTEN_MODEL. |
 | 1.5     | 2026-10-04 | Decision 0012: heritage museum art direction (panelled walls, coffered ceiling, stone, marble and parquet floors, brass vitrines), CC0 PBR textures, interim N8AO, web fonts via `next/font` matching §9. Plans 17 and 18 added. |
 | 1.4     | 2026-10-04 | Compacted the museum: plan scale 0.07 to 0.042, building about 98 × 69 m to about 59 × 42 m, exhibits re-placed tighter while keeping the 2.4 m minimum spacing. |
 | 1.1     | 2026-10-03 | Added production stack (§10), Gemini guide bot (§11), ElevenLabs narration voice (§12); rules 8 to 10 on keys, voices and model config; narration in the exhibit contract; Phase 2 reordered; open decisions 6 to 8 |

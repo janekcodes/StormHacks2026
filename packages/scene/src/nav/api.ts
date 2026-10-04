@@ -30,6 +30,7 @@ export const museum: MuseumNavApi = {
       pitch: options.pitch ?? -0.14
     }
     if (options.onArrive) opts.onArrive = options.onArrive
+    if (options.onCancel) opts.onCancel = options.onCancel
     return travelTo({ x: sp.x, z: sp.z }, opts)
   },
   goRoom(key, options = {}) {

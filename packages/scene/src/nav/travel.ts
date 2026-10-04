@@ -13,6 +13,8 @@ export interface TravelOptions {
   face?: number
   pitch?: number
   onArrive?: () => void
+  /** Called only when a movement key or an explicit cancelTravel() stops an active walk. */
+  onCancel?: () => void
 }
 
 interface TravelState {
@@ -24,6 +26,7 @@ interface TravelState {
   pitch: number | null
   startYaw: number
   onArrive: (() => void) | null
+  onCancel: (() => void) | null
 }
 
 let travel: TravelState | null = null
@@ -99,9 +102,11 @@ export function isTravelling(): boolean {
 }
 
 export function cancelTravel(): void {
+  const cancelled = travel
   travel = null
   // A cancelled walk-to never opens the portal, so drop its narration too.
   stopNarration()
+  cancelled?.onCancel?.()
 }
 
 /**
@@ -133,7 +138,8 @@ export function travelTo(
     face: options.face ?? null,
     pitch: options.pitch ?? null,
     startYaw: player.yaw,
-    onArrive: options.onArrive ?? null
+    onArrive: options.onArrive ?? null,
+    onCancel: options.onCancel ?? null
   }
   return true
 }

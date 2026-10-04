@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildSystemPrompt, type CompactExhibit } from './systemPrompt'
+import { buildSystemPrompt, TOUR_MODE_RULES, type CompactExhibit } from './systemPrompt'
 
 const exhibits: CompactExhibit[] = [
   { id: 'A1', year: '1936', title: "Turing's universal machine", zone: 'A', band: 'inner', tier: 'built' },
@@ -19,5 +19,13 @@ describe('buildSystemPrompt', () => {
 
   it('is deterministic', () => {
     expect(buildSystemPrompt(exhibits, '1.1')).toBe(buildSystemPrompt(exhibits, '1.1'))
+  })
+})
+
+describe('TOUR_MODE_RULES', () => {
+  it('asks for two spoken sentences and forbids moving the visitor', () => {
+    expect(TOUR_MODE_RULES).toContain('two')
+    expect(TOUR_MODE_RULES).toMatch(/do not (walk|move)/i)
+    expect(TOUR_MODE_RULES).not.toMatch(/[\u2013\u2014]/)
   })
 })

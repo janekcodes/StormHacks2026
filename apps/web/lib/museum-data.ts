@@ -1,7 +1,9 @@
 import buildingFile from '@museum/content/generated/building.json'
 import standpointsFile from '@museum/content/generated/standpoints.json'
 import exhibitsFile from '@museum/content/data/exhibits.json'
+import tourFile from '@museum/content/data/tour.json'
 import { BuildingSchema, type Building } from '@museum/content/plan-schema'
+import { TourSchema, type Tour } from '@museum/content/tour-schema'
 import {
   ExhibitsFileSchema,
   type Exhibit,
@@ -20,6 +22,7 @@ export const building: Building = BuildingSchema.parse(buildingFile)
 export const scopeVersion: string = parsed.scopeVersion
 export const exhibits: readonly Exhibit[] = parsed.exhibits
 export const standpoints: StandpointsData = standpointsFile as StandpointsData
+export const tour: Tour = TourSchema.parse(tourFile)
 
 const byId = new Map<string, Exhibit>(parsed.exhibits.map((exhibit) => [exhibit.id, exhibit]))
 
