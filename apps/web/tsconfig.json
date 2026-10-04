@@ -7,7 +7,18 @@
     "jsx": "preserve",
     "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@museum/scene": ["../../packages/scene/src/index.ts"],
+      "@museum/content/schema": ["../../packages/content/src/schema.ts"],
+      "@museum/content/plan-schema": ["../../packages/content/src/plan-schema.ts"],
+      "@museum/content/zones": ["../../packages/content/src/zones.ts"],
+      "@museum/content/generated/building.json": [
+        "../../packages/content/generated/building.json"
+      ],
+      "@museum/content/generated/standpoints.json": [
+        "../../packages/content/generated/standpoints.json"
+      ],
+      "@museum/content/data/exhibits.json": ["../../packages/content/data/exhibits.json"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

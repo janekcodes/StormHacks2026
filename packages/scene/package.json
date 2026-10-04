@@ -17,9 +17,29 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@museum/content": "workspace:*",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
+    "@recast-navigation/core": "^0.43.1",
+    "@recast-navigation/three": "^0.43.1",
+    "detect-gpu": "^5.0.70",
+    "recast-navigation": "^0.43.1",
+    "three": "^0.186.1",
+    "zustand": "^5.0.15"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
     "eslint": "^9.39.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "typescript": "^5.9.3",
     "vitest": "^3.2.7"
   }

@@ -9,7 +9,23 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.js"
+    },
+    "./plan-schema": {
+      "types": "./dist/plan-schema.d.ts",
+      "import": "./dist/plan-schema.js"
+    },
+    "./zones": {
+      "types": "./dist/zones.d.ts",
+      "import": "./dist/zones.js"
+    },
+    "./generated/building.json": "./generated/building.json",
+    "./generated/standpoints.json": "./generated/standpoints.json",
+    "./generated/navmesh.bin": "./generated/navmesh.bin",
+    "./data/exhibits.json": "./data/exhibits.json"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

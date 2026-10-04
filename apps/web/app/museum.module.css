@@ -1,0 +1,271 @@
+.shell {
+  min-height: 100vh;
+  color: #1d2024;
+  background:
+    radial-gradient(circle at 12% 0%, #efe9dc 0%, transparent 42%),
+    radial-gradient(circle at 88% 8%, #e1eef8 0%, transparent 36%),
+    #f4f2ed;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: baseline;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #d7d2c8;
+  background: rgba(244, 242, 237, 0.92);
+}
+
+.brand {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand:focus-visible,
+.navLink:focus-visible,
+.link:focus-visible,
+.cta:focus-visible {
+  outline: 2px solid #1d2024;
+  outline-offset: 3px;
+}
+
+.navLink {
+  color: #3a424c;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.navLink:hover,
+.link:hover {
+  text-decoration: underline;
+}
+
+.main {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+}
+
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.header h1 {
+  margin: 0 0 0.35rem;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+.lede {
+  margin: 0;
+  max-width: 40rem;
+  color: #4f5963;
+  line-height: 1.5;
+}
+
+.mapWrap {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #d7d2c8;
+}
+
+.zoneBlock {
+  margin: 1.75rem 0;
+}
+
+.zoneBlock h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.2rem;
+}
+
+.zoneMeta {
+  margin: 0 0 0.75rem;
+  color: #5b6570;
+  font-size: 0.9rem;
+}
+
+.bandBlock {
+  margin: 0.9rem 0 0.4rem;
+}
+
+.bandBlock h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3a424c;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.list a {
+  color: inherit;
+  text-decoration: none;
+  display: grid;
+  grid-template-columns: 3.5rem 4.5rem 1fr auto;
+  gap: 0.75rem;
+  padding: 0.35rem 0.25rem;
+  border-bottom: 1px solid #e4dfd5;
+}
+
+.list a:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.list a:focus-visible {
+  outline: 2px solid #1d2024;
+  outline-offset: 2px;
+}
+
+.id {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 600;
+}
+
+.year {
+  color: #5b6570;
+  font-variant-numeric: tabular-nums;
+}
+
+.tier {
+  color: #5b6570;
+  font-size: 0.85rem;
+}
+
+.article header h1 {
+  margin: 0 0 0.5rem;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  color: #4f5963;
+  font-size: 0.95rem;
+}
+
+.planned {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  background: #efe9dc;
+  border-left: 3px solid #7a6a48;
+  line-height: 1.45;
+}
+
+.caption {
+  margin: 0 0 1.25rem;
+  max-width: 42rem;
+  line-height: 1.55;
+  font-size: 1.05rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.stats li {
+  padding: 0.65rem 0.75rem;
+  background: #ffffff;
+  border: 1px solid #d7d2c8;
+}
+
+.stats dt,
+.statKey {
+  display: block;
+  font-size: 0.8rem;
+  color: #5b6570;
+  margin-bottom: 0.2rem;
+}
+
+.statVal {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 600;
+}
+
+.section {
+  margin: 1.5rem 0;
+}
+
+.section h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.sources {
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.5;
+}
+
+.caveat {
+  margin: 0;
+  color: #4f5963;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin: 1.25rem 0;
+}
+
+.cta,
+.link {
+  color: #1d2024;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.5rem 0.85rem;
+  background: #1d2024;
+  color: #f4f2ed;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d7d2c8;
+}
+
+.miniMap {
+  margin-top: 1.5rem;
+  max-width: 420px;
+}
+
+@media (max-width: 640px) {
+  .list a {
+    grid-template-columns: 3rem 3.5rem 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .tier {
+    grid-column: 1 / -1;
+  }
+}

@@ -12,11 +12,14 @@
     "size": "node scripts/check-size.mjs"
   },
   "dependencies": {
+    "@museum/content": "workspace:*",
+    "@museum/scene": "workspace:*",
     "next": "^16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "@playwright/test": "^1.63.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.3.0",

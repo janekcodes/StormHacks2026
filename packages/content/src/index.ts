@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { BuildingSchema, type Building } from './plan-schema'
 import { ExhibitsFileSchema, type Exhibit, type ExhibitId } from './schema'
 
 export * from './schema'
@@ -8,6 +9,9 @@ export * from './plan-schema'
 
 const exhibitsPath = fileURLToPath(new URL('../data/exhibits.json', import.meta.url))
 const parsed = ExhibitsFileSchema.parse(JSON.parse(readFileSync(exhibitsPath, 'utf8')))
+
+const buildingPath = fileURLToPath(new URL('../generated/building.json', import.meta.url))
+export const building: Building = BuildingSchema.parse(JSON.parse(readFileSync(buildingPath, 'utf8')))
 
 export const scopeVersion: string = parsed.scopeVersion
 export const exhibits: readonly Exhibit[] = parsed.exhibits
