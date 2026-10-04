@@ -72,14 +72,14 @@ export function buildExhibitSegments(exhibits: readonly ExhibitCollision[]): Seg
 /** Circular obstacles: planters, kiosk/benches, foyer desk, shop table. */
 export function buildObstacles(building: Building): Circle[] {
   const circles: Circle[] = []
-  circles.push([-3.6, 31.0, 1.5])
+  circles.push([-2.16, 18.6, 0.9])
 
-  const ar = building.ra - 1.6
+  const ar = building.ra - 0.96
   for (const a of [45, 135, 225, 315]) {
     const rad = (a * Math.PI) / 180
-    circles.push([Math.cos(rad) * ar, Math.sin(rad) * ar, 1.0])
+    circles.push([Math.cos(rad) * ar, Math.sin(rad) * ar, 0.6])
   }
-  circles.push([0, 0, 3.2])
+  circles.push([0, 0, 1.92])
 
   const shop = building.rooms.find((r) => r.key === 'Shop')
   if (shop) {
@@ -90,7 +90,7 @@ export function buildObstacles(building: Building): Circle[] {
       cz += p[1]
     }
     const n = shop.poly.length || 1
-    circles.push([cx / n + 0.2, cz / n + 1.2, 1.0])
+    circles.push([cx / n + 0.12, cz / n + 0.72, 0.6])
   }
   return circles
 }

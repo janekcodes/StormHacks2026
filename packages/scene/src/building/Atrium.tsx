@@ -13,7 +13,7 @@ export function Atrium({ building }: { building: Building }) {
     const M = mats
     const parts: MergePart[] = []
 
-    const ar = building.ra - 1.6
+    const ar = building.ra - 0.96
     for (const a of [45, 135, 225, 315]) {
       const rad = (a * Math.PI) / 180
       const x = Math.cos(rad) * ar
@@ -34,8 +34,8 @@ export function Atrium({ building }: { building: Building }) {
     }
 
     // Foyer desk
-    parts.push(boxPart(3.2, 1.05, 0.8, M.plinth, -3.6, 0.525, 31.0, 0.3))
-    parts.push(boxPart(3.3, 0.05, 0.9, M.frame, -3.6, 1.07, 31.0, 0.3))
+    parts.push(boxPart(3.2, 1.05, 0.8, M.plinth, -2.16, 0.525, 18.6, 0.3))
+    parts.push(boxPart(3.3, 0.05, 0.9, M.frame, -2.16, 1.07, 18.6, 0.3))
 
     // Shop table
     const shop = building.rooms.find((r) => r.key === 'Shop')
@@ -47,8 +47,8 @@ export function Atrium({ building }: { building: Building }) {
         cz += p[1]
       }
       const n = shop.poly.length || 1
-      cx = cx / n + 0.2
-      cz = cz / n + 1.2
+      cx = cx / n + 0.12
+      cz = cz / n + 0.72
       parts.push(boxPart(0.8, 0.8, 1.6, M.wood, cx, 0.4, cz, 0))
     }
 
@@ -86,7 +86,7 @@ export function Atrium({ building }: { building: Building }) {
   }, [building, mats])
 
   const foliage = useMemo(() => {
-    const ar = building.ra - 1.6
+    const ar = building.ra - 0.96
     return [45, 135, 225, 315].map((a) => {
       const rad = (a * Math.PI) / 180
       return { x: Math.cos(rad) * ar, z: Math.sin(rad) * ar }

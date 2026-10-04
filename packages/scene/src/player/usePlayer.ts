@@ -25,7 +25,7 @@ export interface PlayerState {
 }
 
 const START_X = 0
-const START_Z = 34.5
+const START_Z = 20.7
 
 export const usePlayer = create<PlayerState>((set) => ({
   x: START_X,

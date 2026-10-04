@@ -14,7 +14,7 @@ describe('collision', () => {
   const circles = buildObstacles(building)
 
   it('allows standing in the foyer start pose', () => {
-    expect(blocked(0, 34.5, segs, circles)).toBe(false)
+    expect(blocked(0, 20.7, segs, circles)).toBe(false)
   })
 
   it('blocks the kiosk at the atrium centre', () => {
@@ -22,10 +22,10 @@ describe('collision', () => {
   })
 
   it('slides along a wall with axis separation', () => {
-    // West exterior wall is at x = -49; clearance blocks closer than 0.48 m.
-    expect(blocked(-48.6, 0, segs, circles)).toBe(true)
-    const next = slideMove(-48.4, 0, -1, 0.5, segs, circles)
-    expect(next.x).toBe(-48.4)
+    // West exterior wall is at x = -29.4; clearance blocks closer than 0.48 m.
+    expect(blocked(-29.0, 0, segs, circles)).toBe(true)
+    const next = slideMove(-28.9, 0, -0.5, 0.5, segs, circles)
+    expect(next.x).toBe(-28.9)
     expect(next.z).toBe(0.5)
   })
 })

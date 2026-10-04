@@ -24,11 +24,13 @@ import {
 
 const HALF = 22.5
 
-// Offsets recovered from the prototype (see 03-reference-geometry-rules.md).
-const MARK_INNER_OFFSET_M = 2.1 // 30 px
-const MARK_BAND_OFFSET_M = 1.12 // 16 px
-const SIGN_INSET_M = 0.42 // 6 px inside the concourse edge
-const DASH_CLEARANCE_M = 0.56 // 8 px perpendicular from the clipping wall
+// Offsets recovered from the prototype as plan pixels (see 03-reference-geometry-rules.md).
+// They are authored in pixels and converted to metres at the plan scale so a
+// scale change compresses them along with the rest of the geometry.
+const MARK_INNER_OFFSET_PX = 30
+const MARK_BAND_OFFSET_PX = 16
+const SIGN_INSET_PX = 6 // inside the concourse edge
+const DASH_CLEARANCE_PX = 8 // perpendicular from the clipping wall
 
 const SPECIAL_ROOMS: Record<string, { name: string; tint: string; ink: string }> = {
   Shop: { name: 'Museum Shop', tint: '#f4f2ed', ink: '#4f5963' },
@@ -93,7 +95,12 @@ interface BandLayout {
   cross: (distance: number) => [number, number] | null
 }
 
-function layoutBands(room: Ring, angle: number, innerEdge: number): BandLayout {
+function layoutBands(
+  room: Ring,
+  angle: number,
+  innerEdge: number,
+  dashClearanceM: number
+): BandLayout {
   const u = dirOf(angle)
   const v: Pt = [-u[1], u[0]]
   const outer = Math.max(...room.map((p) => projectOn(p, u)))
@@ -104,8 +111,8 @@ function layoutBands(room: Ring, angle: number, innerEdge: number): BandLayout {
     const p0: Pt = [depth * u[0], depth * u[1]]
     const span = lineRingSpan(p0, v, room)
     if (!span) return null
-    const pullLo = DASH_CLEARANCE_M / Math.abs(span.edgeMin[0] * u[0] + span.edgeMin[1] * u[1])
-    const pullHi = DASH_CLEARANCE_M / Math.abs(span.edgeMax[0] * u[0] + span.edgeMax[1] * u[1])
+    const pullLo = dashClearanceM / Math.abs(span.edgeMin[0] * u[0] + span.edgeMin[1] * u[1])
+    const pullHi = dashClearanceM / Math.abs(span.edgeMax[0] * u[0] + span.edgeMax[1] * u[1])
     return { lo: span.tmin + pullLo, hi: span.tmax - pullHi }
   }
 
@@ -131,6 +138,12 @@ export function generate(plan: PlanInput): Building {
   const ra = round3(plan.atriumR * scale)
   const rc = round3(plan.concourseR * scale)
   const innerEdge = rc * Math.cos(22.5 * (Math.PI / 180))
+
+  // Prototype offsets expressed in metres at the plan's scale.
+  const markInnerOffsetM = MARK_INNER_OFFSET_PX * scale
+  const markBandOffsetM = MARK_BAND_OFFSET_PX * scale
+  const signInsetM = SIGN_INSET_PX * scale
+  const dashClearanceM = DASH_CLEARANCE_PX * scale
 
   const outline = buildOutline(plan)
   const buildingRing = dedupe(outline)
@@ -262,7 +275,7 @@ export function generate(plan: PlanInput): Building {
     const room = rings[key] as Ring
     const u = dirOf(angle)
     const v: Pt = [-u[1], u[0]]
-    const layout = layoutBands(room, angle, innerEdge)
+    const layout = layoutBands(room, angle, innerEdge, dashClearanceM)
 
     // era lines at the two band joins
     const p1: Pt = [layout.band1 * u[0], layout.band1 * u[1]]
@@ -271,12 +284,12 @@ export function generate(plan: PlanInput): Building {
     dashes.push([roundPt(at(p2, v, layout.dash2.lo)), roundPt(at(p2, v, layout.dash2.hi))])
 
     // year marks
-    const innerCross = layout.cross(innerEdge + MARK_INNER_OFFSET_M)
+    const innerCross = layout.cross(innerEdge + markInnerOffsetM)
     const mid = innerCross ? (innerCross[0] + innerCross[1]) / 2 : 0
     const markDists = [
-      { dist: innerEdge + MARK_INNER_OFFSET_M, lat: mid },
-      { dist: layout.band1 + MARK_BAND_OFFSET_M, lat: (layout.dash1.lo + layout.dash1.hi) / 2 },
-      { dist: layout.band2 + MARK_BAND_OFFSET_M, lat: (layout.dash2.lo + layout.dash2.hi) / 2 }
+      { dist: innerEdge + markInnerOffsetM, lat: mid },
+      { dist: layout.band1 + markBandOffsetM, lat: (layout.dash1.lo + layout.dash1.hi) / 2 },
+      { dist: layout.band2 + markBandOffsetM, lat: (layout.dash2.lo + layout.dash2.hi) / 2 }
     ]
     markDists.forEach((m, i) => {
       const p: Pt = [m.dist * u[0] + m.lat * v[0], m.dist * u[1] + m.lat * v[1]]
@@ -289,7 +302,7 @@ export function generate(plan: PlanInput): Building {
   for (const s of plan.sectors) {
     if (s.zone === 'S') continue
     const u = dirOf(s.angle)
-    const r = innerEdge - SIGN_INSET_M
+    const r = innerEdge - signInsetM
     signs.push({ p: roundPt([r * u[0], r * u[1]]), u: roundPt(u), k: s.zone === 'SX' ? 'Sx' : s.zone })
   }
 

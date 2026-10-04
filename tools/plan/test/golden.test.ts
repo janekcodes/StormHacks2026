@@ -178,20 +178,20 @@ describe('plan geometry golden test', () => {
   })
 
   it('matches the entrance and bounds', () => {
-    expect(dist(building.entrance[0], building.entrance[1])).toBeCloseTo(3.73, 1)
+    expect(dist(building.entrance[0], building.entrance[1])).toBeCloseTo(2.24, 2)
     expect(dist(building.entrance[0], reference.entrance[0])).toBeLessThanOrEqual(TOL)
     expect(dist(building.entrance[1], reference.entrance[1])).toBeLessThanOrEqual(TOL)
 
     const xs = building.outline.map((p) => p[0])
     const zs = building.outline.map((p) => p[1])
-    expect(Math.min(...xs)).toBeCloseTo(-49, 1)
-    expect(Math.max(...xs)).toBeCloseTo(49, 1)
-    expect(Math.min(...zs)).toBeCloseTo(-30.8, 1)
-    expect(Math.max(...zs)).toBeCloseTo(38.5, 1)
+    expect(Math.min(...xs)).toBeCloseTo(-29.4, 1)
+    expect(Math.max(...xs)).toBeCloseTo(29.4, 1)
+    expect(Math.min(...zs)).toBeCloseTo(-18.48, 1)
+    expect(Math.max(...zs)).toBeCloseTo(23.1, 1)
   })
 
   it('reports rc and ra', () => {
-    expect(building.ra).toBeCloseTo(10.5, 6)
-    expect(building.rc).toBeCloseTo(16.24, 6)
+    expect(building.ra).toBeCloseTo(6.3, 6)
+    expect(building.rc).toBeCloseTo(9.744, 6)
   })
 })

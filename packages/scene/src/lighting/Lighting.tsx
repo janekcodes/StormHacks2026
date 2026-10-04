@@ -100,7 +100,7 @@ export function Lighting({ quality }: { quality: QualityTier }) {
   return (
     <>
       <color attach="background" args={[0xded9cf]} />
-      <fog attach="fog" args={[0xd8d3c8, 26, 80]} />
+      <fog attach="fog" args={[0xd8d3c8, 16, 48]} />
       <CustomRoomEnv enabled={settings.environment && !lightmapReady} />
       <hemisphereLight args={[0xfff6ea, 0x8a8272, lightmapReady ? 0.05 : 0.3]} />
       <directionalLight

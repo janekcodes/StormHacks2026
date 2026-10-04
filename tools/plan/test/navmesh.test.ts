@@ -25,7 +25,7 @@ const exhibits = ExhibitsFileSchema.parse(
 ).exhibits
 const building = BuildingSchema.parse(generate(plan))
 
-const FOYER = { x: 0, z: 34.5 }
+const FOYER = { x: 0, z: 20.7 }
 
 function segDist(
   px: number,

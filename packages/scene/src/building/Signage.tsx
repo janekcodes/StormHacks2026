@@ -87,7 +87,7 @@ export function Signage({ building }: { building: Building }) {
           </mesh>
         </group>
       ))}
-      <mesh position={[0, 4.05, 24.3]} material={welcome.mat}>
+      <mesh position={[0, 4.05, 14.58]} material={welcome.mat}>
         <planeGeometry args={[7, 1.44]} />
       </mesh>
     </>

@@ -3,7 +3,7 @@ import type { Building } from '@museum/content'
 const S = 10 // px per metre
 
 function xy(x: number, z: number): [string, string] {
-  return [((x + 50) * S).toFixed(2), ((z + 32) * S).toFixed(2)]
+  return [((x + 30) * S).toFixed(2), ((z + 19) * S).toFixed(2)]
 }
 
 function polyPoints(poly: [number, number][]): string {
@@ -22,8 +22,8 @@ function lineEl(x1: number, z1: number, x2: number, z2: number, stroke: string, 
 
 export function renderSvg(building: Building): string {
   const parts: string[] = []
-  const w = 100 * S
-  const h = 70.5 * S
+  const w = 62 * S
+  const h = 44 * S
   parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">`)
   parts.push(`<rect width="${w}" height="${h}" fill="#ffffff"/>`)
 

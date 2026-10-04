@@ -28,6 +28,6 @@ describe('roomAt point-in-polygon', () => {
   })
 
   it('starts the player in the foyer', () => {
-    expect(roomAt(building, 0, 34.5)?.key).toBe('Foyer')
+    expect(roomAt(building, 0, 20.7)?.key).toBe('Foyer')
   })
 })

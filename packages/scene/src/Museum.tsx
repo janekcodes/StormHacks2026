@@ -336,7 +336,7 @@ export function Museum({
           frameloop={openId ? 'never' : 'always'}
           shadows={settings.shadows}
           dpr={settings.dpr}
-          camera={{ fov: 62, near: 0.05, far: 260, position: [0, 1.65, 34.5] }}
+          camera={{ fov: 62, near: 0.05, far: 260, position: [0, 1.65, 20.7] }}
           gl={{ antialias: true, powerPreference: 'high-performance' }}
         >
           <Suspense fallback={null}>

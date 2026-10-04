@@ -134,13 +134,13 @@ function openCylinderMesh(x: number, z: number, radius: number, height = 5, segm
 /** Fixed circular obstacles matching scene collision (planters, kiosk, desk). */
 export function obstacleMeshes(building: Building): THREE.Mesh[] {
   const meshes: THREE.Mesh[] = []
-  meshes.push(openCylinderMesh(-3.6, 31.0, 1.5))
-  const ar = building.ra - 1.6
+  meshes.push(openCylinderMesh(-2.16, 18.6, 0.9))
+  const ar = building.ra - 0.96
   for (const a of [45, 135, 225, 315]) {
     const rad = (a * Math.PI) / 180
-    meshes.push(openCylinderMesh(Math.cos(rad) * ar, Math.sin(rad) * ar, 1.0))
+    meshes.push(openCylinderMesh(Math.cos(rad) * ar, Math.sin(rad) * ar, 0.6))
   }
-  meshes.push(openCylinderMesh(0, 0, 3.2))
+  meshes.push(openCylinderMesh(0, 0, 1.92))
   const shop = building.rooms.find((r) => r.key === 'Shop')
   if (shop) {
     let cx = 0
@@ -150,7 +150,7 @@ export function obstacleMeshes(building: Building): THREE.Mesh[] {
       cz += p[1]
     }
     const n = shop.poly.length || 1
-    meshes.push(openCylinderMesh(cx / n + 0.2, cz / n + 1.2, 1.0))
+    meshes.push(openCylinderMesh(cx / n + 0.12, cz / n + 0.72, 0.6))
   }
   return meshes
 }
@@ -278,11 +278,11 @@ export function roomTargetFor(
   key: string
 ): NavPoint {
   if (key === 'Foyer') {
-    const p = snapPoint(query, 0, 34.5, 2) ?? { x: 0, z: 34.5 }
+    const p = snapPoint(query, 0, 20.7, 2) ?? { x: 0, z: 20.7 }
     return { x: round3(p.x), z: round3(p.z), yaw: 0 }
   }
   if (key === 'Atr') {
-    const p = snapPoint(query, 0, 7, 2) ?? { x: 0, z: 7 }
+    const p = snapPoint(query, 0, 4.2, 2) ?? { x: 0, z: 4.2 }
     return { x: round3(p.x), z: round3(p.z), yaw: 0 }
   }
   if (key === 'Conc') {
@@ -321,7 +321,7 @@ export function roomTargetFor(
   }
 
   if (key === 'G') {
-    const p = snapPoint(query, -7.5, 22.5, 2) ?? { x: -7.5, z: 22.5 }
+    const p = snapPoint(query, -4.5, 13.5, 2) ?? { x: -4.5, z: 13.5 }
     return { x: round3(p.x), z: round3(p.z), yaw: round3(Math.PI / 2) }
   }
   if (key === 'Shop') {
@@ -332,7 +332,7 @@ export function roomTargetFor(
     return { x: round3(p.x), z: round3(p.z), yaw: round3(-Math.PI / 2) }
   }
   if (key === 'X') {
-    const p = snapPoint(query, 18, 18, 3) ?? { x: 18, z: 18 }
+    const p = snapPoint(query, 10.8, 10.8, 3) ?? { x: 10.8, z: 10.8 }
     return { x: round3(p.x), z: round3(p.z), yaw: round3(yawAlong(0.7, 0.7)) }
   }
 

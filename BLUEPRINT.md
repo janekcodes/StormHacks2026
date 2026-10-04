@@ -160,9 +160,9 @@ All plan coordinates are in plan pixels, origin at the atrium centre `(1000, 640
 
 ### 3D scale
 
-- **1 plan px = 0.07 m.** The building is about 98 m × 69 m.
+- **1 plan px = 0.042 m.** The building is about 59 m × 42 m.
 - Ceiling 5 m. Atrium skylight 7.5 m.
-- World axes: `x = (planX − 1000) × 0.07`, `z = (planY − 640) × 0.07`. North is −z.
+- World axes: `x = (planX − 1000) × 0.042`, `z = (planY − 640) × 0.042`. North is −z.
 - Minimum exhibit spacing is about 2.4 m. Floor-standing exhibits need a 2.3 m × 2.0 m platform; plinth exhibits a 1.3 m plinth; placeholders a 0.9 m plinth.
 - Every exhibit faces the atrium centre (people in the G gallery face the foyer), so visitors walking outward always meet the front of an exhibit.
 
@@ -609,6 +609,7 @@ Code and data layout is in [§10](#10-production-stack). Machine-readable mirror
 
 | Version | Date       | Change                                                                                                                                                                                                              |
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.4     | 2026-10-04 | Compacted the museum: plan scale 0.07 to 0.042, building about 98 × 69 m to about 59 × 42 m, exhibits re-placed tighter while keeping the 2.4 m minimum spacing. |
 | 1.1     | 2026-10-03 | Added production stack (§10), Gemini guide bot (§11), ElevenLabs narration voice (§12); rules 8 to 10 on keys, voices and model config; narration in the exhibit contract; Phase 2 reordered; open decisions 6 to 8 |
 | 1.2     | 2026-10-04 | Built E3 (Engelbart's demo, 1968) per plan 13: tier Core to Built, portal and procedural object added. Built 12 to 13, Core 25 to 24; Wing E 0/4/4 to 1/3/4. New portal package `@museum/portal-e3`. |
 | 1.3     | 2026-10-04 | Plan 16: enriched all Core and Extended exhibits with caption/stats/sources/narration; programmatic GLB models; realistic museum materials (3D floor tint retired, §4 note added). |

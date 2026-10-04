@@ -46,7 +46,7 @@ describe('nav', () => {
   })
 
   it('has a path from the foyer to every stand point and room target', () => {
-    const foyer = { x: 0, z: 34.5 }
+    const foyer = { x: 0, z: 20.7 }
     expect(Object.keys(standpoints.exhibits)).toHaveLength(77)
     expect(Object.keys(standpoints.rooms)).toHaveLength(13)
     for (const [id, sp] of Object.entries(standpoints.exhibits)) {
