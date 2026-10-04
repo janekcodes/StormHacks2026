@@ -335,21 +335,26 @@ const MODELS: Record<string, ModelSpec> = {
   X1: { kit: 'quantum', footprint: 'plinth' }
 }
 
+// Base colors are brightened well above the "near black" original palette so the
+// objects read against the stone/timber interior under the dim baked-lightmap
+// lighting (hemisphere drops to 0.05 once lightmaps load). Each base material
+// also carries a small self-emissive lift (see buildScene) matching the visible
+// white-glow placeholder icons these replace.
 const BASE_COLORS: Record<KitName, number> = {
-  gears: 0xb08d57,
-  book: 0x8a5a33,
-  cards: 0xe6dfc8,
-  tubes: 0x2e3238,
-  chip: 0x1f3a2d,
-  rack: 0x33373d,
-  globe: 0x2f6f8f,
-  screen: 0x23262b,
-  neural: 0x3a3f46,
-  portrait: 0xc8c2b4,
-  crate: 0x9c7444,
-  dial: 0x2b2f35,
-  scale: 0x8d939a,
-  quantum: 0x2a2d33
+  gears: 0xd0a862,
+  book: 0xa4713f,
+  cards: 0xe8e2cf,
+  tubes: 0x78808a,
+  chip: 0x2f6b4f,
+  rack: 0x6a7178,
+  globe: 0x3f8fb8,
+  screen: 0x4a5159,
+  neural: 0x7a838c,
+  portrait: 0xd6cfc0,
+  crate: 0xb98a52,
+  dial: 0x6a7178,
+  scale: 0xb0b6bd,
+  quantum: 0x555c66
 }
 
 const ACCENT_COLOR = 0xffe3a8
@@ -392,7 +397,13 @@ function buildScene(spec: ModelSpec): { scene: THREE.Scene; meshes: THREE.Mesh[]
   const scene = new THREE.Scene()
   const meshes: THREE.Mesh[] = []
 
-  const baseMat = new THREE.MeshStandardMaterial({ color: BASE_COLORS[spec.kit], roughness: 0.6 })
+  const baseMat = new THREE.MeshStandardMaterial({
+    color: BASE_COLORS[spec.kit],
+    roughness: 0.5,
+    metalness: 0.1,
+    emissive: BASE_COLORS[spec.kit],
+    emissiveIntensity: 0.32
+  })
   const baseMerged = mergeGeometries(parts.base, false)
   if (baseMerged) {
     baseMerged.computeVertexNormals()
@@ -404,7 +415,7 @@ function buildScene(spec: ModelSpec): { scene: THREE.Scene; meshes: THREE.Mesh[]
       color: ACCENT_COLOR,
       roughness: 0.4,
       emissive: ACCENT_COLOR,
-      emissiveIntensity: 0.9
+      emissiveIntensity: 1.4
     })
     const accentMerged = mergeGeometries(parts.accent, false)
     if (accentMerged) {
