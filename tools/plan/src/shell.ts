@@ -19,7 +19,6 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 
 const WALL_H = 5
 const CEIL_H = 5
-const ATRIUM_H = 7.5
 
 function material(name: string, color: number): THREE.MeshStandardMaterial {
   return new THREE.MeshStandardMaterial({ name, color, roughness: 0.9 })
