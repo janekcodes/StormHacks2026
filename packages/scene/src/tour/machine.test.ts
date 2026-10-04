@@ -1,0 +1,181 @@
+import { describe, expect, it } from 'vitest'
+import type { ExhibitId } from '@museum/content/schema'
+import {
+  CLIP_GRACE_MS,
+  DWELL_MS,
+  initialTourState,
+  reduceTour,
+  type TourContext,
+  type TourEffect,
+  type TourEvent,
+  type TourState
+} from './machine'
+
+const ctx: TourContext = {
+  stops: ['A1', 'B2', 'C3'] as ExhibitId[],
+  clipMs: () => 4000
+}
+
+function run(events: TourEvent[], from: TourState = initialTourState) {
+  let state = from
+  let effects: TourEffect[] = []
+  for (const event of events) {
+    const out = reduceTour(state, event, ctx)
+    state = out.state
+    effects = out.effects
+  }
+  return { state, effects }
+}
+
+const types = (effects: TourEffect[]) => effects.map((effect) => effect.type)
+
+describe('reduceTour', () => {
+  it('START plays the intro with a clip timeout', () => {
+    const { state, effects } = run([{ type: 'START' }])
+    expect(state.phase).toBe('intro')
+    expect(effects).toContainEqual({ type: 'playClip', key: 'intro' })
+    expect(effects).toContainEqual({ type: 'startTimer', kind: 'clip', ms: 4000 + CLIP_GRACE_MS })
+  })
+
+  it('intro end starts stop 0: bridge clip and walk together', () => {
+    const { state, effects } = run([{ type: 'START' }, { type: 'CLIP_ENDED' }])
+    expect(state).toMatchObject({ phase: 'bridge', index: 0, clipDone: false, walkDone: false })
+    expect(effects).toContainEqual({ type: 'playClip', key: 'bridge:0' })
+    expect(effects).toContainEqual({ type: 'walk', id: 'A1' })
+  })
+
+  it('opens the exhibit only when both walk and bridge clip are done, in either order', () => {
+    const a = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'WALK_ARRIVED' }])
+    expect(a.state.phase).toBe('bridge')
+    const b = run([{ type: 'CLIP_ENDED' }], a.state)
+    expect(b.state.phase).toBe('narrate')
+    expect(b.effects).toContainEqual({ type: 'openPortal', id: 'A1' })
+    expect(b.effects).toContainEqual({ type: 'startNarration', id: 'A1' })
+
+    const c = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }, { type: 'WALK_ARRIVED' }])
+    expect(c.state.phase).toBe('narrate')
+  })
+
+  const atNarrate = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }, { type: 'WALK_ARRIVED' }]).state
+
+  it('auto: narration end dwells then advances to the next bridge', () => {
+    const dwell = run([{ type: 'NARRATION_ENDED' }], atNarrate)
+    expect(dwell.state.phase).toBe('dwell')
+    expect(dwell.effects).toContainEqual({ type: 'startTimer', kind: 'dwell', ms: DWELL_MS })
+    const next = run([{ type: 'TIMEOUT', kind: 'dwell' }], dwell.state)
+    expect(next.state).toMatchObject({ phase: 'bridge', index: 1 })
+    expect(types(next.effects)).toEqual(expect.arrayContaining(['clearTimers', 'stopClip', 'closePortal']))
+    expect(next.effects).toContainEqual({ type: 'walk', id: 'B2' })
+  })
+
+  it('manual: narration end waits for NEXT', () => {
+    const manual = run([{ type: 'SET_AUTO', auto: false }, { type: 'NARRATION_ENDED' }], atNarrate)
+    expect(manual.state.phase).toBe('dwell')
+    expect(manual.effects).not.toContainEqual(expect.objectContaining({ type: 'startTimer' }))
+    expect(run([{ type: 'TIMEOUT', kind: 'dwell' }], manual.state).state.phase).toBe('dwell')
+    expect(run([{ type: 'NEXT' }], manual.state).state).toMatchObject({ phase: 'bridge', index: 1 })
+  })
+
+  it('turning auto on while dwelling starts the dwell timer', () => {
+    const manual = run([{ type: 'SET_AUTO', auto: false }, { type: 'NARRATION_ENDED' }], atNarrate)
+    const on = run([{ type: 'SET_AUTO', auto: true }], manual.state)
+    expect(on.effects).toContainEqual({ type: 'startTimer', kind: 'dwell', ms: DWELL_MS })
+  })
+
+  it('pause in narrate pauses narration; resume continues it', () => {
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], atNarrate)
+    expect(paused.state.pauseReason).toBe('user-pause')
+    expect(types(paused.effects)).toEqual(['pauseNarration', 'clearTimers'])
+    const resumed = run([{ type: 'RESUME' }], paused.state)
+    expect(resumed.state.pauseReason).toBeNull()
+    expect(types(resumed.effects)).toEqual(['resumeNarration', 'startTimer'])
+  })
+
+  it('pause mid-bridge cancels the walk and pauses the clip; resume restarts only what is unfinished', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }, { type: 'CLIP_ENDED' }]).state // clip done, walking
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], bridge)
+    expect(types(paused.effects)).toEqual(['pauseClip', 'cancelWalk', 'clearTimers'])
+    const resumed = run([{ type: 'RESUME' }], paused.state)
+    expect(resumed.effects).toContainEqual({ type: 'walk', id: 'A1' })
+    expect(types(resumed.effects)).not.toContain('resumeClip')
+  })
+
+  it('ignores progress events while paused', () => {
+    const paused = run([{ type: 'PAUSE', reason: 'user-pause' }], atNarrate).state
+    expect(run([{ type: 'NARRATION_ENDED' }], paused).state.phase).toBe('narrate')
+    expect(run([{ type: 'TIMEOUT', kind: 'narration' }], paused).state.phase).toBe('narrate')
+  })
+
+  it('user moving during a walk pauses with user-move', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }]).state
+    const moved = run([{ type: 'WALK_CANCELLED' }], bridge)
+    expect(moved.state.pauseReason).toBe('user-move')
+    expect(types(moved.effects)).toEqual(['pauseClip', 'clearTimers'])
+  })
+
+  it('user closing the exhibit pauses; resume reopens and restarts narration', () => {
+    const closed = run([{ type: 'PORTAL_CLOSED' }], atNarrate)
+    expect(closed.state).toMatchObject({ pauseReason: 'portal-closed', portalLost: true })
+    const resumed = run([{ type: 'RESUME' }], closed.state)
+    expect(resumed.effects).toContainEqual({ type: 'openPortal', id: 'A1' })
+    expect(resumed.effects).toContainEqual({ type: 'startNarration', id: 'A1' })
+    expect(resumed.state.portalLost).toBe(false)
+  })
+
+  it('skip works from every phase and clears a user pause', () => {
+    const bridge = run([{ type: 'START' }, { type: 'CLIP_ENDED' }]).state
+    const pausedNarrate = run([{ type: 'PAUSE', reason: 'user-pause' }], atNarrate).state
+    for (const from of [bridge, atNarrate, pausedNarrate]) {
+      const out = run([{ type: 'NEXT' }], from)
+      expect(out.state).toMatchObject({ phase: 'bridge', index: 1, pauseReason: null })
+      expect(out.effects).toContainEqual({ type: 'walk', id: 'B2' })
+    }
+    const intro = run([{ type: 'START' }, { type: 'NEXT' }]).state
+    expect(intro).toMatchObject({ phase: 'bridge', index: 0 })
+  })
+
+  it('skip is ignored while listening or answering', () => {
+    for (const reason of ['listening', 'answering'] as const) {
+      const paused = run([{ type: 'PAUSE', reason }], atNarrate).state
+      expect(run([{ type: 'NEXT' }], paused).state).toEqual(paused)
+      expect(run([{ type: 'PREV' }], paused).state).toEqual(paused)
+    }
+  })
+
+  it('skip from the last stop plays the outro, then done', () => {
+    let state = atNarrate
+    state = run([{ type: 'NEXT' }, { type: 'NEXT' }], state).state
+    expect(state).toMatchObject({ phase: 'bridge', index: 2 })
+    const outro = run([{ type: 'NEXT' }], state)
+    expect(outro.state.phase).toBe('outro')
+    expect(outro.effects).toContainEqual({ type: 'playClip', key: 'outro' })
+    expect(run([{ type: 'CLIP_ENDED' }], outro.state).state.phase).toBe('done')
+  })
+
+  it('prev goes back one stop and never below the first', () => {
+    const two = run([{ type: 'NEXT' }], atNarrate).state
+    expect(run([{ type: 'PREV' }], two).state).toMatchObject({ phase: 'bridge', index: 0 })
+    expect(run([{ type: 'PREV' }], atNarrate).state).toMatchObject({ phase: 'bridge', index: 0 })
+  })
+
+  it('timeouts stand in for missing audio and stuck walks', () => {
+    const bridge = run([{ type: 'START' }, { type: 'TIMEOUT', kind: 'clip' }]).state
+    expect(bridge.phase).toBe('bridge')
+    const walkTimeout = run([{ type: 'TIMEOUT', kind: 'clip' }, { type: 'TIMEOUT', kind: 'walk' }], bridge)
+    expect(walkTimeout.state.phase).toBe('narrate')
+    const snap = run([{ type: 'TIMEOUT', kind: 'walk' }], bridge)
+    expect(snap.effects).toContainEqual({ type: 'snapTo', id: 'A1' })
+    expect(run([{ type: 'TIMEOUT', kind: 'narration' }], atNarrate).state.phase).toBe('dwell')
+  })
+
+  it('a stale walk timeout outside a bridge is ignored', () => {
+    expect(run([{ type: 'TIMEOUT', kind: 'walk' }], atNarrate).state).toEqual(atNarrate)
+  })
+
+  it('END tears everything down and keeps the auto setting', () => {
+    const manual = run([{ type: 'SET_AUTO', auto: false }], atNarrate).state
+    const ended = run([{ type: 'END' }], manual)
+    expect(ended.state).toEqual({ ...initialTourState, auto: false })
+    expect(types(ended.effects)).toEqual(['clearTimers', 'stopClip', 'cancelWalk', 'closePortal'])
+  })
+})
