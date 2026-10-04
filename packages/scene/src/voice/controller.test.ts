@@ -153,6 +153,18 @@ describe('createVoiceController', () => {
     expect(t.statuses.at(-1)).toBe('unavailable')
   })
 
+  it('resolves a pending stop immediately (null) when disposed while finishing', async () => {
+    const t = setup(fakeConnection(), { finalTimeoutMs: 5000 })
+    await t.controller.start()
+    t.conn.emitPartial('hello there')
+    const started = Date.now()
+    const done = t.controller.stop()
+    t.controller.dispose()
+    expect(await done).toBeNull()
+    expect(Date.now() - started).toBeLessThan(1000)
+    expect(t.statuses.at(-1)).toBe('finishing')
+  })
+
   it('treats an unexpected close while listening as unavailable', async () => {
     const t = setup()
     await t.controller.start()

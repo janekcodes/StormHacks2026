@@ -8,12 +8,12 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: Request): Promise<Response> {
   const sessionId = new URL(request.url).searchParams.get('sessionId') ?? ''
   if (!sessionId || sessionId.length > 128) {
-    return Response.json({ error: 'Invalid request.' }, { status: 400 })
+    return Response.json({ error: 'Invalid request.' }, { status: 400, headers: { 'Cache-Control': 'no-store' } })
   }
   if (await rateLimited(sessionId)) {
     return Response.json(
       { error: 'You have asked a lot of questions. Wait a moment and try again.' },
-      { status: 429 }
+      { status: 429, headers: { 'Cache-Control': 'no-store' } }
     )
   }
   const out = await requestListenToken(

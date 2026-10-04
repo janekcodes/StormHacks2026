@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { Tour } from '@museum/content/tour-schema'
 import type { ExhibitId } from '@museum/content/schema'
 import { CLIP_GRACE_MS, MISSING_CLIP_MS } from './machine'
-import { tourContext } from './store'
+import type { TourEffect, TourLineKey } from './machine'
+import { tourContext, useTourStore } from './store'
 
 const tour: Tour = {
   id: 'test-tour',
@@ -67,8 +68,38 @@ describe('tourContext().clipMs', () => {
   })
 
   it('an out-of-range key returns MISSING_CLIP_MS', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ms = ctx.clipMs('bridge:9' as any)
+    const ms = ctx.clipMs('bridge:9' as TourLineKey)
     expect(ms).toBe(MISSING_CLIP_MS)
+  })
+})
+
+describe('dispatch queue', () => {
+  it('a throwing runner does not leave stale events to replay on the next dispatch', () => {
+    const run = vi.fn<(effects: TourEffect[]) => void>()
+    useTourStore.getState().configure(tour, run)
+    const { dispatch } = useTourStore.getState()
+    // The first effects run queues a re-entrant END, then throws.
+    run.mockImplementationOnce(() => {
+      dispatch({ type: 'END' })
+      throw new Error('runner failed')
+    })
+    expect(() => dispatch({ type: 'START' })).toThrow('runner failed')
+    const phaseAfterFailure = useTourStore.getState().state.phase
+    expect(phaseAfterFailure).toBe('intro')
+    dispatch({ type: 'SET_AUTO', auto: true })
+    // The stale END must not run; only the new event is reduced.
+    expect(useTourStore.getState().state.phase).toBe(phaseAfterFailure)
+    expect(useTourStore.getState().state.auto).toBe(true)
+  })
+
+  it('configure() clears queued events', () => {
+    const run = vi.fn<(effects: TourEffect[]) => void>()
+    useTourStore.getState().configure(tour, run)
+    run.mockImplementationOnce(() => {
+      useTourStore.getState().dispatch({ type: 'END' })
+      useTourStore.getState().configure(tour, run)
+    })
+    useTourStore.getState().dispatch({ type: 'START' })
+    expect(useTourStore.getState().state.phase).toBe('idle')
   })
 })

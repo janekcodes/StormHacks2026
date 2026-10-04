@@ -31,4 +31,14 @@ describe('requestListenToken', () => {
     expect((await requestListenToken(env, vi.fn(async () => Response.json({})))).status).toBe(502)
     expect((await requestListenToken(env, vi.fn(async () => Promise.reject(new Error('down'))))).status).toBe(502)
   })
+
+  it('passes an abort signal upstream and returns 502 when the request aborts', async () => {
+    const fetchImpl = vi.fn(async () => {
+      throw new DOMException('The operation was aborted', 'AbortError')
+    })
+    const out = await requestListenToken(env, fetchImpl as unknown as typeof fetch)
+    expect(out.status).toBe(502)
+    const [, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit]
+    expect(init.signal).toBeInstanceOf(AbortSignal)
+  })
 })

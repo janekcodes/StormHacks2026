@@ -55,6 +55,7 @@ export const useTourStore = create<TourStore>((set, get) => ({
   configure: (tour, run) => {
     runEffects = run
     ctx = tour ? tourContext(tour) : null
+    queue.length = 0
     set({ tour, state: { ...initialTourState, auto: get().state.auto }, caption: null })
   },
   // Effects can dispatch synchronously (a failed walk); queue so each event
@@ -71,6 +72,10 @@ export const useTourStore = create<TourStore>((set, get) => ({
         set({ state: out.state })
         runEffects?.(out.effects)
       }
+    } catch (error) {
+      // Drop events queued behind the failure so they do not replay on the next dispatch.
+      queue.length = 0
+      throw error
     } finally {
       draining = false
     }

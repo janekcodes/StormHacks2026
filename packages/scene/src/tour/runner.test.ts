@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { ExhibitId } from '@museum/content/schema'
 import type { TourEvent } from './machine'
 import { createTourRunner, type RunnerDeps } from './runner'
@@ -41,6 +41,10 @@ function setup() {
 }
 
 describe('createTourRunner', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('reports arrival of the current walk only', () => {
     const t = setup()
     const runner = createTourRunner(t.deps)
@@ -92,6 +96,5 @@ describe('createTourRunner', () => {
     runner.run([{ type: 'startTimer', kind: 'dwell', ms: 100 }, { type: 'clearTimers' }])
     vi.advanceTimersByTime(500)
     expect(t.events).toHaveLength(1)
-    vi.useRealTimers()
   })
 })

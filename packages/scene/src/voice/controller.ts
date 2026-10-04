@@ -135,6 +135,7 @@ export function createVoiceController(deps: VoiceControllerDeps) {
       }
       const active = conn
       if (!active || phase !== 'listening') return null
+      const mine = gen
       phase = 'finishing'
       status('finishing')
       await new Promise<void>((resolve) => {
@@ -150,7 +151,8 @@ export function createVoiceController(deps: VoiceControllerDeps) {
         }
       })
       wake = null
-      if (unavailable) return null
+      // dispose() during finishing bumps gen: the controller is gone, report nothing.
+      if (unavailable || mine !== gen) return null
       phase = 'idle'
       closeActive()
       status('idle')
@@ -162,6 +164,7 @@ export function createVoiceController(deps: VoiceControllerDeps) {
       starting = null
       phase = 'idle'
       closeActive()
+      wake?.()
     }
   }
 }

@@ -24,7 +24,11 @@ export async function requestListenToken(env: ListenTokenEnv, fetchImpl: typeof 
     }
   }
   try {
-    const res = await fetchImpl(TOKEN_URL, { method: 'POST', headers: { 'xi-api-key': apiKey } })
+    const res = await fetchImpl(TOKEN_URL, {
+      method: 'POST',
+      headers: { 'xi-api-key': apiKey },
+      signal: AbortSignal.timeout(10_000)
+    })
     if (!res.ok) return { status: 502, body: { error: 'Voice questions are unavailable right now.' } }
     const data = (await res.json()) as { token?: unknown }
     if (typeof data.token !== 'string' || !data.token) {

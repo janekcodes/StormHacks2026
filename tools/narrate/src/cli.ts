@@ -147,13 +147,18 @@ for (const { id, line } of tourTargets) {
   }
   const out = await narrateExhibit({
     id, narration: line.text, voiceId, modelId, apiKey, audioDir, dictionary,
-    ...(line.audio?.hash ? { existingHash: line.audio.hash } : {})
+    // Only trust the hash when the file name still matches, so a renamed stop regenerates.
+    ...(line.audio?.hash && line.audio.src === record.src ? { existingHash: line.audio.hash } : {})
   })
   // `line` is an object inside the parsed tour; mutate the raw JSON in step with it.
   line.audio = { src: record.src, align: record.align, voiceId, modelId, hash: record.hash }
   if (out.durationMs !== null) line.durationMs = out.durationMs
   changed += 1
   console.log(`generated ${id} -> ${record.src}`)
+}
+
+if (options.only?.startsWith('tour-') && tourTargets.length === 0) {
+  throw new Error(`no tour target matched --only ${options.only}`)
 }
 
 if (!options.dryRun) {
