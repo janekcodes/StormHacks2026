@@ -1,7 +1,7 @@
 # Guide v1 eval report
 
 Model: gemini-3.8-flash
-Pass rate: 42/42 (100.0%)
+Pass rate: 40/42 (95.2%)
 Tool calls with valid IDs: 100%
 
 ## Results
@@ -44,6 +44,8 @@ PASS | Walk me to the Transformer exhibit
 PASS | Highlight the AI exhibits for me
 PASS | Give me a tour of AI and hardware
 PASS | Is the Turing test on display?
-PASS | Is the Manchester Baby on display?
-PASS | Can I open the smartphone exhibit?
+FAIL | Is the Manchester Baby on display?
+      unexpected tool call
+FAIL | Can I open the smartphone exhibit?
+      unexpected tool call
 PASS | What's the weather like today?
